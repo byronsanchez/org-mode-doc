@@ -1,0 +1,12 @@
+*.html
+*~
+nobackup
+.#*
+\#*\#
+*.txt
+*.tex
+*.aux
+*.dvi
+*.log
+*.out
+*.ics
