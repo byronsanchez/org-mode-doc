@@ -1,0 +1,81 @@
+#+TITLE: Org Mode - Organize Your Life!
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:nil *:t TeX:nil LaTeX:nil skip:nil d:nil tags:not-in-toc
+
+* Testing Org
+
+This is a junk org-file for playing with export properties.
+
+** Playing with ditaa
+
+This
+
+#+BEGIN_EXAMPLE
+ #+begin_ditaa one.png -r -S
+ 
+                +---------------------+
+                |                     |
+                |    One              |                      +-------------------+
+                |                     |                      |                   |
+                |       cF00          +---=----------------->+      Two          |
+                +---------------------+                      |                   |
+                                                             |    c0F0           |
+                                                             +--------+----------+
+                                                                      |
+                                                                      |
+                                                                      |
+                                                       +--------------+
+                                                       |               
+                                                       |               
+                                                       V      
+                                            +----------+---------+
+                                            |                    |
+                                            |     Three   c00F   |
+                                            |                    |
+                                            +--------------------+
+ #+end_ditaa
+#+END_EXAMPLE
+
+becomes this!
+
+#+begin_ditaa one.png -r -S
+ 
+                +---------------------+
+                |                     |
+                |    One              |                      +-------------------+
+                |                     |                      |                   |
+                |       cF00          +---=----------------->+      Two          |
+                +---------------------+                      |                   |
+                                                             |    c0F0           |
+                                                             +--------+----------+
+                                                                      |
+                                                                      |
+                                                                      |
+                                                       +--------------+
+                                                       |               
+                                                       |               
+                                                       V      
+                                            +----------+---------+
+                                            |                    |
+                                            |     Three   c00F   |
+                                            |                    |
+                                            +--------------------+
+#+end_ditaa
+
+#+begin_ditaa two.png -S
+                         
+             +----------+
+             |          |
+             |          |
+             |          |
+             +----+-----+
+                  |                                              o
+                  |                                              |
+                  |                                              |
+                  |                                        +-----+-------+
+                  |                                        |             |
+                  |                                        |             |
+                  +----------------------------------------+             |
+                                                           |             |
+                                                           +-------------+
+#+end_ditaa
