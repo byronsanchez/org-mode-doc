@@ -99,7 +99,7 @@ becomes this!
 #+ \\usepackage{graphicx}
 #+ \\usepackage{multicol}
 #+ \\geometry{headheight=47pt}
-#+ \\fancyhead[L]{\\LARGE This is the header title}
-#+ \\fancyfoot[L]{\\small Overridden filename\\\\ \\today}
+#+ \\fancyhead[L]{\\LARGE Org-Mode - Organize Your Life!}
+#+ \\fancyfoot[L]{\\org-mode.org\\\\ \\today}
 #+ "
 #+ End:
