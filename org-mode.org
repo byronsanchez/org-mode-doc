@@ -7,31 +7,6 @@
 
 This is a junk org-file for playing with export properties.
 
-** TODO Testing export tags for case
-#+BEGIN_EXAMPLE
-this is my example
-#+end_example
-
-#+BeGiN_eXaMpLe
-a really contrived example
-#+END_EXAMPLE
-
-#+BEGIN_DITAA junk.png -r -S
-
-+--------+
-| fails  |
-|cRED    |
-+--------+
-#+end_ditaa
-
-#+BEGIN_ditaa junk2.png -r -S
-
-+--------+
-| fails  |
-|cBLU    |
-+--------+
-#+END_ditaa
-
 ** Playing with ditaa
 
 This
@@ -88,6 +63,26 @@ becomes this!
                                             +--------------------+
 #+end_ditaa
 
+#+begin_ditaa xxx.png -r -S
+
+      +---------------+
+      |               |
+      |               |
+      +-------+-------+				  +----------------+
+	      |					  |                |
+	      |					  |                |
+	      |					  |                |
+	      +-----------------+		  |                |
+	       			| 		  +----------------+
+				|
+		     +----------+--------+
+		     |         	         |
+		     |         	         |
+		     |                   |
+		     +-------------------+
+
+#+end_ditaa
+
 #+begin_ditaa two.png -S
                          
              +----------+
@@ -107,15 +102,28 @@ becomes this!
 #+end_ditaa
 
 #+begin_ditaa three.png -r -S -o
- 
-                  +---------------+
-                  |               |
-                  |               |
-                  |               |
-                  |               |
-                  | You are here  |  
-                  |               |
-                  +---------------+
+
+    +--------------+			    +-------------------+
+    |              |			    |                   |
+    |   Alpha      |   	       	       	    |        Beta       |
+    | cYEL         |   	       	       	    | cBLU              |
+    +------+-------+   	       	       	    +----------+--------+
+	   |		   	    		       | 
+	   |		   	    		       | 
+	   |		   	    		       | 
+	   |		   	    		       | 
+	   |		   	    		       | 
+	   |		   	    		       | 
+	   |		   	    		       | 
+	   +--------------+	   +-------------------+ 
+		  	  |	   |			 
+		       	  V	   V			 
+		    +-----+--------+-----+		 
+		    |                    |     	       	 
+		    |       Gamma        |
+		    |       cF60         |
+		    |                    |
+		    +--------------------+
 #+end_ditaa
 
 #+ Local Variables:
