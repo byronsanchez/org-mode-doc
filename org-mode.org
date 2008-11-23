@@ -3,9 +3,11 @@
 #+LANGUAGE:  en
 #+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:nil *:t TeX:nil LaTeX:nil skip:nil d:nil tags:not-in-toc
 
-* Testing Org
+* Publishing
 
 This is a junk org-file for playing with export properties.
+
+The is also available as a [[file:org-mode.pdf][PDF document]].
 
 ** Playing with ditaa
 
@@ -31,7 +33,7 @@ This
  :                                                      V      
  :                                           +----------+---------+
  :                                           |                    |
- :                                           |     Three   c00F   |
+ :                                           |     Three   c083   |
  :                                           |                    |
  :                                           +--------------------+
  #+end_ditaa
@@ -58,10 +60,14 @@ becomes this!
 :                                                      V      
 :                                           +----------+---------+
 :                                           |                    |
-:                                           |     Three   c00F   |
+:                                           |     Three   c083   |
 :                                           |                    |
 :                                           +--------------------+
 #+end_ditaa
+
+
+------------
+
 
 #+begin_ditaa three.png -S -o
 : 
@@ -83,10 +89,13 @@ becomes this!
 :                    +-----+--------+-----+               
 :                    |                    |               
 :                    |       Gamma        |
-:                    |       cF60         |
+:                    |       cF63         |
 :                    |                    |
 :                    +--------------------+
 #+end_ditaa
+
+
+------------
 
 #+begin_ditaa blue.png -r -S
 : +---------+
@@ -105,6 +114,7 @@ becomes this!
 #+ \\usepackage{multicol}
 #+ \\geometry{headheight=47pt}
 #+ \\fancyhead[L]{\\LARGE Org-Mode - Organize Your Life!}
-#+ \\fancyfoot[L]{\\org-mode.org\\\\ \\today}
+#+ \\fancyfoot[L]{\\small org-mode.org}
+#+ \\fancyfoot[R]{\\today}
 #+ "
 #+ End:
