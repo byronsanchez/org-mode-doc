@@ -95,7 +95,7 @@ becomes this!
 
 ------------
 
-#+begin_ditaa blue.png -r
+#+begin_ditaa blue.png -r -S
 : +---------+
 : | cBLU    |
 : |         |
