@@ -7,7 +7,7 @@
 
 This is a junk org-file for playing with export properties.
 
-The is also available as a [[file:org-mode.pdf][PDF document]].
+This is also available as a [[file:org-mode.pdf][PDF document]].
 
 ** Playing with ditaa
 
@@ -41,7 +41,6 @@ This
 
 becomes this!
 
-#+ATTR_LaTeX: width=20em,height=20em,bb=0 0 100 100
 #+begin_ditaa one.png -r -S
 :               +---------------------+
 :               |                     |
@@ -69,7 +68,6 @@ becomes this!
 ------------
 
 
-#+ATTR_LaTeX: width=20em,height=20em,bb=0 0 100 100
 #+begin_ditaa three.png -S -o
 :    +--------------+                        +-------------------+
 :    |              |                        |                   |
@@ -97,7 +95,6 @@ becomes this!
 
 ------------
 
-#+ATTR_LaTeX: width=20em,height=20em,bb=0 0 100 100
 #+begin_ditaa blue.png -r -S
 : +---------+
 : | cBLU    |
