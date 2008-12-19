@@ -41,6 +41,8 @@ This
 
 becomes this!
 
+#+CAPTION: Rounded boxes
+#+ATTR_LaTeX: width=15cm
 #+begin_ditaa one.png -r -S
 :               +---------------------+
 :               |                     |
@@ -65,9 +67,8 @@ becomes this!
 #+end_ditaa
 
 
-------------
-
-
+#+CAPTION: Square boxes
+#+ATTR_LaTeX: width=6in
 #+begin_ditaa three.png -S -o
 :    +--------------+                        +-------------------+
 :    |              |                        |                   |
@@ -93,9 +94,21 @@ becomes this!
 #+end_ditaa
 
 
-------------
-
+#+CAPTION: Example picture
+#+ATTR_LaTeX: width=4in
 #+begin_ditaa blue.png -r -S
+: +---------+
+: | cBLU    |
+: |         |
+: |    +----+
+: |    |cPNK|
+: |    |    |
+: +----+----+
+#+end_ditaa
+
+#+CAPTION: Lines not separated
+#+ATTR_LaTeX: width=4in
+#+begin_ditaa blue2.png -r -S -E
 : +---------+
 : | cBLU    |
 : |         |
