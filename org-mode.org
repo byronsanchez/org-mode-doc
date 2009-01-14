@@ -5,118 +5,66 @@
 
 * Publishing
 
-This is a junk org-file for playing with export properties.
-
-This is also available as a [[file:org-mode.pdf][PDF document]].
-
 ** Playing with ditaa
 
 This
 
-#+BEGIN_EXAMPLE
- #+begin_ditaa one.png -r -S
- : 
- :               +---------------------+
- :               |                     |
- :               |    One              |                      +-------------------+
- :               |                     |                      |                   |
- :               |       cF00          +---=----------------->+      Two          |
- :               +---------------------+                      |                   |
- :                                                            |    c0F0           |
- :                                                            +--------+----------+
- :                                                                     |
- :                                                                     |
- :                                                                     |
- :                                                      +--------------+
- :                                                      |               
- :                                                      |               
- :                                                      V      
- :                                           +----------+---------+
- :                                           |                    |
- :                                           |     Three   c00F   |
- :                                           |                    |
- :                                           +--------------------+
- #+end_ditaa
-#+END_EXAMPLE
+#+begin_example
+ :           +-----------+        +---------+  
+ :           |    PLC    |        |         |                
+ :           |  Network  +<------>+   PLC   +<---=---------+ 
+ :           |    cRED   |        |  c707   |              | 
+ :           +-----------+        +----+----+              | 
+ :                                     ^                   | 
+ :                                     |                   | 
+ :                                     |  +----------------|-----------------+
+ :                                     |  |                |                 |
+ :                                     v  v                v                 v
+ :             +----------+       +----+--+--+      +-------+---+      +-----+-----+      Windows clients
+ :             |          |       |          |      |           |      |           |      +----+   +----+
+ :             | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL|...|cYEL|
+ :             |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |   |    |
+ :             +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+   +----+
+ :                ^    ^          +----------+             ^           +-------+---+
+ :                |    |                                   |                        
+ :                |    +--------=--------------------------+                    
+ :                v                                                             
+ :             +--+---+                                                         
+ :             |      |                                                         
+ :             | MICS |            -------- Data ---------                      
+ :             | cBLU |            --=----- Signals ---=--                      
+ :             +------+                                                         
+#+end_example
 
-becomes this!
+becomes This!!
 
-#+CAPTION: Rounded boxes
-#+ATTR_LaTeX: width=15cm
-#+begin_ditaa one.png -r -S
-:               +---------------------+
-:               |                     |
-:               |    One              |                      +-------------------+
-:               |                     |                      |                   |
-:               |       cF00          +---=----------------->+      Two          |
-:               +---------------------+                      |                   |
-:                                                            |    c0F0           |
-:                                                            +--------+----------+
-:                                                                     |
-:                                                                     |
-:                                                                     |
-:                                                      +--------------+
-:                                                      |               
-:                                                      |               
-:                                                      V      
-:                                           +----------+---------+
-:                                           |                    |
-:                                           |     Three   c00F   |
-:                                           |                    |
-:                                           +--------------------+
+#+begin_ditaa communication.png -r -S
+:           +-----------+        +---------+  
+:           |    PLC    |        |         |                
+:           |  Network  +<------>+   PLC   +<---=---------+ 
+:           |    cRED   |        |  c707   |              | 
+:           +-----------+        +----+----+              | 
+:                                     ^                   | 
+:                                     |                   | 
+:                                     |  +----------------|-----------------+
+:                                     |  |                |                 |
+:                                     v  v                v                 v
+:             +----------+       +----+--+--+      +-------+---+      +-----+-----+      Windows clients
+:             |          |       |          |      |           |      |           |      +----+   +----+
+:             | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL|...|cYEL|
+:             |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |   |    |
+:             +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+   +----+
+:                ^    ^          +----------+             ^           +-------+---+
+:                |    |                                   |                        
+:                |    +--------=--------------------------+                    
+:                v                                                             
+:             +--+---+                                                         
+:             |      |                                                         
+:             | MICS |            -------- Data ---------                      
+:             | cBLU |            --=----- Signals ---=--                      
+:             +------+                                                         
 #+end_ditaa
 
-
-#+CAPTION: Square boxes
-#+ATTR_LaTeX: width=6in
-#+begin_ditaa three.png -S -o
-:    +--------------+                        +-------------------+
-:    |              |                        |                   |
-:    |   Alpha      |                        |        Beta       |
-:    | cYEL         |                        | cBLU              |
-:    +------+-------+                        +----------+--------+
-:           |                                           | 
-:           |                                           | 
-:           |                                           | 
-:           |                                           | 
-:           |                                           | 
-:           |                                           | 
-:           |                                           | 
-:           +--------------+        +-------------------+ 
-:                          |        |                     
-:                          V        V                     
-:                    +-----+--------+-----+               
-:                    |                    |               
-:                    |       Gamma        |
-:                    |       c789         |
-:                    |                    |
-:                    +--------------------+
-#+end_ditaa
-
-
-#+CAPTION: Example picture
-#+ATTR_LaTeX: width=4in
-#+begin_ditaa blue.png -r -S
-: +---------+
-: | cBLU    |
-: |         |
-: |    +----+
-: |    |cPNK|
-: |    |    |
-: +----+----+
-#+end_ditaa
-
-#+CAPTION: Lines not separated
-#+ATTR_LaTeX: width=4in
-#+begin_ditaa blue2.png -r -S -E
-: +---------+
-: | cBLU    |
-: |         |
-: |    +----+
-: |    |cPNK|
-: |    |    |
-: +----+----+
-#+end_ditaa
 
 #+ Local Variables:
 #+ org-export-latex-title-command: ""
