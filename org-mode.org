@@ -16,24 +16,25 @@
 This document attempts to describe how I use org-mode in my day-to-day work.
 
 This is currently a work-in-progress.
-* time clocking
-** setting default task with C-u C-u C-c C-x C-i
-** clocking in old tasks C-u C-c C-x C-i
-* Tasks
-** My todo keywords
-*** using STARTED for clocked tasks
-* Custom agenda views
-** use agenda view for STARTED to find stuff in progress and things to clock
-** use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
-* Adding new tasks quickly - org remember
-** Use separate files for remember tasks (tasks,org, notes.org, phone.org)
-** Remember tasks for phone calls and bbdb searches
-* Time reporting and tracking
-** clocking time and reporting for client tasks
-** checking for holes in clocked times
-* GTD stuff
-** weekly review process
-*** sorting REFILE tasks and refiling in groups
+* TODO time clocking
+** TODO setting default task with C-u C-u C-c C-x C-i
+** TODO clocking in old tasks C-u C-c C-x C-i
+* TODO Tasks
+** TODO My todo keywords
+*** TODO using STARTED for clocked tasks
+* TODO Custom agenda views
+** TODO use agenda view for STARTED to find stuff in progress and things to clock
+** TODO use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
+* TODO Key bindings
+* TODO Adding new tasks quickly - org remember
+** TODO Use separate files for remember tasks (tasks,org, notes.org, phone.org)
+** TODO Remember tasks for phone calls and bbdb searches
+* TODO Time reporting and tracking
+** TODO clocking time and reporting for client tasks
+** TODO checking for holes in clocked times
+* TODO GTD stuff
+** TODO weekly review process
+*** TODO sorting REFILE tasks and refiling in groups
 * Publishing
 
 ** Playing with ditaa
