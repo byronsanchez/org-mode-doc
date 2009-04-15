@@ -22,16 +22,19 @@ This is currently a work-in-progress.
 * TODO Tasks
 ** TODO My todo keywords
 *** TODO using STARTED for clocked tasks
+** TODO Estimates
+** TODO Clocking Time
+*** TODO Time reporting and tracking
+**** TODO checking for holes in clocked times
+* TODO Tags, Filetags
 * TODO Custom agenda views
 ** TODO use agenda view for STARTED to find stuff in progress and things to clock
 ** TODO use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
+** TODO Filtering
 * TODO Key bindings
 * TODO Adding new tasks quickly - org remember
 ** TODO Use separate files for remember tasks (tasks,org, notes.org, phone.org)
 ** TODO Remember tasks for phone calls and bbdb searches
-* TODO Time reporting and tracking
-** TODO clocking time and reporting for client tasks
-** TODO checking for holes in clocked times
 * TODO GTD stuff
 ** TODO weekly review process
 *** TODO sorting REFILE tasks and refiling in groups
