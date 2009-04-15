@@ -1,68 +1,103 @@
-#+LaTeX_CLASS: myarticle
 #+TITLE: Org Mode - Organize Your Life!
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:nil *:t TeX:nil LaTeX:nil skip:nil d:nil tags:not-in-toc
+#+AUTHOR: Bernt Hansen
+#+EMAIL: bernt@norang.ca
+#+OPTIONS:   H:3 num:t   toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+DATE:      2009-04-15 Wed
+#+DESCRIPTION: A description of how I currently use org-mode
+#+KEYWORDS:  org-mode Emacs organization GTD getting-things-done
+#+INFOJS_OPT: view:nil toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+* Overview
+This document attempts to describe how I use org-mode in my day-to-day work.
 
+This is currently a work-in-progress.
+* time clocking
+** setting default task with C-u C-u C-c C-x C-i
+** clocking in old tasks C-u C-c C-x C-i
+* Tasks
+** My todo keywords
+*** using STARTED for clocked tasks
+* Custom agenda views
+** use agenda view for STARTED to find stuff in progress and things to clock
+** use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
+* Adding new tasks quickly - org remember
+** Use separate files for remember tasks (tasks,org, notes.org, phone.org)
+** Remember tasks for phone calls and bbdb searches
+* Time reporting and tracking
+** clocking time and reporting for client tasks
+** checking for holes in clocked times
+* GTD stuff
+** weekly review process
+*** sorting REFILE tasks and refiling in groups
 * Publishing
 
 ** Playing with ditaa
 
+I don't do a lot of publishing for other people but I do keep a set of private client system documentation online.
+Most of this documentation is a collection of notes exported to HTML.  ditaa is a great tool for quickly generating
+graphics to convey ideas.  The following graphic is one example of what you can do easily with ditaa:
+
 This
 
 #+begin_example
- :           +-----------+        +---------+  
- :           |    PLC    |        |         |                
- :           |  Network  +<------>+   PLC   +<---=---------+ 
- :           |    cRED   |        |  c707   |              | 
- :           +-----------+        +----+----+              | 
- :                                     ^                   | 
- :                                     |                   | 
- :                                     |  +----------------|-----------------+
- :                                     |  |                |                 |
- :                                     v  v                v                 v
- :             +----------+       +----+--+--+      +-------+---+      +-----+-----+      Windows clients
- :             |          |       |          |      |           |      |           |      +----+   +----+
- :             | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL|...|cYEL|
- :             |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |   |    |
- :             +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+   +----+
- :                ^    ^          +----------+             ^           +-------+---+
- :                |    |                                   |                        
- :                |    +--------=--------------------------+                    
- :                v                                                             
- :             +--+---+                                                         
- :             |      |                                                         
- :             | MICS |            -------- Data ---------                      
- :             | cBLU |            --=----- Signals ---=--                      
- :             +------+                                                         
+ :      +-----------+        +---------+  
+ :      |    PLC    |        |         |                
+ :      |  Network  +<------>+   PLC   +<---=---------+ 
+ :      |    cRED   |        |  c707   |              | 
+ :      +-----------+        +----+----+              | 
+ :                                ^                   | 
+ :                                |                   | 
+ :                                |  +----------------|-----------------+
+ :                                |  |                |                 |
+ :                                v  v                v                 v
+ :        +----------+       +----+--+--+      +-------+---+      +-----+-----+      Windows clients
+ :        |          |       |          |      |           |      |           |      +----+   +----+
+ :        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL|...|cYEL|
+ :        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |   |    |
+ :        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+   +----+
+ :           ^    ^          +----------+             ^           +-------+---+
+ :           |    |                                   |                        
+ :           |    +--------=--------------------------+                    
+ :           v                                                             
+ :  +--------+--------+                                                         
+ :  |                 |                                                         
+ :  | Millwide System |            -------- Data ---------                      
+ :  | cBLU            |            --=----- Signals ---=--                      
+ :  +-----------------+                                                         
 #+end_example
 
-becomes This!!
+becomes this!
 
 #+begin_ditaa communication.png -r -S
-:           +-----------+        +---------+  
-:           |    PLC    |        |         |                
-:           |  Network  +<------>+   PLC   +<---=---------+ 
-:           |    cRED   |        |  c707   |              | 
-:           +-----------+        +----+----+              | 
-:                                     ^                   | 
-:                                     |                   | 
-:                                     |  +----------------|-----------------+
-:                                     |  |                |                 |
-:                                     v  v                v                 v
-:             +----------+       +----+--+--+      +-------+---+      +-----+-----+      Windows clients
-:             |          |       |          |      |           |      |           |      +----+   +----+
-:             | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL|...|cYEL|
-:             |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |   |    |
-:             +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+   +----+
-:                ^    ^          +----------+             ^           +-------+---+
-:                |    |                                   |                        
-:                |    +--------=--------------------------+                    
-:                v                                                             
-:             +--+---+                                                         
-:             |      |                                                         
-:             | MICS |            -------- Data ---------                      
-:             | cBLU |            --=----- Signals ---=--                      
-:             +------+                                                         
+:      +-----------+        +---------+  
+:      |    PLC    |        |         |                
+:      |  Network  +<------>+   PLC   +<---=---------+ 
+:      |    cRED   |        |  c707   |              | 
+:      +-----------+        +----+----+              | 
+:                                ^                   | 
+:                                |                   | 
+:                                |  +----------------|-----------------+
+:                                |  |                |                 |
+:                                v  v                v                 v
+:        +----------+       +----+--+--+      +-------+---+      +-----+-----+      Windows clients
+:        |          |       |          |      |           |      |           |      +----+   +----+
+:        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL|...|cYEL|
+:        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |   |    |
+:        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+   +----+
+:           ^    ^          +----------+             ^           +-------+---+
+:           |    |                                   |                        
+:           |    +--------=--------------------------+                    
+:           v                                                             
+:  +--------+--------+                                                         
+:  |                 |                                                         
+:  | Millwide System |            -------- Data ---------                      
+:  | cBLU            |            --=----- Signals ---=--                      
+:  +-----------------+                                                         
 #+end_ditaa
 
 
