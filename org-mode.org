@@ -17,32 +17,32 @@ This document attempts to describe how I use org-mode in my day-to-day work.
 
 This is currently a work-in-progress.
 
-* TODO Tasks
-** TODO My todo keywords
+* Tasks
+** My todo keywords
    - globally set for all files
-*** TODO using STARTED for clocked tasks
-** TODO Estimates
-* TODO Time Clocking
+*** using STARTED for clocked tasks
+** Estimates
+* Time Clocking
   - Clock time religiously
-** TODO setting default task with C-u C-u C-c C-x C-i
-** TODO clocking in old tasks C-u C-c C-x C-i
-** TODO Clocking in
-*** TODO Using the clock history
-*** TODO Setting a default clock task
-** TODO Make tasks to respond to emails
-** TODO Create new tasks and clock in when starting something new
-** TODO Time reporting and tracking
-*** TODO Finding tasks to clock in
+** setting default task with C-u C-u C-c C-x C-i
+** clocking in old tasks C-u C-c C-x C-i
+** Clocking in
+*** Using the clock history
+*** Setting a default clock task
+** Make tasks to respond to emails
+** Create new tasks and clock in when starting something new
+** Time reporting and tracking
+*** Finding tasks to clock in
     - Use the clock history
     - STARTED/ONGOING tasks (agenda view)
-*** TODO checking for holes in clocked times
+*** checking for holes in clocked times
     - agenda log mode with clocked times as default
-* TODO Tags, Filetags
-* TODO Custom agenda views
-** TODO use agenda view for STARTED to find stuff in progress and things to clock
-** TODO use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
-** TODO Filtering
-* TODO Key bindings
+* Tags, Filetags
+* Custom agenda views
+** use agenda view for STARTED to find stuff in progress and things to clock
+** use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
+** Filtering
+* Key bindings
   I have the following custom key bindings set up for my emacs.  All
   of the raw settings are in [[AllTheGorySetupDetails][All The Gory Setup Details]] below.
 
@@ -70,12 +70,12 @@ This is currently a work-in-progress.
 | F11     | Goto currently clocked item                     | Often      |
 | C-S-f12 | Save buffers and publish current project        | Often      |
 | C-x n r | Narrow to region                                | Sometimes  |
-* TODO Adding new tasks quickly - org remember
-** TODO Use separate files for remember tasks (tasks,org, notes.org, phone.org)
-** TODO Remember tasks for phone calls and bbdb searches
-* TODO GTD stuff
-** TODO weekly review process
-*** TODO sorting REFILE tasks and refiling in groups
+* Adding new tasks quickly - org remember
+** Use separate files for remember tasks (tasks,org, notes.org, phone.org)
+** Remember tasks for phone calls and bbdb searches
+* GTD stuff
+** weekly review process
+*** sorting REFILE tasks and refiling in groups
 * Publishing
 
 ** Playing with ditaa
@@ -154,9 +154,9 @@ becomes this!
 #+ \\fancyfoot[R]{\\today}
 #+ "
 #+ End:
-* TODO All The Gory Setup Details
+* All The Gory Setup Details
 #!<<AllTheGorySetupDetails>>
-** TODO What I put in my .emacs
+** What I put in my .emacs
 #+begin_src lisp
 ;;;
 ;;; Org Mode
@@ -317,7 +317,7 @@ becomes this!
 
 #+end_src lisp
 
-** TODO What goes in my custom.el
+** What goes in my custom.el
 The following is an excerpt of my custom settings for org-mode related items.
 
 #+begin_src lisp 
