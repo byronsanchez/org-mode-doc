@@ -24,6 +24,9 @@ This is currently a work-in-progress.
 *** TODO using STARTED for clocked tasks
 ** TODO Estimates
 ** TODO Clocking Time
+*** TODO Clocking in
+**** TODO Using the clock history
+**** TODO Setting a default clock task
 *** TODO Time reporting and tracking
 **** TODO checking for holes in clocked times
 * TODO Tags, Filetags
