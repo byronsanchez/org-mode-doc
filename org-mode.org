@@ -66,15 +66,15 @@ states for tasks (*WAITING*, *SOMEDAY*, *CANCELLED*).
 
 The following diagram shows the possible state transitions for a task.
 
-#+begin_ditaa task_states.png -r -S
+#+begin_ditaa task_states.png -r
 :       +--------+       +---------+       +--------+
 #+end_ditaa
 
-#+begin_ditaa task_states.png -r -S
+#+begin_ditaa task_states.png -r
 :       +--------+       +---------+       +--------+
 :       |        |       |         |       |        |
 :    +--+  TODO  +------>+ STARTED +------>+  DONE  |
-:    |  | cF00   |       |  c009   |       | c360   |
+:    |  | cRED   |       |  cBLU   |       | cGRE   |
 :    |  +--+-+---+       +--+---+--+       +--------+
 :    |     ^ ^              ^   |
 :    |     | |              |   |
@@ -85,7 +85,7 @@ The following diagram shows the possible state transitions for a task.
 :    |  +--+----+-+     +----+----+     +-----+-----+
 :    |  |         |     |         |     |           |
 :    |  | WAITING |     | SOMEDAY |     | CANCELLED |
-:    |  |   cF60  |     |  cC0C   |     |   c360    |
+:    |  |   cF60  |     |  cC0C   |     |   cGRE    |
 :    |  +----+----+     +---+--+--+     +-----+--+--+
 :    |       ^              ^  |              ^  ^
 :    |       |              |  |              |  |
@@ -101,25 +101,25 @@ The following diagram shows the possible state transitions for a task.
 *** Quotation Task States
 I also do fixed-price quotation work.  Quotations use the following state transitions:
 
-#+begin_ditaa quote_states.png -r -S
+#+begin_ditaa quote_states.png -r
 :                                              +----------+
 :                                              |          |
 :                                          +-->+ EXPIRED  |
-:                                          |   | c360     |
+:                                          |   | cGRE     |
 :                                          |   +----------+
 :                                          |
 :                                          |
 :       +-------------+       +--------+   :   +----------+
 :       |             |       |        +---+   |          |
 :       |  QUOTATION  +------>+ QUOTED +------>+ APPROVED |
-:       | cF00        |       |  cC0C  +---+   | c360     |
+:       | cRED        |       |  cC0C  +---+   | cGRE     |
 :       +-------------+       +--+---+-+   :   +----------+
 :                                          |
 :                                          |
 :                                          |   +----------+
 :                                          |   |          |
 :                                          +-->+ REJECTED |
-:                                              | c360     |
+:                                              | cGRE     |
 :                                              +----------+
 #+end_ditaa
 
@@ -127,11 +127,11 @@ I also do fixed-price quotation work.  Quotations use the following state transi
 Fixed price jobs normally have a /Purchase Order/ associated with it which is used for billing the client.
 The following states track purchase orders.
 
-#+begin_ditaa po_states.png -r -S
+#+begin_ditaa po_states.png -r
 :       +----------+       +---------+
 :       |          |       |         |
 :       |  OPENPO  +------>+ CLOSEPO |
-:       | cF00     |       |  c360   |
+:       | cRED     |       |  cGRE   |
 :       +----------+       +---------+
 #+end_ditaa
 
@@ -139,23 +139,23 @@ The following states track purchase orders.
 Finally I also track projects which are really super-tasks.  Projects normally have lots of individual tasks
 that can be estimated and clocked.  Projects use the following state transitions:
 
-#+begin_ditaa project_states.png -r -S
+#+begin_ditaa project_states.png -r
 :                                 +---------------+
 :                                 |               |
 :                                 |    PROJDONE   |
-:                                 | c360          |
+:                                 | cGRE          |
 :                                 +----+----------+
 :                                      ^      
 :       +-------------+                |
 :       |             +----------------+
 :       |   PROJECT   |
-:       | cF00        +-----------=----+
+:       | cRED        +-----------=----+
 :       +-------------+                |
 :                                      v            
 :                                 +----+----------+
 :                                 |               |
 :                                 | PROJCANCELLED |
-:                                 | c360          |
+:                                 | cGRE          |
 :                                 +---------------+
 #+end_ditaa
 
@@ -254,6 +254,7 @@ graphics to convey ideas.  The following graphic is one example of what you can 
 This
 
 #+begin_example
+ #+begin_ditaa communication.png -r
  :      +-----------+        +---------+  
  :      |    PLC    |        |         |                
  :      |  Network  +<------>+   PLC   +<---=---------+ 
@@ -278,11 +279,12 @@ This
  :  | Millwide System |            -------- Data ---------                      
  :  | cBLU            |            --=----- Signals ---=--                      
  :  +-----------------+                                                         
+ #+end_ditaa
 #+end_example
 
 becomes this!
 
-#+begin_ditaa communication.png -r -S
+#+begin_ditaa communication.png -r
 :      +-----------+        +---------+  
 :      |    PLC    |        |         |                
 :      |  Network  +<------>+   PLC   +<---=---------+ 
