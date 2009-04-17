@@ -58,17 +58,13 @@ Here are my *TODO* state keywords and colour settings:
 				     ("PROJDONE" :foreground "forest green" :weight bold)
 				     ("PROJCANCELLED" :foreground "forest green" :weight bold))))
 
-#+end_src lisp
+#+end_src
 *** Normal Task States
 Normal tasks go through the sequence *TODO* -> *STARTED* -> *DONE*.
 The second sequence is really just a convenient collection of odd-ball
 states for tasks (*WAITING*, *SOMEDAY*, *CANCELLED*).
 
 The following diagram shows the possible state transitions for a task.
-
-#+begin_ditaa task_states.png -r
-:       +--------+       +---------+       +--------+
-#+end_ditaa
 
 #+begin_ditaa task_states.png -r
 :       +--------+       +---------+       +--------+
