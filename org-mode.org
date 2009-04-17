@@ -15,6 +15,8 @@
 #+LINK_HOME: 
 * Overview
 This is currently a work-in-progress.
+Org-mode is a fabulous organizational tool built by Carsten Dominik that operates on plain text files.
+Org-mode is part of Emacs.
 
 This document attempts to describe how I use org-mode in my day-to-day
 work.  I have been using org-mode as my personal information manager
@@ -25,7 +27,7 @@ I still change my workflow and tweak little things regularly but right
 now this document describes most of my org-mode setup.
 * Tasks and States
 I use the same set of TODO keywords for all of my org files.  org-mode
-lets you defined TODO keywords per file.  I find it's easier to have a
+lets you define TODO keywords per file.  I find it's easier to have a
 standard set of TODO keywords globally so I can use the same setup in
 any org file I'm working with.
 
@@ -93,7 +95,6 @@ The following diagram shows the possible state transitions for a task.
 : 
 : 
 :         -------->  Normal state changes 
-:                                         
 :         ----=--->  Optional state changes       
 #+end_ditaa
 
@@ -153,11 +154,10 @@ that can be estimated and clocked.  Projects use the following state transitions
 :                                      v            
 :                                 +----+----------+
 :                                 |               |
-:                                 + PROJCANCELLED |
+:                                 | PROJCANCELLED |
 :                                 | c360          |
 :                                 +---------------+
 #+end_ditaa
-to track the project parent task.
 
 ** Fast Todo Selection
 I use fast todo selection so that moving a task from one state to
