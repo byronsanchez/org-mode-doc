@@ -60,6 +60,38 @@ Here are my *TODO* state keywords and colour settings:
 
 Normal tasks go through the sequence
 
+#+begin_ditaa task_states1.png -r -S
+:       +--------+       +---------+       +--------+
+:       |        |       |         |       |        |
+:       |  TODO  +------>+ STARTED +------>+  DONE  |
+:       | cRED   |       |  cBLU   |       | cGRE   |
+:       +--------+       +---------+       +--------+
+#+end_ditaa
+
+#+begin_ditaa task_states2.png -r -S
+:       +--------+       +---------+       +--------+
+:       |        |       |         |       |        |
+:       |  TODO  +------>+ STARTED +------>+  DONE  |
+:       | cRED   |       |  cBLU   |       | cGRE   |
+:       +--------+       +---------+       +--------+
+#+end_ditaa
+
+#+begin_ditaa task_states3.png -r -S
+:       +--------+       +---------+       +--------+
+:       |        |       |         |       |        |
+:       |  TODO  +------>+ STARTED +------>+  DONE  |
+:       | cRED   |       |  cBLU   |       | cGRE   |
+:       +--------+       +---------+       +--------+
+#+end_ditaa
+
+#+begin_ditaa task_states4.png -r -S
+:       +--------+       +---------+       +--------+
+:       |        |       |         |       |        |
+:       |  TODO  +------>+ STARTED +------>+  DONE  |
+:       | cRED   |       |  cBLU   |       | cGRE   |
+:       +--------+       +---------+       +--------+
+#+end_ditaa
+
 *TODO* -> *STARTED* -> *DONE*.
 
 The second sequence is really just a convenient collection of odd-ball
