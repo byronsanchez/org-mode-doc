@@ -1,8 +1,8 @@
-#+TITLE: Org Mode - Organize Your Life!
+#+TITLE: Org Mode - Organize Your Life In Plain Text!
 #+LANGUAGE:  en
 #+AUTHOR: Bernt Hansen
 #+EMAIL: bernt@norang.ca
-#+OPTIONS:   H:3 num:nil   toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   H:3 num:t   toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+DESCRIPTION: A description of how I currently use org-mode
 #+KEYWORDS:  org-mode Emacs organization GTD getting-things-done
@@ -24,9 +24,14 @@ for years now.  I started small with just the default =TODO= and
 
 I still change my workflow and tweak little things regularly but right
 now this document describes most of my current org-mode setup.
+
+I'm assuming you've had some exposure to org-mode already so concepts like the agenda, remember mode, etc.
+won't be completely foreign to you.  More information about org-mode can be found in the [[http://orgmode.org/index.html#sec-4.1][Org-Mode Manual]] and on the 
+[[http://orgmode.org/worg/][Worg Site]].
 * Org-Mode Setup
-I have the following setup in my .emacs so org-mode is enabled.  I use org-mode as the
-default mode for =.org=, =*.org_archive=, and =*.txt= files.
+I have the following setup in my .emacs so that org-mode is enabled.
+I use org-mode as the default mode for =.org=, =*.org_archive=, and
+=*.txt= files.
 
 #+begin_src lisp
 ;;;
@@ -36,10 +41,10 @@ default mode for =.org=, =*.org_archive=, and =*.txt= files.
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 (require 'org-install)
 ;;
+;; Standard key bindings
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-;;
 #+end_src
 
 I also use orgstruct++-mode and flyspell-mode when composing email messages in Gnus.
@@ -50,6 +55,20 @@ I also use orgstruct++-mode and flyspell-mode when composing email messages in G
 				turn-on-auto-fill
 				bbdb-define-all-aliases)))
 #+end_src
+
+I hate creating documents with spelling errors... so I use
+flyspell-mode for almost everything.  I also recently discovered
+yasnippets which are enabled most of my editing modes.
+#+begin_src lisp
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    ;; yasnippet
+	    (make-variable-buffer-local 'yas/trigger-key)
+	    (setq yas/trigger-key [tab])
+	    (define-key yas/keymap [tab] 'yas/next-field-group)
+	    (flyspell-mode 1)))
+#+end_src
+
 ** My Org Files
    I have lots of org files.
 
@@ -76,11 +95,6 @@ I also use orgstruct++-mode and flyspell-mode when composing email messages in G
    I have the following work-related org-files (using ficticious
    client names)
 
-   I deal with multiple clients and client projects and separate these
-   into one org file per client normally.  Clients come and go so I
-   can add or drop entire org files from my agenda to keep only what
-   is important visible in agenda views.
-
    | Filename    | Description                             |
    |-------------+-----------------------------------------|
    | norang.org  | Norang tasks and notes                  |
@@ -89,6 +103,12 @@ I also use orgstruct++-mode and flyspell-mode when composing email messages in G
    | ABC-DEF.org | ABC Ltd tasks for their client DEF Corp |
    | ABC-KKK.org | ABC Ltd tasks for their client KKK Inc  |
    | YYY.org     | YYY Inc tasks                           |
+
+   I deal with multiple clients and client projects and separate these
+   into one org file per client normally.  An org file becomes the
+   collection of projects, notes, etc for a single client.  Clients
+   come and go so I can add or drop entire org files from my agenda to
+   keep only what is important visible in agenda views.
 
    I do work for ABC Ltd which has multiple clients systems that I
    work on.  I separate the tasks for each client into separate org
@@ -436,13 +456,40 @@ which I'll talk about later.
   find it's easier to get in the habit of clocking everything.
 
   This is where the =STARTED= todo task comes in to play.
+** Clock Setup
+   I like to keep control of the clock separate from task changes.  If
+   I mark a clocked task =DONE= I want to clock to keep running on
+   that task until I've finished all of the work on it.  I tend to
+   mark tasks =DONE= just before I'm really finished with it.  If I
+   need to enter a note with the =DONE= state change then it may take
+   a few minutes to get all of the details entered -- and this counts
+   towards clocking on that task.
 
-  - Clock time religiously
-** Setting default task with C-u C-u C-c C-x C-i
-** Clocking in old tasks C-u C-c C-x C-i
+   I have the following org-mode setup for clocking:
+
+#+begin_src lisp
+;;
+;; Resume clocking tasks when emacs is restarted
+(setq org-clock-persistence-insinuate)
+;;
+(setq org-clock-history-length 35)
+(setq org-clock-in-resume t)
+(setq org-clock-in-switch-to-state "STARTED")
+(setq org-clock-into-drawer t)
+(setq org-clock-out-remove-zero-time-clocks t)
+(setq org-clock-out-when-done nil)
+(setq org-clock-persist t)
+(setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 3)))
+(setq org-agenda-log-mode-items (quote (clock)))
+#+end_src
 ** Clocking in
+  When I start working on a task I clock it in with =C-c C-x C-i=.
+  This changes the task state to =STARTED= and starts the clock.
+
 *** Using the clock history
 *** Setting a default clock task
+** Setting default task with C-u C-u C-c C-x C-i
+** Clocking in old tasks C-u C-c C-x C-i
 ** Make tasks to respond to emails
 ** Create new tasks and clock in when starting something new
 ** Time reporting and tracking
@@ -589,7 +636,6 @@ becomes this!
 #+ "
 #+ End:
 * All The Gory Setup Details
-#!<<AllTheGorySetupDetails>>
 ** What I put in my .emacs
 #+begin_src lisp
 (defun my-org-todo ()
@@ -621,13 +667,6 @@ becomes this!
 
 (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
 
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    ;; yasnippet
-	    (make-variable-buffer-local 'yas/trigger-key)
-	    (setq yas/trigger-key [tab])
-	    (define-key yas/keymap [tab] 'yas/next-field-group)
-	    (flyspell-mode 1)))
 (add-hook 'grb-todo-mode-hook
 	  (lambda ()
 	    ;; yasnippet
@@ -635,7 +674,6 @@ becomes this!
 	    (setq yas/trigger-key [tab])
 	    (define-key yas/keymap [tab] 'grb-todo-cycle-commands)))
 ;;
-(org-clock-persistence-insinuate)
 
 (load "~/git/org-mode/contrib/lisp/org-exp-blocks")
 (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
@@ -709,10 +747,8 @@ becomes this!
 The following is an excerpt of my custom settings for org-mode related items.
 
 #+begin_src lisp 
- '(org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 3)))
  '(org-agenda-custom-commands (quote (("p" "Projects" tags "/!PROJECT" ((org-use-tag-inheritance nil))) ("o" "Started tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil))) ("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil))) ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil))) ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil))) ("x" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil))) ("2" "Level 2 tasks" tags "LEVEL=2/-DONE-CANCELLED" nil) ("n" "Notes" tags "NOTES" nil))))
  '(org-agenda-include-diary t)
- '(org-agenda-log-mode-items (quote (clock)))
  '(org-agenda-repeating-timestamp-show-all t)
  '(org-agenda-show-all-dates t)
  '(org-agenda-skip-deadline-if-done t)
@@ -724,13 +760,6 @@ The following is an excerpt of my custom settings for org-mode related items.
  '(org-agenda-time-grid (quote ((daily weekly today require-timed remove-match) "----------------" (800 1000 1200 1400 1600 1800 2000))))
  '(org-agenda-todo-ignore-with-date t)
  '(org-blank-before-new-entry (quote ((heading) (plain-list-item))))
- '(org-clock-history-length 36)
- '(org-clock-in-resume nil)
- '(org-clock-in-switch-to-state "STARTED")
- '(org-clock-into-drawer t)
- '(org-clock-out-remove-zero-time-clocks t)
- '(org-clock-out-when-done t)
- '(org-clock-persist t)
  '(org-columns-default-format "%40ITEM(Task) %17Quoted(Quoted) %17Effort(Estimated Effort){:} %CLOCKSUM")
  '(org-cycle-include-plain-lists nil)
  '(org-cycle-separator-lines 0)
