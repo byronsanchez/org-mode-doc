@@ -2,7 +2,7 @@
 #+LANGUAGE:  en
 #+AUTHOR: Bernt Hansen
 #+EMAIL: bernt@norang.ca
-#+OPTIONS:   H:4 num:t   toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   H:3 num:nil   toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+DESCRIPTION: A description of how I currently use org-mode
 #+KEYWORDS:  org-mode Emacs organization GTD getting-things-done
@@ -23,9 +23,65 @@ for years now.  I started small with just the default *TODO* and
 *DONE* keywords and grew my use of org-mode to fit my workflow.
 
 I still change my workflow and tweak little things regularly but right
-now this document describes most of my org-mode setup.
+now this document describes most of my current org-mode setup.
+* Org-Mode Setup
+I have the following setup in my .emacs so org-mode is enabled.  I use org-mode as the
+default mode for *.org, *.org_archive, and *.txt files.
+
+#+begin_src lisp
+;;;
+;;; Org Mode
+;;;
+(add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp"))
+(add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+(require 'org-install)
+;;
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+;;
+#+end_src
+
+I also use orgstruct++-mode and flyspell-mode when composing email messages in Gnus.
+
+#+begin_src lisp
+(setq message-mode-hook (quote (orgstruct++-mode 
+				(lambda nil (setq fill-column 72) (flyspell-mode 1))
+				turn-on-auto-fill
+				bbdb-define-all-aliases)))
+#+end_src
+** Agenda Setup
+   I have lots of org files.  I deal with multiple clients and client
+   projects and separate these into one org file per client normally.
+   Clients come and go so I can add or drop entire org files from my
+   agenda to keep only what is important visible in agenda views.
+
+   Here is my current =org-agenda-files= setup.
+#+begin_src lisp
+(setq org-agenda-files (quote ("~/git/org/tasks.org"
+			       "~/git/org/gsoc2009.org"
+			       "~/git/org/farm.org" 
+			       "~/git/org/mark.org"
+			       "~/git/org/notes.org"
+			       "~/git/org/phone.org"
+			       "~/git/org/org.org"
+			       "~/git/org/norang.org"
+			       ; client org files removed
+			       "~/git/org/git.org"
+			       "~/git/org/todo.org"
+			       "~/git/org/bzflag.org")))
+#+end_src
+
+   I don't manually edit the =org-agenda-files= variable - I let
+   org-mode do it for me.  It is shown above formatted as a =setq= for
+   clarity.  If I want to add a file to the agenda I open it up with
+   =C-x C-f= (find-file) and add it to the agenda with =C-c [=.  To
+   remove a file I just visit it and hit =C-c ]= and all of the tasks
+   in that file are instantly removed from my agenda views until I add
+   them back again.
+
 * Tasks and States
-I use the same set of TODO keywords for all of my org files.  org-mode
+I use the same set of TODO keywords for all of my org files.  Org-mode
 lets you define TODO keywords per file.  I find it's easier to have a
 standard set of TODO keywords globally so I can use the same setup in
 any org file I'm working with.
@@ -184,6 +240,106 @@ which I'll talk about later.
 #+end_src lisp
 
 *** using STARTED for clocked tasks
+
+* Adding New Tasks Quickly with Remember
+  To add new tasks efficiently I use a minimal number of remember templates.
+  I used to have lots of remember templates, one for each org-file.  I'd start org-remember with
+  C-M-r and then pick a template that filed the task under =* Tasks= in the appropriate file.
+
+  I found I still needed to refile these remember tasks again to the
+  correct location within the org-file so all of these different
+  remember templates weren't really helping at all.  Since then I've
+  changed my workflow to use a minimal number of remember templates --
+  I create the new task quickly and refile it once.  This also saves
+  me from maintaining my org-remember templates when I add a new org file.
+** Remember Templates
+   When a new task needs to be added I categorize it into one of three
+   things:
+
+   - A phone call
+   - A new task
+   - A new note
+
+   and pick the appropriate remember task.
+
+   Here is my setup for org-remember
+
+#+begin_src lisp
+;;
+;;;  Load Org Remember Stuff
+(require 'remember)
+(org-remember-insinuate)
+
+;; Start clock if a remember buffer includes :CLOCK-IN:
+(add-hook 'remember-mode-hook 'my-start-clock-if-needed 'append)
+
+(defun my-start-clock-if-needed ()
+  (save-excursion
+    (goto-char (point-min))
+    (when (re-search-forward " *:CLOCK-IN: *" nil t)
+      (replace-match "")
+      (org-clock-in))))
+
+;; I use C-M-r to start org-remember
+(global-set-key (kbd "C-M-r") 'org-remember)
+
+;; Keep clocks running
+(setq org-remember-clock-out-on-exit nil)
+
+;; C-c C-c stores the note immediately
+(setq org-remember-store-without-prompt t)
+
+;; I don't use this -- but set it in case I forget to specify a location in a future template
+(setq org-remember-default-headline "Tasks")
+
+;; 3 remember templates for TODO tasks, Notes, and Phone calls
+(setq org-remember-templates (quote (("todo" 116 "* TODO %?
+  %u
+  %a" "~/git/org/tasks.org" bottom nil) ("note" 110 "* %?
+  %u
+  %a" nil bottom nil) ("phone" 112 "* PHONE %a - 
+  %u
+  :CLOCK-IN:
+  %?" "~/git/org/phone.org" bottom nil))))
+#+end_src
+
+   Each type of remember note goes in a separate org file with a =#+FILETAGS:= header which gives all tasks in that
+   file a tag.
+** Separate files for Remember Tasks
+   I have 3 org files which are targets for my remember templates:
+
+   | Remember File | Used for       |
+   |---------------+----------------|
+   | notes.org     | notes          |
+   | tasks.org     | new TODO tasks |
+   | phone.org     | phone calls    |
+
+   Normally these files are empty except for a single line at the top which creates tags for anything in
+   the files.  The three files look like this:
+
+*** Notes.org - Remember file for notes
+#+begin_example
+#+FILETAGS: NOTES REFILE
+#+end_example
+*** Tasks.org - Remember file for TODO tasks
+#+begin_example
+#+FILETAGS: REFILE
+#+end_example
+*** Phone.org - Remember file for clocking phone calls
+#+begin_example
+#+FILETAGS: PHONE REFILE
+#+end_example
+* Refiling Tasks
+  Refiling tasks is easy.  After collecting a bunch of new tasks in my
+  tasks.org file using remember mode I need to move these to the
+  correct org file and topic.  All of my active org-files are in my
+  =org-agenda-files= variable and contribute to the agenda.
+
+  I'll collect tasks in my remember org files (tasks.org, phone.org,
+  notes.org) for up to a week.  Often I end up refiling tasks the
+  same day I create them .  If I have multiple tasks that should be
+  refiled to the same org file and task I reorder the tasks in the
+
 * Time Clocking
   - Clock time religiously
 ** Setting default task with C-u C-u C-c C-x C-i
@@ -232,12 +388,33 @@ which I'll talk about later.
 | F11     | Goto currently clocked item                     | Often      |
 | C-S-f12 | Save buffers and publish current project        | Often      |
 | C-x n r | Narrow to region                                | Sometimes  |
-* Adding new tasks quickly - org remember
-** Use separate files for remember tasks (tasks,org, notes.org, phone.org)
-** Remember tasks for phone calls and bbdb searches
+
+#+begin_src lisp
+;; Custom Key Bindings
+(global-set-key (kbd "<f5>") 'my-org-todo)
+(global-set-key (kbd "<f7>") 'set-truncate-lines)
+(global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
+(global-set-key (kbd "<f9> b") 'bbdb)
+(global-set-key (kbd "<f9> c") 'calendar)
+(global-set-key (kbd "<f9> f") 'boxquote-insert-file)
+(global-set-key (kbd "<f9> g") 'gnus)
+(global-set-key (kbd "<f9> i") (lambda () (interactive) (info "~/git/org-mode/doc/org.info")))
+(global-set-key (kbd "<f9> o") 'org-occur)
+(global-set-key (kbd "<f9> r") 'boxquote-region)
+(global-set-key (kbd "<f9> u") (lambda () (interactive) (untabify (point-min) (point-max))))
+(global-set-key (kbd "<f9> v") 'visible-mode)
+(global-set-key (kbd "C-<f9>") 'previous-buffer)
+(global-set-key (kbd "C-x n r") 'narrow-to-region)
+(global-set-key (kbd "C-<f10>") 'next-buffer)
+(global-set-key (kbd "<f12>") 'org-agenda)
+(global-set-key (kbd "<f11>") 'org-clock-goto)
+(global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
+#+end_src
+
 * GTD stuff
 ** weekly review process
 *** sorting REFILE tasks and refiling in groups
+* Archiving
 * Publishing
 
 ** Playing with ditaa
@@ -322,56 +499,11 @@ becomes this!
 #!<<AllTheGorySetupDetails>>
 ** What I put in my .emacs
 #+begin_src lisp
-;;;
-;;; Org Mode
-;;;
-(add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp"))
-(add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-(require 'org-install)
-;;
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-;;
 (defun my-org-todo ()
   (interactive)
   (org-narrow-to-subtree)
   (org-show-todo-tree nil)
   (widen))
-
-(add-hook 'remember-mode-hook 'my-start-clock-if-needed 'append)
-
-(defun my-start-clock-if-needed ()
-  (save-excursion
-    (goto-char (point-min))
-    (when (re-search-forward " *:CLOCK-IN: *" nil t)
-      (replace-match "")
-      (org-clock-in))))
-
-;; Custom Key Bindings
-(global-set-key (kbd "<f5>") 'my-org-todo)
-
-(global-set-key (kbd "<f7>") 'set-truncate-lines)
-(global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
-(global-set-key (kbd "<f9> b") 'bbdb)
-(global-set-key (kbd "<f9> c") 'calendar)
-(global-set-key (kbd "<f9> f") 'boxquote-insert-file)
-(global-set-key (kbd "<f9> g") 'gnus)
-(global-set-key (kbd "<f9> i") (lambda () (interactive) (info "~/git/org-mode/doc/org.info")))
-(global-set-key (kbd "<f9> o") 'org-occur)
-(global-set-key (kbd "<f9> r") 'boxquote-region)
-(global-set-key (kbd "<f9> u") (lambda () (interactive) (untabify (point-min) (point-max))))
-(global-set-key (kbd "<f9> v") 'visible-mode)
-(global-set-key (kbd "C-<f9>") 'previous-buffer)
-(global-set-key (kbd "C-x n r") 'narrow-to-region)
-(global-set-key (kbd "C-<f10>") 'next-buffer)
-(global-set-key (kbd "<f12>") 'org-agenda)
-(global-set-key (kbd "<f11>") 'org-clock-goto)
-(global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
-(global-set-key (kbd "C-M-r") 'org-remember)
-;;
-;;;  New Org mode stuff
-(require 'remember)
 
 (defun my-org-agenda-to-appt ()
   (interactive)
@@ -411,7 +543,6 @@ becomes this!
 	    (define-key yas/keymap [tab] 'grb-todo-cycle-commands)))
 ;;
 (org-clock-persistence-insinuate)
-(org-remember-insinuate)
 
 (load "~/git/org-mode/contrib/lisp/org-exp-blocks")
 (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
@@ -487,7 +618,6 @@ The following is an excerpt of my custom settings for org-mode related items.
 #+begin_src lisp 
  '(org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 3)))
  '(org-agenda-custom-commands (quote (("p" "Projects" tags "/!PROJECT" ((org-use-tag-inheritance nil))) ("o" "Started tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil))) ("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil))) ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil))) ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil))) ("x" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil))) ("2" "Level 2 tasks" tags "LEVEL=2/-DONE-CANCELLED" nil) ("n" "Notes" tags "NOTES" nil))))
- '(org-agenda-files (quote ("~/git/org/tasks.org" "~/git/org/gsoc2009.org" "~/git/org/farm.org" "~/git/org/mark.org" "~/git/org/notes.org" "~/git/org/phone.org" "~/git/org/org.org" "~/git/org/norang.org" "~/git/org/git.org" "~/git/org/todo.org" "~/git/org/bzflag.org")))
  '(org-agenda-include-diary t)
  '(org-agenda-log-mode-items (quote (clock)))
  '(org-agenda-repeating-timestamp-show-all t)
@@ -579,17 +709,6 @@ The following is an excerpt of my custom settings for org-mode related items.
  '(org-outline-path-complete-in-steps nil)
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
  '(org-refile-use-outline-path (quote file))
- '(org-remember-clock-out-on-exit nil)
- '(org-remember-default-headline "Tasks")
- '(org-remember-store-without-prompt t)
- '(org-remember-templates (quote (("todo" 116 "* TODO %?
-  %u
-  %a" "~/git/org/tasks.org" bottom nil) ("note" 110 "* %?
-  %u
-  %a" nil bottom nil) ("phone" 112 "* PHONE %a - 
-  %u
-  :CLOCK-IN:
-  %?" "~/git/org/phone.org" bottom nil))))
  '(org-return-follows-link nil)
  '(org-reverse-note-order nil)
  '(org-show-following-heading t)
