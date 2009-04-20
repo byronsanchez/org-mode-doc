@@ -14,6 +14,7 @@
 #+LINK_HOME: 
 * Overview
 This is currently a work-in-progress.
+
 Org-mode is a fabulous organizational tool built by Carsten Dominik that operates on plain text files.
 Org-mode is part of Emacs.
 
@@ -69,10 +70,8 @@ yasnippets which are enabled most of my editing modes.
 	    (flyspell-mode 1)))
 #+end_src
 
-** My Org Files
-   I have lots of org files.
-
-   I have the following personal org files
+** Organizing Your Life Into Org Files
+   The following org files collect non-work related tasks:
 
    | Filename     | Description                                |
    |--------------+--------------------------------------------|
@@ -84,7 +83,7 @@ yasnippets which are enabled most of my editing modes.
    | git.org      | Git related tasks                          |
    | bzflag.org   | BZFlag related tasks                       | 
 
-   I have the following remember-mode org-files
+   The following org-files are the targets for remember notes:
 
    | Filename  | Description            |
    |-----------+------------------------|
@@ -92,8 +91,8 @@ yasnippets which are enabled most of my editing modes.
    | notes.org | New notes bucket       |
    | phone.org | New phone calls bucket |
 
-   I have the following work-related org-files (using ficticious
-   client names)
+   The following work-related org-files keep my business notes (using
+   fictitious client names)
 
    | Filename    | Description                             |
    |-------------+-----------------------------------------|
@@ -104,15 +103,18 @@ yasnippets which are enabled most of my editing modes.
    | ABC-KKK.org | ABC Ltd tasks for their client KKK Inc  |
    | YYY.org     | YYY Inc tasks                           |
 
-   I deal with multiple clients and client projects and separate these
-   into one org file per client normally.  An org file becomes the
-   collection of projects, notes, etc for a single client.  Clients
-   come and go so I can add or drop entire org files from my agenda to
-   keep only what is important visible in agenda views.
+   Org-mode is great for dealing with multiple clients and client
+   projects.  An org file becomes the collection of projects, notes,
+   etc. for a single client.
 
-   I do work for ABC Ltd which has multiple clients systems that I
-   work on.  I separate the tasks for each client into separate org
-   files.  This makes it easy to add or remove clients.
+   Clients (ABC Ltd) has multiple customer systems that I
+   work on.  I separate the tasks for each client-customer into
+   separate org files.  Clients come and go so I can add or drop
+   entire org files from my agenda to keep only what is important
+   visible in agenda views.
+
+   Other org files are used for publishing only and do not contribute to the agenda.
+   See [[Publishing]] for more details.
 ** Agenda Setup
    Here is my current =org-agenda-files= setup.
 #+begin_src lisp
@@ -556,6 +558,9 @@ which I'll talk about later.
 *** sorting REFILE tasks and refiling in groups
 * Archiving
 * Publishing
+  :PROPERTIES:
+  :CUSTOM_ID: Publishing
+  :END:
 
 ** Playing with ditaa
 
@@ -635,7 +640,7 @@ becomes this!
 #+ \\fancyfoot[R]{\\today}
 #+ "
 #+ End:
-* All The Gory Setup Details
+* Temporary Section to be deleted
 ** What I put in my .emacs
 #+begin_src lisp
 (defun my-org-todo ()
