@@ -485,8 +485,9 @@ which I'll talk about later.
 (setq org-agenda-log-mode-items (quote (clock)))
 #+end_src
 ** Clocking in
-  When I start working on a task I clock it in with =C-c C-x C-i=.
-  This changes the task state to =STARTED= and starts the clock.
+  When I start working on a task I clock it in with =C-c C-x C-i= (or
+  just =I= in the agenda).  This changes the task state to =STARTED=
+  and starts the clock.
 
 *** Using the clock history
 *** Setting a default clock task
