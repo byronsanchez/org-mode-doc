@@ -19,14 +19,14 @@ Org-mode is part of Emacs.
 
 This document attempts to describe how I use org-mode in my day-to-day
 work.  I have been using org-mode as my personal information manager
-for years now.  I started small with just the default *TODO* and
-*DONE* keywords and grew my use of org-mode to fit my workflow.
+for years now.  I started small with just the default =TODO= and
+=DONE= keywords and grew my use of org-mode to fit my workflow.
 
 I still change my workflow and tweak little things regularly but right
 now this document describes most of my current org-mode setup.
 * Org-Mode Setup
 I have the following setup in my .emacs so org-mode is enabled.  I use org-mode as the
-default mode for *.org, *.org_archive, and *.txt files.
+default mode for =.org=, =*.org_archive=, and =*.txt= files.
 
 #+begin_src lisp
 ;;;
@@ -50,12 +50,50 @@ I also use orgstruct++-mode and flyspell-mode when composing email messages in G
 				turn-on-auto-fill
 				bbdb-define-all-aliases)))
 #+end_src
-** Agenda Setup
-   I have lots of org files.  I deal with multiple clients and client
-   projects and separate these into one org file per client normally.
-   Clients come and go so I can add or drop entire org files from my
-   agenda to keep only what is important visible in agenda views.
+** My Org Files
+   I have lots of org files.
 
+   I have the following personal org files
+
+   | Filename     | Description                                |
+   |--------------+--------------------------------------------|
+   | todo.org     | Personal tasks and things to keep track of |
+   | gsoc2009.org | Google Summer of Code stuff for 2009       |
+   | farm.org     | Farm related tasks                         |
+   | mark.org     | Tasks related to my son Mark               |
+   | org.org      | Org-mode related tasks                     |
+   | git.org      | Git related tasks                          |
+   | bzflag.org   | BZFlag related tasks                       | 
+
+   I have the following remember-mode org-files
+
+   | Filename  | Description            |
+   |-----------+------------------------|
+   | tasks.org | New task bucket        |
+   | notes.org | New notes bucket       |
+   | phone.org | New phone calls bucket |
+
+   I have the following work-related org-files (using ficticious
+   client names)
+
+   I deal with multiple clients and client projects and separate these
+   into one org file per client normally.  Clients come and go so I
+   can add or drop entire org files from my agenda to keep only what
+   is important visible in agenda views.
+
+   | Filename    | Description                             |
+   |-------------+-----------------------------------------|
+   | norang.org  | Norang tasks and notes                  |
+   | XYZ.org     | XYZ Corp tasks and notes                |
+   | ABC.org     | ABC Ltd tasks                           |
+   | ABC-DEF.org | ABC Ltd tasks for their client DEF Corp |
+   | ABC-KKK.org | ABC Ltd tasks for their client KKK Inc  |
+   | YYY.org     | YYY Inc tasks                           |
+
+   I do work for ABC Ltd which has multiple clients systems that I
+   work on.  I separate the tasks for each client into separate org
+   files.  This makes it easy to add or remove clients.
+** Agenda Setup
    Here is my current =org-agenda-files= setup.
 #+begin_src lisp
 (setq org-agenda-files (quote ("~/git/org/tasks.org"
@@ -87,7 +125,7 @@ standard set of TODO keywords globally so I can use the same setup in
 any org file I'm working with.
 
 ** ToDo keywords
-Here are my *TODO* state keywords and colour settings:
+Here are my =TODO= state keywords and colour settings:
 
 #+begin_src lisp 
 (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)") 
@@ -115,9 +153,9 @@ Here are my *TODO* state keywords and colour settings:
 
 #+end_src
 *** Normal Task States
-Normal tasks go through the sequence *TODO* -> *STARTED* -> *DONE*.
+Normal tasks go through the sequence =TODO= -> =STARTED= -> =DONE=.
 The second sequence is really just a convenient collection of odd-ball
-states for tasks (*WAITING*, *SOMEDAY*, *CANCELLED*).
+states for tasks (=WAITING=, =SOMEDAY=, =CANCELLED=).
 
 The following diagram shows the possible state transitions for a task.
 
@@ -175,7 +213,7 @@ I also do fixed-price quotation work.  Quotations use the following state transi
 #+end_ditaa
 
 *** Purchase Order Task States
-Fixed price jobs normally have a /Purchase Order/ associated with it which is used for billing the client.
+Fixed price jobs normally have a =Purchase Order= associated with it which is used for billing the client.
 The following states track purchase orders.
 
 #+begin_ditaa po_states.png -r -s 0.8
@@ -219,14 +257,14 @@ another is normally done directly with the fast selection key.
 #+end_src lisp
 
 Changing a task state is done with 
-: C-c C-t <KEY>
+: C-c C-t KEY
 
-where /<KEY>/ is the appropriate fast todo state selection key as defined in /org-todo-keywords/.
+where =KEY= is the appropriate fast todo state selection key as defined in =org-todo-keywords=.
 ** ToDo state triggers
 I have a few triggers that automatically assign tags to tasks based on
-state changes.  If a task moves to *CANCELLED* state then it gets a
-/CANCELLED/ tag.  Moving a *CANCELLED* task back to *TODO* removes the
-/CANCELLED/ tag.  These are used for filtering tasks in agenda views
+state changes.  If a task moves to =CANCELLED= state then it gets a
+*CANCELLED* tag.  Moving a =CANCELLED= task back to =TODO= removes the
+*CANCELLED* tag.  These are used for filtering tasks in agenda views
 which I'll talk about later.
 
 #+begin_src lisp 
@@ -329,6 +367,28 @@ which I'll talk about later.
 #+begin_example
 #+FILETAGS: PHONE REFILE
 #+end_example
+** Remember Tasks is all about begin FAST
+   Okay I'm in the middle of something and oh yeah - I have to remember to do that.
+   I don't stop what I'm doing.  I'm probably clocking a project I'm working on and I don't want to
+   lose my focus on that but I can't afford to forget this little thing that just came up.
+
+   So what do I do?  Hit =C-M-r= to start remember mode and select =t= since it's a new task and I get a buffer like this
+#+begin_example OPTIONS
+ ##     C-c C-c  "~/git/org/tasks.org" -> "* bottom"
+ ## C-u C-c C-c  like C-c C-c, and immediately visit note at target location
+ ## C-0 C-c C-c  "???" -> "* ???"
+ ## C-1 C-c C-c  to select file and header location interactively.
+ ## C-2 C-c C-c  as child of the currently clocked item
+ ## To switch templates, use `C-M-r'.  To abort use `C-c C-k'.
+
+ * TODO 
+   [2009-04-19 Sun]
+   [[file:~/git/doc.norang.ca/org-mode.org::*Remember%20Tasks%20is%20all%20about%20begin%20FAST][file:~/git/doc.norang.ca/org-mode.org::*Remember Tasks is all about begin FAST]]
+#+end_example
+
+   Enter the details of the TODO item and =C-c C-c= to file it away in tasks.org and go right back
+   to what I'm really working on secure in the knowledge that that item isn't going to get lost and 
+   I don't have to think about it anymore at all now.
 * Refiling Tasks
   Refiling tasks is easy.  After collecting a bunch of new tasks in my
   tasks.org file using remember mode I need to move these to the
@@ -336,11 +396,47 @@ which I'll talk about later.
   =org-agenda-files= variable and contribute to the agenda.
 
   I'll collect tasks in my remember org files (tasks.org, phone.org,
-  notes.org) for up to a week.  Often I end up refiling tasks the
-  same day I create them .  If I have multiple tasks that should be
-  refiled to the same org file and task I reorder the tasks in the
+  notes.org) for up to a week.  Often I end up refiling tasks the same
+  day I create them because they show up in my daily clock report
+  summary and are obviously in the wrong place.  If I have multiple
+  tasks that should be refiled to the same org file and task I reorder
+  the tasks so they are next to each other, highlight the group, and
+  refile to the target file and task.
 
+** Refile Setup
+   To refile tasks in org you need to tell it where you want to refile things.
+
+   In my setup I let any file in =org-agenda-files= and the current file contribute to the list of valid refile targets.
+   I don't refile to tasks more then 5 levels deep just to limit the number of displayed targets.
+   I also use ido to help find targets quickly.
+
+   Here is my refile configuration:
+#+begin_src lisp
+(setq org-completion-use-ido t)
+(setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
+(setq org-refile-use-outline-path (quote file))
+#+end_src
+
+   To refile a task to my =norang.org= file under =System Maintenance=
+   I just put the cursor on the task and hit =C-c C-w= and enter =nor
+   TAB sys TAB RET= and it's done.  I always know what file it's going
+   into but if I don't remember the exact task name I can just hit TAB
+   twice and all remember targets that match show up in a list.  Just
+   scroll through the list and pick the right refile target.  This
+   works great!
+* Custom agenda views
+** use agenda view for STARTED to find stuff in progress and things to clock
+** use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
+** Filtering
 * Time Clocking
+  Okay, I admit it.  I'm a clocking fanatic.
+
+  I clock everything (well almost everything).  Org-mode makes this
+  really easy.  I'd rather clock too much stuff than not enough so I
+  find it's easier to get in the habit of clocking everything.
+
+  This is where the =STARTED= todo task comes in to play.
+
   - Clock time religiously
 ** Setting default task with C-u C-u C-c C-x C-i
 ** Clocking in old tasks C-u C-c C-x C-i
@@ -356,13 +452,10 @@ which I'll talk about later.
 *** Checking for holes in clocked times
     - agenda log mode with clocked times as default
 * Tags, Filetags
-* Custom agenda views
-** use agenda view for STARTED to find stuff in progress and things to clock
-** use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
-** Filtering
 * Key bindings
-  I have the following custom key bindings set up for my emacs.  All
-  of the raw settings are in [[AllTheGorySetupDetails][All The Gory Setup Details]] below.
+  I have the following custom key bindings set up for my emacs.
+#+end_example
+
 
 | Key     | For                                             | Used       |
 |---------+-------------------------------------------------+------------|
@@ -639,7 +732,6 @@ The following is an excerpt of my custom settings for org-mode related items.
  '(org-clock-out-when-done t)
  '(org-clock-persist t)
  '(org-columns-default-format "%40ITEM(Task) %17Quoted(Quoted) %17Effort(Estimated Effort){:} %CLOCKSUM")
- '(org-completion-use-ido t)
  '(org-cycle-include-plain-lists nil)
  '(org-cycle-separator-lines 0)
  '(org-deadline-warning-days 30)
@@ -707,8 +799,6 @@ The following is an excerpt of my custom settings for org-mode related items.
  '(org-lowest-priority 71)
  '(org-odd-levels-only nil)
  '(org-outline-path-complete-in-steps nil)
- '(org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
- '(org-refile-use-outline-path (quote file))
  '(org-return-follows-link nil)
  '(org-reverse-note-order nil)
  '(org-show-following-heading t)
