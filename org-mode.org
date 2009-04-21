@@ -457,15 +457,29 @@ which I'll talk about later.
   really easy.  I'd rather clock too much stuff than not enough so I
   find it's easier to get in the habit of clocking everything.
 
-  This is where the =STARTED= todo task comes in to play.
+  As an example of what I mean about being fanatical about clocking my
+  data for April 20, 2009 shows 14 hours 19 minutes of clocked time
+  (which included 3 hours and 17 minutes of painting my basement.)  My
+  clocked day started at 6:57AM and ended at 23:11PM.  I have only a
+  few holes in my clocked day (where I wasn't clocking anything):
+ 
+  | Missing Clock Data |
+  |--------------------|
+  |        16:14-16:53 |
+  |        16:55-17:19 |
+  |        18:00-18:52 |
+
+  This makes it possible to look back at the day and see where I'm
+  spending too much time, or not enough time on specific projects.
+
 ** Clock Setup
-   I like to keep control of the clock separate from task changes.  If
-   I mark a clocked task =DONE= I want to clock to keep running on
-   that task until I've finished all of the work on it.  I tend to
-   mark tasks =DONE= just before I'm really finished with it.  If I
-   need to enter a note with the =DONE= state change then it may take
-   a few minutes to get all of the details entered -- and this counts
-   towards clocking on that task.
+   I like to keep control of the clock separate from task state
+   changes.  If I mark a clocked task =DONE= I want the clock to keep
+   running on that task until I've finished all of the work on it.  I
+   tend to mark tasks =DONE= just before I'm really finished with them.
+   This allows me to enter a note with the =DONE= state that may
+   take a few minutes to compose and the time spent doing get all of the details entered -- and this
+   counts towards clocking on that task.
 
    I have the following org-mode setup for clocking:
 
@@ -558,6 +572,18 @@ which I'll talk about later.
 ** weekly review process
 *** sorting REFILE tasks and refiling in groups
 * Archiving
+** Archiving Subtrees
+   My normal archiving procedure is to move entire subtrees to a separate archive file for the project.
+   Task subtrees in =FILE.org= get archived to =FILE.org_archive= using the =C-c C-x C-s= command.
+
+   I archive entire projects and subtrees into a single forever-growing file.  My archive files are huge but so far
+   I haven't found a need to split them by year (or decade) :)
+
+** Archive Tag
+   The only time I set the ARCHIVE tag on a task is to prevent it from opening by default because it has
+   tons of information I don't really need to look at on a regular basis.  I can open the task with 
+   C-TAB if I need to see the gory details (like a huge table of data related to the task) but normally I 
+   don't need that information displayed.
 * Publishing
   :PROPERTIES:
   :CUSTOM_ID: Publishing
@@ -847,3 +873,12 @@ The following is an excerpt of my custom settings for org-mode related items.
  '(org-time-stamp-rounding-minutes (quote (1 5)))
  '(org-yank-adjusted-subtrees t)
 #+end_src lisp
+* Things I Don't Use
+** Task Priorities
+   I use the agenda to figure out what to do work on next.  I don't use priorities at all.
+   I've played with them in the past and always to back to using no priorities.
+   If I could find a good way to disable the keys that set priorities I would :)
+** Archive Sibling
+   This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
+   having a bunch of tasks marked DONE (but not archived)
+
