@@ -472,14 +472,21 @@ which I'll talk about later.
   This makes it possible to look back at the day and see where I'm
   spending too much time, or not enough time on specific projects.
 
+  Without clocking data it's hard to tell what you did after the fact.
+
 ** Clock Setup
    I like to keep control of the clock separate from task state
    changes.  If I mark a clocked task =DONE= I want the clock to keep
    running on that task until I've finished all of the work on it.  I
-   tend to mark tasks =DONE= just before I'm really finished with them.
-   This allows me to enter a note with the =DONE= state that may
-   take a few minutes to compose and the time spent doing get all of the details entered -- and this
+   tend to mark tasks =DONE= just before I'm really finished with
+   them.  This allows me to enter a note with the =DONE= state that
+   may take a few minutes to compose and the time spent doing this
    counts towards clocking on that task.
+
+   Keeping the clock running when moving a subtask to a =DONE= state
+   means clocking continues to apply to the parent task.  I can pick
+   the next task from the parent and clock that in without losing a
+   minute or two while I'm deciding what to work on next.
 
    I have the following org-mode setup for clocking:
 
@@ -488,23 +495,78 @@ which I'll talk about later.
 ;; Resume clocking tasks when emacs is restarted
 (setq org-clock-persistence-insinuate)
 ;;
+;; Yes it's long... but more is better ;)
 (setq org-clock-history-length 35)
+;; Resume clocking task on clock-in if the clock is open
 (setq org-clock-in-resume t)
+;; Change task state to STARTED when clocking in
 (setq org-clock-in-switch-to-state "STARTED")
+;; Save clock data and notes in the LOGBOOK drawer
 (setq org-clock-into-drawer t)
+;; Sometimes I change tasks I'm clocking quickly - this just removes clocked tasks with 0:00 duration
 (setq org-clock-out-remove-zero-time-clocks t)
+;; Don't clock out when moving task to a done state
 (setq org-clock-out-when-done nil)
+;; Save the running clock and all clock history when exiting Emacs, load it on startup
 (setq org-clock-persist t)
-(setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 3)))
+;; Agenda clock reports parameters (no links, 2 levels deep)
+(setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
+;; Agenda log mode items to display (clock time only by default)
 (setq org-agenda-log-mode-items (quote (clock)))
 #+end_src
 ** Clocking in
-  When I start working on a task I clock it in with =C-c C-x C-i= (or
-  just =I= in the agenda).  This changes the task state to =STARTED=
-  and starts the clock.
+  When I start or continue working on a task I clock it in with =C-c
+  C-x C-i= (or just =I= in the agenda).  This changes the task state
+  to =STARTED= and starts the clock for this task.
 
-*** Using the clock history
 *** Setting a default clock task
+
+    I have a default =* Organization= task in my norang.org file that
+    I tend to put miscellaneous clock time on.  While reorganizing my
+    org-files and doing other planning work that isn't for a specific
+    project I'll clock in this task while I do things.  By clocking
+    this task in with a double prefix =C-u C-u C-c C-x C-i= it starts
+    the clock and makes this the default clock task.
+
+    You can quickly clock in the default task with =C-u C-c C-x C-i d=
+*** Using the clock history and returning to interrupted tasks
+
+    You can use the clock history to restart clocks on old tasks you've clocked or to jump
+    directly to a task you have clocked previously.  I use this mainly to clock in whatever
+    got interrupted by something.
+
+    Consider the following scenario:
+
+      - You are working on and clocking =Task A= (Organization)
+      - You get interrupted and switch to =Task B= (Document my use of org-mode)
+      - You complete =Task B= (Document my use of org-mode)
+      - Now you want to go back to =Task A= (Organization) again to continue
+
+    This is easy to deal with.  
+    
+    1. Clock in =Task A=, work on it
+    2. Go to =Task B= (or create a new task) and clock it in
+    3. When you are finished with =Task B= hit =C-u C-c C-x C-i i=
+
+    This displays a clock history selection window like the following
+    and selects the interrupted =[i]= entry.
+
+*Clock history selection buffer for C-u C-c C-x C-i*
+#+begin_example
+Default Task
+[d] norang          STARTED Organization                  <-- Task B
+The task interrupted by starting the last one
+[i] norang          STARTED Organization                  <-- Task B
+Current Clocking Task
+[c] org             STARTED Document my use of org-mode   <-- Task A
+Recent Tasks
+[1] org             STARTED Document my use of org-mode   <-- Task A
+[2] norang          STARTED Organization                  <-- Task B
+...
+[Z] org             DONE Fix default section links        <-- 35 clock task entries ago
+#+end_example
+
+   Then just select =i= from the menu to go back to working on the interrupted =Task A=
 ** Setting default task with C-u C-u C-c C-x C-i
 ** Clocking in old tasks C-u C-c C-x C-i
 ** Make tasks to respond to emails
