@@ -530,9 +530,6 @@ which I'll talk about later.
 
     You can quickly clock in the default task with =C-u C-c C-x C-i d=
 *** Using the clock history to clock in old tasks
-    :LOGBOOK:
-    :END:
-
     You can use the clock history to restart clocks on old tasks you've clocked or to jump
     directly to a task you have clocked previously.  I use this mainly to clock in whatever
     got interrupted by something.
