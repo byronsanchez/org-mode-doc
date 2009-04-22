@@ -296,6 +296,7 @@ which I'll talk about later.
 					   ("SOMEDAY" ("WAITING" . t))
 					   (done ("NEXT") ("WAITING"))
 					   ("TODO" ("WAITING") ("CANCELLED"))
+					   ("STARTED" ("WAITING"))
 					   ("PROJECT" ("CANCELLED")))))
 #+end_src lisp
 
