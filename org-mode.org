@@ -544,9 +544,8 @@ which I'll talk about later.
 					 ("n" "Notes" tags "NOTES" nil))))
 #+end_src
 
-** So w
+** So what do I work on now?
    - use agenda view for STARTED to find stuff in progress and things to clock
-** use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
 ** Filtering
 * Time Clocking
   Okay, I admit it.  I'm a clocking fanatic.
