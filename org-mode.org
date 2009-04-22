@@ -29,8 +29,10 @@ now this document describes most of my current org-mode setup.
 I'm assuming you've had some exposure to org-mode already so concepts like the agenda, remember mode, etc.
 won't be completely foreign to you.  More information about org-mode can be found in the [[http://orgmode.org/index.html#sec-4.1][Org-Mode Manual]] and on the 
 [[http://orgmode.org/worg/][Worg Site]].
-* Org-Mode Setup
-I have the following setup in my .emacs so that org-mode is enabled.
+* Getting Started
+  I use =org-mode= in most of my emacs buffers.
+** Org-Mode Setup
+I have the following setup in my .emacs so that org-mode is enabled for most buffers.
 I use org-mode as the default mode for =.org=, =*.org_archive=, and
 =*.txt= files.
 
@@ -48,7 +50,7 @@ I use org-mode as the default mode for =.org=, =*.org_archive=, and
 (global-set-key "\C-cb" 'org-iswitchb)
 #+end_src
 
-I also use orgstruct++-mode and flyspell-mode when composing email messages in Gnus.
+I also use =orgstruct++-mode= in =Gnus=.
 
 #+begin_src lisp
 (setq message-mode-hook (quote (orgstruct++-mode 
@@ -58,8 +60,9 @@ I also use orgstruct++-mode and flyspell-mode when composing email messages in G
 #+end_src
 
 I hate creating documents with spelling errors... so I use
-flyspell-mode for almost everything.  I also recently discovered
-yasnippets which are enabled in most of my editing modes.
+=flyspell-mode= for almost everything.  I also recently discovered
+=yasnippets= which are enabled in most of my editing modes.
+
 #+begin_src lisp
 (add-hook 'org-mode-hook
 	  (lambda ()
@@ -71,6 +74,9 @@ yasnippets which are enabled in most of my editing modes.
 #+end_src
 
 ** Organizing Your Life Into Org Files
+   Separate your tasks into logical groupings or projects.  
+   Use separate org files for large task groupings.
+
    The following org files collect non-work related tasks:
 
    | Filename     | Description                                |
@@ -139,6 +145,62 @@ yasnippets which are enabled in most of my editing modes.
    remove a file I just visit it and hit =C-c ]= and all of the tasks
    in that file are instantly removed from my agenda views until I add
    them back again.
+** Key bindings
+   I live in the agenda.  To make getting to the agenda faster I
+   mapped =F12= to the sequence =C-c a= since I'm using it hundreds of
+   times a day.
+
+  I have the following custom key bindings set up for my emacs.
+#+end_example
+
+
+| Key     | For                                             | Used       |
+|---------+-------------------------------------------------+------------|
+| F12     | Agenda (1 key less than C-c a)                  | Very Often |
+| C-c a   | Enter Agenda                                    | Rare       |
+| C-c l   | Store a link for retrieval with C-c C-l         | Frequently |
+| C-c b   | Switch to org file                              | Frequently |
+| f5      | Show todo items for this subtree                | Sometimes  |
+| f7      | Toggle line truncation/wrap                     | Rare       |
+| f8      | Go to next org file in org-agenda-files         | Sometimes  |
+| f9 b    | Quick access to bbdb data                       | Often      |
+| f9 c    | Calendar access                                 | Often      |
+| f9 f    | Boxquote insert a file                          | Sometimes  |
+| f9 g    | Gnus - I live in gnus                           | Frequently |
+| f9 i    | Org-mode Info manual                            | Sometimes  |
+| f9 o    | Org occur search                                | Rare       |
+| f9 r    | Boxquote selected region                        | Often      |
+| f9 u    | Untabify region                                 | Rare       |
+| f9 v    | Toggle visible mode (for showing/editing links) | Sometimes  |
+| C-f9    | Previous buffer                                 | Sometimes  |
+| C-f10   | Next buffer                                     | Sometimes  |
+| C-M-r   | Create a remember task                          | Often      |
+| F11     | Goto currently clocked item                     | Often      |
+| C-S-f12 | Save buffers and publish current project        | Often      |
+| C-x n r | Narrow to region                                | Sometimes  |
+
+Here is the keybinding setup in lisp:
+#+begin_src lisp
+;; Custom Key Bindings
+(global-set-key (kbd "<f12>") 'org-agenda)
+(global-set-key (kbd "<f5>") 'my-org-todo)
+(global-set-key (kbd "<f7>") 'set-truncate-lines)
+(global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
+(global-set-key (kbd "<f9> b") 'bbdb)
+(global-set-key (kbd "<f9> c") 'calendar)
+(global-set-key (kbd "<f9> f") 'boxquote-insert-file)
+(global-set-key (kbd "<f9> g") 'gnus)
+(global-set-key (kbd "<f9> i") (lambda () (interactive) (info "~/git/org-mode/doc/org.info")))
+(global-set-key (kbd "<f9> o") 'org-occur)
+(global-set-key (kbd "<f9> r") 'boxquote-region)
+(global-set-key (kbd "<f9> u") (lambda () (interactive) (untabify (point-min) (point-max))))
+(global-set-key (kbd "<f9> v") 'visible-mode)
+(global-set-key (kbd "C-<f9>") 'previous-buffer)
+(global-set-key (kbd "C-x n r") 'narrow-to-region)
+(global-set-key (kbd "C-<f10>") 'next-buffer)
+(global-set-key (kbd "<f11>") 'org-clock-goto)
+(global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
+#+end_src
 
 * Tasks and States
 I use the same set of TODO keywords for all of my org files.  Org-mode
@@ -418,14 +480,12 @@ which I'll talk about later.
   correct org file and topic.  All of my active org-files are in my
   =org-agenda-files= variable and contribute to the agenda.
 
-  I'll collect tasks in my remember org files (tasks.org, phone.org,
-  notes.org) for up to a week.  Often I end up refiling tasks the same
-  day I create them because they show up in my daily clock report
-  summary and are obviously in the wrong place.  If I have multiple
-  tasks that should be refiled to the same org file and task I reorder
-  the tasks so they are next to each other, highlight the group, and
-  refile to the target file and task.
-
+  I collect tasks in my remember org files (tasks.org, phone.org,
+  notes.org) for up to a week.  I do my weekly review every Monday and
+  one of the tasks for that is to refile all remember tasks.  Often I
+  end up refiling tasks the same day I create them because they show
+  up in my daily clock report summary and are obviously in the wrong
+  place.
 ** Refile Setup
    To refile tasks in org you need to tell it where you want to refile things.
 
@@ -447,8 +507,45 @@ which I'll talk about later.
    twice and all remember targets that match show up in a list.  Just
    scroll through the list and pick the right refile target.  This
    works great!
+** Refiling Tasks
+   To find tasks to refile I run my agenda view (=F12 r= = =C-c a r=)
+   which shows tasks with the =REFILE= tag.  This view shows all tasks
+   (even ones marked in a =done= state).
+
+   All of my remember target files have this tag in the FILETAGS
+   header so every task in the file can be found using this view.
+
+   I visit each file with =REFILE= tasks to refile.  If there are a
+   few files going to the same place (3 or less) I refile the first
+   one, then move to the second one and use =C-c C-w up-arrow RET= to
+   refile to the same location again.  If more than 3 tasks are going
+   to the same place I do those last - since refiling everything else
+   away helps to group those together.  Then I select the group of
+   tasks and refile them in a single operation.
+
 * Custom agenda views
-** use agenda view for STARTED to find stuff in progress and things to clock
+  I only have 5 custom agenda views defined.  Most of my old custom
+  agenda views were rendered obsolete when filtering functionality was
+  added to the agenda in newer versions of =org-mode=.
+
+  Custom agenda views are used for
+  - Finding =STARTED= tasks
+  - Finding tasks to be refiled
+  - Finding tasks waiting on something (=WAITING= or =SOMEDAY=)
+  - Finding project tasks (=PROJECT=)
+  - Finding notes
+
+** Setup
+#+begin_src lisp
+(setq org-agenda-custom-commands (quote (("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
+					 ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
+					 ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil)))
+					 ("p" "Projects" tags "/!PROJECT" ((org-use-tag-inheritance nil)))
+					 ("n" "Notes" tags "NOTES" nil))))
+#+end_src
+
+** So w
+   - use agenda view for STARTED to find stuff in progress and things to clock
 ** use priorities to sort STARTED tasks so it's easy to find often used ongoing tasks
 ** Filtering
 * Time Clocking
@@ -575,57 +672,6 @@ Recent Tasks
 *** Checking for holes in clocked times
     - agenda log mode with clocked times as default
 * Tags, Filetags
-* Key bindings
-  I have the following custom key bindings set up for my emacs.
-#+end_example
-
-
-| Key     | For                                             | Used       |
-|---------+-------------------------------------------------+------------|
-| C-c l   | Store a link for retrieval with C-c C-l         | Frequently |
-| C-c a   | Enter Agenda                                    | Rare       |
-| C-c b   | Switch to org file                              | Frequently |
-| f5      | Show todo items for this subtree                | Sometimes  |
-| f7      | Toggle line truncation/wrap                     | Rare       |
-| f8      | Go to next org file in org-agenda-files         | Sometimes  |
-| f9 b    | Quick access to bbdb data                       | Often      |
-| f9 c    | Calendar access                                 | Often      |
-| f9 f    | Boxquote insert a file                          | Sometimes  |
-| f9 g    | Gnus - I live in gnus                           | Frequently |
-| f9 i    | Org-mode Info manual                            | Sometimes  |
-| f9 o    | Org occur search                                | Rare       |
-| f9 r    | Boxquote selected region                        | Often      |
-| f9 u    | Untabify region                                 | Rare       |
-| f9 v    | Toggle visible mode (for showing/editing links) | Sometimes  |
-| C-f9    | Previous buffer                                 | Sometimes  |
-| C-f10   | Next buffer                                     | Sometimes  |
-| C-M-r   | Create a remember task                          | Often      |
-| F12     | Agenda (1 key less than C-c a)                  | Often      |
-| F11     | Goto currently clocked item                     | Often      |
-| C-S-f12 | Save buffers and publish current project        | Often      |
-| C-x n r | Narrow to region                                | Sometimes  |
-
-#+begin_src lisp
-;; Custom Key Bindings
-(global-set-key (kbd "<f5>") 'my-org-todo)
-(global-set-key (kbd "<f7>") 'set-truncate-lines)
-(global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
-(global-set-key (kbd "<f9> b") 'bbdb)
-(global-set-key (kbd "<f9> c") 'calendar)
-(global-set-key (kbd "<f9> f") 'boxquote-insert-file)
-(global-set-key (kbd "<f9> g") 'gnus)
-(global-set-key (kbd "<f9> i") (lambda () (interactive) (info "~/git/org-mode/doc/org.info")))
-(global-set-key (kbd "<f9> o") 'org-occur)
-(global-set-key (kbd "<f9> r") 'boxquote-region)
-(global-set-key (kbd "<f9> u") (lambda () (interactive) (untabify (point-min) (point-max))))
-(global-set-key (kbd "<f9> v") 'visible-mode)
-(global-set-key (kbd "C-<f9>") 'previous-buffer)
-(global-set-key (kbd "C-x n r") 'narrow-to-region)
-(global-set-key (kbd "C-<f10>") 'next-buffer)
-(global-set-key (kbd "<f12>") 'org-agenda)
-(global-set-key (kbd "<f11>") 'org-clock-goto)
-(global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
-#+end_src
 
 * GTD stuff
 ** weekly review process
