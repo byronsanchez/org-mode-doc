@@ -873,9 +873,12 @@ becomes this!
 (my-org-agenda-to-appt)
 (appt-activate t)
 (run-at-time "24:01" nil 'my-org-agenda-to-appt)
-(run-at-time "00:59" 3600 'org-save-all-org-buffers)
-;;
 #+end_src
+* Automatic History, Backups, and Synchronization with Git
+#+begin_src lisp
+(run-at-time "00:59" 3600 'org-save-all-org-buffers)
+#+end_src
+** FIXME Unfinished
 * Productivity Tools
 #+begin_src lisp
 (require 'yasnippet)
