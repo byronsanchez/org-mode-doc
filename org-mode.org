@@ -15,8 +15,8 @@
 * Overview
 This is currently a work-in-progress.
 
-Org-mode is a fabulous organizational tool built by Carsten Dominik that operates on plain text files.
-Org-mode is part of Emacs.
+Org-mode is a fabulous organizational tool built by Carsten Dominik
+that operates on plain text files.  Org-mode is part of Emacs.
 
 This document attempts to describe how I use org-mode in my day-to-day
 work.  I have been using org-mode as my personal information manager
@@ -26,15 +26,16 @@ for years now.  I started small with just the default =TODO= and
 I still change my workflow and tweak little things regularly but right
 now this document describes most of my current org-mode setup.
 
-I'm assuming you've had some exposure to org-mode already so concepts like the agenda, remember mode, etc.
-won't be completely foreign to you.  More information about org-mode can be found in the [[http://orgmode.org/index.html#sec-4.1][Org-Mode Manual]] and on the 
-[[http://orgmode.org/worg/][Worg Site]].
+I'm assuming you've had some exposure to org-mode already so concepts
+like the agenda, remember mode, etc.  won't be completely foreign to
+you.  More information about org-mode can be found in the [[http://orgmode.org/index.html#sec-4.1][Org-Mode
+Manual]] and on the [[http://orgmode.org/worg/][Worg Site]].
 * Getting Started
   I use =org-mode= in most of my emacs buffers.
 ** Org-Mode Setup
-I have the following setup in my .emacs so that org-mode is enabled for most buffers.
-I use org-mode as the default mode for =.org=, =*.org_archive=, and
-=*.txt= files.
+The following setup in my .emacs enables org-mode for most buffers.
+=org-mode= is the default mode for =.org=, =*.org_archive=, and =*.txt=
+files.
 
 #+begin_src lisp
 ;;;
@@ -50,7 +51,8 @@ I use org-mode as the default mode for =.org=, =*.org_archive=, and
 (global-set-key "\C-cb" 'org-iswitchb)
 #+end_src
 
-I also use =orgstruct++-mode= in =Gnus=.
+=orgstruct++-mode= is enabled in =Gnus= message buffers to aid in
+creating structured email messages.
 
 #+begin_src lisp
 (setq message-mode-hook (quote (orgstruct++-mode 
@@ -59,9 +61,9 @@ I also use =orgstruct++-mode= in =Gnus=.
 				bbdb-define-all-aliases)))
 #+end_src
 
-I hate creating documents with spelling errors... so I use
-=flyspell-mode= for almost everything.  I also recently discovered
-=yasnippets= which are enabled in most of my editing modes.
+=flyspell-mode= is enabled for almost everything to help prevent
+creating documents with spelling errors.  =yasnippets= are enabled to
+speed up creation of standard text blocks in most editing modes.
 
 #+begin_src lisp
 (add-hook 'org-mode-hook
@@ -566,27 +568,37 @@ which I'll talk about later.
 
    I use these tasks for clocking time while doing these activities and my list of =STARTED= tasks is normally less than 20
    items long.
-** Reading email, newgroups, and conversations on IRC
-   To read email I do =F12 s C-s email RET I= which goes to the agenda view for started tasks, searches for
-   'email' and clocks it in.  Then I go to Gnus and read everything in my inboxes.
-   If there are emails that require a response I use org-remember to create a new task for each one.
-   Some emails are quick to respond to and some take research and take many minutes to complete.
-   I clock each one in it's own task.
+** Reading email, newsgroups, and conversations on IRC
+   To read email I do =F12 s C-s email RET I= which goes to the agenda
+   view for started tasks, searches for 'email' and clocks it in.
+   Then I go to Gnus and read everything in my inboxes.  If there are
+   emails that require a response I use org-remember to create a new
+   task with a heading of 'Respond to <user>' for each one.  This
+   automatically links to the email in the task and makes it easy to
+   find later.  Some emails are quick to respond to and some take
+   research and a significant amount of time to complete.  I clock
+   each one in it's own task just in case I need that clocked time
+   later.
 
-   Next, I go to my newly created tasks to be refiled with =F12 r= and clock in an email task and deal with it.
-   Repeat this until all of the 'Respond to <user>' tasks are marked =DONE=.
+   Next, I go to my newly created tasks to be refiled with =F12 r= and
+   clock in an email task and deal with it.  Repeat this until all of
+   the 'Respond to <user>' tasks are marked =DONE=.
 
-   I read email and newgroups in Gnus so I don't separate clocked time for quickly looking at things.  If an article has
-   a useful piece of information I want to remember I create a note for it with =F12 n= and enter the topic and file it.
-   This takes practically no time at all and I know the note is safely filed for later.
+   I read email and newgroups in Gnus so I don't separate clocked time
+   for quickly looking at things.  If an article has a useful piece of
+   information I want to remember I create a note for it with =F12 n=
+   and enter the topic and file it.  This takes practically no time at
+   all and I know the note is safely filed for later.
 ** Filtering
 
-   So many tasks, so little time.  I have hundreds of tasks at an give time (373 right now).  There is so much stuff
-   to look at it can be daunting.  This is where agenda filtering saves the day.
+   So many tasks, so little time.  I have hundreds of tasks at any
+   give time (373 right now).  There is so much stuff to look at it
+   can be daunting.  This is where agenda filtering saves the day.
 
-   It's 11:53AM and I'm in work mode.  I don't want to see tasks that are not work related right now.
-   I also don't want to work on a big project just before lunch... so I need to find small tasks that I can knock
-   off the list.
+   It's 11:53AM and I'm in work mode just before lunch.  I don't want
+   to see tasks that are not work related right now.  I also don't
+   want to work on a big project just before lunch... so I need to
+   find small tasks that I can knock off the list.
 
    How do we do this?  Get a list of all tasks with =F12 t= and then narrow it down with filtering.
    To find leftover/orphaned (non-project, non-waiting, work) tasks on my list I do 
@@ -595,32 +607,14 @@ which I'll talk about later.
 
    That leaves me with about 30 tasks to look at and I can pick something that fits the minutes I have left before I 
    take off for lunch.
-** FIXME Unfinished stuff
-#+begin_src lisp
-(setq org-agenda-custom-commands (quote (("p" "Projects" tags "/!PROJECT" ((org-use-tag-inheritance nil)))
-					 ("o" "Started tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
-					 ("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
-					 ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil)))
-					 ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
-					 ("x" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
-					 ("2" "Level 2 tasks" tags "LEVEL=2/-DONE-CANCELLED" nil)
-					 ("n" "Notes" tags "NOTES" nil))))
-(setq org-agenda-include-diary t)
-(setq org-agenda-repeating-timestamp-show-all t)
-(setq org-agenda-show-all-dates t)
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-agenda-skip-scheduled-if-done t)
-(setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down effort-up category-up)
-					  (todo priority-down)
-					  (tags priority-down))))
-(setq org-agenda-start-on-weekday nil)
-(setq org-agenda-tags-todo-honor-ignore-options t)
-(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
-(setq org-agenda-time-grid (quote ((daily weekly today require-timed remove-match)
-				   "----------------" 
-				   (800 1000 1200 1400 1600 1800 2000))))
-(setq org-agenda-todo-ignore-with-date t)
-#+end_src
+** Keeping the STARTED task list under control
+   Some tasks are periodic.  Things I need to do weekly.
+   Since I clock these tasks in they change to a =STARTED= state.
+   Cyclic or repeated tasks automatically reschedule to the future and reset
+   the task state back to =TODO= when they are marked =DONE=.  This removes it
+   from the =STARTED= agenda view and helps keep the list short.  Tasks that 
+   I've worked on but won't finish anytime soon can be removed from the =STARTED=
+   agenda view simply by moving the task state keyword back to =TODO=.
 
 * Time Clocking
   Okay, I admit it.  I'm a clocking fanatic.
@@ -1042,5 +1036,23 @@ becomes this!
 ** Archive Sibling
    This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
    having a bunch of tasks marked DONE (but not archived)
+* FIXME Unfinished stuff
+#+begin_src lisp
+(setq org-agenda-include-diary nil)
+(setq org-agenda-repeating-timestamp-show-all t)
+(setq org-agenda-show-all-dates t)
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down effort-up category-up)
+					  (todo priority-down)
+					  (tags priority-down))))
+(setq org-agenda-start-on-weekday nil)
+(setq org-agenda-tags-todo-honor-ignore-options t)
+(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
+(setq org-agenda-time-grid (quote ((daily weekly today require-timed remove-match)
+				   "----------------" 
+				   (800 1000 1200 1400 1600 1800 2000))))
+(setq org-agenda-todo-ignore-with-date t)
+#+end_src
 
    
