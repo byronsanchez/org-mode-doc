@@ -76,8 +76,10 @@ speed up creation of standard text blocks in most editing modes.
 #+end_src
 
 ** Organizing Your Life Into Org Files
-   Separate your tasks into logical groupings or projects.  
+   Tasks are separated into logical groupings or projects.  
    Use separate org files for large task groupings.
+
+   Here are sample files that I use.
 
    The following org files collect non-work related tasks:
 
@@ -113,18 +115,20 @@ speed up creation of standard text blocks in most editing modes.
 
    Org-mode is great for dealing with multiple clients and client
    projects.  An org file becomes the collection of projects, notes,
-   etc. for a single client.
+   etc. for a single client or client-project.
 
-   Clients (ABC Ltd) has multiple customer systems that I
-   work on.  I separate the tasks for each client-customer into
-   separate org files.  Clients come and go so I can add or drop
-   entire org files from my agenda to keep only what is important
-   visible in agenda views.
+   Clients (ABC Ltd) has multiple customer systems that I work on.
+   Separating the tasks for each client-customer into separate org
+   files helps keep things logically grouped and since clients come
+   and go this allows entire org files to be added or dropped from my
+   agenda to keep only what is important visible in agenda views.
 
    Other org files are used for publishing only and do not contribute to the agenda.
    See [[Publishing]] for more details.
 ** Agenda Setup
-   Here is my current =org-agenda-files= setup.
+   Here is my current =org-agenda-files= setup.  It is shown above
+   formatted as a =setq= for clarity but in reality this is saved in
+   my custom.el file.
 #+begin_src lisp
 (setq org-agenda-files (quote ("~/git/org/tasks.org"
 			       "~/git/org/gsoc2009.org"
@@ -140,19 +144,18 @@ speed up creation of standard text blocks in most editing modes.
 			       "~/git/org/bzflag.org")))
 #+end_src
 
-   I don't manually edit the =org-agenda-files= variable - I let
-   org-mode do it for me.  It is shown above formatted as a =setq= for
-   clarity.  If I want to add a file to the agenda I open it up with
-   =C-x C-f= (find-file) and add it to the agenda with =C-c [=.  To
-   remove a file I just visit it and hit =C-c ]= and all of the tasks
-   in that file are instantly removed from my agenda views until I add
-   them back again.
+   =org-mode= manages the =org-agenda-files= variable.  I just visit
+   an org file and add it to the agenda with =C-c [=.  To remove a
+   file I just visit it and hit =C-c ]= and all of the tasks in that
+   file are instantly removed from my agenda views until I add them
+   back again.
+
 ** Key bindings
    I live in the agenda.  To make getting to the agenda faster I
    mapped =F12= to the sequence =C-c a= since I'm using it hundreds of
    times a day.
 
-  I have the following custom key bindings set up for my emacs.
+   I have the following custom key bindings set up for my emacs.
 #+end_example
 
 
@@ -180,8 +183,8 @@ speed up creation of standard text blocks in most editing modes.
 | F11     | Goto currently clocked item                     | Often      |
 | C-S-f12 | Save buffers and publish current project        | Often      |
 | C-x n r | Narrow to region                                | Sometimes  |
-
-Here is the keybinding setup in lisp:
+   
+   Here is the keybinding setup in lisp:
 #+begin_src lisp
 ;; Custom Key Bindings
 (global-set-key (kbd "<f12>") 'org-agenda)
@@ -205,11 +208,16 @@ Here is the keybinding setup in lisp:
 #+end_src
 
 * Tasks and States
-I use the same set of TODO keywords for all of my org files.  Org-mode
-lets you define TODO keywords per file.  I find it's easier to have a
-standard set of TODO keywords globally so I can use the same setup in
-any org file I'm working with.
+  I use one set of TODO keywords for all of my org files.  Org-mode
+  lets you define TODO keywords per file but I find it's easier to
+  have a standard set of TODO keywords globally so I can use the same
+  setup in any org file I'm working with.
 
+  The only exception to this is this document :) since I don't want
+  =org-mode= hiding the =TODO= keyword when it appears in headlines.
+  I've set up a dummy =#+SEQ_TODO: FIXME FIXED= entry at the top of
+  this file just to leave my =TODO= keyword untouched in this
+  document.
 ** ToDo keywords
 Here are my =TODO= state keywords and colour settings:
 
@@ -335,36 +343,54 @@ that can be estimated and clocked.  Projects use the following state transitions
 #+end_ditaa
 
 ** Fast Todo Selection
-I use fast todo selection so that moving a task from one state to
-another is normally done directly with the fast selection key.
+   Fast todo selection allows changing from any task todo state to any
+   other state directly by selecting the appropriate key from the fast
+   todo selection key menu.  This is a great feature!
 
 #+begin_src lisp 
 (setq org-use-fast-todo-selection t)
 #+end_src lisp
 
-Changing a task state is done with 
+    Changing a task state is done with 
 : C-c C-t KEY
 
-where =KEY= is the appropriate fast todo state selection key as defined in =org-todo-keywords=.
+    where =KEY= is the appropriate fast todo state selection key as defined in =org-todo-keywords=.
 ** ToDo state triggers
-I have a few triggers that automatically assign tags to tasks based on
-state changes.  If a task moves to =CANCELLED= state then it gets a
-*CANCELLED* tag.  Moving a =CANCELLED= task back to =TODO= removes the
-*CANCELLED* tag.  These are used for filtering tasks in agenda views
-which I'll talk about later.
+   I have a few triggers that automatically assign tags to tasks based
+   on state changes.  If a task moves to =CANCELLED= state then it
+   gets a *CANCELLED* tag.  Moving a =CANCELLED= task back to =TODO=
+   removes the *CANCELLED* tag.  These are used for filtering tasks in
+   agenda views which I'll talk about later.
+
+   The triggers break down to the following rules:
+
+   - Moving a task to =CANCELLED= adds a *CANCELLED* tag
+   - Moving a task to =WAITING= adds a *WAITING* tag
+   - Moving a task to =SOMEDAY= adds a *WAITING* tag
+   - Moving a task to a done state removes *NEXT* and *WAITING* tags
+   - Moving a task to =TODO= removes *WAITING* and *CANCELLED* tags
+   - Moving a task to =STARTED= removes a *WAITING* tag
+   - Moving a task to =PROJECT= removes a *CANCELLED* tag and adds a *PROJECT* tag
+
+   The tags are used to filter tasks in the agenda views conveniently.
 
 #+begin_src lisp 
 (setq org-todo-state-tags-triggers (quote (("CANCELLED" ("CANCELLED" . t))
-					   ("PROJCANCELLED" ("CANCELLED" . t))
 					   ("WAITING" ("WAITING" . t) ("NEXT"))
 					   ("SOMEDAY" ("WAITING" . t))
 					   (done ("NEXT") ("WAITING"))
 					   ("TODO" ("WAITING") ("CANCELLED"))
 					   ("STARTED" ("WAITING"))
-					   ("PROJECT" ("CANCELLED")))))
+					   ("PROJECT" ("CANCELLED") ("PROJECT" . t)))))
 #+end_src lisp
 
-*** using STARTED for clocked tasks
+*** Using STARTED for clocked tasks
+    Tasks automatically change to =STARTED= whenever they are clocked in.
+
+#+begin_src lisp
+;; Change task state to STARTED when clocking in
+(setq org-clock-in-switch-to-state "STARTED")
+#+end_src
 
 * Adding New Tasks Quickly with Remember
   To add new tasks efficiently I use a minimal number of remember templates.
