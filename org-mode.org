@@ -6,7 +6,7 @@
 #+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+DESCRIPTION: A description of how I currently use org-mode
 #+KEYWORDS:  org-mode Emacs organization GTD getting-things-done
-#+SEQ_TODO: FIXME FIXED
+#+SEQ_TODO: UNFINISHED COMPLETE
 #+INFOJS_OPT: view:nil toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
@@ -757,20 +757,20 @@ Recent Tasks
 [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
 #+end_example
 
-** Make tasks to respond to emails
-** Create new tasks and clock in when starting something new
-** Time reporting and tracking
+** UNFINISHED Make tasks to respond to emails
+** UNFINISHED Create new tasks and clock in when starting something new
+** UNFINISHED Time reporting and tracking
 *** Finding tasks to clock in
     - Use the clock history
     - STARTED/ONGOING tasks (agenda view)
 *** Checking for holes in clocked times
     - agenda log mode with clocked times as default
-* Tags, Filetags
+* UNFINISHED Tags, Filetags
 
-* GTD stuff
-** weekly review process
-*** sorting REFILE tasks and refiling in groups
-* Archiving
+* UNFINISHED GTD stuff
+** UNFINISHED weekly review process
+*** UNFINISHED sorting REFILE tasks and refiling in groups
+* UNFINISHED Archiving
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a separate archive file for the project.
    Task subtrees in =FILE.org= get archived to =FILE.org_archive= using the =C-c C-x C-s= command.
@@ -778,12 +778,12 @@ Recent Tasks
    I archive entire projects and subtrees into a single forever-growing file.  My archive files are huge but so far
    I haven't found a need to split them by year (or decade) :)
 
-** Archive Tag
+** Archive Tag - Hiding Information
    The only time I set the ARCHIVE tag on a task is to prevent it from opening by default because it has
    tons of information I don't really need to look at on a regular basis.  I can open the task with 
    C-TAB if I need to see the gory details (like a huge table of data related to the task) but normally I 
    don't need that information displayed.
-* Publishing
+* UNFINISHED Publishing
   :PROPERTIES:
   :CUSTOM_ID: Publishing
   :END:
@@ -855,7 +855,7 @@ becomes this!
 #+end_ditaa
 
 
-** FIXME Unfinished stuff
+** UNFINISHED stuff
 #+begin_src lisp
 (setq org-export-docbook-xsl-fo-proc-command "fop %s %s")
 (setq org-export-docbook-xslt-proc-command "xsltproc --output %s /usr/share/xml/docbook/stylesheet/nwalsh/fo/docbook.xsl %s")
@@ -930,7 +930,7 @@ becomes this!
 (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
 #+end_src
 
-* Reminders
+* UNFINISHED Reminders
 #+begin_src lisp
 (defun my-org-agenda-to-appt ()
   (interactive)
@@ -942,12 +942,11 @@ becomes this!
 (appt-activate t)
 (run-at-time "24:01" nil 'my-org-agenda-to-appt)
 #+end_src
-* Automatic History, Backups, and Synchronization with Git
+* UNFINISHED Automatic History, Backups, and Synchronization with Git
 #+begin_src lisp
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 #+end_src
-** FIXME Unfinished
-* Productivity Tools
+* UNFINISHED Productivity Tools
 #+begin_src lisp
 (require 'yasnippet)
 (yas/initialize)
@@ -1054,7 +1053,7 @@ becomes this!
 (setq org-time-stamp-rounding-minutes (quote (1 5)))
 (setq org-yank-adjusted-subtrees t)
 #+end_src lisp
-* Things I Don't Use
+* UNFINISHED Things I Don't Use
 ** Task Priorities
    I use the agenda to figure out what to do work on next.  I don't use priorities at all.
    I've played with them in the past and always to back to using no priorities.
@@ -1062,7 +1061,7 @@ becomes this!
 ** Archive Sibling
    This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
    having a bunch of tasks marked DONE (but not archived)
-* FIXME Unfinished stuff
+* UNFINISHED stuff
 #+begin_src lisp
 (setq org-agenda-include-diary nil)
 (setq org-agenda-repeating-timestamp-show-all t)
