@@ -30,6 +30,8 @@ I'm assuming you've had some exposure to org-mode already so concepts
 like the agenda, remember mode, etc.  won't be completely foreign to
 you.  More information about org-mode can be found in the [[http://orgmode.org/index.html#sec-4.1][Org-Mode
 Manual]] and on the [[http://orgmode.org/worg/][Worg Site]].
+
+This document is created using the publishing features of org-mode.
 * Getting Started
   I use =org-mode= in most of my emacs buffers.
 ** Org-Mode Setup
@@ -37,7 +39,7 @@ The following setup in my .emacs enables org-mode for most buffers.
 =org-mode= is the default mode for =.org=, =.org_archive=, and =.txt=
 files.
 
-#+begin_src lisp
+#+begin_src emacs-lisp
 ;;;
 ;;; Org Mode
 ;;;
@@ -54,7 +56,7 @@ files.
 =orgstruct++-mode= is enabled in =Gnus= message buffers to aid in
 creating structured email messages.
 
-#+begin_src lisp
+#+begin_src emacs-lisp
 (setq message-mode-hook (quote (orgstruct++-mode 
 				(lambda nil (setq fill-column 72) (flyspell-mode 1))
 				turn-on-auto-fill
@@ -65,7 +67,7 @@ creating structured email messages.
 creating documents with spelling errors.  =yasnippets= are enabled to
 speed up creation of standard text blocks in most editing modes.
 
-#+begin_src lisp
+#+begin_src emacs-lisp
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    ;; yasnippet
@@ -129,7 +131,7 @@ speed up creation of standard text blocks in most editing modes.
    Here is my current =org-agenda-files= setup.  It is shown above
    formatted as a =setq= for clarity but in reality this is saved in
    my custom.el file.
-#+begin_src lisp
+#+begin_src emacs-lisp
 (setq org-agenda-files (quote ("~/git/org/tasks.org"
 			       "~/git/org/gsoc2009.org"
 			       "~/git/org/farm.org" 
@@ -185,7 +187,7 @@ speed up creation of standard text blocks in most editing modes.
 | C-c a   | Enter Agenda (minimal emacs testing)            | Rare       |
    
    Here is the keybinding setup in lisp:
-#+begin_src lisp
+#+begin_src emacs-lisp
 ;; Custom Key Bindings
 (global-set-key (kbd "<f12>") 'org-agenda)
 (global-set-key (kbd "<f5>") 'my-org-todo)
@@ -221,7 +223,7 @@ speed up creation of standard text blocks in most editing modes.
 ** ToDo keywords
 Here are my =TODO= state keywords and colour settings:
 
-#+begin_src lisp 
+#+begin_src emacs-lisp 
 (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
  (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)")
  (sequence "QUOTATION(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
@@ -345,7 +347,7 @@ that can be estimated and clocked.  Projects use the following state transitions
    other state directly by selecting the appropriate key from the fast
    todo selection key menu.  This is a great feature!
 
-#+begin_src lisp 
+#+begin_src emacs-lisp 
 (setq org-use-fast-todo-selection t)
 #+end_src lisp
 
@@ -372,7 +374,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 
    The tags are used to filter tasks in the agenda views conveniently.
 
-#+begin_src lisp 
+#+begin_src emacs-lisp 
 (setq org-todo-state-tags-triggers (quote (("CANCELLED" ("CANCELLED" . t))
 					   ("WAITING" ("WAITING" . t) ("NEXT"))
 					   ("SOMEDAY" ("WAITING" . t))
@@ -385,7 +387,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 *** Using STARTED for clocked tasks
     Tasks automatically change to =STARTED= whenever they are clocked in.
 
-#+begin_src lisp
+#+begin_src emacs-lisp
 ;; Change task state to STARTED when clocking in
 (setq org-clock-in-switch-to-state "STARTED")
 #+end_src
@@ -413,7 +415,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 
    Here is my setup for org-remember
 
-#+begin_src lisp
+#+begin_src emacs-lisp
 ;;
 ;;;  Load Org Remember Stuff
 (require 'remember)
@@ -520,7 +522,7 @@ that can be estimated and clocked.  Projects use the following state transitions
    I also use ido to help find targets quickly.
 
    Here is my refile configuration:
-#+begin_src lisp
+#+begin_src emacs-lisp
 (setq org-completion-use-ido t)
 (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
 (setq org-refile-use-outline-path (quote file))
@@ -562,7 +564,7 @@ that can be estimated and clocked.  Projects use the following state transitions
   - Finding notes
 
 ** Setup
-#+begin_src lisp
+#+begin_src emacs-lisp
 (setq org-agenda-custom-commands (quote (("P" "Projects" tags #("/!PROJECT" 0 9 (face org-warning)) ((org-use-tag-inheritance nil)))
 					 ("s" "Started Tasks" todo #("STARTED" 0 7 (face org-warning)) ((org-agenda-todo-ignore-with-date nil)))
 					 ("w" "Tasks waiting on something" tags #("WAITING" 0 7 (face org-warning)) ((org-use-tag-inheritance nil)))
@@ -680,7 +682,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 
    I have the following org-mode setup for clocking:
 
-#+begin_src lisp
+#+begin_src emacs-lisp
 ;;
 ;; Resume clocking tasks when emacs is restarted
 (setq org-clock-persistence-insinuate)
@@ -755,26 +757,31 @@ Recent Tasks
 [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
 #+end_example
 
-** UNFINISHED Create new tasks and clock in when starting something new
+** UNFINISHED Clock Everything
+   Create new tasks and clock in when starting something new
+
    - Interruption occurs
    - Create a quick remember task C-M-r
    - Type the heading 
    - and clock it in C-c C-x C-i
    - and file it C-c C-c
    - Go do it
+   - mark it =DONE=
+   - clock something else in
+   - refile it later
+** Finding tasks to clock in
+   - Use the clock history C-u C-c C-x C-i
+   - Grab something off today's agenda
+   - look at =STARTED= tasks (agenda view)
 ** UNFINISHED Time reporting and tracking
-*** UNFINISHED Finding tasks to clock in
-    - Use the clock history C-u C-c C-x C-i
-    - Grab something off today's agenda
-    - look at =STARTED= tasks (agenda view)
-*** UNFINISHED Checking for holes in clocked times
+*** Checking for holes in clocked times
     - agenda log mode with clocked times as default
       describe my default agenda log view
 * UNFINISHED Tags, Filetags
 
 * UNFINISHED GTD stuff
-** UNFINISHED weekly review process
-*** UNFINISHED sorting REFILE tasks and refiling in groups
+** Weekly Review Process
+*** Sorting REFILE tasks and refiling in groups
 * UNFINISHED Archiving
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a separate archive file for the project.
@@ -859,9 +866,13 @@ becomes this!
 :  +-----------------+                                                         
 #+end_ditaa
 
+#+begin_src emacs-lisp
+(load "~/git/org-mode/contrib/lisp/org-exp-blocks")
+(setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+#+end_src
 
-** UNFINISHED stuff
-#+begin_src lisp
+** More publishing stuff
+#+begin_src emacs-lisp
 (setq org-export-docbook-xsl-fo-proc-command "fop %s %s")
 (setq org-export-docbook-xslt-proc-command "xsltproc --output %s /usr/share/xml/docbook/stylesheet/nwalsh/fo/docbook.xsl %s")
 (setq org-export-html-inline-images t)
@@ -936,7 +947,7 @@ becomes this!
 #+end_src
 
 * UNFINISHED Reminders
-#+begin_src lisp
+#+begin_src emacs-lisp
 (defun my-org-agenda-to-appt ()
   (interactive)
   (setq appt-time-msg-list nil)
@@ -948,7 +959,7 @@ becomes this!
 (run-at-time "24:01" nil 'my-org-agenda-to-appt)
 #+end_src
 * UNFINISHED Automatic History, Backups, and Synchronization with Git
-#+begin_src lisp
+#+begin_src emacs-lisp
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 #+end_src
 
@@ -958,34 +969,11 @@ becomes this!
   :PROPERTIES:
   :CUSTOM_ID: ProductivityTools
   :END:
-#+begin_src lisp
+** Yasnippet
+#+begin_src emacs-lisp
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
-#+end_src
-
-#+begin_src lisp
-(defun my-org-todo ()
-  (interactive)
-  (org-narrow-to-subtree)
-  (org-show-todo-tree nil)
-  (widen))
-
-#+end_src
-
-#+begin_src lisp
-(add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
-
-#+end_src
-
-#+begin_src lisp
-(add-hook 'grb-todo-mode-hook
-	  (lambda ()
-	    ;; yasnippet
-	    (make-variable-buffer-local 'yas/trigger-key)
-	    (setq yas/trigger-key [tab])
-	    (define-key yas/keymap [tab] 'grb-todo-cycle-commands)))
-;;
 #+end_src
 
 org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/block
@@ -997,24 +985,43 @@ $0
 #+end_$1
 #+end_example
 
-#+begin_src lisp
-
-(load "~/git/org-mode/contrib/lisp/org-exp-blocks")
-(setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
-
+** F5 - Show TODO tree for the current subtree
+#+begin_src emacs-lisp
+(defun my-org-todo ()
+  (interactive)
+  (org-narrow-to-subtree)
+  (org-show-todo-tree nil)
+  (widen))
+#+end_src
+** Highlight the current agenda line
+#+begin_src emacs-lisp
+(add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
 #+end_src
 
-#+begin_src lisp
+** Git stuff
+#+begin_src emacs-lisp
+(add-hook 'grb-todo-mode-hook
+	  (lambda ()
+	    ;; yasnippet
+	    (make-variable-buffer-local 'yas/trigger-key)
+	    (setq yas/trigger-key [tab])
+	    (define-key yas/keymap [tab] 'grb-todo-cycle-commands)))
+;;
+#+end_src
+
+** Checklist handling
+#+begin_src emacs-lisp
 (load "~/git/org-mode/contrib/lisp/org-checklist")
-
 #+end_src
-
-#+begin_src lisp
+** No backups
+   We use git... we don't need no steeenking backups!  Especially when
+   some of the files are decrypted, edited, and encrypted and the
+   unencrypted backup file is left lying around.
+#+begin_src emacs-lisp
 (setq backup-inhibited t)
-
 #+end_src
-
-#+begin_src lisp
+** More uncategorized org-mode stuff
+#+begin_src emacs-lisp
 (setq org-blank-before-new-entry (quote ((heading)
 					 (plain-list-item))))
 (setq org-columns-default-format "%40ITEM(Task) %17Quoted(Quoted) %17Effort(Estimated Effort){:} %CLOCKSUM")
@@ -1031,18 +1038,7 @@ $0
 (setq org-insert-heading-respect-content t)
 #+end_src
 
-#+begin_src lisp
-(setq org-link-frame-setup (quote ((vm . vm-visit-folder-other-frame)
-				   (gnus . gnus-other-frame)
-				   (file . find-file-other-window))))
-#+end_src
-
-#+begin_src lisp
-(setq org-log-done (quote time))
-(setq org-log-into-drawer t)
-#+end_src
-
-#+begin_src lisp
+#+begin_src emacs-lisp
 (setq org-lowest-priority 71)
 (setq org-odd-levels-only nil)
 (setq org-outline-path-complete-in-steps nil)
@@ -1069,6 +1065,20 @@ $0
 (setq org-time-stamp-rounding-minutes (quote (1 5)))
 (setq org-yank-adjusted-subtrees t)
 #+end_src lisp
+
+** I forget what this is for
+#+begin_src emacs-lisp
+(setq org-link-frame-setup (quote ((vm . vm-visit-folder-other-frame)
+				   (gnus . gnus-other-frame)
+				   (file . find-file-other-window))))
+#+end_src
+** Logging stuff
+#+begin_src emacs-lisp
+(setq org-log-done (quote time))
+(setq org-log-into-drawer t)
+#+end_src
+
+
 * UNFINISHED Things I Don't Use
 ** Task Priorities
    I use the agenda to figure out what to do work on next.  I don't use priorities at all.
@@ -1078,7 +1088,7 @@ $0
    This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
    having a bunch of tasks marked DONE (but not archived)
 * UNFINISHED stuff
-#+begin_src lisp
+#+begin_src emacs-lisp
 (setq org-agenda-include-diary nil)
 (setq org-agenda-repeating-timestamp-show-all t)
 (setq org-agenda-show-all-dates t)
