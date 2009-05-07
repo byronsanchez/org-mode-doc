@@ -34,7 +34,7 @@ Manual]] and on the [[http://orgmode.org/worg/][Worg Site]].
   I use =org-mode= in most of my emacs buffers.
 ** Org-Mode Setup
 The following setup in my .emacs enables org-mode for most buffers.
-=org-mode= is the default mode for =.org=, =*.org_archive=, and =*.txt=
+=org-mode= is the default mode for =.org=, =.org_archive=, and =.txt=
 files.
 
 #+begin_src lisp
@@ -579,7 +579,7 @@ that can be estimated and clocked.  Projects use the following state transitions
    - Read email and news
      - create notes, and tasks for things that need responses with org-remember
    - Check refile tasks and respond to emails
-   - Look at my agenda and knock of tasks scheduled for today
+   - Look at my agenda and knock off tasks scheduled for today
      - Clock it in since (=I= in the agenda while on the task -- this marks it as =STARTED=)
      - Work on it until it is =DONE= or it gets interrupted
    - Check today's time log report and refile tasks with clocked time
@@ -951,10 +951,6 @@ becomes this!
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
-#+end_src
-
-#+begin_src lisp
-
 #+end_src
 
 #+begin_src lisp
