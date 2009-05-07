@@ -757,13 +757,12 @@ Recent Tasks
 [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
 #+end_example
 
-** UNFINISHED Make tasks to respond to emails
 ** UNFINISHED Create new tasks and clock in when starting something new
 ** UNFINISHED Time reporting and tracking
-*** Finding tasks to clock in
+*** UNFINISHED Finding tasks to clock in
     - Use the clock history
     - STARTED/ONGOING tasks (agenda view)
-*** Checking for holes in clocked times
+*** UNFINISHED Checking for holes in clocked times
     - agenda log mode with clocked times as default
 * UNFINISHED Tags, Filetags
 
