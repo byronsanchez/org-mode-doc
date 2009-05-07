@@ -589,11 +589,47 @@ that can be estimated and clocked.  Projects use the following state transitions
      - repeat until the agenda timeclock report has all of the time in project files
      
 ** What do I work on next?
-   Use the agenda view for =STARTED= tasks to find stuff in progress and things to clock.
-   I clock everything - some tasks are always in a =STARTED= state (Like Organization, Email News and IRC, etc)
+   Use the agenda view for =STARTED= tasks to find stuff in progress
+   and things to clock.  I clock everything - some tasks are always in
+   a =STARTED= state (Like Organization, Email News and IRC, etc)
 
-   I use these tasks for clocking time while doing these activities and my list of =STARTED= tasks is normally less than 20
-   items long.
+   I use these tasks for clocking time while doing these activities
+   and my list of =STARTED= tasks is normally less than 20 items long.
+
+   I used to have a special keyword =ONGOING= for things that I do a
+   lot and want to clock but never really start/end.  I had a special
+   agenda view for =ONGOING= tasks that I would pull up to easily find
+   the thing I want to clock.
+
+   Since then I've moved away from using the =ONGOING= todo keyword
+   and just use =STARTED= the same way.  If a task is clocked-in it
+   automatically moves to the =STARTED= todo state and shows up on the
+   list without having to think about it.  Having an agenda view that
+   shows =STARTED= tasks makes it easy to pick the thing to clock -
+   and I don't have to remember if I need to look in the =ONGOING=
+   list or the =STARTED= list when looking for the task to clock-in.
+   The =STARTED= list is basically 'what is current' - stuff I worked
+   on recently and need to continue working on.  I want to find the
+   thing to work on as fast as I can and actually do work on it - not
+   spend time hunting through my org files for the task that needs to
+   be clocked-in.
+
+   I just find it easier to have it all in one short list.  My
+   =STARTED= list has less than 20 entries so it's pretty easy to find
+   what I want.  The whole point of the =STARTED= list is to make it
+   quick and easy to find the task to clock-in.
+
+   I only have 2 tasks that are permanently in a =STARTED= state.  These are:
+
+     - Organization
+     - Email, News, and IRC
+
+   Everything else will eventually move to a =DONE= state and fall off
+   the list.
+
+   I found having two lists more confusing than just the single
+   =STARTED= list.
+
 ** Reading email, newsgroups, and conversations on IRC
    To read email I do =F12 s C-s email RET I= which goes to the agenda
    view for started tasks, searches for 'email' and clocks it in.
