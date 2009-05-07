@@ -3,7 +3,7 @@
 #+AUTHOR: Bernt Hansen
 #+EMAIL: bernt@norang.ca
 #+OPTIONS:   H:3 num:t   toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
-#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:nil pri:nil tags:not-in-toc
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+DESCRIPTION: A description of how I currently use org-mode
 #+KEYWORDS:  org-mode Emacs organization GTD getting-things-done
 #+SEQ_TODO: UNFINISHED COMPLETE
@@ -758,12 +758,20 @@ Recent Tasks
 #+end_example
 
 ** UNFINISHED Create new tasks and clock in when starting something new
+   - Interruption occurs
+   - Create a quick remember task C-M-r
+   - Type the heading 
+   - and clock it in C-c C-x C-i
+   - and file it C-c C-c
+   - Go do it
 ** UNFINISHED Time reporting and tracking
 *** UNFINISHED Finding tasks to clock in
-    - Use the clock history
-    - STARTED/ONGOING tasks (agenda view)
+    - Use the clock history C-u C-c C-x C-i
+    - Grab something off today's agenda
+    - look at =STARTED= tasks (agenda view)
 *** UNFINISHED Checking for holes in clocked times
     - agenda log mode with clocked times as default
+      describe my default agenda log view
 * UNFINISHED Tags, Filetags
 
 * UNFINISHED GTD stuff
@@ -945,6 +953,9 @@ becomes this!
 #+begin_src lisp
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 #+end_src
+
+  - cron job for commiting new changes
+
 * UNFINISHED Productivity Tools
 #+begin_src lisp
 (require 'yasnippet)
