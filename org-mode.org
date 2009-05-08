@@ -565,11 +565,11 @@ that can be estimated and clocked.  Projects use the following state transitions
 
 ** Setup
 #+begin_src emacs-lisp
-(setq org-agenda-custom-commands (quote (("P" "Projects" tags #("/!PROJECT" 0 9 (face org-warning)) ((org-use-tag-inheritance nil)))
-					 ("s" "Started Tasks" todo #("STARTED" 0 7 (face org-warning)) ((org-agenda-todo-ignore-with-date nil)))
-					 ("w" "Tasks waiting on something" tags #("WAITING" 0 7 (face org-warning)) ((org-use-tag-inheritance nil)))
-					 ("r" "Refile New Notes and Tasks" tags #("REFILE" 0 6 (face org-warning)) ((org-agenda-todo-ignore-with-date nil)))
-					 ("n" "Notes" tags #("NOTES" 0 5 (face org-warning)) nil))))
+(setq org-agenda-custom-commands (quote (("P" "Projects" tags "/!PROJECT" ((org-use-tag-inheritance nil)))
+					 ("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
+					 ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil)))
+					 ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
+					 ("n" "Notes" tags "NOTES" nil))))
 #+end_src
 
    My day goes generally like this:
@@ -1088,16 +1088,17 @@ $0
 (setq org-stuck-projects (quote ("/PROJECT" nil ("NEXT") "")))
 (setq org-table-export-default-format "orgtbl-to-csv")
 (setq org-tag-alist (quote ((:startgroup)
-			    (#("@InTown" 0 7 (face nil)) . 116)
-			    (#("@Work" 0 5 (face nil)) . 119)
-			    (#("@Home" 0 5 (face nil)) . 104)
-			    (#("@Farm" 0 5 (face org-todo)) . 102)
-			    (#("@Play" 0 5 (face nil)) . 112)
+			    ("@InTown" . 116)
+			    ("@Work" . 119)
+			    ("@Home" . 104)
+			    ("@Farm" . 102)
+			    ("@Play" . 112)
 			    (:endgroup)
-			    (#("BUY" 0 3 (face nil)) . 98)
-			    (#("QUOTE" 0 5 (face nil)) . 113)
-			    (#("NEXT" 0 4 (face nil)) . 78)
-			    (#("GSOC" 0 4 (face nil)) . 103))))
+			    ("QUOTE" . 113)
+			    ("NEXT" . 78)
+			    ("GSOC" . 103)
+			    ("PROJECT" . 80)
+			    ("WAITING" . 87))))
 (setq org-time-stamp-rounding-minutes (quote (1 5)))
 (setq org-yank-adjusted-subtrees t)
 #+end_src lisp
