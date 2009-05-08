@@ -794,33 +794,51 @@ Recent Tasks
 [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
 #+end_example
 
-** UNFINISHED Clock Everything
+** Clock Everything
    In order to clock everything you need a task for everything.
-   That's find for p
-   Create new tasks and clock in when starting something new
+   That's fine for planned projects but interruptions inevitably occur
+   and you need some place to record whatever time you spend on that
+   interruption.
 
-   - Interruption occurs
-   - Create a quick remember task C-M-r
+   To deal with this we create a new remember task to record the thing
+   we are about to do.  The workflow goes something like this:
+
+   - You are clocking some task and an interruption occurs
+   - Create a quick remember task =C-M-r=
    - Type the heading 
-   - and clock it in C-c C-x C-i
-   - and file it C-c C-c
+   - clock it in =C-c C-x C-i=
+   - file it =C-c C-c=
    - Go do it
    - mark it =DONE=
-   - clock something else in
-   - refile it later
+   - clock something else in (return to the interrupted task with =C-u C-c C-x C-i i=)
+   - refile the newly created and clocked task later
+
+   This means you can ignore the details like where this task really
+   belongs in your org file layout and just get on with completing the
+   thing.  Refiling a bunch of tasks later in a group when it is
+   convenient to refile the tasks saves time in the long run.
 ** Finding tasks to clock in
+   To find a task to work on I use one of the following options
+   (generally listed most frequently used first)
+
    - Use the clock history C-u C-c C-x C-i
-   - Grab something off today's agenda
-   - look at =STARTED= tasks (agenda view)
-** UNFINISHED Time reporting and tracking
-*** Checking for holes in clocked times
-    - agenda log mode with clocked times as default
-      describe my default agenda log view
+     Go back to something I was clocking that is not finished
+   - Pick something off today's agenda
+     =SCHEDULED= or =DEADLINE= items that need to be done soon
+   - Pick something off the =STARTED= tasks agenda view
+     Work on some unfinished task to move to completion
+
+   - Use an agenda view with filtering to pick something to work on
 * UNFINISHED Tags, Filetags
 
 * UNFINISHED GTD stuff
 ** Weekly Review Process
 *** Sorting REFILE tasks and refiling in groups
+
+* UNFINISHED Time reporting and tracking
+** Checking for holes in clocked times
+   - agenda log mode with clocked times as default
+     describe my default agenda log view
 * UNFINISHED Archiving
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a separate archive file for the project.
