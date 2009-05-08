@@ -565,11 +565,12 @@ that can be estimated and clocked.  Projects use the following state transitions
 
 ** Setup
 #+begin_src emacs-lisp
-(setq org-agenda-custom-commands (quote (("P" "Projects" tags "/!PROJECT" ((org-use-tag-inheritance nil)))
-					 ("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
-					 ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil)))
-					 ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
-					 ("n" "Notes" tags "NOTES" nil))))
+(setq org-agenda-custom-commands 
+      (quote (("P" "Projects" tags "/!PROJECT" ((org-use-tag-inheritance nil)))
+	      ("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
+	      ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil)))
+	      ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
+	      ("n" "Notes" tags "NOTES" nil))))
 #+end_src
 
    My day goes generally like this:
