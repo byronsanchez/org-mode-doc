@@ -795,6 +795,8 @@ Recent Tasks
 #+end_example
 
 ** UNFINISHED Clock Everything
+   In order to clock everything you need a task for everything.
+   That's find for p
    Create new tasks and clock in when starting something new
 
    - Interruption occurs
