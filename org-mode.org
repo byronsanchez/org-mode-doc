@@ -830,6 +830,62 @@ Recent Tasks
 
    - Use an agenda view with filtering to pick something to work on
 * UNFINISHED Tags, Filetags
+** Filetags
+#+begin_example 
+1 match for "^#\+FILETAGS:" in buffer: bzflag.org
+      1:#+FILETAGS: BZFLAG PLAY
+1 match for "^#\+FILETAGS:" in buffer: todo.org
+      1:#+FILETAGS: HOME
+1 match for "^#\+FILETAGS:" in buffer: git.org
+      1:#+FILETAGS: GIT PLAY
+1 match for "^#\+FILETAGS:" in buffer: norang.org
+      1:#+FILETAGS: NORANG @Work
+1 match for "^#\+FILETAGS:" in buffer: ABC.org
+      1:#+FILETAGS: ABC @Work
+1 match for "^#\+FILETAGS:" in buffer: XYZ.org
+      1:#+FILETAGS: XYZ @Work
+1 match for "^#\+FILETAGS:" in buffer: ABC-DEF.org
+      1:#+FILETAGS: ABC DEF @Work
+1 match for "^#\+FILETAGS:" in buffer: ABC-KKK.org
+      1:#+FILETAGS: ABC KKK @Work
+1 match for "^#\+FILETAGS:" in buffer: YYY.org
+      1:#+FILETAGS: YYY @Work
+1 match for "^#\+FILETAGS:" in buffer: org.org
+      1:#+FILETAGS: ORG PLAY
+1 match for "^#\+FILETAGS:" in buffer: phone.org
+      1:#+FILETAGS: PHONE REFILE
+1 match for "^#\+FILETAGS:" in buffer: notes.org
+      1:#+FILETAGS: NOTES REFILE
+1 match for "^#\+FILETAGS:" in buffer: mark.org
+      1:#+FILETAGS: MARK
+1 match for "^#\+FILETAGS:" in buffer: farm.org
+      1:#+FILETAGS: FARM
+1 match for "^#\+FILETAGS:" in buffer: gsoc2009.org
+      1:#+FILETAGS: GSOC HOME PLAY
+1 match for "^#\+FILETAGS:" in buffer: tasks.org
+      1:#+FILETAGS: REFILE
+#+end_example
+
+** Tags
+#+begin_src emacs-lisp
+(setq org-tag-alist (quote ((:startgroup)
+			    ("@InTown" . 116)
+			    ("@Work" . 119)
+			    ("@Home" . 104)
+			    ("@Farm" . 102)
+			    (:endgroup)
+			    ("QUOTE" . 113)
+			    ("NEXT" . 78)
+			    ("GSOC" . 103)
+			    ("PROJECT" . 80)
+			    ("WAITING" . 87)
+			    ("FARM" . 70)
+			    ("HOME" . 72)
+			    ("ORG" . 79)
+			    ("PLAY" . 112))))
+(setq org-fast-tag-selection-single-key (quote expert))
+(setq org-agenda-tags-todo-honor-ignore-options t)
+#+end_src
 
 * UNFINISHED GTD stuff
 ** Weekly Review Process
@@ -1088,9 +1144,8 @@ $0
 (setq org-default-notes-file "~/git/org/notes.org")
 (setq org-default-priority 71)
 (setq org-enforce-todo-dependencies t)
-(setq org-fast-tag-selection-single-key (quote expert))
 (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 8:00"))))
-(setq org-hide-leading-stars t)
+(setq org-hide-leading-stars nil)
 (setq org-id-method (quote uuidgen))
 (setq org-insert-heading-respect-content t)
 #+end_src
@@ -1108,18 +1163,6 @@ $0
 (setq org-special-ctrl-k t)
 (setq org-stuck-projects (quote ("/PROJECT" nil ("NEXT") "")))
 (setq org-table-export-default-format "orgtbl-to-csv")
-(setq org-tag-alist (quote ((:startgroup)
-			    ("@InTown" . 116)
-			    ("@Work" . 119)
-			    ("@Home" . 104)
-			    ("@Farm" . 102)
-			    ("@Play" . 112)
-			    (:endgroup)
-			    ("QUOTE" . 113)
-			    ("NEXT" . 78)
-			    ("GSOC" . 103)
-			    ("PROJECT" . 80)
-			    ("WAITING" . 87))))
 (setq org-time-stamp-rounding-minutes (quote (1 5)))
 (setq org-yank-adjusted-subtrees t)
 #+end_src lisp
@@ -1156,7 +1199,6 @@ $0
 					  (todo priority-down)
 					  (tags priority-down))))
 (setq org-agenda-start-on-weekday nil)
-(setq org-agenda-tags-todo-honor-ignore-options t)
 (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
 (setq org-agenda-time-grid (quote ((daily weekly today require-timed remove-match)
 				   "----------------" 
