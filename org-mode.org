@@ -446,11 +446,11 @@ that can be estimated and clocked.  Projects use the following state transitions
 (setq org-remember-default-headline "Tasks")
 
 ;; 3 remember templates for TODO tasks, Notes, and Phone calls
-(setq org-remember-templates (quote (("todo" 116 "* TODO %?
+(setq org-remember-templates (quote (("todo" ?t "* TODO %?
   %u
-  %a" "~/git/org/tasks.org" bottom nil) ("note" 110 "* %?
+  %a" "~/git/org/tasks.org" bottom nil) ("note" ?n "* %?
   %u
-  %a" nil bottom nil) ("phone" 112 "* PHONE %a - 
+  %a" nil bottom nil) ("phone" ?p "* PHONE %a - 
   %u
   :CLOCK-IN:
   %?" "~/git/org/phone.org" bottom nil))))
@@ -882,21 +882,21 @@ Recent Tasks
 ** Tags
 #+begin_src emacs-lisp
 (setq org-tag-alist (quote ((:startgroup)
-			    ("@InTown" . 116)
-			    ("@Work" . 119)
-			    ("@Home" . 104)
-			    ("@Farm" . 102)
+			    ("@InTown" . ?t)
+			    ("@Work" . ?w)
+			    ("@Home" . ?h)
+			    ("@Farm" . ?f)
 			    (:endgroup)
-			    ("QUOTE" . 113)
-			    ("NEXT" . 78)
-			    ("GSOC" . 103)
-			    ("PROJECT" . 80)
-			    ("WAITING" . 87)
-			    ("FARM" . 70)
-			    ("HOME" . 72)
-			    ("ORG" . 79)
-			    ("PLAY" . 112)
-			    ("CANCELLED" . 67)))))
+			    ("QUOTE" . ?q)
+			    ("NEXT" . ?N)
+			    ("GSOC" . ?g)
+			    ("PROJECT" . ?P)
+			    ("WAITING" . ?W)
+			    ("FARM" . ?F)
+			    ("HOME" . ?H)
+			    ("ORG" . ?O)
+			    ("PLAY" . ?p)
+			    ("CANCELLED" . ?C)))))
 
 (setq org-fast-tag-selection-single-key (quote expert))
 
@@ -1167,7 +1167,6 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 (setq org-cycle-separator-lines 0)
 (setq org-deadline-warning-days 30)
 (setq org-default-notes-file "~/git/org/notes.org")
-(setq org-default-priority 71)
 (setq org-enforce-todo-dependencies t)
 (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 8:00"))))
 (setq org-id-method (quote uuidgen))
@@ -1181,10 +1180,9 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 #+end_src emacs-lisp
 
 #+begin_src emacs-lisp
-(setq org-lowest-priority 71)
 (setq org-odd-levels-only nil)
 (setq org-outline-path-complete-in-steps nil)
-(setq org-return-follows-link t)
+(setq org-return-follows-link nil)
 (setq org-reverse-note-order nil)
 (setq org-show-following-heading t)
 (setq org-show-hierarchy-above t)
@@ -1211,9 +1209,19 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 
 * UNFINISHED Things I Don't Use
 ** Task Priorities
-   I use the agenda to figure out what to do work on next.  I don't use priorities at all.
-   I've played with them in the past and always to back to using no priorities.
-   If I could find a good way to disable the keys that set priorities I would :)
+   I use the agenda to figure out what to do work on next.  I don't
+   use priorities at all.  I've played with them in the past and
+   always go back to using no priorities.
+
+   If I could find a good way to disable the keys that set priorities
+   I would :).  Every so often I accidentally set a priority on a task
+   and then need to remove it again.
+
+#+begin_src emacs-lisp
+(setq org-default-priority ?G)
+(setq org-lowest-priority ?G)
+#+end_src emacs-lisp
+
 ** Archive Sibling
    This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
    having a bunch of tasks marked DONE (but not archived)
@@ -1250,8 +1258,8 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 ** org-git-sync.sh
 shell script for on-demand synchronization
 #+begin_src sh
-,#!/bin/sh
-,# Add org file changes to the repository
+#!/bin/sh
+# Add org file changes to the repository
 REPOS="org doc.norang.ca www.norang.ca"
 
 for REPO in $REPOS
@@ -1271,6 +1279,7 @@ cron job for synchronizing hourly
 0 * * * * ~/bin/org-git-sync.sh >/dev/null
 #+end_example
 
+I use the following .gitignore=
 ** USB Stick synchronization
    shell scripts:
    - usb-git-fetch
