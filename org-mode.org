@@ -1279,8 +1279,8 @@ cron job for synchronizing hourly
 0 * * * * ~/bin/org-git-sync.sh >/dev/null
 #+end_example
 
-I use the following =.gitignore= file in my org-mode to keep export files etc out of my
-repositories.
+I use the following =.gitignore= file in my org-mode directories to
+keep export files etc. out of my git repositories.
 #+begin_example 
 /*.html
 *~
