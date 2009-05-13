@@ -843,9 +843,52 @@ Recent Tasks
      Work on some unfinished task to move to completion
 
    - Use an agenda view with filtering to pick something to work on
-* UNFINISHED Tags, Filetags
+* Tags
+  Tasks can have any number of arbitrary tags.  Tags are used for
+
+  - filtering todo lists and agenda views
+  - preventing export of some subtrees when publishing
+  - providing context to some tasks
+
+  Tags are mostly used for filtering in the agenda.  This means you
+  can find tasks with a specific tag easily across your large number
+  of org-mode files.
+
+  Some tags are mutually exclusive.  These are defined in a group so
+  that only one of the tags can be applied to a task at a time
+  (disregarding tag inheritance).  I use these types for tags for
+  applying context to a task.  (Work tasks have a @Work tag, and are
+  done at the office, Farm tasks have an @Farm tag and are done at the
+  farm -- I can't change the oil on the tractor if I'm not at the
+  farm... so I hide these and other tasks by filtering my agenda view
+  to only @Work tasks when I'm at the office.)
+
+  Tasks are grouped together in org-files and a =#+FILETAGS:= entry
+  applies a tag to all tasks in the file.  I use this to apply the
+  =@Work= tag to projects that are Work related.
+
 ** Filetags
+   Filetags are a convenient way to apply one or more tags to all of
+   the headings in a file.
+
+   Filetags look like this:
+
 #+begin_example 
+#+FILETAGS: NORANG @Work
+#+end_example
+
+   I have the following =#+FILETAGS:= entries in my org-mode files:
+
+| File        | Tags          |
+|-------------+---------------|
+| bzflag.org  | BZFLAG PLAY   |
+| todo.org    | HOME          |
+| git.org     | GIT PLAY      |
+| norang.org  | NORANG @Work  |
+| ABC.org     | ABC @Work     |
+| XYZ.org     | XYZ @Work     |
+| ABC-DEF.org | ABC DEF @Work |
+|             |               |
 1 match for "^#\+FILETAGS:" in buffer: bzflag.org
       1:#+FILETAGS: BZFLAG PLAY
 1 match for "^#\+FILETAGS:" in buffer: todo.org
@@ -878,7 +921,6 @@ Recent Tasks
       1:#+FILETAGS: GSOC HOME PLAY
 1 match for "^#\+FILETAGS:" in buffer: tasks.org
       1:#+FILETAGS: REFILE
-#+end_example
 
 ** Tags
 #+begin_src emacs-lisp
