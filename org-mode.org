@@ -385,9 +385,9 @@ that can be estimated and clocked.  Projects use the following state transitions
 					   ("TODO" ("WAITING") ("CANCELLED"))
 					   ("STARTED" ("WAITING"))
 					   ("PROJECT" ("CANCELLED") ("PROJECT" . t)))))
-#+end_src lisp
+#+end_src
 
-*** Using STARTED for clocked tasks
+*** Using =STARTED= for clocked tasks
     Tasks automatically change to =STARTED= whenever they are clocked in.
 
 #+begin_src emacs-lisp
@@ -529,8 +529,13 @@ that can be estimated and clocked.  Projects use the following state transitions
 
    Here is my refile configuration:
 #+begin_src emacs-lisp
+; Use IDO for target completion
 (setq org-completion-use-ido t)
+
+; Targets include this file and any file contributing to the agenda - up to 5 levels deep
 (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
+
+; Targets start with the file name - allows creating level 1 tasks
 (setq org-refile-use-outline-path (quote file))
 #+end_src
 
@@ -561,12 +566,19 @@ that can be estimated and clocked.  Projects use the following state transitions
    These headlines have a =NOTES= tag which allows finding notes 
    across multiple files easily using the agenda search functions.
 
-   Notes created by remember tasks go first to =notes.org= and are later
-   refiled to the appropriate project file.
+   Notes created by remember tasks go first to =notes.org= and are
+   later refiled to the appropriate project file.  Some notes that are
+   project related get filed to the appropriate project instead of the
+   =NOTES= task.  Generally these types of note are specific to the
+   project and not generally useful -- so removing them from the notes
+   list when the project is archived makes sense.
 ** Refiling Phone Calls
-   Phone calls are handled the same as notes.  I time my calls, creating
-   them with =F12 p= and filing them in =phone.org=.  Later these are
-   refiled to a =* Phone Calls= task which has a =PHONE= tag.
+   Phone calls are handled the same as notes.  I time my calls,
+   creating them with =F12 p= and filing them in =phone.org=.  Later
+   these are refiled to a =* Phone Calls= task which has a =PHONE= tag
+   or to the project task that this clocked phone call should
+   contribute clocked time to.  Some phone calls are billable and we
+   want these tracked in the appropriate category.
 * Custom agenda views
   I only have 5 custom agenda views defined.  Most of my old custom
   agenda views were rendered obsolete when filtering functionality was
@@ -698,7 +710,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 
    That leaves me with about 30 tasks to look at and I can pick something that fits the minutes I have left before I 
    take off for lunch.
-** Keeping the STARTED task list under control
+** Keeping the =STARTED= task list under control
    Some tasks are periodic.  Things I need to do weekly.
    Since I clock these tasks in they change to a =STARTED= state.
    Cyclic or repeated tasks automatically reschedule to the future and reset
@@ -861,6 +873,10 @@ Recent Tasks
 
   - filtering todo lists and agenda views
   - providing context to some tasks
+  - tagging notes
+  - tagging phone calls
+  - tagging NEXT actions for project tasks
+  - tagging tasks in a WAITING state because a parent task is WAITING
   - preventing export of some subtrees when publishing
 
   Tags are mostly used for filtering in the agenda.  This means you
@@ -870,7 +886,7 @@ Recent Tasks
   Some tags are mutually exclusive.  These are defined in a group so
   that only one of the tags can be applied to a task at a time
   (disregarding tag inheritance).  I use these types for tags for
-  applying context to a task.  (Work tasks have a =@Work= tag, and are
+  applying context to a task.  (Work tasks have an =@Work= tag, and are
   done at the office, Farm tasks have an =@Farm= tag and are done at the
   farm -- I can't change the oil on the tractor if I'm not at the
   farm... so I hide these and other tasks by filtering my agenda view
@@ -897,6 +913,7 @@ Recent Tasks
    filtering on the agenda.
 
 #+begin_src emacs-lisp
+; Tags with fast selection keys
 (setq org-tag-alist (quote ((:startgroup)
 			    ("@InTown" . ?t)
 			    ("@Work" . ?w)
@@ -914,8 +931,10 @@ Recent Tasks
 			    ("PLAY" . ?p)
 			    ("CANCELLED" . ?C)))))
 
+; Allow setting single tags without the menu
 (setq org-fast-tag-selection-single-key (quote expert))
 
+; For tag searches ignore tasks with scheduled and deadline dates
 (setq org-agenda-tags-todo-honor-ignore-options t)
 #+end_src
 
@@ -981,20 +1000,33 @@ Recent Tasks
   reading the org-mode and git mailing lists in Gnus.  To create a
   note I use my note remember template =C-M-r n=, type a heading for
   the note and =C-c C-c= to save it.  The only other thing to do is to
-  refile it to the appropriate project file later whenever it is
-  convenient to refile.
+  refile it (later) to the appropriate project file.
 
   I have an agenda view just to find notes.  Notes are refiled to an
-  appropriate project file and task.  If there is not specific task it
-  belongs to it goes to the catchall =* Notes= task.  Notes are created
-  with a =NOTE= tag already applied by the remember template so I'm free
-  to mThis allows me
-  to find all my notes easily with =F12 n=.  I'm free to limit the
-  resulting notes using standard agenda tag filtering.
+  appropriate project file and task.  If there is no specific task it
+  belongs to it goes to the catchall =* Notes= task.  I generally have
+  a catchall notes task in every project file.  Notes are created with
+  a =NOTE= tag already applied by the remember template so I'm free to
+  refile the note anywhere.  As long as the note is in a project file
+  that contributes to my agenda (ie. in org-agenda-files) then I can
+  find the note back easily with my notes agenda view by hitting the
+  key combination =F12 n=.  I'm free to limit the agenda view of notes
+  using standard agenda tag filtering.
 
-  Short notes with a meaningful headline are a great way to remember
   technical details without the need to actually remember anything -
-  other than needing to press =F12 n= to go find any note.
+  Short notes with a meaningful headline are a great way to remember
+  other than how to find them back when you need them using =F12 n=.
+
+  Notes that are project related and not generally useful can be
+  archived with the project and removed from the agenda when the
+  project is removed.
+
+  So my org notes go in org.org and my git notes go in git.org both
+  under the =* Notes= task.  I'll forever be able to find those.  A
+  note about some work project detail I want to remember with the
+  project is filed to the project task under the appropriate work
+  org-mode file and eventually gets removed from the agenda when the
+  project is complete and archived.
 * UNFINISHED GTD stuff
 ** Weekly Review Process
 *** Sorting REFILE tasks and refiling in groups
@@ -1182,7 +1214,7 @@ becomes this!
   :PROPERTIES:
   :CUSTOM_ID: ProductivityTools
   :END:
-** Yasnippet
+** Yasnippets
 #+begin_src emacs-lisp
 (require 'yasnippet)
 (yas/initialize)
@@ -1291,8 +1323,23 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 (setq org-log-done (quote time))
 (setq org-log-into-drawer t)
 #+end_src
-
-
+** Agenda settings
+#+begin_src emacs-lisp
+(setq org-agenda-todo-ignore-with-date t)
+(setq org-agenda-include-diary t)
+(setq org-agenda-repeating-timestamp-show-all t)
+(setq org-agenda-show-all-dates t)
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down effort-up category-up)
+					  (todo priority-down)
+					  (tags priority-down))))
+(setq org-agenda-start-on-weekday nil)
+(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
+(setq org-agenda-time-grid (quote ((daily weekly today require-timed remove-match)
+				   "----------------" 
+				   (800 1000 1200 1400 1600 1800 2000))))
+#+end_src
 * UNFINISHED Things I Don't Use
 ** Task Priorities
    I use the agenda to figure out what to do work on next.  I don't
@@ -1311,23 +1358,6 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 ** Archive Sibling
    This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
    having a bunch of tasks marked DONE (but not archived)
-* UNFINISHED stuff
-#+begin_src emacs-lisp
-(setq org-agenda-include-diary nil)
-(setq org-agenda-repeating-timestamp-show-all t)
-(setq org-agenda-show-all-dates t)
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-agenda-skip-scheduled-if-done t)
-(setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down effort-up category-up)
-					  (todo priority-down)
-					  (tags priority-down))))
-(setq org-agenda-start-on-weekday nil)
-(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
-(setq org-agenda-time-grid (quote ((daily weekly today require-timed remove-match)
-				   "----------------" 
-				   (800 1000 1200 1400 1600 1800 2000))))
-(setq org-agenda-todo-ignore-with-date t)
-#+end_src
 
    
 * UNFINISHED Using Git for Automatic History, Backups, and Synchronization
