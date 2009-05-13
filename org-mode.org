@@ -361,19 +361,19 @@ that can be estimated and clocked.  Projects use the following state transitions
 ** ToDo state triggers
    I have a few triggers that automatically assign tags to tasks based
    on state changes.  If a task moves to =CANCELLED= state then it
-   gets a *CANCELLED* tag.  Moving a =CANCELLED= task back to =TODO=
-   removes the *CANCELLED* tag.  These are used for filtering tasks in
+   gets a =CANCELLED= tag.  Moving a =CANCELLED= task back to =TODO=
+   removes the =CANCELLED= tag.  These are used for filtering tasks in
    agenda views which I'll talk about later.
 
    The triggers break down to the following rules:
 
-   - Moving a task to =CANCELLED= adds a *CANCELLED* tag
-   - Moving a task to =WAITING= adds a *WAITING* tag
-   - Moving a task to =SOMEDAY= adds a *WAITING* tag
-   - Moving a task to a done state removes *NEXT* and *WAITING* tags
-   - Moving a task to =TODO= removes *WAITING* and *CANCELLED* tags
-   - Moving a task to =STARTED= removes a *WAITING* tag
-   - Moving a task to =PROJECT= removes a *CANCELLED* tag and adds a *PROJECT* tag
+   - Moving a task to =CANCELLED= adds a =CANCELLED= tag
+   - Moving a task to =WAITING= adds a =WAITING= tag
+   - Moving a task to =SOMEDAY= adds a =WAITING= tag
+   - Moving a task to a done state removes =NEXT= and =WAITING= tags
+   - Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
+   - Moving a task to =STARTED= removes a =WAITING= tag
+   - Moving a task to =PROJECT= removes a =CANCELLED= tag and adds a =PROJECT= tag
 
    The tags are used to filter tasks in the agenda views conveniently.
 
@@ -449,9 +449,12 @@ that can be estimated and clocked.  Projects use the following state transitions
 ;; 3 remember templates for TODO tasks, Notes, and Phone calls
 (setq org-remember-templates (quote (("todo" ?t "* TODO %?
   %u
-  %a" "~/git/org/tasks.org" bottom nil) ("note" ?n "* %?
+  %a" "~/git/org/tasks.org" bottom nil)
+				     ("note" ?n "* %?                                        :NOTE:
   %u
-  %a" nil bottom nil) ("phone" ?p "* PHONE %a - 
+  %a" nil bottom nil)
+				     ("phone" ?p "* PHONE %:name - %:company -                :PHONE:
+  Contact Info: %a
   %u
   :CLOCK-IN:
   %?" "~/git/org/phone.org" bottom nil))))
@@ -553,7 +556,17 @@ that can be estimated and clocked.  Projects use the following state transitions
    to the same place I do those last - since refiling everything else
    away helps to group those together.  Then I select the group of
    tasks and refile them in a single operation.
+** Refiling Notes
+   I keep a =* Notes*= headline in each of my org-mode files.
+   These headlines have a =NOTES= tag which allows finding notes 
+   across multiple files easily using the agenda search functions.
 
+   Notes created by remember tasks go first to =notes.org= and are later
+   refiled to the appropriate project file.
+** Refiling Phone Calls
+   Phone calls are handled the same as notes.  I time my calls, creating
+   them with =F12 p= and filing them in =phone.org=.  Later these are
+   refiled to a =* Phone Calls= task which has a =PHONE= tag.
 * Custom agenda views
   I only have 5 custom agenda views defined.  Most of my old custom
   agenda views were rendered obsolete when filtering functionality was
@@ -844,11 +857,11 @@ Recent Tasks
 
    - Use an agenda view with filtering to pick something to work on
 * Tags
-  Tasks can have any number of arbitrary tags.  Tags are used for
+  Tasks can have any number of arbitrary tags.  Tags are used for:
 
   - filtering todo lists and agenda views
-  - preventing export of some subtrees when publishing
   - providing context to some tasks
+  - preventing export of some subtrees when publishing
 
   Tags are mostly used for filtering in the agenda.  This means you
   can find tasks with a specific tag easily across your large number
@@ -857,72 +870,32 @@ Recent Tasks
   Some tags are mutually exclusive.  These are defined in a group so
   that only one of the tags can be applied to a task at a time
   (disregarding tag inheritance).  I use these types for tags for
-  applying context to a task.  (Work tasks have a @Work tag, and are
-  done at the office, Farm tasks have an @Farm tag and are done at the
+  applying context to a task.  (Work tasks have a =@Work= tag, and are
+  done at the office, Farm tasks have an =@Farm= tag and are done at the
   farm -- I can't change the oil on the tractor if I'm not at the
   farm... so I hide these and other tasks by filtering my agenda view
-  to only @Work tasks when I'm at the office.)
+  to only =@Work= tasks when I'm at the office.)
 
   Tasks are grouped together in org-files and a =#+FILETAGS:= entry
   applies a tag to all tasks in the file.  I use this to apply the
   =@Work= tag to projects that are Work related.
 
-** Filetags
-   Filetags are a convenient way to apply one or more tags to all of
-   the headings in a file.
-
-   Filetags look like this:
-
-#+begin_example 
-#+FILETAGS: NORANG @Work
-#+end_example
-
-   I have the following =#+FILETAGS:= entries in my org-mode files:
-
-| File        | Tags          |
-|-------------+---------------|
-| bzflag.org  | BZFLAG PLAY   |
-| todo.org    | HOME          |
-| git.org     | GIT PLAY      |
-| norang.org  | NORANG @Work  |
-| ABC.org     | ABC @Work     |
-| XYZ.org     | XYZ @Work     |
-| ABC-DEF.org | ABC DEF @Work |
-|             |               |
-1 match for "^#\+FILETAGS:" in buffer: bzflag.org
-      1:#+FILETAGS: BZFLAG PLAY
-1 match for "^#\+FILETAGS:" in buffer: todo.org
-      1:#+FILETAGS: HOME
-1 match for "^#\+FILETAGS:" in buffer: git.org
-      1:#+FILETAGS: GIT PLAY
-1 match for "^#\+FILETAGS:" in buffer: norang.org
-      1:#+FILETAGS: NORANG @Work
-1 match for "^#\+FILETAGS:" in buffer: ABC.org
-      1:#+FILETAGS: ABC @Work
-1 match for "^#\+FILETAGS:" in buffer: XYZ.org
-      1:#+FILETAGS: XYZ @Work
-1 match for "^#\+FILETAGS:" in buffer: ABC-DEF.org
-      1:#+FILETAGS: ABC DEF @Work
-1 match for "^#\+FILETAGS:" in buffer: ABC-KKK.org
-      1:#+FILETAGS: ABC KKK @Work
-1 match for "^#\+FILETAGS:" in buffer: YYY.org
-      1:#+FILETAGS: YYY @Work
-1 match for "^#\+FILETAGS:" in buffer: org.org
-      1:#+FILETAGS: ORG PLAY
-1 match for "^#\+FILETAGS:" in buffer: phone.org
-      1:#+FILETAGS: PHONE REFILE
-1 match for "^#\+FILETAGS:" in buffer: notes.org
-      1:#+FILETAGS: NOTES REFILE
-1 match for "^#\+FILETAGS:" in buffer: mark.org
-      1:#+FILETAGS: MARK
-1 match for "^#\+FILETAGS:" in buffer: farm.org
-      1:#+FILETAGS: FARM
-1 match for "^#\+FILETAGS:" in buffer: gsoc2009.org
-      1:#+FILETAGS: GSOC HOME PLAY
-1 match for "^#\+FILETAGS:" in buffer: tasks.org
-      1:#+FILETAGS: REFILE
-
 ** Tags
+   Here are my tag definitions with associated keys for filtering in
+   the agenda views.
+
+   The startgroup - endgroup (=@XXX=) tags are mutually exclusive -
+   selecting one removes a similar tag already on the task.  These are
+   the context tags - you can't be in two places at once so if a task
+   is marked with @Farm and you add @Work then the @Farm tag is
+   removed automagically.
+
+   The other tags =QUOTE= .. =CANCELLED= are not mutually exclusive and
+   multiple tags can appear on a single task.  Some of those tags are
+   created by todo state change triggers.  The shortcut key is used to
+   add or remove the tag using =C-c C-q= or to apply the task for
+   filtering on the agenda.
+
 #+begin_src emacs-lisp
 (setq org-tag-alist (quote ((:startgroup)
 			    ("@InTown" . ?t)
@@ -946,12 +919,82 @@ Recent Tasks
 (setq org-agenda-tags-todo-honor-ignore-options t)
 #+end_src
 
+** Filetags
+   Filetags are a convenient way to apply one or more tags to all of
+   the headings in a file.
+
+   Filetags look like this:
+
+#+begin_example 
+#+FILETAGS: NORANG @Work
+#+end_example
+
+   I have the following =#+FILETAGS:= entries in my org-mode files:
+
+*** Non-work related org-mode files
+| File         | Tags           |
+|--------------+----------------|
+| todo.org     | HOME           |
+| gsoc2009.org | GSOC HOME PLAY |
+| bzflag.org   | BZFLAG PLAY    |
+| git.org      | GIT PLAY       |
+| org.org      | ORG PLAY       |
+| mark.org     | MARK           |
+| farm.org     | FARM           |
+
+*** Work related org-mode files
+| File         | Tags           |
+|--------------+----------------|
+| norang.org   | NORANG @Work   |
+| ABC.org      | ABC @Work      |
+| XYZ.org      | XYZ @Work      |
+| ABC-DEF.org  | ABC DEF @Work  |
+| ABC-KKK.org  | ABC KKK @Work  |
+| YYY.org      | YYY @Work      |
+
+*** Refile tasks
+| File         | Tags           |
+|--------------+----------------|
+| phone.org    | PHONE REFILE   |
+| notes.org    | NOTES REFILE   |
+| tasks.org    | REFILE         |
+|--------------+----------------|
+
 ** Trigger Tags
+   The following tags are automatically added or removed by todo state
+   triggers described previously in [[*ToDo%20state%20triggers][*ToDo state triggers]]
+
    - =WAITING=
    - =CANCELLED=
    - =NEXT=
    - =PROJECT=
-* UNFINISHED Handling Notes
+* Handling Notes
+  Notes are little gems of knowledge that you come across during your
+  day.  They are just like tasks except there is nothing to do (except
+  learn and memorize the gem of knowledge).  Unfortunately there are
+  way too many gems to remember and my head explodes just thinking
+  about it.
+
+  org-mode to the rescue!
+
+  Often I'll find some cool feature or thing I want to remember while
+  reading the org-mode and git mailing lists in Gnus.  To create a
+  note I use my note remember template =C-M-r n=, type a heading for
+  the note and =C-c C-c= to save it.  The only other thing to do is to
+  refile it to the appropriate project file later whenever it is
+  convenient to refile.
+
+  I have an agenda view just to find notes.  Notes are refiled to an
+  appropriate project file and task.  If there is not specific task it
+  belongs to it goes to the catchall =* Notes= task.  Notes are created
+  with a =NOTE= tag already applied by the remember template so I'm free
+  to mThis allows me
+  to find all my notes easily with =F12 n=.  I'm free to limit the
+  resulting notes using standard agenda tag filtering.
+
+  Short notes with a meaningful headline are a great way to remember
+  technical details without the need to actually remember anything -
+  other than needing to press =F12 n= to go find any note.
 * UNFINISHED GTD stuff
 ** Weekly Review Process
 *** Sorting REFILE tasks and refiling in groups
