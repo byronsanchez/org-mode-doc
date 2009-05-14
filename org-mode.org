@@ -1028,25 +1028,39 @@ Recent Tasks
   org-mode file and eventually gets removed from the agenda when the
   project is complete and archived.
 * UNFINISHED GTD stuff
+  Most of my day is deadline/schedule driven.
+  I work off of the agenda first and then 
 ** Weekly Review Process
 *** Sorting REFILE tasks and refiling in groups
 * UNFINISHED Time reporting and tracking
 ** Checking for holes in clocked times
    - agenda log mode with clocked times as default
      describe my default agenda log view
-* UNFINISHED Archiving
+* Archiving
 ** Archiving Subtrees
-   My normal archiving procedure is to move entire subtrees to a separate archive file for the project.
-   Task subtrees in =FILE.org= get archived to =FILE.org_archive= using the =C-c C-x C-s= command.
+   My normal archiving procedure is to move entire subtrees to a
+   separate archive file for the project.  Task subtrees in =FILE.org=
+   get archived to =FILE.org_archive= using the =C-c C-x C-s= command.
 
-   I archive entire projects and subtrees into a single forever-growing file.  My archive files are huge but so far
-   I haven't found a need to split them by year (or decade) :)
+   I archive entire projects and subtrees into a single
+   forever-growing file.  My archive files are huge but so far I
+   haven't found a need to split them by year (or decade) :)
 
 ** Archive Tag - Hiding Information
-   The only time I set the ARCHIVE tag on a task is to prevent it from opening by default because it has
-   tons of information I don't really need to look at on a regular basis.  I can open the task with 
-   C-TAB if I need to see the gory details (like a huge table of data related to the task) but normally I 
-   don't need that information displayed.
+   The only time I set the ARCHIVE tag on a task is to prevent it from
+   opening by default because it has tons of information I don't
+   really need to look at on a regular basis.  I can open the task
+   with C-TAB if I need to see the gory details (like a huge table of
+   data related to the task) but normally I don't need that
+   information displayed.
+** When to Archive
+   Archiving monthly works well for me.  I normally invoice clients on
+   the first of the month and after using the time clock information
+   for the previous month I archive any =DONE= tasks and projects.
+
+   This keeps my main working files clutter-free.  If I never need the
+   detail for the archived tasks they are available in the appropriate
+   archive file.
 * UNFINISHED Publishing
   :PROPERTIES:
   :CUSTOM_ID: Publishing
@@ -1198,16 +1212,35 @@ becomes this!
 (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
 #+end_src
 
-* UNFINISHED Reminders
+* Reminders
+  I use appt for reminders.  It's simple and unobtrusive -- putting
+  pending appointments in the status bar and beeping as 12, 9, 6, 3,
+  and 0 minutes before the appointment is due.
+
+  Everytime the agenda is displayed (and that's lots for me) the
+  appointment list is erased and rebuilt from the current agenda
+  details for today.  This means everytime I reschedule something, add
+  or remove tasks that are time related the appointment list is
+  automatically updated the next time I look at the agenda.
+  
+** Reminder Setup
 #+begin_src emacs-lisp
+; Erase all reminders and rebuilt reminders for today from the agenda
 (defun my-org-agenda-to-appt ()
   (interactive)
   (setq appt-time-msg-list nil)
   (org-agenda-to-appt))
 
+; Rebuild the reminders everytime the agenda is displayed
 (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
+
+; This is at the end of my .emacs - so appointments are set up when Emacs starts
 (my-org-agenda-to-appt)
+
+; Activate appointments so we get notifications
 (appt-activate t)
+
+; If we leave Emacs running overnight - reset the appointments one minute after midnight
 (run-at-time "24:01" nil 'my-org-agenda-to-appt)
 #+end_src
 * UNFINISHED Productivity Tools
@@ -1340,7 +1373,11 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 				   "----------------" 
 				   (800 1000 1200 1400 1600 1800 2000))))
 #+end_src
-* UNFINISHED Things I Don't Use
+* Things I Don't Use
+  This is a partial list of things I know about but do not use.
+  =org-mode= is huge with tons of features.  There are features out there
+  that I don't know about yet or haven't explored so this list is not
+  going to be complete.
 ** Task Priorities
    I use the agenda to figure out what to do work on next.  I don't
    use priorities at all.  I've played with them in the past and
