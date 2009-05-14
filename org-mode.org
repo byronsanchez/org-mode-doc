@@ -32,7 +32,9 @@ you.  More information about org-mode can be found in the [[http://orgmode.org/i
 Manual]] and on the [[http://orgmode.org/worg/][Worg Site]].
 
 This document is created using the publishing features of org-mode.
-The source for this document can be found at http://doc.norang.ca/org-mode.org
+The source for this document can be found at
+http://doc.norang.ca/org-mode.org.html and
+http://doc.norang.ca/org-mode.org
 * Getting Started
   I use =org-mode= in most of my emacs buffers.
 ** Org-Mode Setup
