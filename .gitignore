@@ -11,3 +11,4 @@ nobackup
 *.out
 *.ics
 *.pdf
+*.org-source
