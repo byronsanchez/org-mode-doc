@@ -560,9 +560,12 @@ that can be estimated and clocked.  Projects use the following state transitions
    few files going to the same place (3 or less) I refile the first
    one, then move to the second one and use =C-c C-w up-arrow RET= to
    refile to the same location again.  If more than 3 tasks are going
-   to the same place I do those last - since refiling everything else
-   away helps to group those together.  Then I select the group of
-   tasks and refile them in a single operation.
+   to the same place I try to do those last - since refiling
+   everything else away helps to group those together.  Then I select
+   the group of tasks and refile them in a single operation.
+
+   Refiling all of my tasks tends to take less than a minute so I may
+   do this a couple of times a day.
 ** Refiling Notes
    I keep a =* Notes*= headline in each of my org-mode files.
    These headlines have a =NOTES= tag which allows finding notes 
@@ -1029,11 +1032,57 @@ Recent Tasks
   project is filed to the project task under the appropriate work
   org-mode file and eventually gets removed from the agenda when the
   project is complete and archived.
-* UNFINISHED GTD stuff
+* GTD stuff
   Most of my day is deadline/schedule driven.
-  I work off of the agenda first and then 
+  I work off of the agenda first and then pick items from the todo lists as
+  outlined in [[*What%20do%20I%20work%20on%20next][*What do I work on next]]
+
 ** Weekly Review Process
-*** Sorting REFILE tasks and refiling in groups
+   The first day of the week (usually Monday) I do my weekly review. 
+   I keep a list like this one to remind me what needs to be done.
+
+   I have a recurring task which keeps my weekly review checklist
+   handy.  This pops up as a reminder on Monday's.  This week I'm
+   doing my weekly review on Tuesday since Monday was a holiday.
+
+#+begin_example 
+** STARTED Weekly Review [0/5]
+   SCHEDULED: <2009-05-18 Mon ++1w> 
+   :LOGBOOK:...
+   :PROPERTIES:...
+
+   What to review:
+
+    - [ ] Check follow-up folder
+    - [ ] Review new tasks                                  F12-r
+      - if it takes less than 5 minutes just do it
+      - otherwise assign an estimated time and file it somewhere
+      - Refile billable work to appropriate location
+    - [ ] Check for stuck projects and add next tasks       F12-#         
+    - [ ] Review all tasks F12 t
+      - [ ] Work tasks /w
+      - [ ] Projects / P
+      - [ ] Next Tasks / N  (Next tasks can not be blocked)
+	- Move NEXT tag to subtasks as required
+      - [ ] Waiting / W
+    - [ ] Make plan for the week (out of NEXT tasks)
+#+end_example
+
+   The first item [ ] Check follow-up folder makes me pull out the
+   paper file I dump stuff into all week long - things I need to take
+   care of but are in no particular hurry to deal with.  Stuff I get
+   in the mail etc that I don't want to deal with now.  I just toss it
+   in my =Follow-Up= folder in the filing cabinet and forget about it
+   until the weekly review.
+
+   I go through the folder and weed out anything that needs to be
+   dealt with.  After that everything else is in =org-mode=.  I tend
+   to schedule tasks onto the agenda for the coming week so that I
+   don't spend lots of time trying to find what needs to be worked on
+   next.
+
+   This works for me.  You're mileage may vary ;)
+
 * UNFINISHED Time reporting and tracking
 ** Checking for holes in clocked times
    - agenda log mode with clocked times as default
@@ -1174,16 +1223,54 @@ becomes this!
 #+end_src
 
 ** Publishing Single Files
-   Org-mode exports the current file to one of the standard formats by invoking an export function.
-   The standard key binding for this is =C-c C-e
+   Org-mode exports the current file to one of the standard formats by
+   invoking an export function.  The standard key binding for this is
+   =C-c C-e= followed by the key for the type of export you want.
+
+   This works great for single files or parts of files -- if you
+   narrow the buffer to only part of the org-mode file then you only
+   get the narrowed detail in the export.
+
 ** Publishing Projects
+
+   I mainly use publishing for publishing multiple files or projects.
+   I don't want to remember where the created export file needs to
+   move to and org-mode projects are a great solution to this.
+
+   The [[http://doc.norang.ca]] website (and a bunch of other files that
+   are not publicly available) are all created by editing org-mode
+   files and publishing the project the file is contained in.  This is
+   great for people like me who want to figure out the details once
+   and forget about it.  I love stuff that Just Works(tm).
+
+   I have 3 main projects I use org-mode publishing for currently:
+
+   - norang (website)
+   - doc.norang.ca (website)
+   - org files (which are selectively included by other websites)
+
+   Here's my publishing setup:
+
 #+begin_src emacs-lisp
+; experimenting with docbook exports - not finished
 (setq org-export-docbook-xsl-fo-proc-command "fop %s %s")
 (setq org-export-docbook-xslt-proc-command "xsltproc --output %s /usr/share/xml/docbook/stylesheet/nwalsh/fo/docbook.xsl %s")
+;
+; Inline images in HTML instead of producting links to the image
 (setq org-export-html-inline-images t)
+; Do not use sub or superscripts - I currently don't need this functionality in my documents
 (setq org-export-with-sub-superscripts nil)
 
+; List of projects
+; norang - http://www.norang.ca/
+; doc    - http://doc.norang.ca/
+; org    - miscellaneous todo lists for publishing
 (setq org-publish-project-alist
+;
+; http://www.norang.ca/  (norang website)
+; norang-org are the org-files that generate the content
+; norang-extra are images and css files that need to be included
+; norang is the top-level project that gets published
       (quote (("norang-org"
 	       :base-directory "~/git/www.norang.ca"
 	       :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs"
@@ -1208,6 +1295,11 @@ becomes this!
 	       :author nil)
 	      ("norang"
 	       :components ("norang-org" "norang-extra"))
+;
+; http://doc.norang.ca/  (norang website)
+; doc-org are the org-files that generate the content
+; doc-extra are images and css files that need to be included
+; doc is the top-level project that gets published
 	      ("doc-org"
 	       :base-directory "~/git/doc.norang.ca/"
 	       :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
@@ -1229,6 +1321,11 @@ becomes this!
 	       :publishing-function org-publish-attachment
 	       :recursive t
 	       :author nil)
+	      ("doc"
+	       :components ("doc-org" "doc-extra"))
+;
+; Miscellaneous pages for other websites
+; org are the org-files that generate the content
 	      ("org"
 	       :base-directory "~/git/org/"
 	       :publishing-directory "/ssh:www-data@www:~/org"
@@ -1240,10 +1337,13 @@ becomes this!
 	       :style-include-default nil
 	       :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\">"
 	       :author-info nil
-	       :creator-info nil)
-	      ("doc"
-	       :components ("doc-org" "doc-extra")))))
+	       :creator-info nil))))
 
+; I'm lazy and don't want to remember the name of the project to publish when I modify 
+; a file that is part of a project.  So this function saves the file, and publishes
+; the project that includes this file
+;
+; It's bound to C-S-F12 so I just edit and hit C-S-F12 when I'm done and move on to the next thing
 (defun my-save-then-publish ()
   (interactive)
   (save-buffer)
@@ -1251,8 +1351,32 @@ becomes this!
   (org-publish-current-project))
 
 (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
+
 #+end_src
 
+   The =norang= and =doc= projects publish directly into the webserver
+   directory that serves that site.  Publishing one of these projects
+   exports all modified pages, generates images with ditaa, copies the
+   resulting files to the webserver so that they are immediately
+   available for viewing.
+
+   The http://doc.norang.ca/ site contains subdirectories with client
+   documentation that are restricted access using Apache Basic
+   authentication and I don't create links to these sites from the
+   publicly viewable pages.  http://doc.norang.ca/someclient/ would
+   show the index for any org files under
+   =~/git/doc.norang.ca/someclient/= if that is set up as a viewable
+   website.  I use most of the information myself but give access to
+   clients if they are interested in the information/notes that I keep
+   about their systems.
+
+   This works great for me - I know where my notes are and I can
+   access them from anywhere on the internet.  I'm also free to share
+   notes with other people by simply giving them the link to the
+   appropriate site.
+
+   All I need to remember to do is edit the appropriate org file and
+   publish it with C-S-F12 -- not exactly hard :)
 * Reminders
   I use appt for reminders.  It's simple and unobtrusive -- putting
   pending appointments in the status bar and beeping as 12, 9, 6, 3,
