@@ -398,6 +398,9 @@ that can be estimated and clocked.  Projects use the following state transitions
 #+end_src
 
 * Adding New Tasks Quickly with Remember
+  :PROPERTIES:
+  :CUSTOM_ID: Remember
+  :END:
   To add new tasks efficiently I use a minimal number of remember templates.
   I used to have lots of remember templates, one for each org-file.  I'd start org-remember with
   C-M-r and then pick a template that filed the task under =* Tasks= in the appropriate file.
@@ -511,6 +514,9 @@ that can be estimated and clocked.  Projects use the following state transitions
    to what I'm really working on secure in the knowledge that that item isn't going to get lost and 
    I don't have to think about it anymore at all now.
 * Refiling Tasks
+  :PROPERTIES:
+  :CUSTOM_ID: Refiling
+  :END:
   Refiling tasks is easy.  After collecting a bunch of new tasks in my
   tasks.org file using remember mode I need to move these to the
   correct org file and topic.  All of my active org-files are in my
