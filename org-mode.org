@@ -1434,7 +1434,8 @@ $0
 #+end_$1
 #+end_example
 
-** Limit your view to what you are working on with =f5=
+** Limit your view to what you are working on
+*** Using =f5=
 =f5= is bound the following function
 
 #+begin_src emacs-lisp
@@ -1452,21 +1453,12 @@ by limiting your view to this task subtree and all of the items left to work on.
 
 I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and =C-c C-v= combination
 leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the normal view.
+*** Limiting the agenda to a subtree
+Using =C-c C-x <= and =C-c C-x >=
 
 ** Highlight the current agenda line
 #+begin_src emacs-lisp
 (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
-#+end_src
-
-** Git stuff
-#+begin_src emacs-lisp
-(add-hook 'grb-todo-mode-hook
-	  (lambda ()
-	    ;; yasnippet
-	    (make-variable-buffer-local 'yas/trigger-key)
-	    (setq yas/trigger-key [tab])
-	    (define-key yas/keymap [tab] 'grb-todo-cycle-commands)))
-;;
 #+end_src
 
 ** Checklist handling
@@ -1626,6 +1618,17 @@ keep export files etc. out of my git repositories.
    - usb-git-fetch
    - usb-git-push
    - usb-git-missing
+** Git stuff
+#+begin_src emacs-lisp
+(add-hook 'grb-todo-mode-hook
+	  (lambda ()
+	    ;; yasnippet
+	    (make-variable-buffer-local 'yas/trigger-key)
+	    (setq yas/trigger-key [tab])
+	    (define-key yas/keymap [tab] 'grb-todo-cycle-commands)))
+;;
+#+end_src
+
 * COMMENT Other stuff we may not want to include
 ** my weekly review procedure
    CLOSED: [2009-05-11 Mon 14:23]
