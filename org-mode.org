@@ -1581,20 +1581,32 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 #+end_src
 
-   A =cron= job runs at the top of the hour to commit any changes just saved by the call to =org-save-all-org-buffers= above.
-   I use a script to create the commits so that I can run it on demand when moving from my workstation to a laptop.
-   cron job for synchronizing hourly
+   A =cron= job runs at the top of the hour to commit any changes just
+   saved by the call to =org-save-all-org-buffers= above.  I use a
+   script to create the commits so that I can run it on demand to
+   easily commit all modified work when moving from one machine to another.
+
+   Cron job details:
 #+begin_example 
 0 * * * * ~/bin/org-git-sync.sh >/dev/null
 #+end_example
 
+*** org-git-sync.sh
+    Here is the shell script I use to create a =git= commit for each of my org-repositories.
+    This looks for modified files in any of my three org-mode git repositories:
 
-   - Records a commit if anything changes
-   - Runs hourly so it's possible to go back in case of a serious 'oops'
+    - org 
 
-   - cron job for commiting new changes
-** org-git-sync.sh
-shell script for on-demand synchronization
+      for all of my organization project files and todo lists
+
+    - doc-norang.ca
+
+      for any changes to documents under http://doc.norang.ca/
+
+    - www.norang.ca
+
+      for any changes to my other website http://www.norang.ca/
+
 #+begin_src sh
 #!/bin/sh
 # Add org file changes to the repository
