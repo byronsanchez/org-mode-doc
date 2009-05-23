@@ -1090,7 +1090,7 @@ Recent Tasks
    This works for me.  You're mileage may vary ;)
 
 * UNFINISHED Time reporting and tracking
-** Checking for holes in clocked times
+** UNFINISHED Checking for holes in clocked times
    - agenda log mode with clocked times as default
      describe my default agenda log view
 * Archiving
@@ -1418,7 +1418,7 @@ becomes this!
   :PROPERTIES:
   :CUSTOM_ID: ProductivityTools
   :END:
-** Yasnippets
+** UNFINISHED Yasnippets
 #+begin_src emacs-lisp
 (require 'yasnippet)
 (yas/initialize)
@@ -1434,8 +1434,8 @@ $0
 #+end_$1
 #+end_example
 
-** Limit your view to what you are working on
-*** Using =f5=
+** UNFINISHED Limit your view to what you are working on
+*** UNFINISHED Using =f5=
 =f5= is bound the following function
 
 #+begin_src emacs-lisp
@@ -1453,28 +1453,24 @@ by limiting your view to this task subtree and all of the items left to work on.
 
 I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and =C-c C-v= combination
 leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the normal view.
-*** Limiting the agenda to a subtree
-Using =C-c C-x <= and =C-c C-x >=
-
-** Highlight the current agenda line
+** UNFINISHED Highlight the current agenda line
 #+begin_src emacs-lisp
 (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
 #+end_src
 
-** Checklist handling
+** UNFINISHED Checklist handling
 #+begin_src emacs-lisp
 (load "~/git/org-mode/contrib/lisp/org-checklist")
 #+end_src
-** No backups
+** UNFINISHED No backups
    We use git... we don't need backups!  Especially when
    some of the files are decrypted, edited, and encrypted and the
    unencrypted backup file is left lying around.
 
-   All those files ending in ~ bug me.
 #+begin_src emacs-lisp
 (setq backup-inhibited t)
 #+end_src
-** More uncategorized org-mode stuff
+** UNFINISHED More uncategorized org-mode stuff
 #+begin_src emacs-lisp
 (setq org-blank-before-new-entry (quote ((heading)
 					 (plain-list-item))))
@@ -1516,12 +1512,12 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 				   (gnus . gnus-other-frame)
 				   (file . find-file-other-window))))
 #+end_src
-** Logging stuff
+** UNFINISHED Logging stuff
 #+begin_src emacs-lisp
 (setq org-log-done (quote time))
 (setq org-log-into-drawer t)
 #+end_src
-** Agenda settings
+** UNFINISHED Agenda settings
 #+begin_src emacs-lisp
 (setq org-agenda-todo-ignore-with-date t)
 (setq org-agenda-include-diary t)
@@ -1562,7 +1558,7 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
    having a bunch of tasks marked DONE (but not archived)
 
    
-* UNFINISHED Using Git for Automatic History, Backups, and Synchronization
+* Using Git for Automatic History, Backups, and Synchronization
   Editing folded regions of your org-mode file can be hazardous to
   your data.  My method for dealing with this is to put my org files
   in a =Git= source repository.
@@ -1586,14 +1582,15 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
    script to create the commits so that I can run it on demand to
    easily commit all modified work when moving from one machine to another.
 
-   Cron job details:
+   =crontab= details:
 #+begin_example 
 0 * * * * ~/bin/org-git-sync.sh >/dev/null
 #+end_example
 
-*** org-git-sync.sh
+*** ~/bin/org-git-sync.sh
     Here is the shell script I use to create a =git= commit for each of my org-repositories.
-    This looks for modified files in any of my three org-mode git repositories:
+    This loops through multiple repositories and commits any modified files.
+    I have the following org-mode repositories:
 
     - org 
 
@@ -1607,6 +1604,8 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 
       for any changes to my other website http://www.norang.ca/
 
+This script does not create empty commits - =git= only creates a commit
+if something was modified.
 #+begin_src sh
 #!/bin/sh
 # Add org file changes to the repository
@@ -1624,8 +1623,11 @@ do
 done
 #+end_src sh
 
-I use the following =.gitignore= file in my org-mode directories to
-keep export files etc. out of my git repositories.
+I use the following =.gitignore= file in my org-mode =git= repositories
+to keep export generated files out of my =git= repositories.  If I
+include a graphic from some other source than ditaa then I'll add it
+to the repository manually.  By default all PNG graphic files are
+ignored (since I assume they are produced by ditaa during export)
 #+begin_example 
 *.html
 *~
@@ -1645,12 +1647,12 @@ keep export files etc. out of my git repositories.
 *.toc
 #+end_example
 
-** USB Stick synchronization
+** UNFINISHED USB Stick synchronization
    shell scripts:
    - usb-git-fetch
    - usb-git-push
    - usb-git-missing
-** Git stuff
+** UNFINISHED Git stuff
 #+begin_src emacs-lisp
 (add-hook 'grb-todo-mode-hook
 	  (lambda ()
@@ -1661,36 +1663,21 @@ keep export files etc. out of my git repositories.
 ;;
 #+end_src
 
-* COMMENT Other stuff we may not want to include
-** my weekly review procedure
-   CLOSED: [2009-05-11 Mon 14:23]
-  What to review:
-
-   - [X] Check follow-up folder
-   - [X] Review new tasks                                  F12-r
-     - if it takes less than 5 minutes just do it
-     - otherwise assign an estimated time and file it somewhere
-     - Refile billable work to appropriate location
-   - [X] Check for stuck projects and add next tasks     F12-#         
-   - [ ] Review all tasks F12 t
-     - [ ] Work tasks /w
-     - [ ] Projects / P
-     - [ ] Next Tasks / N  (Next tasks can not be blocked)
-       - Move NEXT tag to subtasks as required
-     - [ ] Waiting / W
-   - [ ] Make plan for the week (out of NEXT tasks)
-
-
-** Estimates
-** Handling Phone calls
+* UNFINISHED Other stuff we may not want to include		   :noexport:
+** UNFINISHED Estimates
+** UNFINISHED Handling Phone calls
    - Remember tasks for phone calls and bbdb searches
 
-** How to control time spent on tasks
+** UNFINISHED How to control time spent on tasks
    - Max time limits (1h org documentation)
    - Min time limits (1h jobsearch)
    - Put the limit in the task name and use the daily agenda report for time spent
    - Scheduled tasks as repeating daily so you get them off the daily agenda and reset to TODO
-** Recurring tasks and copy subtree
-** Working on stuff
-*** Limiting time spent
+** UNFINISHED Recurring tasks and copy subtree
+** UNFINISHED Working on stuff
+*** UNFINISHED Limiting time spent
 [MAX1h] [MIN1h] and daily recurring scheduled tasks
+** UNFINISHED More unproven productivity tools
+*** UNFINISHED Limiting the agenda to a subtree
+Using =C-c C-x <= and =C-c C-x >=
+
