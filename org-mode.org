@@ -783,16 +783,12 @@ that can be estimated and clocked.  Projects use the following state transitions
 (setq org-clock-in-switch-to-state "STARTED")
 ;; Save clock data and notes in the LOGBOOK drawer
 (setq org-clock-into-drawer t)
-;; Sometimes I change tasks I'm clocking quickly - this just removes clocked tasks with 0:00 duration
+;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
 (setq org-clock-out-remove-zero-time-clocks t)
 ;; Don't clock out when moving task to a done state
 (setq org-clock-out-when-done nil)
 ;; Save the running clock and all clock history when exiting Emacs, load it on startup
 (setq org-clock-persist t)
-;; Agenda clock reports parameters (no links, 2 levels deep)
-(setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
-;; Agenda log mode items to display (clock time only by default)
-(setq org-agenda-log-mode-items (quote (clock)))
 #+end_src
 ** Clocking in
   When I start or continue working on a task I clock it in with =C-c
@@ -1089,45 +1085,98 @@ Recent Tasks
 
    This works for me.  You're mileage may vary ;)
 
-* UNFINISHED Time reporting and tracking
-  At the beginning of the month I invoice my clients for work done
-  over the past month.  This is where I review my clocking data for 
-  correctness before billing for the time.
+* Time reporting and tracking
+** Billing clients based on clocked time
+   At the beginning of the month I invoice my clients for work done
+   last month.  This is where I review my clocking data for 
+   correctness before billing for the time.
 
-  Billing for time basically boils down to
+   Billing for time basically boils down to the following steps:
 
-  - Check that the clock data in complete and correct
-  - Generate a clock report to summarize time spent
-  - Create an invoice based on the clock data
-  - Archive complete tasks so they are out of the way.
+   1. Verify that that clock data in complete and correct
+   2. Use clock reports to summarize time spent
+   3. Create an invoice based on the clock data
 
-    See the [[Archiving]] section for more details
-** Check that the clock data in complete and correct
-   Before invoicing for time at the end of the month it's important to
-   make sure your clocked time data is correct.  If you have a clocked
-   time with an entry that is not closed (ie. it has no end time) then
-   that is a hole in your clocked timeframe and it gets counted as
-   zero (0) for time spent on the task which is almost certainly
-   wrong.
+      I currently create invoices in an external software package
+      based on the org-mode clock data.
+
+   4. Archive complete tasks so they are out of the way.
+
+      See [[*Archiving]] for more details.
+*** Verify that clock data in complete and correct
+   Since I change tasks often (sometimes more than once in a minute) I use the following setting
+   to remove clock entries with a zero duration.
+#+begin_src emacs-lisp
+;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
+(setq org-clock-out-remove-zero-time-clocks t)
+#+end_src
+
+   This setting just keeps my clocked log entries clean - only
+   recording entries that contribute to the clock report.
+
+   Before invoicing for time it is important to make sure your clocked
+   time data is correct.  If you have a clocked time with an entry
+   that is not closed (ie. it has no end time) then that is a hole in
+   your clocked day and it gets counted as zero (0) for time spent on
+   the task when generating clock reports.  Counting it as zero is
+   almost certainly wrong.
 
    To check for unclosed clock times I use the agenda-view log-mode
    (=l= in the agenda) with the following setup which shows clocked
    times only by default.  To see all task state changes you can issue
    a prefix to this command (=C-u l= in the agenda).
 
-   To check 
+   To check the last month's clock data I use =F12 a m left-arrow l=
+   which shows a full month in the agenda, moves to the previous
+   month, and shows the clocked times only.
 
    The clocked-time only display in the agenda makes it easy to
    quickly scan down the list to see if an entry is missing an end
    time.  If an entry is not closed you can manually fix the clock
    entry based on other clock info around that time.
 
-   Use the following setup to get log mode in the agenda to only show clocked times:
+   Use the following setup to get log mode in the agenda to only show
+   clocked times:
 #+begin_src emacs-lisp
 ;; Agenda log mode items to display (clock time only by default)
 (setq org-agenda-log-mode-items (quote (clock)))
 #+end_src
+*** Using clock reports to summarize time spent
+   Billable time for clients are kept in separate org files.
 
+   To get a report of time spent on tasks for =XYZ.org= you simply
+   visit the =XYZ.org= file and run an agenda clock report for the
+   last month with =F12 1 a m left-arrow R=
+
+   This limits the agenda to this one file, shows the agenda for a 
+   full month, moves to last month, and generates a clock report.
+   Just scroll down to the end of the agenda to see the report.
+
+   I export the agenda to a text file with =C-x C-w XYZ.txt= so I can
+   cut and paste the report and save it with the invoice.
+
+   My agenda org clock report settings show 2 levels of detail and do
+   not show links so that they are easier to cut and paste into other
+   applications.
+#+begin_src emacs-lisp
+;; Agenda clock reports parameters (no links, 2 levels deep)
+(setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
+#+end_src
+
+   I used to have a monthly clock report dynamic block in each project
+   org file and manually updated them at the end of my billing cycle.
+   I moved to using agenda clock reports shortly after that feature
+   was added since I find this much more convenient.  The data isn't
+   normally for consumption by anyone else so the format of the agenda
+   clock report format is great for my use-case.
+
+** UNFINISHED Reviewing projects and tasks
+*** UNFINISHED Column View
+#+begin_src emacs-lisp
+; Set default column view headings: Task Quoted Estimated_Effort Clock_Summary
+(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
+#+end_src
+*** UNFINISHED =C-c C-x C-d=
 * Archiving
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a
@@ -1509,7 +1558,6 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 #+begin_src emacs-lisp
 (setq org-blank-before-new-entry (quote ((heading)
 					 (plain-list-item))))
-(setq org-columns-default-format "%40ITEM(Task) %17Quoted(Quoted) %17Effort(Estimated Effort){:} %CLOCKSUM")
 (setq org-cycle-include-plain-lists t)
 (setq org-cycle-separator-lines 0)
 (setq org-deadline-warning-days 30)
@@ -1565,8 +1613,7 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 					  (tags priority-down))))
 (setq org-agenda-start-on-weekday nil)
 (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
-(setq org-agenda-time-grid (quote ((daily weekly today require-timed remove-match)
-				   "----------------" 
+(setq org-agenda-time-grid (quote (nil "----------------" 
 				   (800 1000 1200 1400 1600 1800 2000))))
 #+end_src
 * Things I Don't Use
