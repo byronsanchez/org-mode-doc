@@ -1090,9 +1090,44 @@ Recent Tasks
    This works for me.  You're mileage may vary ;)
 
 * UNFINISHED Time reporting and tracking
-** UNFINISHED Checking for holes in clocked times
-   - agenda log mode with clocked times as default
-     describe my default agenda log view
+  At the beginning of the month I invoice my clients for work done
+  over the past month.  This is where I review my clocking data for 
+  correctness before billing for the time.
+
+  Billing for time basically boils down to
+
+  - Check that the clock data in complete and correct
+  - Generate a clock report to summarize time spent
+  - Create an invoice based on the clock data
+  - Archive complete tasks so they are out of the way.
+
+    See the [[Archiving]] section for more details
+** Check that the clock data in complete and correct
+   Before invoicing for time at the end of the month it's important to
+   make sure your clocked time data is correct.  If you have a clocked
+   time with an entry that is not closed (ie. it has no end time) then
+   that is a hole in your clocked timeframe and it gets counted as
+   zero (0) for time spent on the task which is almost certainly
+   wrong.
+
+   To check for unclosed clock times I use the agenda-view log-mode
+   (=l= in the agenda) with the following setup which shows clocked
+   times only by default.  To see all task state changes you can issue
+   a prefix to this command (=C-u l= in the agenda).
+
+   To check 
+
+   The clocked-time only display in the agenda makes it easy to
+   quickly scan down the list to see if an entry is missing an end
+   time.  If an entry is not closed you can manually fix the clock
+   entry based on other clock info around that time.
+
+   Use the following setup to get log mode in the agenda to only show clocked times:
+#+begin_src emacs-lisp
+;; Agenda log mode items to display (clock time only by default)
+(setq org-agenda-log-mode-items (quote (clock)))
+#+end_src
+
 * Archiving
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a
