@@ -1176,7 +1176,10 @@ Recent Tasks
 ; Set default column view headings: Task Quoted Estimated_Effort Clock_Summary
 (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
 #+end_src
-*** UNFINISHED =C-c C-x C-d=
+*** UNFINISHED org-clock-display
+=C-c C-x C-d=
+*** UNFINISHED Dynamic column view clock report
+=C-c C-x i RET=
 * Archiving
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a
