@@ -1089,9 +1089,10 @@ Recent Tasks
 ** Billing clients based on clocked time
    At the beginning of the month I invoice my clients for work done
    last month.  This is where I review my clocking data for 
-   correctness before billing for the time.
+   correctness before billing for the clocked time.
 
-   Billing for time basically boils down to the following steps:
+   Billing for clocked time basically boils down to the following
+   steps:
 
    1. Verify that that clock data in complete and correct
    2. Use clock reports to summarize time spent
@@ -1112,19 +1113,19 @@ Recent Tasks
 #+end_src
 
    This setting just keeps my clocked log entries clean - only
-   recording entries that contribute to the clock report.
+   keeping clock entries that contribute to the clock report.
 
-   Before invoicing for time it is important to make sure your clocked
-   time data is correct.  If you have a clocked time with an entry
-   that is not closed (ie. it has no end time) then that is a hole in
-   your clocked day and it gets counted as zero (0) for time spent on
-   the task when generating clock reports.  Counting it as zero is
-   almost certainly wrong.
+   Before invoicing for clocked time it is important to make sure your
+   clocked time data is correct.  If you have a clocked time with an
+   entry that is not closed (ie. it has no end time) then that is a
+   hole in your clocked day and it gets counted as zero (0) for time
+   spent on the task when generating clock reports.  Counting it as
+   zero is almost certainly wrong.
 
    To check for unclosed clock times I use the agenda-view log-mode
    (=l= in the agenda) with the following setup which shows clocked
-   times only by default.  To see all task state changes you can issue
-   a prefix to this command (=C-u l= in the agenda).
+   times only by default.  (To see all task state changes you can issue
+   a prefix to this command (=C-u l= in the agenda)).
 
    To check the last month's clock data I use =F12 a m left-arrow l=
    which shows a full month in the agenda, moves to the previous
@@ -1146,20 +1147,20 @@ Recent Tasks
 
    To get a report of time spent on tasks for =XYZ.org= you simply
    visit the =XYZ.org= file and run an agenda clock report for the
-   last month with =F12 1 a m left-arrow R=
-
-   This limits the agenda to this one file, shows the agenda for a 
-   full month, moves to last month, and generates a clock report.
-   Just scroll down to the end of the agenda to see the report.
+   last month with =F12 1 a m left-arrow R=.  This limits the agenda
+   to this one file, shows the agenda for a full month, moves to last
+   month, and generates a clock report.  Just scroll down to the end
+   of the agenda to see the report.
 
    I export the agenda to a text file with =C-x C-w XYZ.txt= so I can
-   cut and paste the report and save it with the invoice.
+   cut and paste the report and save it as supporting information with
+   the invoice.
 
    My agenda org clock report settings show 2 levels of detail and do
    not show links so that they are easier to cut and paste into other
    applications.
 #+begin_src emacs-lisp
-;; Agenda clock reports parameters (no links, 2 levels deep)
+;; Agenda clock report parameters (no links, 2 levels deep)
 (setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
 #+end_src
 
@@ -1170,15 +1171,20 @@ Recent Tasks
    normally for consumption by anyone else so the format of the agenda
    clock report format is great for my use-case.
 
-** Task Estimates
+** Task Estimates and column view
    Estimating how long tasks take to complete is a difficult skill to
    master.  Org-mode makes it easy to practice creating estimates for
    tasks and then clock the actual time it takes to complete.
 
    By repeatedly estimating tasks and reviewing how your estimate
    relates to the actual time clocked you can tune your estimating
-   skill.
+   skills.
 *** Creating a task estimate with column mode
+#+begin_src emacs-lisp
+; Set default column view headings: Task Quoted Estimated_Effort Clock_Summary
+(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
+#+end_src
+
    I use =properties= and =column view= to do project estimates.
    A property called =Effort= records the amount of time I think
    a given task will take to complete.  The estimate times I use
@@ -1212,17 +1218,48 @@ Recent Tasks
    After setting the effort values exit =column mode= with =q=.
    
 *** Saving your estimate
+    For fixed price jobs where you provide your estimate to a client,
+    then work to complete the project it is useful to save the
+    original estimate that is provided to the client.
+
+    Save your original estimate by creating a dynamic clock report
+    table at the top of your estimated project subtree.  Entering
+    =C-c C-x i RET= inserts a clock table report with your estimated
+    values and any clocked time to date.
+
+#+begin_example 
+Original Estimate
+#+BEGIN: columnview :hlines 1 :id local
+| Task                        | Estimated Effort | CLOCKSUM |
+|-----------------------------+------------------+----------|
+| ** TODO Project to estimate |             5:40 |          |
+| *** TODO Step 1             |             0:10 |          |
+| *** TODO Step 2             |             0:10 |          |
+| *** TODO Step 3             |             5:10 |          |
+| **** TODO Step 3.1          |             2:00 |          |
+| **** TODO Step 3.2          |             3:00 |          |
+| **** TODO Step 3.3          |             0:10 |          |
+| *** TODO Step 4             |             0:10 |          |
+#+END:
+#+end_example
+
+    I normally delete the =#+BEGIN:= and =#+END:= lines from the original
+    table after providing the estimate to the client to ensure I don't
+    accidentally update the table by hitting =C-c C-c= on the =#+BEGIN:= line.
+
+    This makes it possible to refine the project tasks into subtasks as 
+    you work on the project without losing the original estimate data.
+    
 *** Reviewing your estimate
-** UNFINISHED Reviewing projects and tasks
-*** UNFINISHED Column View
-#+begin_src emacs-lisp
-; Set default column view headings: Task Quoted Estimated_Effort Clock_Summary
-(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
-#+end_src
-*** UNFINISHED org-clock-display
-=C-c C-x C-d=
-*** UNFINISHED Dynamic column view clock report
-=C-c C-x i RET=
+    =Column view= is great for reviewing your estimate.  This shows
+    your estimate value and the total clock time for the project.
+
+    Creating a dynamic clock table with =C-c C-x i RET= is a great
+    way to save this project review if you need to make it available
+    to other applications.
+
+    =C-c C-x C-d= provides a quick summary of clocked time for the
+    current org file.
 * Archiving
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a
