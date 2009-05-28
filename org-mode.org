@@ -1557,6 +1557,65 @@ becomes this!
 
    All I need to remember to do is edit the appropriate org file and
    publish it with C-S-F12 -- not exactly hard :)
+** UNFINISHED Playing with graphviz
+*** Small Graph
+#+begin_dot dot gv01.png -Tpng
+digraph G {
+  main -> parse -> execute;
+  main -> init;
+  main -> cleanup;
+  execute -> make_string;
+  execute -> printf;
+  init -> make_string;
+  main -> printf;
+  execute -> compare;
+};
+#+end_dot
+
+*** Fancy Graph
+#+begin_dot dot gv02.png -Tpng
+digraph G {
+  size = "4,4";
+  main [shape=box];  /* this is a comment */
+  main -> parse [weight=8];
+  parse -> execute;
+  main -> init [style=dotted];
+  main -> cleanup;
+  execute -> { make_string; printf;};
+  init -> make_string;
+  edge [color=red]; // so is this
+  main -> printf [style=bold, label="100 times"];
+  make_string [label="make a\nstring"];
+  node [shape=box,style=filled,color=".78 .3 1.0"];
+  execute -> compare;
+};
+#+end_dot
+***  Polygonal Shapes
+#+begin_dot dot gv03.png -Tpng
+digraph G {
+  a -> b -> c;
+  b -> d;
+  a [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled];
+  c [shape=polygon,sides=4,skew=.4,label="hello world"];
+  d [shape=invtriangle];
+  e [shape=polygon,sides=4,distortion=.7];
+};
+#+end_dot
+
+*** Structures
+#+begin_dot dot gv04.png -Tpng
+digraph structs {
+  node [shape=record];
+  struct1 [shape=record,label="<f0> left|<f1> mid\ dle|<f2> right"];
+  struct2 [shape=record,label="<f0> one|<f1> two"];
+  struct3 [shape=record,label="hello\nworld |{ b |{c|<here> d|e}| f}| g | h"];
+  struct1 -> struct2;
+  struct1 -> struct3;
+};
+*** 
+#+end_dot
+
+
 * Reminders
   I use appt for reminders.  It's simple and unobtrusive -- putting
   pending appointments in the status bar and beeping as 12, 9, 6, 3,
