@@ -497,18 +497,16 @@ that can be estimated and clocked.  Projects use the following state transitions
    lose my focus on that but I can't afford to forget this little thing that just came up.
 
    So what do I do?  Hit =C-M-r= to start remember mode and select =t= since it's a new task and I get a buffer like this
-#+begin_example OPTIONS
- ##     C-c C-c  "~/git/org/tasks.org" -> "* bottom"
- ## C-u C-c C-c  like C-c C-c, and immediately visit note at target location
- ## C-0 C-c C-c  "???" -> "* ???"
- ## C-1 C-c C-c  to select file and header location interactively.
- ## C-2 C-c C-c  as child of the currently clocked item
- ## To switch templates, use `C-M-r'.  To abort use `C-c C-k'.
-
- * TODO 
-   [2009-04-19 Sun]
-   [[file:~/git/doc.norang.ca/org-mode.org::*Remember%20Tasks%20is%20all%20about%20begin%20FAST][file:~/git/doc.norang.ca/org-mode.org::*Remember Tasks is all about begin FAST]]
-#+end_example
+:  ##     C-c C-c  "~/git/org/tasks.org" -> "* bottom"
+:  ## C-u C-c C-c  like C-c C-c, and immediately visit note at target location
+:  ## C-0 C-c C-c  "???" -> "* ???"
+:  ## C-1 C-c C-c  to select file and header location interactively.
+:  ## C-2 C-c C-c  as child of the currently clocked item
+:  ## To switch templates, use `C-M-r'.  To abort use `C-c C-k'.
+: 
+:  * TODO 
+:    [2009-04-19 Sun]
+:    [[file:~/git/doc.norang.ca/org-mode.org::*Remember%20Tasks%20is%20all%20about%20begin%20FAST][file:~/git/doc.norang.ca/org-mode.org::*Remember Tasks is all about begin FAST]]
 
    Enter the details of the TODO item and =C-c C-c= to file it away in tasks.org and go right back
    to what I'm really working on secure in the knowledge that that item isn't going to get lost and 
@@ -1399,16 +1397,12 @@ becomes this!
 (load "~/git/org-mode/contrib/lisp/org-exp-blocks")
 (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
 #+end_src
-** Playing with graphviz					   :noexport:
+** Playing with graphviz
 [[http://www.graphviz.org/][Graphviz]] is another great tool for creating graphics in your documents.
-
-*NOTE* graphviz support is not currently part of the official org-mode
-       repository.  This uses a modifed =org-exp-blocks.el= posted to
-       the mailing list on May 27, 2009.
 
 This
 
-: #+begin_dot dot gv01.png -Tpng
+: #+begin_dot gv01.png -Tpng
 : digraph G {
 :   concentrate=true;
 :   subgraph cluster_wrapline {
@@ -1444,7 +1438,7 @@ This
 
 becomes this!
 
-#+begin_dot dot gv01.png -Tpng
+#+begin_dot gv01.png -Tpng
 digraph G {
   concentrate=true;
   subgraph cluster_wrapline {
