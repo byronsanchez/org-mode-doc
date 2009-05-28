@@ -1339,34 +1339,32 @@ ditaa:
 
 This
 
-#+begin_example
- #+begin_ditaa communication.png -r -s 0.8
- :      +-----------+        +---------+  
- :      |    PLC    |        |         |                
- :      |  Network  +<------>+   PLC   +<---=---------+ 
- :      |    cRED   |        |  c707   |              | 
- :      +-----------+        +----+----+              | 
- :                                ^                   | 
- :                                |                   | 
- :                                |  +----------------|-----------------+
- :                                |  |                |                 |
- :                                v  v                v                 v
- :        +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients
- :        |          |       |          |      |           |      |           |      +----+      +----+
- :        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL|
- :        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    |
- :        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+
- :           ^    ^          +----------+             ^           +-------+---+
- :           |    |                                   |                        
- :           |    +--------=--------------------------+                    
- :           v                                                             
- :  +--------+--------+                                                         
- :  |                 |                                                         
- :  | Millwide System |            -------- Data ---------                      
- :  | cBLU            |            --=----- Signals ---=--                      
- :  +-----------------+                                                         
- #+end_ditaa
-#+end_example
+: #+begin_ditaa communication.png -r -s 0.8 
+:      +-----------+        +---------+   
+:      |    PLC    |        |         |                 
+:      |  Network  +<------>+   PLC   +<---=---------+  
+:      |    cRED   |        |  c707   |              |  
+:      +-----------+        +----+----+              |  
+:                                ^                   |  
+:                                |                   |  
+:                                |  +----------------|-----------------+ 
+:                                |  |                |                 | 
+:                                v  v                v                 v 
+:        +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients 
+:        |          |       |          |      |           |      |           |      +----+      +----+ 
+:        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL| 
+:        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    | 
+:        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+ 
+:           ^    ^          +----------+             ^           +-------+---+ 
+:           |    |                                   |                         
+:           |    +--------=--------------------------+                     
+:           v                                                              
+:  +--------+--------+                                                          
+:  |                 |                                                          
+:  | Millwide System |            -------- Data ---------                       
+:  | cBLU            |            --=----- Signals ---=--                       
+:  +-----------------+                                                         
+: #+end_ditaa
 
 becomes this!
 
@@ -1401,6 +1399,86 @@ becomes this!
 (load "~/git/org-mode/contrib/lisp/org-exp-blocks")
 (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
 #+end_src
+** Playing with graphviz					   :noexport:
+[[http://www.graphviz.org/][Graphviz]] is another great tool for creating graphics in your documents.
+
+*NOTE* graphviz support is not currently part of the official org-mode
+       repository.  This uses a modifed =org-exp-blocks.el= posted to
+       the mailing list on May 27, 2009.
+
+This
+
+: #+begin_dot dot gv01.png -Tpng
+: digraph G {
+:   concentrate=true;
+:   subgraph cluster_wrapline {
+:     label="Wrapline Control System";
+:     color=purple;
+:     sharedmem [style=filled, fillcolor=lightgrey, shape=box];
+:     sharedmem -> exec [style=dotted];
+:     sharedmem -> db [style=dotted];
+:     sharedmem -> plc [style=dotted];
+:     sharedmem -> opserver [style=dotted];
+:     exec -> db;
+:     exec -> opserver;
+:     plc -> exec;
+:   };
+:   plcnet [shape=box, label="PLC Network"];
+:   plcnet -> plc;
+:   millwide [shape=box, label="Millwide System"];
+:   db -> millwide;
+: 
+:   subgraph cluster_opclients {
+:     color=blue;
+:     client1[label="client"];
+:     client2[label="client"];
+:     client3[label="client"];
+:     clientn[label="client"];
+:     opserver -> client1;
+:     opserver -> client2;
+:     opserver -> client3;
+:     opserver -> clientn;
+:   };
+: };
+: #+end_dot
+
+becomes this!
+
+#+begin_dot dot gv01.png -Tpng
+digraph G {
+  concentrate=true;
+  subgraph cluster_wrapline {
+    label="Wrapline Control System";
+    color=purple;
+    sharedmem [style=filled, fillcolor=lightgrey, shape=box];
+    sharedmem -> exec [style=dotted];
+    sharedmem -> db [style=dotted];
+    sharedmem -> plc [style=dotted];
+    sharedmem -> opserver [style=dotted];
+    exec -> db;
+    exec -> opserver;
+    plc -> exec;
+  };
+  plcnet [shape=box, label="PLC Network"];
+  plcnet -> plc;
+  millwide [shape=box, label="Millwide System"];
+  db -> millwide;
+
+  subgraph cluster_opclients {
+    color=blue;
+    client1[label="client"];
+    client2[label="client"];
+    client3[label="client"];
+    clientn[label="client"];
+    opserver -> client1;
+    opserver -> client2;
+    opserver -> client3;
+    opserver -> clientn;
+  };
+};
+#+end_dot
+
+
 
 ** Publishing Single Files
    Org-mode exports the current file to one of the standard formats by
@@ -1557,47 +1635,6 @@ becomes this!
 
    All I need to remember to do is edit the appropriate org file and
    publish it with C-S-F12 -- not exactly hard :)
-** Playing with graphviz
-[[http://www.graphviz.org/][Graphviz]] is another great tool for creating graphics in your documents.
-
-#+begin_dot dot gv01.png -Tpng
-digraph G {
-  concentrate=true;
-  size="8,6"; ratio=fill;
-  subgraph cluster_wrapline {
-    label="Wrapline Control System";
-    fontsize=30;
-    color=purple;
-    sharedmem; exec; opserver; db; plc;
-    sharedmem [style=filled, fillcolor=lightgrey, shape=box];
-    sharedmem -> exec [style=dotted];
-    sharedmem -> db [style=dotted];
-    sharedmem -> plc [style=dotted];
-    sharedmem -> opserver [style=dotted];
-    exec -> db;
-    exec -> opserver;
-    plc -> exec;
-  };
-  plcnet [shape=box, label="PLC Network"];
-  plcnet -> plc;
-  millwide [shape=box, label="Millwide System"];
-  db -> millwide;
-
-  subgraph cluster_opclients {
-    color=blue;
-    concentrate=true;
-    node[style=filled, fillcolor=yellow];
-    client1[label="Client"];
-    client2[label="Client"];
-    client3[label="Client"];
-    clientn[label="Client"];
-    opserver -> client1;
-    opserver -> client2;
-    opserver -> client3;
-    opserver -> clientn;
-  };
-};
-#+end_dot
 
 
 * Reminders
