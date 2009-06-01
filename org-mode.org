@@ -1228,28 +1228,28 @@ Original Estimate
    handy.  This pops up as a reminder on Monday's.  This week I'm
    doing my weekly review on Tuesday since Monday was a holiday.
 
-#+begin_example 
-** STARTED Weekly Review [0/5]
-   SCHEDULED: <2009-05-18 Mon ++1w> 
-   :LOGBOOK:...
-   :PROPERTIES:...
-
-   What to review:
-
-    - [ ] Check follow-up folder
-    - [ ] Review new tasks                                  F12-r
-      - if it takes less than 5 minutes just do it
-      - otherwise assign an estimated time and file it somewhere
-      - Refile billable work to appropriate location
-    - [ ] Check for stuck projects and add next tasks       F12-#         
-    - [ ] Review all tasks F12 t
-      - [ ] Work tasks /w
-      - [ ] Projects / P
-      - [ ] Next Tasks / N  (Next tasks can not be blocked)
-	- Move NEXT tag to subtasks as required
-      - [ ] Waiting / W
-    - [ ] Make plan for the week (out of NEXT tasks)
-#+end_example
+: ** STARTED Weekly Review [0/5]
+:    SCHEDULED: <2009-05-18 Mon ++1w> 
+:    :LOGBOOK:...
+:    :PROPERTIES:...
+: 
+:    What to review:
+: 
+:     - [ ] Check follow-up folder
+:     - [ ] Review new tasks                                  F12-r
+:       - if it takes less than 5 minutes just do it
+:       - otherwise assign an estimated time and file it somewhere
+:       - Refile billable work to appropriate location
+:     - [ ] Check for stuck projects and add next tasks       F12-#         
+:     - [ ] Review all tasks F12 t
+:       - [ ] Work tasks F12 t / w / - W
+:       - [ ] Miscellaneous work tasks / - P / - W
+:       - [ ] Projects F12 P
+:       - [ ] Next Tasks F12 t / N / - W (Next tasks can not be blocked)
+: 	- Move NEXT tag to subtasks or remove as required
+:       - [ ] Waiting Tasks F12 t 4 r
+:       - [ ] Someday Tasks F12 t 5 r
+:     - [ ] Make plan for the week (out of NEXT tasks)
 
    The first item [ ] Check follow-up folder makes me pull out the
    paper file I dump stuff into all week long - things I need to take
