@@ -1667,13 +1667,21 @@ digraph G {
   :CUSTOM_ID: ProductivityTools
   :END:
 
-** UNFINISHED Yasnippets
+** Yasnippets
+   Yasnippets is cool!  You type the snippet name and =TAB= and yasnippet expands the name
+   with the contents of the snippet text - substituting snippet variables as appropriate.
+
+   Yasnippet comes with lots of snippets for programming languages.  So far I only use
+   1 snippet =block= for =org-mode=.
+
+   Setup =yasnippet= with the following code in your =.emacs=
 #+begin_src emacs-lisp
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
 #+end_src
 
+   Here is the definition for the =block= snippet.
 org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/block
 #+begin_example 
 #name : #+begin_...#+end_
@@ -1683,9 +1691,19 @@ $0
 #+end_$1
 #+end_example
 
-** UNFINISHED Limit your view to what you are working on
-*** UNFINISHED Using =f5=
-=f5= is bound the following function
+   I use this to create =#+begin_*= blocks like =#+begin_example=,
+   =#+begin_dot=, =#=begin_src=, etc.
+
+   Simple type =block= then =TAB= and it replaces the =block= text with the snippet contents.
+   Then type =src TAB emacs-lisp TAB= and your snippet block is done.  =C-c '= and 
+   enter whatever emacs-lisp code you want to insert.  In this block you're in a mode
+   that knows how to format and colourize lisp code as you enter it which is really nice.
+   =C-c '= exits back to org-mode.
+
+   This is a great time saver.
+** Limit your view to what you are working on
+*** Narrowing to a subtree with =my-org-todo=
+=f5= is bound the function =my-org-todo= which is defined as follows:
 
 #+begin_src emacs-lisp
 (global-set-key (kbd "<f5>") 'my-org-todo)
@@ -1702,9 +1720,80 @@ by limiting your view to this task subtree and all of the items left to work on.
 
 I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and =C-c C-v= combination
 leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the normal view.
-** UNFINISHED Highlight the current agenda line
+*** Limiting the agenda to a subtree
+    =C-c C-x <= turns on the agenda restriction lock to the current subtree.
+    This keeps your agenda focused on only this subtree.  Alarms and notifications are still
+    active outside the agenda restriction.  =C-c C-x >= turns off the agenda restriction
+    lock returning your agenda view back to normal.
+
+    I don't normally use the agenda restriction lock.  Normally I want to see =work= 
+    tasks which are in multiple files so agenda view filtering works better for me.
+*** Limiting the agenda to a file
+    You can limit the agenda view to a single file in multiple ways.
+
+    You can use the agenda restriction lock =C-c C-x <= on the
+    =#+STARTUP:= keyword (or any other keyword) in the file.  This
+    lock stays in effect until you remove it with =C-c C-x C-r=.
+
+    Another way is to invoke the agenda with =F12 1 a= while visiting
+    an org-mode file.  This limits the agenda view to just this file.
+    I occassionally use this to view a file not in my
+    =org-agenda-files= in the agenda.
+
+** Tuning the Agenda Views
+   Various customizations affect how the agenda views show task
+   details.  This section shows each of the customizations I use in my
+   workflow.
+*** Highlight the current agenda line
+    The following code in my =.emacs= file keeps the current agenda
+    line highlighted.  This makes it obvious what task will be
+    affected by commands issued in the agenda.  No more acting on the
+    wrong task by mistake!
+
 #+begin_src emacs-lisp
+;; Always hilight the current agenda line
 (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
+#+end_src
+
+*** Remove tasks with dates from the global todo lists
+    Task with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show
+    up in the agenda when appropriate.  Use the following settings to
+    remove these tasks from the global todo lists.  The idea here is
+    the agenda has date-related items and the global todo lists have
+    everything else.  Keeping tasks on one list only prevents having
+    to review tasks more than once on the weekly review.
+
+    Tasks with dates are scheduled into the future sometime and you
+    don't need to deal with them until the date approaches.
+#+begin_src emacs-lisp
+;; Keep tasks with dates off the global todo lists
+(setq org-agenda-todo-ignore-with-date t)
+;; Remove completed deadline tasks from the agenda view
+(setq org-agenda-skip-deadline-if-done t)
+;; Remove completed scheduled tasks from the agenda view
+(setq org-agenda-skip-scheduled-if-done t)
+#+end_src
+
+*** Use the Diary for Holidays only
+    I don't use the emacs Diary for anything but holiday information.
+    I like seeing the holidays on my agenda.  This helps with planning
+    for those days when you're not supposed to be working.
+
+#+begin_src emacs-lisp
+(setq org-agenda-include-diary t)
+#+end_src
+
+*** UNFINISHED Other agenda stuff
+#+begin_src emacs-lisp
+(setq org-agenda-repeating-timestamp-show-all t)
+(setq org-agenda-show-all-dates t)
+(setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down effort-up category-up)
+					  (todo priority-down)
+					  (tags priority-down))))
+(setq org-agenda-start-on-weekday nil)
+(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
+(setq org-agenda-time-grid (quote (nil "----------------" 
+				   (800 1000 1200 1400 1600 1800 2000))))
 #+end_src
 
 ** UNFINISHED Checklist handling
@@ -1763,22 +1852,6 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 #+begin_src emacs-lisp
 (setq org-log-done (quote time))
 (setq org-log-into-drawer t)
-#+end_src
-** UNFINISHED Agenda settings
-#+begin_src emacs-lisp
-(setq org-agenda-todo-ignore-with-date t)
-(setq org-agenda-include-diary t)
-(setq org-agenda-repeating-timestamp-show-all t)
-(setq org-agenda-show-all-dates t)
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-agenda-skip-scheduled-if-done t)
-(setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down effort-up category-up)
-					  (todo priority-down)
-					  (tags priority-down))))
-(setq org-agenda-start-on-weekday nil)
-(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
-(setq org-agenda-time-grid (quote (nil "----------------" 
-				   (800 1000 1200 1400 1600 1800 2000))))
 #+end_src
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
