@@ -1662,17 +1662,20 @@ digraph G {
 ; If we leave Emacs running overnight - reset the appointments one minute after midnight
 (run-at-time "24:01" nil 'my-org-agenda-to-appt)
 #+end_src
-* UNFINISHED Productivity Tools
+* Productivity Tools
   :PROPERTIES:
   :CUSTOM_ID: ProductivityTools
+  :NOBLOCKING: t
   :END:
-
+  This section is a miscellaneous collection of Emacs customizations that I use
+  with org-mode so that it Works-For-Me(tm).
 ** Yasnippets
-   Yasnippets is cool!  You type the snippet name and =TAB= and yasnippet expands the name
-   with the contents of the snippet text - substituting snippet variables as appropriate.
+   Yasnippets is cool!  You type the snippet name and =TAB= and
+   yasnippet expands the name with the contents of the snippet text -
+   substituting snippet variables as appropriate.
 
-   Yasnippet comes with lots of snippets for programming languages.  So far I only use
-   1 snippet =block= for =org-mode=.
+   Yasnippet comes with lots of snippets for programming languages.
+   So far I only use 1 snippet (=block=) for =org-mode=.
 
    Setup =yasnippet= with the following code in your =.emacs=
 #+begin_src emacs-lisp
@@ -1681,7 +1684,8 @@ digraph G {
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
 #+end_src
 
-   Here is the definition for the =block= snippet.
+   Here is the definition for the =block= snippet:
+
 org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/block
 #+begin_example 
 #name : #+begin_...#+end_
@@ -1691,17 +1695,26 @@ $0
 #+end_$1
 #+end_example
 
-   I use this to create =#+begin_*= blocks like =#+begin_example=,
-   =#+begin_dot=, =#=begin_src=, etc.
+   I use this to create =#+begin_*= blocks like 
+     - =#+begin_example=
+     - =#+begin_dot=
+     - =#=begin_src=
+     - etc.
 
-   Simple type =block= then =TAB= and it replaces the =block= text with the snippet contents.
-   Then type =src TAB emacs-lisp TAB= and your snippet block is done.  =C-c '= and 
-   enter whatever emacs-lisp code you want to insert.  In this block you're in a mode
-   that knows how to format and colourize lisp code as you enter it which is really nice.
-   =C-c '= exits back to org-mode.
+   Simply type =block= then =TAB= and it replaces the =block= text
+   with the snippet contents.  Then type =src TAB emacs-lisp TAB= and
+   your snippet block is done.
+
+   Hit =C-c SingeQuote(')= and insert whatever emacs-lisp code you
+   need.  While in this block you're in a mode that knows how to
+   format and colourize emacs lisp code as you enter it which is
+   really nice.  =C-c SingleQuote(')= exits back to org-mode.  This
+   recognizes any emacs editing mode so all you have to do is enter
+   the appropriate mode name for the block.
 
    This is a great time saver.
 ** Limit your view to what you are working on
+   There is more than one way to do this.  Use what works for you.
 *** Narrowing to a subtree with =my-org-todo=
 =f5= is bound the function =my-org-todo= which is defined as follows:
 
@@ -1715,19 +1728,22 @@ $0
   (widen))
 #+end_src
 
-This makes it easy to hide all of the other details in your org-file temporarily
-by limiting your view to this task subtree and all of the items left to work on.
+This makes it easy to hide all of the other details in your org-file
+temporarily by limiting your view to this task subtree.  Tasks are
+folded and hilighted so that only tasks which are incomplete are
+shown.
 
 I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and =C-c C-v= combination
 leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the normal view.
 *** Limiting the agenda to a subtree
-    =C-c C-x <= turns on the agenda restriction lock to the current subtree.
+    =C-c C-x <= turns on the agenda restriction lock for the current subtree.
     This keeps your agenda focused on only this subtree.  Alarms and notifications are still
     active outside the agenda restriction.  =C-c C-x >= turns off the agenda restriction
     lock returning your agenda view back to normal.
 
-    I don't normally use the agenda restriction lock.  Normally I want to see =work= 
-    tasks which are in multiple files so agenda view filtering works better for me.
+    I don't normally use the agenda restriction lock.  I normally want
+    to see all =work= tasks which are in multiple files so agenda view
+    filtering works better for me.
 *** Limiting the agenda to a file
     You can limit the agenda view to a single file in multiple ways.
 
@@ -1768,8 +1784,10 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 #+begin_src emacs-lisp
 ;; Keep tasks with dates off the global todo lists
 (setq org-agenda-todo-ignore-with-date t)
+
 ;; Remove completed deadline tasks from the agenda view
 (setq org-agenda-skip-deadline-if-done t)
+
 ;; Remove completed scheduled tasks from the agenda view
 (setq org-agenda-skip-scheduled-if-done t)
 #+end_src
@@ -1809,14 +1827,18 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 #+begin_src emacs-lisp
 ;; Show all future entries for repeating tasks
 (setq org-agenda-repeating-timestamp-show-all t)
+
 ;; Show all agenda dates - even if they are empty
 (setq org-agenda-show-all-dates t)
+
 ;; Sorting order for tasks on the agenda
 (setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down effort-up category-up)
 					  (todo priority-down)
 					  (tags priority-down))))
+
 ;; Start the weekly agenda today
 (setq org-agenda-start-on-weekday nil)
+
 ;; Disable display of the time grid
 (setq org-agenda-time-grid (quote (nil "----------------" 
 				   (800 1000 1200 1400 1600 1800 2000))))
@@ -1900,8 +1922,7 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 
 ** Archive Sibling
    This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
-   having a bunch of tasks marked DONE (but not archived)
-
+   having a bunch of tasks marked =DONE= (but not archived)
    
 * Using Git for Automatic History, Backups, and Synchronization
   Editing folded regions of your org-mode file can be hazardous to
