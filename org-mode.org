@@ -1698,7 +1698,7 @@ $0
    I use this to create =#+begin_*= blocks like 
      - =#+begin_example=
      - =#+begin_dot=
-     - =#=begin_src=
+     - =#+begin_src=
      - etc.
 
    Simply type =block= then =TAB= and it replaces the =block= text
@@ -1772,12 +1772,12 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 #+end_src
 
 *** Remove tasks with dates from the global todo lists
-    Task with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show
+    Tasks with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show
     up in the agenda when appropriate.  Use the following settings to
     remove these tasks from the global todo lists.  The idea here is
     the agenda has date-related items and the global todo lists have
-    everything else.  Keeping tasks on one list only prevents having
-    to review tasks more than once on the weekly review.
+    everything else.  Keeping tasks only one list only prevents having
+    to review tasks more than once when browsing the lists.
 
     Tasks with dates are scheduled into the future sometime and you
     don't need to deal with them until the date approaches.
@@ -1824,6 +1824,8 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 
       for the weekly view
     - display of the grid
+
+Here are the =.emacs= settings.
 #+begin_src emacs-lisp
 ;; Show all future entries for repeating tasks
 (setq org-agenda-repeating-timestamp-show-all t)
