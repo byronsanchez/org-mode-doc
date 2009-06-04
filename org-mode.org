@@ -1783,15 +1783,32 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 (setq org-agenda-include-diary t)
 #+end_src
 
-*** UNFINISHED Other agenda stuff
+    My =~/diary= file is empty.
+*** Searches include archive files
+    I keep a single archive file for each of my org-mode project files.
+    This allows me to search the current file and the archive when I need to
+    dig up old information from the archives.
+
+    I don't need this often but it sure it handy on the occasions that
+    I do need it.
+
 #+begin_src emacs-lisp
+;; Include agenda archive files when searching for things
+(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
+#+end_src
+*** Agenda view tuning
+#+begin_src emacs-lisp
+;; Show all future entries for repeating tasks
 (setq org-agenda-repeating-timestamp-show-all t)
+;; Show all agenda dates - even if they are empty
 (setq org-agenda-show-all-dates t)
+;; Sorting order for tasks on the agenda
 (setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down effort-up category-up)
 					  (todo priority-down)
 					  (tags priority-down))))
+;; Start the weekly agenda today
 (setq org-agenda-start-on-weekday nil)
-(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
+;; Disable display of the time grid
 (setq org-agenda-time-grid (quote (nil "----------------" 
 				   (800 1000 1200 1400 1600 1800 2000))))
 #+end_src
