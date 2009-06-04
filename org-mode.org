@@ -71,12 +71,14 @@ creating documents with spelling errors.  =yasnippets= are enabled to
 speed up creation of standard text blocks in most editing modes.
 
 #+begin_src emacs-lisp
+;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    ;; yasnippet
 	    (make-variable-buffer-local 'yas/trigger-key)
 	    (setq yas/trigger-key [tab])
 	    (define-key yas/keymap [tab] 'yas/next-field-group)
+	    ;; flyspell mode to spell checking everywhere
 	    (flyspell-mode 1)))
 #+end_src
 
@@ -1682,6 +1684,16 @@ digraph G {
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
+
+;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    ;; yasnippet
+	    (make-variable-buffer-local 'yas/trigger-key)
+	    (setq yas/trigger-key [tab])
+	    (define-key yas/keymap [tab] 'yas/next-field-group)
+	    ;; flyspell mode to spell checking everywhere
+	    (flyspell-mode 1)))
 #+end_src
 
    Here is the definition for the =block= snippet:
@@ -1747,9 +1759,10 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 *** Limiting the agenda to a file
     You can limit the agenda view to a single file in multiple ways.
 
-    You can use the agenda restriction lock =C-c C-x <= on the
-    =#+STARTUP:= keyword (or any other keyword) in the file.  This
-    lock stays in effect until you remove it with =C-c C-x C-r=.
+    You can use the agenda restriction lock =C-c C-x <= on the any
+    line before the first heading to set the agenda restriction lock
+    to this file only.  This lock stays in effect until you remove it
+    with =C-c C-x C-r=.
 
     Another way is to invoke the agenda with =F12 1 a= while visiting
     an org-mode file.  This limits the agenda view to just this file.
@@ -1793,15 +1806,31 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 #+end_src
 
 *** Use the Diary for Holidays only
-    I don't use the emacs Diary for anything but holiday information.
-    I like seeing the holidays on my agenda.  This helps with planning
-    for those days when you're not supposed to be working.
+    I don't use the emacs Diary for anything but I like seeing the
+    holidays on my agenda.  This helps with planning for those days
+    when you're not supposed to be working.
 
 #+begin_src emacs-lisp
-(setq org-agenda-include-diary t)
+(setq org-agenda-include-diary nil)
 #+end_src
 
-    My =~/diary= file is empty.
+    I don't have a =~/diary= file anymore.
+
+    I include holidays from the calendar in my =todo.org= file as follows
+#+begin_example 
+#+FILETAGS: HOME
+* Appointments
+  :PROPERTIES:
+  :CATEGORY: Appt
+  :ARCHIVE:  %s_archive::* Appointments
+  :END:      
+** Holidays
+   :PROPERTIES:
+   :Category: Holiday
+   :END:
+...
+#+end_example
+
 *** Searches include archive files
     I keep a single archive file for each of my org-mode project files.
     This allows me to search the current file and the archive when I need to
@@ -2044,7 +2073,4 @@ ignored (since I assume they are produced by ditaa during export)
 ** UNFINISHED Working on stuff
 *** UNFINISHED Limiting time spent
 [MAX1h] [MIN1h] and daily recurring scheduled tasks
-** UNFINISHED More unproven productivity tools
-*** UNFINISHED Limiting the agenda to a subtree
-Using =C-c C-x <= and =C-c C-x >=
 
