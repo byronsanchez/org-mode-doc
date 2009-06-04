@@ -1796,7 +1796,16 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 ;; Include agenda archive files when searching for things
 (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
 #+end_src
-*** Agenda view tuning
+*** Agenda view tweaks
+    The following agenda customizations control 
+    - display of repeating tasks
+
+    - display of empty dates on the agenda
+    - task sort order
+    - start the agenda display with today
+
+      for the weekly view
+    - display of the grid
 #+begin_src emacs-lisp
 ;; Show all future entries for repeating tasks
 (setq org-agenda-repeating-timestamp-show-all t)
