@@ -1883,27 +1883,69 @@ Here are the =.emacs= settings:
 		  (800 1000 1200 1400 1600 1800 2000))))
 #+end_src
 
-** UNFINISHED Checklist handling
+** Checklist handling
+   Checklists are great for repeated tasks with lots of things that need to be done.
+   For a long time I was manually resetting the check boxes to unchecked when marking
+   the repeated task =DONE= but no more!  There's a contributed =org-checklist= that
+   can uncheck the boxes automagically when the task is marked done.
+
+   Add the following to your =.emacs=
 #+begin_src emacs-lisp
 (load "~/git/org-mode/contrib/lisp/org-checklist")
 #+end_src
-** UNFINISHED No backups
-   We use git... we don't need backups!  Especially when
-   some of the files are decrypted, edited, and encrypted and the
-   unencrypted backup file is left lying around.
 
-#+begin_src emacs-lisp
-(setq backup-inhibited t)
-#+end_src
+   and then to use it in a task you simply set the property =RESET_CHECK_BOXES= to =t= 
+   like this
+
+: ** TODO Invoicing and Archive Tasks [0/7]
+:    DEADLINE: <2009-07-01 Wed +1m -0d> 
+:    :PROPERTIES:
+:    :RESET_CHECK_BOXES: t
+:    :END:
+: 
+:    - [ ] Do task 1
+:    - [ ] Do task 2
+:    ...
+:    - [ ] Do task 7
+
+** No Emacs backup files
+   This isn't strictly an org-mode customization.
+
+   I don't use Emacs backup files at all.  I find the =*~= files
+   that litter my hard drive rather annoying actually so I turn
+   them off with the following customization:
+
+   #+begin_src emacs-lisp
+   (setq backup-inhibited t)
+   #+end_src
+
+   The main reason I turn off backups is that I have a few encrypted
+   files on my system that I occassionally decrypt, edit with Emacs, 
+   and encrypt again.  After encrypting I delete the plain-text version 
+   of the file.  I always forget to delete the Emacs backup file... and
+   this leaves the plain-text version of the file on disk which is 
+   unacceptable to me.  My solution was no more Emacs backup files.
+
+   org-mode can also encrypt entries but I've never looked into that yet.
+   This may be a good alternative for some of my existing encrypted files
+   but I haven't had the time to explore that yet.
+
 ** UNFINISHED More uncategorized org-mode stuff
 #+begin_src emacs-lisp
 (setq org-blank-before-new-entry (quote ((heading)
 					 (plain-list-item))))
-(setq org-cycle-include-plain-lists t)
+(setq org-cycle-include-plain-lists nil)
 (setq org-cycle-separator-lines 0)
 (setq org-deadline-warning-days 30)
 (setq org-default-notes-file "~/git/org/notes.org")
+#+end_src
+
+Handling blocked tasks and the =NOBLOCKING= property (usually on repeated tasks)
+#+begin_src emacs-lisp
 (setq org-enforce-todo-dependencies t)
+#+end_src
+
+#+begin_src emacs-lisp
 (setq org-id-method (quote uuidgen))
 (setq org-insert-heading-respect-content t)
 #+end_src
@@ -1914,9 +1956,17 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 (setq org-hide-leading-stars nil)
 #+end_src emacs-lisp
 
+I've converted my files between odd-levels-only and odd-even using the
+functions =org-convert-to-odd-levels= and =org-convert-to-oddeven-levels= functions
+a number of times.  I ended up going back to odd-even levels to reduce the amount of
+leading whitespace on tasks.  I didn't find that lining up the headlines and tasks
+in odd-levels-only to be all that helpful.
 #+begin_src emacs-lisp
 (setq org-odd-levels-only nil)
-(setq org-outline-path-complete-in-steps nil)
+#+end_src
+
+#+begin_src emacs-lisp
+(setq org-outline-path-complete-in-steps t)
 (setq org-return-follows-link nil)
 (setq org-reverse-note-order nil)
 (setq org-show-following-heading t)
@@ -2028,12 +2078,15 @@ do
 done
 #+end_src sh
 
-I use the following =.gitignore= file in my org-mode =git= repositories
-to keep export generated files out of my =git= repositories.  If I
-include a graphic from some other source than ditaa then I'll add it
-to the repository manually.  By default all PNG graphic files are
-ignored (since I assume they are produced by ditaa during export)
+I use the following =.gitignore= file in my org-mode =git=
+repositories to keep export generated files out of my =git=
+repositories.  If I include a graphic from some other source than
+ditaa or graphviz then I'll add it to the repository manually.  By
+default all PNG graphic files are ignored (since I assume they are
+produced by ditaa during export)
 #+begin_example 
+core
+core.*
 *.html
 *~
 .#*
@@ -2058,6 +2111,30 @@ ignored (since I assume they are produced by ditaa during export)
    - usb-git-push
    - usb-git-missing
 ** UNFINISHED Git stuff
+   I use =git= in all of my directories where editing a file should be
+   tracked so I can edit files with confidence.  It's easy to go back
+   to a previous version or to see exactly what changed since the last
+   commit.  This is great when editing configuration files (such as
+   apache configrations, bind9 configurations, etc.)
+
+   I find this extremely useful where your edits might break things
+   and having git track the changes means if you break it you can just
+   go back to the previous version easily.  This is also true for
+   package upgrades for software where the upgrade modifies the
+   configuration files.
+
+   I have every version of my edits in a local =git= repository.  Yes
+   backups still get done religiously.  I set up an automated network
+   backup over 10 years ago that is still serving me well today.  All
+   of my systems gets daily backups to a network drive.  Weekly these
+   are collected and written to DVD iso images in case my machines
+   walk off someday.  I'm not going to lose any important data ever
+   again.  Once a week I get an email that says 'These ISO images are
+   ready to be burned to disk' and all I have to do is write them out.
+   Backups take a minimal amount of time currently and I'm really
+   happy about that.  Backups that you have to work hard at don't get
+   gone.
+
 #+begin_src emacs-lisp
 (add-hook 'grb-todo-mode-hook
 	  (lambda ()
