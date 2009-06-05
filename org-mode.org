@@ -1924,11 +1924,44 @@ Here are the =.emacs= settings:
    and encrypt again.  After encrypting I delete the plain-text version 
    of the file.  I always forget to delete the Emacs backup file... and
    this leaves the plain-text version of the file on disk which is 
-   unacceptable to me.  My solution was no more Emacs backup files.
+   unacceptable.  My solution is no more Emacs backup files.
 
-   org-mode can also encrypt entries but I've never looked into that yet.
-   This may be a good alternative for some of my existing encrypted files
-   but I haven't had the time to explore that yet.
+   org-mode can also encrypt entries but I've never looked into that
+   yet.  This may be a good alternative for some of my existing
+   encrypted file work flows but I haven't had the time to explore it.
+   Emacs and org-mode is an adventure!
+
+** Backups
+   =Backups that you have to work hard at don't get gone=.
+
+   I lost a bunch of data over 10 years ago due to not having a
+   working backup solution.  At the time I said =I'm not going to lose
+   any important data ever again=.  So far so good :)
+
+   My backups get done religiously.  What does this have to do with
+   org-mode?  Not much really, other than I don't spend time doing
+   backups -- they just happen -- which saves me time for other more
+   interesting things.
+
+   My backup philosophy is to make it possible to recover your data --
+   not necessarily easy.  It doesn't have to be easy/fast to do the
+   recovery because I'll rarely have to recover data from the backups.
+   Saving time for recovery doesn't make sense to me.  I want the
+   backup to be fast and painless since I do those all the time.
+
+   I set up an automated network backup over 10 years ago that is
+   still serving me well today.  All of my systems gets daily backups
+   to a network drive.  These are collected weekly and written to DVD
+   ISO images in case my machines walk off someday.
+
+   Once a week I get an email that says 'These ISO images are ready to
+   be burned to disk' and all I have to do is write them out.  Backups
+   take minimal effort currently and I'm really happy about that.
+
+   Since then =git= came into my life, so backups of =git=
+   repositories that are on multiple machines is much less critical
+   than it used to be.  There is an automatic backup of everything
+   pushed to the remote repository.
 
 ** UNFINISHED More uncategorized org-mode stuff
 #+begin_src emacs-lisp
@@ -2104,46 +2137,29 @@ core.*
 *.png
 *.toc
 #+end_example
+** Git - Edit files with confidence
+   I use =git= in all of my directories where editing a file should be
+   tracked.
+
+   This means I can edit files with confidence.  I'm free to change
+   stuff and break things because it won't matter.  It's easy to go
+   back to a previous working version or to see exactly what changed
+   since the last commit.  This is great when editing configuration
+   files (such as apache webserver, bind9 DNS configurations, etc.)
+
+   I find this extremely useful where your edits might break things
+   and having =git= tracking the changes means if you break it you can
+   just go back to the previous working version easily.  This is also
+   true for package upgrades for software where the upgrade modifies
+   the configuration files.
+
+   I have every version of my edits in a local =git= repository.
 
 ** UNFINISHED USB Stick synchronization
    shell scripts:
    - usb-git-fetch
    - usb-git-push
    - usb-git-missing
-** UNFINISHED Git stuff
-   I use =git= in all of my directories where editing a file should be
-   tracked so I can edit files with confidence.  It's easy to go back
-   to a previous version or to see exactly what changed since the last
-   commit.  This is great when editing configuration files (such as
-   apache configrations, bind9 configurations, etc.)
-
-   I find this extremely useful where your edits might break things
-   and having git track the changes means if you break it you can just
-   go back to the previous version easily.  This is also true for
-   package upgrades for software where the upgrade modifies the
-   configuration files.
-
-   I have every version of my edits in a local =git= repository.  Yes
-   backups still get done religiously.  I set up an automated network
-   backup over 10 years ago that is still serving me well today.  All
-   of my systems gets daily backups to a network drive.  Weekly these
-   are collected and written to DVD iso images in case my machines
-   walk off someday.  I'm not going to lose any important data ever
-   again.  Once a week I get an email that says 'These ISO images are
-   ready to be burned to disk' and all I have to do is write them out.
-   Backups take a minimal amount of time currently and I'm really
-   happy about that.  Backups that you have to work hard at don't get
-   gone.
-
-#+begin_src emacs-lisp
-(add-hook 'grb-todo-mode-hook
-	  (lambda ()
-	    ;; yasnippet
-	    (make-variable-buffer-local 'yas/trigger-key)
-	    (setq yas/trigger-key [tab])
-	    (define-key yas/keymap [tab] 'grb-todo-cycle-commands)))
-;;
-#+end_src
 
 * Other stuff we may not want to include		   :noexport:
 ** UNFINISHED Handling Phone calls
