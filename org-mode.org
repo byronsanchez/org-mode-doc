@@ -2037,6 +2037,25 @@ in odd-levels-only to be all that helpful.
  (sequence "PROJECT(P@)" "|" "PROJDONE(D@)"))))
 #+end_src
 
+   This adds a log entry whenever a task moves to any of the following states:
+   - to or out of =DONE= status
+   - to =WAITING= status (with a note) or out of =WAITING= status
+   - to =SOMEDAY= status
+   - to =CANCELLED= status (with a note) or out of =CANCELLED= status
+   - to =QUOTATION= status
+   - to =QUOTED= status
+   - to =APPROVED= status (with a note)
+   - to =EXPIRED= status (with a note)
+   - to =REJECTED= status (with a note)
+   - to =OPENPO= status
+   - to =CLOSEDPO= status (with a note)
+   - to =PROJECT= status (with a note)
+   - to =PROJDONE= status (with a note)
+
+   I keep clock times in the =LOGBOOK= drawer but state change notes outside
+   so unfolding the task shows *why* the task changed state - without the need
+   to show the contents of the =LOGBOOK= drawer.
+
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
