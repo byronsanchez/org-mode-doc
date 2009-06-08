@@ -237,10 +237,8 @@ Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp 
 (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
- (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)")
- (sequence "QUOTATION(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
- (sequence "OPENPO(!)" "|" "CLOSEDPO(@)")
- (sequence "PROJECT(P@)" "|" "PROJDONE(D@)"))))
+ (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@") "|" "CANCELLED(c@/!)")
+ (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
 
 (setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
  ("STARTED" :foreground "blue" :weight bold)
@@ -248,15 +246,13 @@ Here are my =TODO= state keywords and colour settings:
  ("WAITING" :foreground "orange" :weight bold)
  ("SOMEDAY" :foreground "magenta" :weight bold)
  ("CANCELLED" :foreground "forest green" :weight bold)
- ("QUOTATION" :foreground "red" :weight bold)
+ ("QUOTE" :foreground "red" :weight bold)
  ("QUOTED" :foreground "magenta" :weight bold)
  ("APPROVED" :foreground "forest green" :weight bold)
  ("EXPIRED" :foreground "forest green" :weight bold)
  ("REJECTED" :foreground "forest green" :weight bold)
- ("OPENPO" :foreground "blue" :weight bold)
- ("CLOSEDPO" :foreground "forest green" :weight bold)
- ("PROJECT" :foreground "red" :weight bold)
- ("PROJDONE" :foreground "forest green" :weight bold))))
+ ("OPEN" :foreground "blue" :weight bold)
+ ("PROJECT" :foreground "red" :weight bold))))
 #+end_src
 *** Normal Task States
 Normal tasks go through the sequence =TODO= -> =STARTED= -> =DONE=.
@@ -306,7 +302,7 @@ I also do fixed-price quotation work.  Quotations use the following state transi
 :                                          |
 :       +-------------+       +--------+   :   +----------+
 :       |             |       |        +---+   |          |
-:       |  QUOTATION  +------>+ QUOTED +------>+ APPROVED |
+:       |    QUOTE    +------>+ QUOTED +------>+ APPROVED |
 :       | cRED        |       |  cC0C  +---+   | cGRE     |
 :       +-------------+       +--+---+-+   :   +----------+
 :                                          |
@@ -325,7 +321,7 @@ The following states track purchase orders.
 #+begin_ditaa po_states.png -r -s 0.8
 :       +----------+       +---------+
 :       |          |       |         |
-:       |  OPENPO  +------>+ CLOSEPO |
+:       |   OPEN   +------>+   DONE  |
 :       | cRED     |       |  cGRE   |
 :       +----------+       +---------+
 #+end_ditaa
@@ -337,7 +333,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 #+begin_ditaa project_states.png -r -s 0.8
 :                                 +---------------+
 :                                 |               |
-:                                 |    PROJDONE   |
+:                                 |      DONE     |
 :                                 | cGRE          |
 :                                 +----+----------+
 :                                      ^      
@@ -2031,10 +2027,8 @@ in odd-levels-only to be all that helpful.
 
 #+begin_src emacs-lisp
 (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
- (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)")
- (sequence "QUOTATION(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
- (sequence "OPENPO(!)" "|" "CLOSEDPO(@)")
- (sequence "PROJECT(P@)" "|" "PROJDONE(D@)"))))
+ (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@") "|" "CANCELLED(c@/!)")
+ (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
 #+end_src
 
    This adds a log entry whenever a task moves to any of the following states:
@@ -2042,15 +2036,13 @@ in odd-levels-only to be all that helpful.
    - to =WAITING= status (with a note) or out of =WAITING= status
    - to =SOMEDAY= status
    - to =CANCELLED= status (with a note) or out of =CANCELLED= status
-   - to =QUOTATION= status
+   - to =QUOTE= status
    - to =QUOTED= status
    - to =APPROVED= status (with a note)
    - to =EXPIRED= status (with a note)
    - to =REJECTED= status (with a note)
-   - to =OPENPO= status
-   - to =CLOSEDPO= status (with a note)
+   - to =OPEN= status
    - to =PROJECT= status (with a note)
-   - to =PROJDONE= status (with a note)
 
    I keep clock times in the =LOGBOOK= drawer but state change notes outside
    so unfolding the task shows *why* the task changed state - without the need
@@ -2189,40 +2181,48 @@ core.*
    I have every version of my edits in a local =git= repository.
 
 ** USB Stick synchronization
-   So I recently acquired a Eee PC 1000 HE which now serves as my main road-warrior laptop replacing
-   my 6 year old Toshiba Tecra S1.
+   So I recently acquired a Eee PC 1000 HE which now serves as my main
+   road-warrior laptop replacing my 6 year old Toshiba Tecra S1.
 
-   I have a git server on my LAN that hosts bare repositories for all of my projects.
-   The problem is I have to leave in 5 minutes and want to make sure I have up-to-date copies
-   of everything I work on when I take it on the road (without Internet access).
+   I have a server on my LAN that hosts bare git repositories for all
+   of my projects.  The problem I was facing is I have to leave in 5
+   minutes and want to make sure I have up-to-date copies of
+   everything I work on when I take it on the road (without Internet
+   access).
 
-   To solve this I use a USB stick with bare repositories on it for my git repositories.  This
-   includes my org-mode repositories as well as any other source code libraries I'm working on.
+   To solve this I use a USB stick with bare git repositories on it.
+   This includes my org-mode repositories as well as any other git
+   repositories I'm interested in.
    
-   So just before I leave I mount my USB stick on my workstation and run =usb-git-fetch= then
-   =usb-git-push=.  For any repositories that give non-fast-forward errors merge as required
-   until =usb-git-push= reports no errors.  Then I grab my Eee PC and my USB stick and leave.
+   Just before I leave I mount my USB stick on my workstation and run
+   =usb-git-fetch= then =usb-git-push=.  For any repositories that
+   give errors due to non-fast-forward merges I manually merge as
+   required and rerun =usb-git-push= until it reports no errors.  This
+   normally takes a minute to two to do.  Then I grab my Eee PC and my
+   USB stick and leave.
 
-   Later I mount my USB stick in the Eee PC and do =usb-git-fetch= to grab all of the commits
-   from my workstation.  I can merge as required for whatever I want to work on when I'm on the
-   road knowing I have full up-to-date history of all my git repos on the USB stick.
+   Later I mount my USB stick in the Eee PC and do =usb-git-fetch= to
+   grab all of the commits from my workstation.  I can merge as
+   required for whatever I want to work on when I'm on the road
+   knowing I have full up-to-date history of all my git repos on the
+   USB stick.
 
    This really works great!  The problem I had with using a local lan
    bare repo was I'd forget to push/fetch a few repostories - always
    the ones I actually wanted to use when offline.  Using the USB
-   stick guarantees taht all repos are up to date and allows me to be
-   completely mobile and not dependent on Internet access.
+   stick guarantees that all repositories are up to date and allows me
+   to be completely mobile and not dependent on Internet access.
 
-   I mount my USB stick in a directory =/usb= using the =fstab= entry
+   I mount my USB stick in a directory =/usb= using the =fstab= entry as follows:
 : /dev/sdb1 /usb vfat defaults,user,noauto,shortname=mixed 0 0
 
-   The 3 scripts I use do the following
+   The 3 scripts I use do the following:
 
    | Script          | Description                                                               |
    |-----------------+---------------------------------------------------------------------------|
-   | usb-git-fetch   | For each repo on the usb stick fetch from it if it exists on this machine |
-   | usb-git-push    | For each repo on the usb stick push to it if it exists on this machine    |
-   | usb-git-missing | For each repo on the usb stick report if we don't have a local copy of it |
+   | usb-git-fetch   | For each repo on the USB stick fetch from it if it exists on this machine |
+   | usb-git-push    | For each repo on the USB stick push to it if it exists on this machine    |
+   | usb-git-missing | For each repo on the USB stick report if we don't have a local copy of it |
 
 Here is the =usb-git-fetch= script
 #+begin_src sh
