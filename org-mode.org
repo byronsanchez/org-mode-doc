@@ -236,7 +236,7 @@ speed up creation of standard text blocks in most editing modes.
 Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp 
-(setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
+(setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
  (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)")
  (sequence "QUOTATION(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
  (sequence "OPENPO(!)" "|" "CLOSEDPO(@)")
@@ -2018,11 +2018,25 @@ in odd-levels-only to be all that helpful.
 				   (gnus . gnus-other-frame)
 				   (file . find-file-other-window))))
 #+end_src
-** UNFINISHED Logging stuff
+** Logging stuff
+   Most of my logging is controlled by the global =org-todo-keywords=
+
+   My logging settings are set as follows:
 #+begin_src emacs-lisp
 (setq org-log-done (quote time))
-(setq org-log-into-drawer t)
+(setq org-log-into-drawer nil)
 #+end_src
+
+   With =org-todo-keywords= set as 
+
+#+begin_src emacs-lisp
+(setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
+ (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)")
+ (sequence "QUOTATION(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
+ (sequence "OPENPO(!)" "|" "CLOSEDPO(@)")
+ (sequence "PROJECT(P@)" "|" "PROJDONE(D@)"))))
+#+end_src
+
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
@@ -2155,13 +2169,80 @@ core.*
 
    I have every version of my edits in a local =git= repository.
 
-** UNFINISHED USB Stick synchronization
-   shell scripts:
-   - usb-git-fetch
-   - usb-git-push
-   - usb-git-missing
+** USB Stick synchronization
+   So I recently acquired a Eee PC 1000 HE which now serves as my main road-warrior laptop replacing
+   my 6 year old Toshiba Tecra S1.
 
-* Other stuff we may not want to include		   :noexport:
+   I have a git server on my LAN that hosts bare repositories for all of my projects.
+   The problem is I have to leave in 5 minutes and want to make sure I have up-to-date copies
+   of everything I work on when I take it on the road (without Internet access).
+
+   To solve this I use a USB stick with bare repositories on it for my git repositories.  This
+   includes my org-mode repositories as well as any other source code libraries I'm working on.
+   
+   So just before I leave I mount my USB stick on my workstation and run =usb-git-fetch= then
+   =usb-git-push=.  For any repositories that give non-fast-forward errors merge as required
+   until =usb-git-push= reports no errors.  Then I grab my Eee PC and my USB stick and leave.
+
+   Later I mount my USB stick in the Eee PC and do =usb-git-fetch= to grab all of the commits
+   from my workstation.  I can merge as required for whatever I want to work on when I'm on the
+   road knowing I have full up-to-date history of all my git repos on the USB stick.
+
+   This really works great!  The problem I had with using a local lan
+   bare repo was I'd forget to push/fetch a few repostories - always
+   the ones I actually wanted to use when offline.  Using the USB
+   stick guarantees taht all repos are up to date and allows me to be
+   completely mobile and not dependent on Internet access.
+
+   I mount my USB stick in a directory =/usb= using the =fstab= entry
+: /dev/sdb1 /usb vfat defaults,user,noauto,shortname=mixed 0 0
+
+   The 3 scripts I use do the following
+
+   | Script          | Description                                                               |
+   |-----------------+---------------------------------------------------------------------------|
+   | usb-git-fetch   | For each repo on the usb stick fetch from it if it exists on this machine |
+   | usb-git-push    | For each repo on the usb stick push to it if it exists on this machine    |
+   | usb-git-missing | For each repo on the usb stick report if we don't have a local copy of it |
+
+Here is the =usb-git-fetch= script
+#+begin_src sh
+#!/bin/sh
+find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
+  if test -d ~/${repo/.git}
+  then
+    echo REPO: $repo
+    cd ~/$repo
+    git fetch usb
+  fi
+done
+#+end_src
+
+Here is the =usb-git-push= script
+#+begin_src sh
+#!/bin/sh
+find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
+  if test -d ~/${repo/.git}
+  then
+    echo REPO: $repo
+    cd ~/$repo 
+    git push usb
+  fi
+done
+#+end_src
+
+Here is the =usb-git-missing= script
+#+begin_src sh
+#!/bin/sh
+find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
+  if ! test -d ~/${repo/.git}
+  then
+    echo REPO: $repo
+  fi
+done
+#+end_src
+
+* Other stuff we may not want to include 			   :noexport:
 ** UNFINISHED Handling Phone calls
    - Remember tasks for phone calls and bbdb searches
 
