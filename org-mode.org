@@ -133,38 +133,6 @@ speed up creation of standard text blocks in most editing modes.
 
    Other org files are used for publishing only and do not contribute to the agenda.
    See [[Publishing]] for more details.
-** UNFINISHED Org file structure
-   Most of my org files are set up with level 1 headings as main categories only.
-   Tasks and projects normally start as level 2 or higher.
-
-   These are some of my level 1 headings in =todo.org=:
-   - Appointments
-   - Special Dates
-   - Finances
-   - Health
-   - House Maintenance
-   - Medical
-   - Miscellaneous
-   - Lawn and Garden
-
-   Sometimes projects are level 1 tasks.
-
-   Each of these level 1 tasks normally has a =property drawer=
-   specifying the archive location for any tasks in that tree.  An
-   example level 1 heading is setup like this:
-#+begin_example 
-** Miscellaneous
-   :PROPERTIES:
-     :CATEGORY: todo
-     :ARCHIVE: %s_archive::* Miscellaneous
-   :END:
-#+end_example
-
-   This ensures that any level 2 task that I archive from this heading
-   (I archive by subtree) gets saved in the archive file under the
-   level 1 =Miscellaneous= headline so I can find it back again if
-   needed.  This keeps my main org files and my archives with
-   basically the same structure.
 
 ** Agenda Setup
    Here is my current =org-agenda-files= setup.  It is shown above
@@ -190,6 +158,63 @@ speed up creation of standard text blocks in most editing modes.
    file I just visit it and hit =C-c ]= and all of the tasks in that
    file are instantly removed from my agenda views until I add them
    back again.
+** Org file structure
+   Most of my org files are set up with level 1 headings as main
+   categories only.  Tasks and projects normally start as level 2
+   tasks but I have a few level 1 =PROJECT= tasks.
+
+   Here are some examples of my level 1 headings in
+
+   =todo.org=:
+
+   - Appointments
+   - Special Dates
+
+     Includes level 2 headings for
+
+     - Birthdays
+     - Anniversaries
+     - Holidays
+   - Finances
+   - Health
+   - House Maintenance
+   - Medical
+   - Miscellaneous
+   - Lawn and Garden
+
+   =norang.org=:
+
+   - System Maintenance
+   - Payroll
+   - Accounting
+   - Finances
+   - Hardware Maintenance
+   - Quotes
+   - Administration
+   - Research
+
+   Each of these level 1 tasks normally has a =property drawer=
+   specifying the archive location and category for any tasks in that
+   tree.  Level 1 headings are set up like this:
+
+: ** Appointments
+:    :PROPERTIES:
+:    :CATEGORY: Appt
+:    :ARCHIVE:  %s_archive::* Appointments
+:    :END:      
+:    ...
+: ** Miscellaneous
+:    :PROPERTIES:
+:      :CATEGORY: todo
+:      :ARCHIVE: %s_archive::* Miscellaneous
+:    :END:
+
+   This ensures that any level 2 task that I archive from this heading
+   (I archive by subtree) gets saved in the archive file under the
+   appropriate level 1 heading so I can find it back again if needed.
+
+   This keeps my main org files and my archives with basically the
+   same structure.
 
 ** Key bindings
    I live in the agenda.  To make getting to the agenda faster I
