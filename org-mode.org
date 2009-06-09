@@ -1791,6 +1791,9 @@ $0
 
    This is a great time saver.
 ** Limit your view to what you are working on
+   :PROPERTIES:
+   :CUSTOM_ID: LimitingAgendaView
+   :END:
    There is more than one way to do this.  Use what works for you.
 *** Narrowing to a subtree with =my-org-todo=
 =f5= is bound the function =my-org-todo= which is defined as follows:
@@ -2108,6 +2111,9 @@ in odd-levels-only to be all that helpful.
    I keep clock times in the =LOGBOOK= drawer but state change notes outside
    so unfolding the task shows *why* the task changed state - without the need
    to show the contents of the =LOGBOOK= drawer.
+** UNFINISHED Limiting time spent on tasks
+   Task estimates and =org-clock-sound=
+   clock mode line property usage
 
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
@@ -2326,13 +2332,4 @@ done
 ** UNFINISHED Handling Phone calls
    - Remember tasks for phone calls and bbdb searches
 
-** UNFINISHED How to control time spent on tasks
-   - Max time limits (1h org documentation)
-   - Min time limits (1h jobsearch)
-   - Put the limit in the task name and use the daily agenda report for time spent
-   - Scheduled tasks as repeating daily so you get them off the daily agenda and reset to TODO
 ** UNFINISHED Recurring tasks and copy subtree
-** UNFINISHED Working on stuff
-*** UNFINISHED Limiting time spent
-[MAX1h] [MIN1h] and daily recurring scheduled tasks
-
