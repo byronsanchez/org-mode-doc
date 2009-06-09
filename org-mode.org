@@ -133,6 +133,39 @@ speed up creation of standard text blocks in most editing modes.
 
    Other org files are used for publishing only and do not contribute to the agenda.
    See [[Publishing]] for more details.
+** UNFINISHED Org file structure
+   Most of my org files are set up with level 1 headings as main categories only.
+   Tasks and projects normally start as level 2 or higher.
+
+   These are some of my level 1 headings in =todo.org=:
+   - Appointments
+   - Special Dates
+   - Finances
+   - Health
+   - House Maintenance
+   - Medical
+   - Miscellaneous
+   - Lawn and Garden
+
+   Sometimes projects are level 1 tasks.
+
+   Each of these level 1 tasks normally has a =property drawer=
+   specifying the archive location for any tasks in that tree.  An
+   example level 1 heading is setup like this:
+#+begin_example 
+** Miscellaneous
+   :PROPERTIES:
+     :CATEGORY: todo
+     :ARCHIVE: %s_archive::* Miscellaneous
+   :END:
+#+end_example
+
+   This ensures that any level 2 task that I archive from this heading
+   (I archive by subtree) gets saved in the archive file under the
+   level 1 =Miscellaneous= headline so I can find it back again if
+   needed.  This keeps my main org files and my archives with
+   basically the same structure.
+
 ** Agenda Setup
    Here is my current =org-agenda-files= setup.  It is shown above
    formatted as a =setq= for clarity but in reality this is saved in
@@ -1016,6 +1049,9 @@ Recent Tasks
    After setting the effort values exit =column mode= with =q=.
    
 *** Saving your estimate
+    :PROPERTIES:
+    :CUSTOM_ID: SavingEstimate
+    :END:
     For fixed price jobs where you provide your estimate to a client,
     then work to complete the project it is useful to save the
     original estimate that is provided to the client.
