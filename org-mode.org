@@ -2023,26 +2023,13 @@ Here are the =.emacs= settings:
    than it used to be.  There is an automatic backup of everything
    pushed to the remote repository.
 
-** UNFINISHED More uncategorized org-mode stuff
-#+begin_src emacs-lisp
-(setq org-blank-before-new-entry (quote ((heading)
-					 (plain-list-item))))
-(setq org-cycle-include-plain-lists nil)
-(setq org-cycle-separator-lines 0)
-(setq org-deadline-warning-days 30)
-(setq org-default-notes-file "~/git/org/notes.org")
-#+end_src
-
+** UNFINISHED Handling blocked tasks
 Handling blocked tasks and the =NOBLOCKING= property (usually on repeated tasks)
 #+begin_src emacs-lisp
 (setq org-enforce-todo-dependencies t)
-#+end_src
-
-#+begin_src emacs-lisp
-(setq org-id-method (quote uuidgen))
 (setq org-insert-heading-respect-content t)
 #+end_src
-
+** UNFINISHED Task structure and presentation
 I don't hide leading stars - I want to see the heading levels explicitly. 
 I find myself typing ' *' when adding a new heading and then the font lock shows I messed up and created a list instead.
 #+begin_src emacs-lisp 
@@ -2056,6 +2043,20 @@ leading whitespace on tasks.  I didn't find that lining up the headlines and tas
 in odd-levels-only to be all that helpful.
 #+begin_src emacs-lisp
 (setq org-odd-levels-only nil)
+#+end_src
+
+** UNFINISHED More uncategorized org-mode stuff
+#+begin_src emacs-lisp
+(setq org-blank-before-new-entry (quote ((heading)
+					 (plain-list-item))))
+(setq org-cycle-include-plain-lists nil)
+(setq org-cycle-separator-lines 0)
+(setq org-deadline-warning-days 30)
+(setq org-default-notes-file "~/git/org/notes.org")
+#+end_src
+
+#+begin_src emacs-lisp
+(setq org-id-method (quote uuidgen))
 #+end_src
 
 #+begin_src emacs-lisp
