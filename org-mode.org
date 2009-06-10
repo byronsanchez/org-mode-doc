@@ -606,7 +606,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 ; Targets start with the file name - allows creating level 1 tasks
 (setq org-refile-use-outline-path (quote file))
 
-; Targets complete in steps so we start with filename, TAB show the next level of targets etc 
+; Targets complete in steps so we start with filename, TAB shows the next level of targets etc 
 (setq org-outline-path-complete-in-steps t)
 #+end_src
 
@@ -939,13 +939,16 @@ Recent Tasks
 
    - Use an agenda view with filtering to pick something to work on
 ** Editing clock entries
-   Occassionally I cannot clock in a task because I'm away from my
-   computer.  In this case the previous clocked task is still running
-   and counts time for both tasks which is wrong.
+   Sometimes it is necessary to edit clock entries so they reflect
+   reality.  I find I do this for maybe 2-3 entries in a week.
+
+   Occassionally I cannot clock in a task on time because I'm away
+   from my computer.  In this case the previous clocked task is still
+   running and counts time for both tasks which is wrong.
 
    I make a note of the time and then when I get back to my computer I
-   clock in the right task and move the time back to the correct start
-   for the task by visiting the clock line for the entry.
+   clock in the right task and edit the start and end times to correct
+   the clock history.
 
    To visit the clock line for an entry quickly use the agenda log
    mode.  =F12 a l= shows all clock lines for today.  I use this to
@@ -953,27 +956,31 @@ Recent Tasks
    current clocked task but the agenda log mode is better for finding
    and visiting older clock entries.
    
-   Use =F12 a l= to open the agenda in log mode.  This shows clock
-   times only with my setup.  Cursor down to the clock line you need
-   to edit and hit =TAB= and you're there.
+   Use =F12 a l= to open the agenda in log mode and show only logged
+   clock times.  Move the cursor down to the clock line you need to
+   edit and hit =TAB= and you're there.
 
    To edit a clock entry just put the cursor on the part of the date
-   you want to edit (use the keyboard not the mouse - since the mouse
-   goes back to the agenda for that day) and hit the =S-<up arrow>= or
-   =S-<down arrow>= keys to change the time.
+   you want to edit (use the keyboard not the mouse - since the
+   clicking on the timestamp with the mouse goes back to the agenda
+   for that day) and hit the =S-<up arrow>= or =S-<down arrow>= keys
+   to change the time.
 
-   When editing clock times I use the following setting to use 5 minute increments.
+   The following setting makes time editing round to 5 minute
+   increments:
 #+begin_src emacs-lisp
 (setq org-time-stamp-rounding-minutes (quote (1 5)))
 #+end_src lisp
 
-   Editing the time also updates the total for the clock line which is
-   a nice convenience.
+   Editing the time with the shift arrow combination also updates the
+   total for the clock line which is a nice convenience.
 
    I always check that I haven't created task overlaps when fixing
-   time clock entries.  I want my clock entries to be as accurate as
-   possible but editing to the exact minute (instead of rounding to 5
-   minutes) takes more time and isn't worth the hassle.
+   time clock entries by viewing them with log mode on in the agenda.
+
+   I want my clock entries to be as accurate as possible but editing
+   to the exact minute (instead of rounding to 5 minutes) takes more
+   time and isn't worth the hassle.
 * Time reporting and tracking
 ** Billing clients based on clocked time
    At the beginning of the month I invoice my clients for work done
@@ -2117,7 +2124,7 @@ in odd-levels-only to be all that helpful.
 #+begin_src emacs-lisp
 (setq org-table-export-default-format "orgtbl-to-csv")
 #+end_src lisp
-** UNFINISHED More uncategorized org-mode stuff
+** UNFINISHED Visiting links
 #+begin_src emacs-lisp
 (setq org-link-frame-setup (quote ((vm . vm-visit-folder-other-frame)
 				   (gnus . gnus-other-frame)
