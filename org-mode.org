@@ -605,6 +605,9 @@ that can be estimated and clocked.  Projects use the following state transitions
 
 ; Targets start with the file name - allows creating level 1 tasks
 (setq org-refile-use-outline-path (quote file))
+
+; Targets complete in steps so we start with filename, TAB show the next level of targets etc 
+(setq org-outline-path-complete-in-steps t)
 #+end_src
 
    To refile a task to my =norang.org= file under =System Maintenance=
@@ -935,7 +938,42 @@ Recent Tasks
      Work on some unfinished task to move to completion
 
    - Use an agenda view with filtering to pick something to work on
+** Editing clock entries
+   Occassionally I cannot clock in a task because I'm away from my
+   computer.  In this case the previous clocked task is still running
+   and counts time for both tasks which is wrong.
 
+   I make a note of the time and then when I get back to my computer I
+   clock in the right task and move the time back to the correct start
+   for the task by visiting the clock line for the entry.
+
+   To visit the clock line for an entry quickly use the agenda log
+   mode.  =F12 a l= shows all clock lines for today.  I use this to
+   navigate to the appropriate clock lines quickly.  F11 goes to the
+   current clocked task but the agenda log mode is better for finding
+   and visiting older clock entries.
+   
+   Use =F12 a l= to open the agenda in log mode.  This shows clock
+   times only with my setup.  Cursor down to the clock line you need
+   to edit and hit =TAB= and you're there.
+
+   To edit a clock entry just put the cursor on the part of the date
+   you want to edit (use the keyboard not the mouse - since the mouse
+   goes back to the agenda for that day) and hit the =S-<up arrow>= or
+   =S-<down arrow>= keys to change the time.
+
+   When editing clock times I use the following setting to use 5 minute increments.
+#+begin_src emacs-lisp
+(setq org-time-stamp-rounding-minutes (quote (1 5)))
+#+end_src lisp
+
+   Editing the time also updates the total for the clock line which is
+   a nice convenience.
+
+   I always check that I haven't created task overlaps when fixing
+   time clock entries.  I want my clock entries to be as accurate as
+   possible but editing to the exact minute (instead of rounding to 5
+   minutes) takes more time and isn't worth the hassle.
 * Time reporting and tracking
 ** Billing clients based on clocked time
    At the beginning of the month I invoice my clients for work done
@@ -1330,6 +1368,11 @@ Original Estimate
    next.
 
    This works for me.  You're mileage may vary ;)
+** UNFINISHED Project definition and finding stuck projects
+#+begin_src emacs-lisp
+(setq org-stuck-projects (quote ("/PROJECT" nil ("NEXT") "")))
+#+end_src
+
 * Archiving
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a
@@ -2027,7 +2070,6 @@ Here are the =.emacs= settings:
 Handling blocked tasks and the =NOBLOCKING= property (usually on repeated tasks)
 #+begin_src emacs-lisp
 (setq org-enforce-todo-dependencies t)
-(setq org-insert-heading-respect-content t)
 #+end_src
 ** UNFINISHED Task structure and presentation
 I don't hide leading stars - I want to see the heading levels explicitly. 
@@ -2045,22 +2087,10 @@ in odd-levels-only to be all that helpful.
 (setq org-odd-levels-only nil)
 #+end_src
 
-** UNFINISHED More uncategorized org-mode stuff
 #+begin_src emacs-lisp
 (setq org-blank-before-new-entry (quote ((heading)
 					 (plain-list-item))))
-(setq org-cycle-include-plain-lists nil)
-(setq org-cycle-separator-lines 0)
-(setq org-deadline-warning-days 30)
-(setq org-default-notes-file "~/git/org/notes.org")
-#+end_src
-
-#+begin_src emacs-lisp
-(setq org-id-method (quote uuidgen))
-#+end_src
-
-#+begin_src emacs-lisp
-(setq org-outline-path-complete-in-steps t)
+(setq org-insert-heading-respect-content t)
 (setq org-return-follows-link nil)
 (setq org-reverse-note-order nil)
 (setq org-show-following-heading t)
@@ -2068,12 +2098,26 @@ in odd-levels-only to be all that helpful.
 (setq org-show-siblings nil)
 (setq org-special-ctrl-a/e t)
 (setq org-special-ctrl-k t)
-(setq org-stuck-projects (quote ("/PROJECT" nil ("NEXT") "")))
-(setq org-table-export-default-format "orgtbl-to-csv")
-(setq org-time-stamp-rounding-minutes (quote (1 5)))
 (setq org-yank-adjusted-subtrees t)
-#+end_src lisp
+(setq org-cycle-include-plain-lists nil)
+(setq org-cycle-separator-lines 0)
+#+end_src
 
+** UNFINISHED Attachments
+#+begin_src emacs-lisp
+(setq org-id-method (quote uuidgen))
+#+end_src
+
+** UNFINISHED Deadlines and Agenda Visibility
+#+begin_src emacs-lisp
+(setq org-deadline-warning-days 30)
+#+end_src
+
+** UNFINISHED Exporting Tables to CVS
+#+begin_src emacs-lisp
+(setq org-table-export-default-format "orgtbl-to-csv")
+#+end_src lisp
+** UNFINISHED More uncategorized org-mode stuff
 #+begin_src emacs-lisp
 (setq org-link-frame-setup (quote ((vm . vm-visit-folder-other-frame)
 				   (gnus . gnus-other-frame)
@@ -2334,3 +2378,12 @@ done
    - Remember tasks for phone calls and bbdb searches
 
 ** UNFINISHED Recurring tasks and copy subtree
+** UNFINISHED Notes are gone
+  I have a default notes-file defined but the only time I really reference
+  notes is from the agenda template.
+
+#+begin_src emacs-lisp
+(setq org-default-notes-file "~/git/org/notes.org")
+#+end_src
+
+  They go to refile.org now
