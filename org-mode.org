@@ -79,7 +79,7 @@ speed up creation of standard text blocks in most editing modes.
 	    (make-variable-buffer-local 'yas/trigger-key)
 	    (setq yas/trigger-key [tab])
 	    (define-key yas/keymap [tab] 'yas/next-field-group)
-	    ;; flyspell mode to spell checking everywhere
+	    ;; flyspell mode to spell check everywhere
 	    (flyspell-mode 1)))
 #+end_src
 
@@ -1806,7 +1806,7 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
 	    (make-variable-buffer-local 'yas/trigger-key)
 	    (setq yas/trigger-key [tab])
 	    (define-key yas/keymap [tab] 'yas/next-field-group)
-	    ;; flyspell mode to spell checking everywhere
+	    ;; flyspell mode to spell check everywhere
 	    (flyspell-mode 1)))
 #+end_src
 
