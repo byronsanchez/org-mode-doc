@@ -60,10 +60,11 @@ files.
 creating structured email messages.
 
 #+begin_src emacs-lisp
-(setq message-mode-hook (quote (orgstruct++-mode 
-				(lambda nil (setq fill-column 72) (flyspell-mode 1))
-				turn-on-auto-fill
-				bbdb-define-all-aliases)))
+(setq message-mode-hook
+      (quote (orgstruct++-mode
+	      (lambda nil (setq fill-column 72) (flyspell-mode 1))
+	      turn-on-auto-fill
+	      bbdb-define-all-aliases)))
 #+end_src
 
 =flyspell-mode= is enabled for almost everything to help prevent
@@ -71,12 +72,14 @@ creating documents with spelling errors.  =yasnippets= are enabled to
 speed up creation of standard text blocks in most editing modes.
 
 #+begin_src emacs-lisp
+;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    ;; yasnippet
 	    (make-variable-buffer-local 'yas/trigger-key)
 	    (setq yas/trigger-key [tab])
 	    (define-key yas/keymap [tab] 'yas/next-field-group)
+	    ;; flyspell mode to spell check everywhere
 	    (flyspell-mode 1)))
 #+end_src
 
@@ -130,6 +133,7 @@ speed up creation of standard text blocks in most editing modes.
 
    Other org files are used for publishing only and do not contribute to the agenda.
    See [[Publishing]] for more details.
+
 ** Agenda Setup
    Here is my current =org-agenda-files= setup.  It is shown above
    formatted as a =setq= for clarity but in reality this is saved in
@@ -154,6 +158,63 @@ speed up creation of standard text blocks in most editing modes.
    file I just visit it and hit =C-c ]= and all of the tasks in that
    file are instantly removed from my agenda views until I add them
    back again.
+** Org file structure
+   Most of my org files are set up with level 1 headings as main
+   categories only.  Tasks and projects normally start as level 2
+   tasks but I have a few level 1 =PROJECT= tasks.
+
+   Here are some examples of my level 1 headings in
+
+   =todo.org=:
+
+   - Appointments
+   - Special Dates
+
+     Includes level 2 headings for
+
+     - Birthdays
+     - Anniversaries
+     - Holidays
+   - Finances
+   - Health
+   - House Maintenance
+   - Medical
+   - Miscellaneous
+   - Lawn and Garden
+
+   =norang.org=:
+
+   - System Maintenance
+   - Payroll
+   - Accounting
+   - Finances
+   - Hardware Maintenance
+   - Quotes
+   - Administration
+   - Research
+
+   Each of these level 1 tasks normally has a =property drawer=
+   specifying the archive location and category for any tasks in that
+   tree.  Level 1 headings are set up like this:
+
+: ** Appointments
+:    :PROPERTIES:
+:    :CATEGORY: Appt
+:    :ARCHIVE:  %s_archive::* Appointments
+:    :END:      
+:    ...
+: ** Miscellaneous
+:    :PROPERTIES:
+:      :CATEGORY: todo
+:      :ARCHIVE: %s_archive::* Miscellaneous
+:    :END:
+
+   This ensures that any level 2 task that I archive from this heading
+   (I archive by subtree) gets saved in the archive file under the
+   appropriate level 1 heading so I can find it back again if needed.
+
+   This keeps my main org files and my archives with basically the
+   same structure.
 
 ** Key bindings
    I live in the agenda.  To make getting to the agenda faster I
@@ -202,10 +263,14 @@ speed up creation of standard text blocks in most editing modes.
 (global-set-key (kbd "<f9> c") 'calendar)
 (global-set-key (kbd "<f9> f") 'boxquote-insert-file)
 (global-set-key (kbd "<f9> g") 'gnus)
-(global-set-key (kbd "<f9> i") (lambda () (interactive) (info "~/git/org-mode/doc/org.info")))
+(global-set-key (kbd "<f9> i") (lambda ()
+				 (interactive)
+				 (info "~/git/org-mode/doc/org.info")))
 (global-set-key (kbd "<f9> o") 'org-occur)
 (global-set-key (kbd "<f9> r") 'boxquote-region)
-(global-set-key (kbd "<f9> u") (lambda () (interactive) (untabify (point-min) (point-max))))
+(global-set-key (kbd "<f9> u") (lambda ()
+				 (interactive)
+				 (untabify (point-min) (point-max))))
 (global-set-key (kbd "<f9> v") 'visible-mode)
 (global-set-key (kbd "C-<f9>") 'previous-buffer)
 (global-set-key (kbd "C-x n r") 'narrow-to-region)
@@ -229,11 +294,9 @@ speed up creation of standard text blocks in most editing modes.
 Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp 
-(setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
- (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)")
- (sequence "QUOTATION(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
- (sequence "OPENPO(!)" "|" "CLOSEDPO(@)")
- (sequence "PROJECT(P@)" "|" "PROJDONE(D@)"))))
+(setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
+ (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@") "|" "CANCELLED(c@/!)")
+ (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
 
 (setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
  ("STARTED" :foreground "blue" :weight bold)
@@ -241,15 +304,13 @@ Here are my =TODO= state keywords and colour settings:
  ("WAITING" :foreground "orange" :weight bold)
  ("SOMEDAY" :foreground "magenta" :weight bold)
  ("CANCELLED" :foreground "forest green" :weight bold)
- ("QUOTATION" :foreground "red" :weight bold)
+ ("QUOTE" :foreground "red" :weight bold)
  ("QUOTED" :foreground "magenta" :weight bold)
  ("APPROVED" :foreground "forest green" :weight bold)
  ("EXPIRED" :foreground "forest green" :weight bold)
  ("REJECTED" :foreground "forest green" :weight bold)
- ("OPENPO" :foreground "blue" :weight bold)
- ("CLOSEDPO" :foreground "forest green" :weight bold)
- ("PROJECT" :foreground "red" :weight bold)
- ("PROJDONE" :foreground "forest green" :weight bold))))
+ ("OPEN" :foreground "blue" :weight bold)
+ ("PROJECT" :foreground "red" :weight bold))))
 #+end_src
 *** Normal Task States
 Normal tasks go through the sequence =TODO= -> =STARTED= -> =DONE=.
@@ -299,7 +360,7 @@ I also do fixed-price quotation work.  Quotations use the following state transi
 :                                          |
 :       +-------------+       +--------+   :   +----------+
 :       |             |       |        +---+   |          |
-:       |  QUOTATION  +------>+ QUOTED +------>+ APPROVED |
+:       |    QUOTE    +------>+ QUOTED +------>+ APPROVED |
 :       | cRED        |       |  cC0C  +---+   | cGRE     |
 :       +-------------+       +--+---+-+   :   +----------+
 :                                          |
@@ -318,7 +379,7 @@ The following states track purchase orders.
 #+begin_ditaa po_states.png -r -s 0.8
 :       +----------+       +---------+
 :       |          |       |         |
-:       |  OPENPO  +------>+ CLOSEPO |
+:       |   OPEN   +------>+   DONE  |
 :       | cRED     |       |  cGRE   |
 :       +----------+       +---------+
 #+end_ditaa
@@ -330,7 +391,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 #+begin_ditaa project_states.png -r -s 0.8
 :                                 +---------------+
 :                                 |               |
-:                                 |    PROJDONE   |
+:                                 |      DONE     |
 :                                 | cGRE          |
 :                                 +----+----------+
 :                                      ^      
@@ -380,13 +441,14 @@ that can be estimated and clocked.  Projects use the following state transitions
    The tags are used to filter tasks in the agenda views conveniently.
 
 #+begin_src emacs-lisp 
-(setq org-todo-state-tags-triggers (quote (("CANCELLED" ("CANCELLED" . t))
-					   ("WAITING" ("WAITING" . t) ("NEXT"))
-					   ("SOMEDAY" ("WAITING" . t))
-					   (done ("NEXT") ("WAITING"))
-					   ("TODO" ("WAITING") ("CANCELLED"))
-					   ("STARTED" ("WAITING"))
-					   ("PROJECT" ("CANCELLED") ("PROJECT" . t)))))
+(setq org-todo-state-tags-triggers
+      (quote (("CANCELLED" ("CANCELLED" . t))
+	      ("WAITING" ("WAITING" . t) ("NEXT"))
+	      ("SOMEDAY" ("WAITING" . t))
+	      (done ("NEXT") ("WAITING"))
+	      ("TODO" ("WAITING") ("CANCELLED"))
+	      ("STARTED" ("WAITING"))
+	      ("PROJECT" ("CANCELLED") ("PROJECT" . t)))))
 #+end_src
 
 *** Using =STARTED= for clocked tasks
@@ -543,6 +605,9 @@ that can be estimated and clocked.  Projects use the following state transitions
 
 ; Targets start with the file name - allows creating level 1 tasks
 (setq org-refile-use-outline-path (quote file))
+
+; Targets complete in steps so we start with filename, TAB shows the next level of targets etc 
+(setq org-outline-path-complete-in-steps t)
 #+end_src
 
    To refile a task to my =norang.org= file under =System Maintenance=
@@ -873,7 +938,49 @@ Recent Tasks
      Work on some unfinished task to move to completion
 
    - Use an agenda view with filtering to pick something to work on
+** Editing clock entries
+   Sometimes it is necessary to edit clock entries so they reflect
+   reality.  I find I do this for maybe 2-3 entries in a week.
 
+   Occassionally I cannot clock in a task on time because I'm away
+   from my computer.  In this case the previous clocked task is still
+   running and counts time for both tasks which is wrong.
+
+   I make a note of the time and then when I get back to my computer I
+   clock in the right task and edit the start and end times to correct
+   the clock history.
+
+   To visit the clock line for an entry quickly use the agenda log
+   mode.  =F12 a l= shows all clock lines for today.  I use this to
+   navigate to the appropriate clock lines quickly.  F11 goes to the
+   current clocked task but the agenda log mode is better for finding
+   and visiting older clock entries.
+   
+   Use =F12 a l= to open the agenda in log mode and show only logged
+   clock times.  Move the cursor down to the clock line you need to
+   edit and hit =TAB= and you're there.
+
+   To edit a clock entry just put the cursor on the part of the date
+   you want to edit (use the keyboard not the mouse - since the
+   clicking on the timestamp with the mouse goes back to the agenda
+   for that day) and hit the =S-<up arrow>= or =S-<down arrow>= keys
+   to change the time.
+
+   The following setting makes time editing round to 5 minute
+   increments:
+#+begin_src emacs-lisp
+(setq org-time-stamp-rounding-minutes (quote (1 5)))
+#+end_src lisp
+
+   Editing the time with the shift arrow combination also updates the
+   total for the clock line which is a nice convenience.
+
+   I always check that I haven't created task overlaps when fixing
+   time clock entries by viewing them with log mode on in the agenda.
+
+   I want my clock entries to be as accurate as possible but editing
+   to the exact minute (instead of rounding to 5 minutes) takes more
+   time and isn't worth the hassle.
 * Time reporting and tracking
 ** Billing clients based on clocked time
    At the beginning of the month I invoice my clients for work done
@@ -1012,6 +1119,9 @@ Recent Tasks
    After setting the effort values exit =column mode= with =q=.
    
 *** Saving your estimate
+    :PROPERTIES:
+    :CUSTOM_ID: SavingEstimate
+    :END:
     For fixed price jobs where you provide your estimate to a client,
     then work to complete the project it is useful to save the
     original estimate that is provided to the client.
@@ -1265,6 +1375,11 @@ Original Estimate
    next.
 
    This works for me.  You're mileage may vary ;)
+** UNFINISHED Project definition and finding stuck projects
+#+begin_src emacs-lisp
+(setq org-stuck-projects (quote ("/PROJECT" nil ("NEXT") "")))
+#+end_src
+
 * Archiving
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a
@@ -1328,9 +1443,10 @@ Original Estimate
 
 ** Playing with ditaa
 
-ditaa is a great tool for quickly generating graphics to convey ideas.
-The graphics in this document are automatically generated by org-mode
-and ditaa from plain text source.
+[[http://ditaa.sourceforge.net/][ditaa]] is a great tool for quickly generating graphics to convey ideas
+and =ditaa= is included with org-mode!  Some of the graphics in this document
+are automatically generated by org-mode and ditaa from plain text
+source.
 
 The following graphic is one example of what you can do easily with
 ditaa:
@@ -1402,7 +1518,7 @@ becomes this!
 
 This
 
-: #+begin_dot gv01.png -Tpng
+: #+begin_dot gv01.png -Kdot -Tpng
 : digraph G {
 :   concentrate=true;
 :   subgraph cluster_wrapline {
@@ -1438,7 +1554,7 @@ This
 
 becomes this!
 
-#+begin_dot gv01.png -Tpng
+#+begin_dot gv01.png -Kdot -Tpng
 digraph G {
   concentrate=true;
   subgraph cluster_wrapline {
@@ -1472,7 +1588,8 @@ digraph G {
 };
 #+end_dot
 
-
+The =-Kdot= is optional (defaults to =dot=) but you can substitute other graphviz
+types instead here (ie. =twopi=, =neato=, =circo=, etc).
 
 ** Publishing Single Files
    Org-mode exports the current file to one of the standard formats by
@@ -1603,7 +1720,6 @@ digraph G {
   (org-publish-current-project))
 
 (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
-
 #+end_src
 
    The =norang= and =doc= projects publish directly into the webserver
@@ -1662,26 +1778,40 @@ digraph G {
 ; If we leave Emacs running overnight - reset the appointments one minute after midnight
 (run-at-time "24:01" nil 'my-org-agenda-to-appt)
 #+end_src
-* UNFINISHED Productivity Tools
+* Productivity Tools
   :PROPERTIES:
   :CUSTOM_ID: ProductivityTools
+  :NOBLOCKING: t
   :END:
-
+  This section is a miscellaneous collection of Emacs customizations that I use
+  with org-mode so that it Works-For-Me(tm).
 ** Yasnippets
-   Yasnippets is cool!  You type the snippet name and =TAB= and yasnippet expands the name
-   with the contents of the snippet text - substituting snippet variables as appropriate.
+   Yasnippets is cool!  You type the snippet name and =TAB= and
+   yasnippet expands the name with the contents of the snippet text -
+   substituting snippet variables as appropriate.
 
-   Yasnippet comes with lots of snippets for programming languages.  So far I only use
-   1 snippet =block= for =org-mode=.
+   Yasnippet comes with lots of snippets for programming languages.
+   So far I only use 1 snippet (=block=) for =org-mode=.
 
    Setup =yasnippet= with the following code in your =.emacs=
 #+begin_src emacs-lisp
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
+
+;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    ;; yasnippet
+	    (make-variable-buffer-local 'yas/trigger-key)
+	    (setq yas/trigger-key [tab])
+	    (define-key yas/keymap [tab] 'yas/next-field-group)
+	    ;; flyspell mode to spell check everywhere
+	    (flyspell-mode 1)))
 #+end_src
 
-   Here is the definition for the =block= snippet.
+   Here is the definition for the =block= snippet:
+
 org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/block
 #+begin_example 
 #name : #+begin_...#+end_
@@ -1691,17 +1821,30 @@ $0
 #+end_$1
 #+end_example
 
-   I use this to create =#+begin_*= blocks like =#+begin_example=,
-   =#+begin_dot=, =#=begin_src=, etc.
+   I use this to create =#+begin_*= blocks like 
+     - =#+begin_example=
+     - =#+begin_ditaa=
+     - =#+begin_dot=
+     - =#+begin_src=
+     - etc.
 
-   Simple type =block= then =TAB= and it replaces the =block= text with the snippet contents.
-   Then type =src TAB emacs-lisp TAB= and your snippet block is done.  =C-c '= and 
-   enter whatever emacs-lisp code you want to insert.  In this block you're in a mode
-   that knows how to format and colourize lisp code as you enter it which is really nice.
-   =C-c '= exits back to org-mode.
+   Simply type =block= then =TAB= and it replaces the =block= text
+   with the snippet contents.  Then type =src TAB emacs-lisp TAB= and
+   your snippet block is done.
+
+   Hit =C-c SingeQuote(')= and insert whatever emacs-lisp code you
+   need.  While in this block you're in a mode that knows how to
+   format and colourize emacs lisp code as you enter it which is
+   really nice.  =C-c SingleQuote(')= exits back to org-mode.  This
+   recognizes any emacs editing mode so all you have to do is enter
+   the appropriate mode name for the block.
 
    This is a great time saver.
 ** Limit your view to what you are working on
+   :PROPERTIES:
+   :CUSTOM_ID: LimitingAgendaView
+   :END:
+   There is more than one way to do this.  Use what works for you.
 *** Narrowing to a subtree with =my-org-todo=
 =f5= is bound the function =my-org-todo= which is defined as follows:
 
@@ -1715,25 +1858,29 @@ $0
   (widen))
 #+end_src
 
-This makes it easy to hide all of the other details in your org-file temporarily
-by limiting your view to this task subtree and all of the items left to work on.
+This makes it easy to hide all of the other details in your org-file
+temporarily by limiting your view to this task subtree.  Tasks are
+folded and hilighted so that only tasks which are incomplete are
+shown.
 
 I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and =C-c C-v= combination
 leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the normal view.
 *** Limiting the agenda to a subtree
-    =C-c C-x <= turns on the agenda restriction lock to the current subtree.
+    =C-c C-x <= turns on the agenda restriction lock for the current subtree.
     This keeps your agenda focused on only this subtree.  Alarms and notifications are still
     active outside the agenda restriction.  =C-c C-x >= turns off the agenda restriction
     lock returning your agenda view back to normal.
 
-    I don't normally use the agenda restriction lock.  Normally I want to see =work= 
-    tasks which are in multiple files so agenda view filtering works better for me.
+    I don't normally use the agenda restriction lock.  I normally want
+    to see all =work= tasks which are in multiple files so agenda view
+    filtering works better for me.
 *** Limiting the agenda to a file
     You can limit the agenda view to a single file in multiple ways.
 
-    You can use the agenda restriction lock =C-c C-x <= on the
-    =#+STARTUP:= keyword (or any other keyword) in the file.  This
-    lock stays in effect until you remove it with =C-c C-x C-r=.
+    You can use the agenda restriction lock =C-c C-x <= on the any
+    line before the first heading to set the agenda restriction lock
+    to this file only.  This lock stays in effect until you remove it
+    with =C-c C-x C-r=.
 
     Another way is to invoke the agenda with =F12 1 a= while visiting
     an org-mode file.  This limits the agenda view to just this file.
@@ -1756,34 +1903,50 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 #+end_src
 
 *** Remove tasks with dates from the global todo lists
-    Task with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show
+    Tasks with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show
     up in the agenda when appropriate.  Use the following settings to
     remove these tasks from the global todo lists.  The idea here is
     the agenda has date-related items and the global todo lists have
-    everything else.  Keeping tasks on one list only prevents having
-    to review tasks more than once on the weekly review.
+    everything else.  Keeping tasks only one list only prevents having
+    to review tasks more than once when browsing the lists.
 
     Tasks with dates are scheduled into the future sometime and you
     don't need to deal with them until the date approaches.
 #+begin_src emacs-lisp
 ;; Keep tasks with dates off the global todo lists
 (setq org-agenda-todo-ignore-with-date t)
+
 ;; Remove completed deadline tasks from the agenda view
 (setq org-agenda-skip-deadline-if-done t)
+
 ;; Remove completed scheduled tasks from the agenda view
 (setq org-agenda-skip-scheduled-if-done t)
 #+end_src
 
 *** Use the Diary for Holidays only
-    I don't use the emacs Diary for anything but holiday information.
-    I like seeing the holidays on my agenda.  This helps with planning
-    for those days when you're not supposed to be working.
+    I don't use the emacs Diary for anything but I like seeing the
+    holidays on my agenda.  This helps with planning for those days
+    when you're not supposed to be working.
 
 #+begin_src emacs-lisp
-(setq org-agenda-include-diary t)
+(setq org-agenda-include-diary nil)
 #+end_src
 
-    My =~/diary= file is empty.
+    I don't have a =~/diary= file anymore.
+
+    I include holidays from the calendar in my =todo.org= file as follows:
+: #+FILETAGS: HOME
+: * Appointments
+:   :PROPERTIES:
+:   :CATEGORY: Appt
+:   :ARCHIVE:  %s_archive::* Appointments
+:   :END:      
+: ** Holidays
+:    :PROPERTIES:
+:    :Category: Holiday
+:    :END:
+: ...
+
 *** Searches include archive files
     I keep a single archive file for each of my org-mode project files.
     This allows me to search the current file and the archive when I need to
@@ -1806,56 +1969,135 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 
       for the weekly view
     - display of the grid
+
+Here are the =.emacs= settings:
 #+begin_src emacs-lisp
 ;; Show all future entries for repeating tasks
 (setq org-agenda-repeating-timestamp-show-all t)
+
 ;; Show all agenda dates - even if they are empty
 (setq org-agenda-show-all-dates t)
+
 ;; Sorting order for tasks on the agenda
-(setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down effort-up category-up)
-					  (todo priority-down)
-					  (tags priority-down))))
+(setq org-agenda-sorting-strategy
+      (quote ((agenda time-up priority-down effort-up category-up)
+	      (todo priority-down)
+	      (tags priority-down))))
+
 ;; Start the weekly agenda today
 (setq org-agenda-start-on-weekday nil)
+
 ;; Disable display of the time grid
-(setq org-agenda-time-grid (quote (nil "----------------" 
-				   (800 1000 1200 1400 1600 1800 2000))))
+(setq org-agenda-time-grid
+      (quote (nil "----------------"
+		  (800 1000 1200 1400 1600 1800 2000))))
 #+end_src
 
-** UNFINISHED Checklist handling
+** Checklist handling
+   Checklists are great for repeated tasks with lots of things that need to be done.
+   For a long time I was manually resetting the check boxes to unchecked when marking
+   the repeated task =DONE= but no more!  There's a contributed =org-checklist= that
+   can uncheck the boxes automagically when the task is marked done.
+
+   Add the following to your =.emacs=
 #+begin_src emacs-lisp
 (load "~/git/org-mode/contrib/lisp/org-checklist")
 #+end_src
-** UNFINISHED No backups
-   We use git... we don't need backups!  Especially when
-   some of the files are decrypted, edited, and encrypted and the
-   unencrypted backup file is left lying around.
 
+   and then to use it in a task you simply set the property =RESET_CHECK_BOXES= to =t= 
+   like this
+
+: ** TODO Invoicing and Archive Tasks [0/7]
+:    DEADLINE: <2009-07-01 Wed +1m -0d> 
+:    :PROPERTIES:
+:    :RESET_CHECK_BOXES: t
+:    :END:
+: 
+:    - [ ] Do task 1
+:    - [ ] Do task 2
+:    ...
+:    - [ ] Do task 7
+
+** No Emacs backup files
+   This isn't strictly an org-mode customization.
+
+   I don't use Emacs backup files at all.  I find the =*~= files
+   that litter my hard drive rather annoying actually so I turn
+   them off with the following customization:
+
+   #+begin_src emacs-lisp
+   (setq backup-inhibited t)
+   #+end_src
+
+   The main reason I turn off backups is that I have a few encrypted
+   files on my system that I occassionally decrypt, edit with Emacs, 
+   and encrypt again.  After encrypting I delete the plain-text version 
+   of the file.  I always forget to delete the Emacs backup file... and
+   this leaves the plain-text version of the file on disk which is 
+   unacceptable.  My solution is no more Emacs backup files.
+
+   org-mode can also encrypt entries but I've never looked into that
+   yet.  This may be a good alternative for some of my existing
+   encrypted file work flows but I haven't had the time to explore it.
+   Emacs and org-mode is an adventure!
+
+** Backups
+   =Backups that you have to work hard at don't get gone=.
+
+   I lost a bunch of data over 10 years ago due to not having a
+   working backup solution.  At the time I said =I'm not going to lose
+   any important data ever again=.  So far so good :)
+
+   My backups get done religiously.  What does this have to do with
+   org-mode?  Not much really, other than I don't spend time doing
+   backups -- they just happen -- which saves me time for other more
+   interesting things.
+
+   My backup philosophy is to make it possible to recover your data --
+   not necessarily easy.  It doesn't have to be easy/fast to do the
+   recovery because I'll rarely have to recover data from the backups.
+   Saving time for recovery doesn't make sense to me.  I want the
+   backup to be fast and painless since I do those all the time.
+
+   I set up an automated network backup over 10 years ago that is
+   still serving me well today.  All of my systems gets daily backups
+   to a network drive.  These are collected weekly and written to DVD
+   ISO images in case my machines walk off someday.
+
+   Once a week I get an email that says 'These ISO images are ready to
+   be burned to disk' and all I have to do is write them out.  Backups
+   take minimal effort currently and I'm really happy about that.
+
+   Since then =git= came into my life, so backups of =git=
+   repositories that are on multiple machines is much less critical
+   than it used to be.  There is an automatic backup of everything
+   pushed to the remote repository.
+
+** UNFINISHED Handling blocked tasks
+Handling blocked tasks and the =NOBLOCKING= property (usually on repeated tasks)
 #+begin_src emacs-lisp
-(setq backup-inhibited t)
-#+end_src
-** UNFINISHED More uncategorized org-mode stuff
-#+begin_src emacs-lisp
-(setq org-blank-before-new-entry (quote ((heading)
-					 (plain-list-item))))
-(setq org-cycle-include-plain-lists t)
-(setq org-cycle-separator-lines 0)
-(setq org-deadline-warning-days 30)
-(setq org-default-notes-file "~/git/org/notes.org")
 (setq org-enforce-todo-dependencies t)
-(setq org-id-method (quote uuidgen))
-(setq org-insert-heading-respect-content t)
 #+end_src
-
+** UNFINISHED Task structure and presentation
 I don't hide leading stars - I want to see the heading levels explicitly. 
 I find myself typing ' *' when adding a new heading and then the font lock shows I messed up and created a list instead.
 #+begin_src emacs-lisp 
 (setq org-hide-leading-stars nil)
 #+end_src emacs-lisp
 
+I've converted my files between odd-levels-only and odd-even using the
+functions =org-convert-to-odd-levels= and =org-convert-to-oddeven-levels= functions
+a number of times.  I ended up going back to odd-even levels to reduce the amount of
+leading whitespace on tasks.  I didn't find that lining up the headlines and tasks
+in odd-levels-only to be all that helpful.
 #+begin_src emacs-lisp
 (setq org-odd-levels-only nil)
-(setq org-outline-path-complete-in-steps nil)
+#+end_src
+
+#+begin_src emacs-lisp
+(setq org-blank-before-new-entry (quote ((heading)
+					 (plain-list-item))))
+(setq org-insert-heading-respect-content t)
 (setq org-return-follows-link nil)
 (setq org-reverse-note-order nil)
 (setq org-show-following-heading t)
@@ -1863,22 +2105,68 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 (setq org-show-siblings nil)
 (setq org-special-ctrl-a/e t)
 (setq org-special-ctrl-k t)
-(setq org-stuck-projects (quote ("/PROJECT" nil ("NEXT") "")))
-(setq org-table-export-default-format "orgtbl-to-csv")
-(setq org-time-stamp-rounding-minutes (quote (1 5)))
 (setq org-yank-adjusted-subtrees t)
-#+end_src lisp
+(setq org-cycle-include-plain-lists nil)
+(setq org-cycle-separator-lines 0)
+#+end_src
 
+** UNFINISHED Attachments
+#+begin_src emacs-lisp
+(setq org-id-method (quote uuidgen))
+#+end_src
+
+** UNFINISHED Deadlines and Agenda Visibility
+#+begin_src emacs-lisp
+(setq org-deadline-warning-days 30)
+#+end_src
+
+** UNFINISHED Exporting Tables to CVS
+#+begin_src emacs-lisp
+(setq org-table-export-default-format "orgtbl-to-csv")
+#+end_src lisp
+** UNFINISHED Visiting links
 #+begin_src emacs-lisp
 (setq org-link-frame-setup (quote ((vm . vm-visit-folder-other-frame)
 				   (gnus . gnus-other-frame)
 				   (file . find-file-other-window))))
 #+end_src
-** UNFINISHED Logging stuff
+** Logging stuff
+   Most of my logging is controlled by the global =org-todo-keywords=
+
+   My logging settings are set as follows:
 #+begin_src emacs-lisp
 (setq org-log-done (quote time))
-(setq org-log-into-drawer t)
+(setq org-log-into-drawer nil)
 #+end_src
+
+   With =org-todo-keywords= set as 
+
+#+begin_src emacs-lisp
+(setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
+ (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@") "|" "CANCELLED(c@/!)")
+ (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
+#+end_src
+
+   This adds a log entry whenever a task moves to any of the following states:
+   - to or out of =DONE= status
+   - to =WAITING= status (with a note) or out of =WAITING= status
+   - to =SOMEDAY= status
+   - to =CANCELLED= status (with a note) or out of =CANCELLED= status
+   - to =QUOTE= status
+   - to =QUOTED= status
+   - to =APPROVED= status (with a note)
+   - to =EXPIRED= status (with a note)
+   - to =REJECTED= status (with a note)
+   - to =OPEN= status
+   - to =PROJECT= status (with a note)
+
+   I keep clock times in the =LOGBOOK= drawer but state change notes outside
+   so unfolding the task shows *why* the task changed state - without the need
+   to show the contents of the =LOGBOOK= drawer.
+** UNFINISHED Limiting time spent on tasks
+   Task estimates and =org-clock-sound=
+   clock mode line property usage
+
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
@@ -1900,8 +2188,7 @@ I find myself typing ' *' when adding a new heading and then the font lock shows
 
 ** Archive Sibling
    This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
-   having a bunch of tasks marked DONE (but not archived)
-
+   having a bunch of tasks marked =DONE= (but not archived)
    
 * Using Git for Automatic History, Backups, and Synchronization
   Editing folded regions of your org-mode file can be hazardous to
@@ -1968,12 +2255,15 @@ do
 done
 #+end_src sh
 
-I use the following =.gitignore= file in my org-mode =git= repositories
-to keep export generated files out of my =git= repositories.  If I
-include a graphic from some other source than ditaa then I'll add it
-to the repository manually.  By default all PNG graphic files are
-ignored (since I assume they are produced by ditaa during export)
+I use the following =.gitignore= file in my org-mode =git=
+repositories to keep export generated files out of my =git=
+repositories.  If I include a graphic from some other source than
+ditaa or graphviz then I'll add it to the repository manually.  By
+default all PNG graphic files are ignored (since I assume they are
+produced by ditaa during export)
 #+begin_example 
+core
+core.*
 *.html
 *~
 .#*
@@ -1991,37 +2281,116 @@ ignored (since I assume they are produced by ditaa during export)
 *.png
 *.toc
 #+end_example
+** Git - Edit files with confidence
+   I use =git= in all of my directories where editing a file should be
+   tracked.
 
-** UNFINISHED USB Stick synchronization
-   shell scripts:
-   - usb-git-fetch
-   - usb-git-push
-   - usb-git-missing
-** UNFINISHED Git stuff
-#+begin_src emacs-lisp
-(add-hook 'grb-todo-mode-hook
-	  (lambda ()
-	    ;; yasnippet
-	    (make-variable-buffer-local 'yas/trigger-key)
-	    (setq yas/trigger-key [tab])
-	    (define-key yas/keymap [tab] 'grb-todo-cycle-commands)))
-;;
+   This means I can edit files with confidence.  I'm free to change
+   stuff and break things because it won't matter.  It's easy to go
+   back to a previous working version or to see exactly what changed
+   since the last commit.  This is great when editing configuration
+   files (such as apache webserver, bind9 DNS configurations, etc.)
+
+   I find this extremely useful where your edits might break things
+   and having =git= tracking the changes means if you break it you can
+   just go back to the previous working version easily.  This is also
+   true for package upgrades for software where the upgrade modifies
+   the configuration files.
+
+   I have every version of my edits in a local =git= repository.
+
+** USB Stick synchronization
+   So I recently acquired a Eee PC 1000 HE which now serves as my main
+   road-warrior laptop replacing my 6 year old Toshiba Tecra S1.
+
+   I have a server on my LAN that hosts bare git repositories for all
+   of my projects.  The problem I was facing is I have to leave in 5
+   minutes and want to make sure I have up-to-date copies of
+   everything I work on when I take it on the road (without Internet
+   access).
+
+   To solve this I use a USB stick with bare git repositories on it.
+   This includes my org-mode repositories as well as any other git
+   repositories I'm interested in.
+   
+   Just before I leave I mount my USB stick on my workstation and run
+   =usb-git-fetch= then =usb-git-push=.  For any repositories that
+   give errors due to non-fast-forward merges I manually merge as
+   required and rerun =usb-git-push= until it reports no errors.  This
+   normally takes a minute to two to do.  Then I grab my Eee PC and my
+   USB stick and leave.
+
+   Later I mount my USB stick in the Eee PC and do =usb-git-fetch= to
+   grab all of the commits from my workstation.  I can merge as
+   required for whatever I want to work on when I'm on the road
+   knowing I have full up-to-date history of all my git repos on the
+   USB stick.
+
+   This really works great!  The problem I had with using a local lan
+   bare repo was I'd forget to push/fetch a few repostories - always
+   the ones I actually wanted to use when offline.  Using the USB
+   stick guarantees that all repositories are up to date and allows me
+   to be completely mobile and not dependent on Internet access.
+
+   I mount my USB stick in a directory =/usb= using the =fstab= entry as follows:
+: /dev/sdb1 /usb vfat defaults,user,noauto,shortname=mixed 0 0
+
+   The 3 scripts I use do the following:
+
+   | Script          | Description                                                               |
+   |-----------------+---------------------------------------------------------------------------|
+   | usb-git-fetch   | For each repo on the USB stick fetch from it if it exists on this machine |
+   | usb-git-push    | For each repo on the USB stick push to it if it exists on this machine    |
+   | usb-git-missing | For each repo on the USB stick report if we don't have a local copy of it |
+
+Here is the =usb-git-fetch= script
+#+begin_src sh
+#!/bin/sh
+find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
+  if test -d ~/${repo/.git}
+  then
+    echo REPO: $repo
+    cd ~/$repo
+    git fetch usb
+  fi
+done
 #+end_src
 
-* Other stuff we may not want to include		   :noexport:
+Here is the =usb-git-push= script
+#+begin_src sh
+#!/bin/sh
+find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
+  if test -d ~/${repo/.git}
+  then
+    echo REPO: $repo
+    cd ~/$repo 
+    git push usb
+  fi
+done
+#+end_src
+
+Here is the =usb-git-missing= script
+#+begin_src sh
+#!/bin/sh
+find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
+  if ! test -d ~/${repo/.git}
+  then
+    echo REPO: $repo
+  fi
+done
+#+end_src
+
+* Other stuff we may not want to include 			   :noexport:
 ** UNFINISHED Handling Phone calls
    - Remember tasks for phone calls and bbdb searches
 
-** UNFINISHED How to control time spent on tasks
-   - Max time limits (1h org documentation)
-   - Min time limits (1h jobsearch)
-   - Put the limit in the task name and use the daily agenda report for time spent
-   - Scheduled tasks as repeating daily so you get them off the daily agenda and reset to TODO
 ** UNFINISHED Recurring tasks and copy subtree
-** UNFINISHED Working on stuff
-*** UNFINISHED Limiting time spent
-[MAX1h] [MIN1h] and daily recurring scheduled tasks
-** UNFINISHED More unproven productivity tools
-*** UNFINISHED Limiting the agenda to a subtree
-Using =C-c C-x <= and =C-c C-x >=
+** UNFINISHED Notes are gone
+  I have a default notes-file defined but the only time I really reference
+  notes is from the agenda template.
 
+#+begin_src emacs-lisp
+(setq org-default-notes-file "~/git/org/notes.org")
+#+end_src
+
+  They go to refile.org now
