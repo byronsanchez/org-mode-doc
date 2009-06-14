@@ -295,7 +295,7 @@ Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp 
 (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
- (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@") "|" "CANCELLED(c@/!)")
+ (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
  (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
 
 (setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
