@@ -1510,7 +1510,10 @@ becomes this!
 #+end_ditaa
 
 #+begin_src emacs-lisp
+; Note: The following line is no longer required with latest development code since
+;       org-exp-blocks was moved into the core
 (load "~/git/org-mode/contrib/lisp/org-exp-blocks")
+
 (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
 #+end_src
 ** Playing with graphviz
