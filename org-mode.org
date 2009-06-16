@@ -13,7 +13,8 @@
 #+LINK_UP:   
 #+LINK_HOME: 
 * Overview
-This is currently a work-in-progress.
+This is a continually evolving document.  Document change history can
+be found [[http://git.norang.ca/?p=org-mode-doc.git;a=summary][here]].
 
 Org-mode is a fabulous organizational tool built by Carsten Dominik
 that operates on plain text files.  Org-mode is part of Emacs.
