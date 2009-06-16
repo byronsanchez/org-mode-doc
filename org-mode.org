@@ -1454,30 +1454,30 @@ ditaa:
 This
 
 : #+begin_ditaa communication.png -r -s 0.8 
-:      +-----------+        +---------+   
-:      |    PLC    |        |         |                 
-:      |  Network  +<------>+   PLC   +<---=---------+  
-:      |    cRED   |        |  c707   |              |  
-:      +-----------+        +----+----+              |  
-:                                ^                   |  
-:                                |                   |  
-:                                |  +----------------|-----------------+ 
-:                                |  |                |                 | 
-:                                v  v                v                 v 
-:        +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients 
-:        |          |       |          |      |           |      |           |      +----+      +----+ 
-:        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL| 
-:        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    | 
-:        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+ 
-:           ^    ^          +----------+             ^           +-------+---+ 
-:           |    |                                   |                         
-:           |    +--------=--------------------------+                     
-:           v                                                              
-:  +--------+--------+                                                          
-:  |                 |                                                          
-:  | Millwide System |            -------- Data ---------                       
-:  | cBLU            |            --=----- Signals ---=--                       
-:  +-----------------+                                                         
+: :      +-----------+        +---------+   
+: :      |    PLC    |        |         |                 
+: :      |  Network  +<------>+   PLC   +<---=---------+  
+: :      |    cRED   |        |  c707   |              |  
+: :      +-----------+        +----+----+              |  
+: :                                ^                   |  
+: :                                |                   |  
+: :                                |  +----------------|-----------------+ 
+: :                                |  |                |                 | 
+: :                                v  v                v                 v 
+: :        +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients 
+: :        |          |       |          |      |           |      |           |      +----+      +----+ 
+: :        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL| 
+: :        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    | 
+: :        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+ 
+: :           ^    ^          +----------+             ^           +-------+---+ 
+: :           |    |                                   |                         
+: :           |    +--------=--------------------------+                     
+: :           v                                                              
+: :  +--------+--------+                                                          
+: :  |                 |                                                          
+: :  | Millwide System |            -------- Data ---------                       
+: :  | cBLU            |            --=----- Signals ---=--                       
+: :  +-----------------+                                                         
 : #+end_ditaa
 
 becomes this!
@@ -1522,37 +1522,37 @@ becomes this!
 This
 
 : #+begin_dot gv01.png -Kdot -Tpng
-: digraph G {
-:   concentrate=true;
-:   subgraph cluster_wrapline {
-:     label="Wrapline Control System";
-:     color=purple;
-:     sharedmem [style=filled, fillcolor=lightgrey, shape=box];
-:     sharedmem -> exec [style=dotted];
-:     sharedmem -> db [style=dotted];
-:     sharedmem -> plc [style=dotted];
-:     sharedmem -> opserver [style=dotted];
-:     exec -> db;
-:     exec -> opserver;
-:     plc -> exec;
-:   };
-:   plcnet [shape=box, label="PLC Network"];
-:   plcnet -> plc;
-:   millwide [shape=box, label="Millwide System"];
-:   db -> millwide;
-: 
-:   subgraph cluster_opclients {
-:     color=blue;
-:     client1[label="client"];
-:     client2[label="client"];
-:     client3[label="client"];
-:     clientn[label="client"];
-:     opserver -> client1;
-:     opserver -> client2;
-:     opserver -> client3;
-:     opserver -> clientn;
-:   };
-: };
+: : digraph G {
+: :   concentrate=true;
+: :   subgraph cluster_wrapline {
+: :     label="Wrapline Control System";
+: :     color=purple;
+: :     sharedmem [style=filled, fillcolor=lightgrey, shape=box];
+: :     sharedmem -> exec [style=dotted];
+: :     sharedmem -> db [style=dotted];
+: :     sharedmem -> plc [style=dotted];
+: :     sharedmem -> opserver [style=dotted];
+: :     exec -> db;
+: :     exec -> opserver;
+: :     plc -> exec;
+: :   };
+: :   plcnet [shape=box, label="PLC Network"];
+: :   plcnet -> plc;
+: :   millwide [shape=box, label="Millwide System"];
+: :   db -> millwide;
+: : 
+: :   subgraph cluster_opclients {
+: :     color=blue;
+: :     client1[label="client"];
+: :     client2[label="client"];
+: :     client3[label="client"];
+: :     clientn[label="client"];
+: :     opserver -> client1;
+: :     opserver -> client2;
+: :     opserver -> client3;
+: :     opserver -> clientn;
+: :   };
+: : };
 : #+end_dot
 
 becomes this!
