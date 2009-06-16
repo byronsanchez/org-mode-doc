@@ -2146,9 +2146,9 @@ Here are the =.emacs= settings:
 : ** TODO Step 2
 : ** TODO Step 3
   
-   In this case you need to complete =Step 1= before you can do
-   complete =Step 2=, etc. and org-mode prevent the state change to a
-   done task until the preceeding tasks are complete.
+   In this case you need to complete =Step 1= before you can complete
+   =Step 2=, etc. and org-mode prevents the state change to a done task
+   until the preceding tasks are complete.
 
 ** UNFINISHED Task structure and presentation
 I don't hide leading stars - I want to see the heading levels explicitly. 
