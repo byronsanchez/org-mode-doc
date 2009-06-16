@@ -2101,29 +2101,37 @@ Here are the =.emacs= settings:
    than it used to be.  There is an automatic backup of everything
    pushed to the remote repository.
 
-** UNFINISHED Handling blocked tasks
+** Handling blocked tasks
+   Blocked tasks are tasks that have subtasks which are not in a done
+   todo state.  Blocked tasks show up in a grayed font by default in
+   the agenda.
+
    To enable task blocking set the following variable:
 
 #+begin_src emacs-lisp
 (setq org-enforce-todo-dependencies t)
 #+end_src
 
-   This setting prevents tasks from changing to a =DONE= state if any
-   subtasks are still open.  This works pretty well except for
-   repeating tasks.  You can override the setting temporarily by
-   changing the task with =C-u C-u C-u C-c C-t= but I never remember
-   that.  I set a permanent property on the repeated tasks as follows:
+   This setting prevents tasks from changing to =DONE= if any subtasks
+   are still open.  This works pretty well except for repeating tasks.
+   I find I'm regularly adding =TODO= tasks under repeating tasks and
+   not all of the subtasks need to be complete before the next repeat
+   cycle.
+
+   You can override the setting temporarily by changing the task with
+   =C-u C-u C-u C-c C-t= but I never remember that.  I set a permanent
+   property on the repeated tasks as follows:
 
 : * TODO New Repeating Task
 :   SCHEDULED: <2009-06-16 Tue +1w>
 :   :PROPERTIES:
 :   :NOBLOCKING: t
 :   :END:
+: ...
+: ** TODO Subtask
 
-   This prevents
-
-
-   Handling blocked tasks and the =NOBLOCKING= property (usually on repeated tasks)
+   This prevents the =New Repeating Task= from being blocked if some
+   of the items under it are not complete.
 
 ** UNFINISHED Task structure and presentation
 I don't hide leading stars - I want to see the heading levels explicitly. 
