@@ -1377,6 +1377,15 @@ Original Estimate
 
    This works for me.  You're mileage may vary ;)
 ** UNFINISHED Project definition and finding stuck projects
+   Projects are just tasks with a special todo keyword.  Projects
+   generally have a well defined scope, start, and end date.
+
+   I use the =PROJECT= keyword for the top level task on a project.
+   This identifies the task and all subheadings as a single project.
+   Setting the =PROJECT= keyword also sets a =PROJECT= tag so that
+   it is possible to filter tasks that are part of a project in the
+   agenda views.
+
 #+begin_src emacs-lisp
 (setq org-stuck-projects (quote ("/PROJECT" nil ("NEXT") "")))
 #+end_src
