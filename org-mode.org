@@ -432,7 +432,7 @@ that can be estimated and clocked.  Projects use the following state transitions
    The triggers break down to the following rules:
 
    - Moving a task to =CANCELLED= adds a =CANCELLED= tag
-   - Moving a task to =WAITING= adds a =WAITING= tag
+   - Moving a task to =WAITING= adds a =WAITING= tag and removes any =NEXT= tag
    - Moving a task to =SOMEDAY= adds a =WAITING= tag
    - Moving a task to a done state removes =NEXT= and =WAITING= tags
    - Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
@@ -1376,7 +1376,7 @@ Original Estimate
    next.
 
    This works for me.  You're mileage may vary ;)
-** UNFINISHED Project definition and finding stuck projects
+** Project definition and finding stuck projects
    Projects are just tasks with a special todo keyword.  Projects
    generally have a well defined scope, start, and end date.
 
@@ -1386,9 +1386,24 @@ Original Estimate
    it is possible to filter tasks that are part of a project in the
    agenda views.
 
+   Projects are 'stuck' if they have no =NEXT= task defined.  I use
+   tags to identify =NEXT= tasks (so the task todo state keyword is
+   one of =TODO= or =STARTING=).  This allows the task to change to
+   =STARTING= when it is clocked in without losing it's =NEXT= status.
+
+   Org-mode stuck projects lists projects that have no next task defined.
+   I normally review these in my weekly review and assign a =NEXT= task
+   to all projects to clear the stuck project list.  This helps to keep
+   projects moving forwards.
+
 #+begin_src emacs-lisp
 (setq org-stuck-projects (quote ("/PROJECT" nil ("NEXT") "")))
 #+end_src
+
+   Todo state triggers (see [[*ToDo%20state%20triggers][*ToDo state triggers]]) automatically remove
+   =NEXT= tags when tasks change to specific states.
+
+   The stuck project view is available with =F12 #=.
 
 * Archiving
 ** Archiving Subtrees
@@ -2087,10 +2102,29 @@ Here are the =.emacs= settings:
    pushed to the remote repository.
 
 ** UNFINISHED Handling blocked tasks
-Handling blocked tasks and the =NOBLOCKING= property (usually on repeated tasks)
+   To enable task blocking set the following variable:
+
 #+begin_src emacs-lisp
 (setq org-enforce-todo-dependencies t)
 #+end_src
+
+   This setting prevents tasks from changing to a =DONE= state if any
+   subtasks are still open.  This works pretty well except for
+   repeating tasks.  You can override the setting temporarily by
+   changing the task with =C-u C-u C-u C-c C-t= but I never remember
+   that.  I set a permanent property on the repeated tasks as follows:
+
+: * TODO New Repeating Task
+:   SCHEDULED: <2009-06-16 Tue +1w>
+:   :PROPERTIES:
+:   :NOBLOCKING: t
+:   :END:
+
+   This prevents
+
+
+   Handling blocked tasks and the =NOBLOCKING= property (usually on repeated tasks)
+
 ** UNFINISHED Task structure and presentation
 I don't hide leading stars - I want to see the heading levels explicitly. 
 I find myself typing ' *' when adding a new heading and then the font lock shows I messed up and created a list instead.
