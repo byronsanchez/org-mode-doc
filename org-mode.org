@@ -1973,7 +1973,9 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 :    :PROPERTIES:
 :    :Category: Holiday
 :    :END:
-: ...
+: %%(org-calendar-holiday)
+: ** Some other Appointment
+:    ...
 
 *** Searches include archive files
     I keep a single archive file for each of my org-mode project files.
