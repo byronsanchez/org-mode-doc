@@ -2135,6 +2135,21 @@ Here are the =.emacs= settings:
    This prevents the =New Repeating Task= from being blocked if some
    of the items under it are not complete.
 
+   Occassionally I need to complete tasks in a given order.  Org-mode has
+   a property =ORDERED= that enforces this for subtasks.
+
+: * TODO Some Task
+:   :PROPERTY:
+:   :ORDERED: t
+:   :END:
+: ** TODO Step 1
+: ** TODO Step 2
+: ** TODO Step 3
+  
+   In this case you need to complete =Step 1= before you can do
+   complete =Step 2=, etc. and org-mode prevent the state change to a
+   done task until the preceeding tasks are complete.
+
 ** UNFINISHED Task structure and presentation
 I don't hide leading stars - I want to see the heading levels explicitly. 
 I find myself typing ' *' when adding a new heading and then the font lock shows I messed up and created a list instead.
