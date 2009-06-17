@@ -2150,31 +2150,82 @@ Here are the =.emacs= settings:
    =Step 2=, etc. and org-mode prevents the state change to a done task
    until the preceding tasks are complete.
 
-** UNFINISHED Task structure and presentation
-I don't hide leading stars - I want to see the heading levels explicitly. 
-I find myself typing ' *' when adding a new heading and then the font lock shows I messed up and created a list instead.
+** UNFINISHED Org Task structure and presentation
+*** Controlling display of leading stars on headlines
+    Org-mode has the ability to show or hide the leading starts on
+    task headlines.  It's also possible to have headlines at odd
+    levels only so that the stars and heading task names line up in
+    sublevels.
+
+    I don't hide leading stars - I want to see the heading levels
+    explicitly.  When I tried the hide leading stars setting I found
+    myself typing ' *' when adding a new heading and then the font
+    lock shows I messed up and created a list instead.
+
+    To make org show leading stars use
+
 #+begin_src emacs-lisp 
 (setq org-hide-leading-stars nil)
 #+end_src emacs-lisp
+*** Show headings at odd levels only or odd-even levels
+    I've converted my files between odd-levels-only and odd-even using
+    the functions =org-convert-to-odd-levels= and
+    =org-convert-to-oddeven-levels= functions a number of times.  I
+    ended up going back to odd-even levels to reduce the amount of
+    leading whitespace on tasks.  I didn't find that lining up the
+    headlines and tasks in odd-levels-only to be all that helpful.
 
-I've converted my files between odd-levels-only and odd-even using the
-functions =org-convert-to-odd-levels= and =org-convert-to-oddeven-levels= functions
-a number of times.  I ended up going back to odd-even levels to reduce the amount of
-leading whitespace on tasks.  I didn't find that lining up the headlines and tasks
-in odd-levels-only to be all that helpful.
 #+begin_src emacs-lisp
 (setq org-odd-levels-only nil)
 #+end_src
+*** Controlling insertion of blank lines in lists and headings
+    I find extra blank lines in lists and headings a bit of a
+    nuisance.  To get a body after a list you need to include a blank
+    line between the list entry and the body -- and indent the body
+    appropriately.  Most of my lists have no body detail so I like the
+    look of collapsed lists with no blank lines in the better.
 
 #+begin_src emacs-lisp
 (setq org-blank-before-new-entry (quote ((heading)
 					 (plain-list-item))))
-(setq org-insert-heading-respect-content t)
+#+end_src
+*** Adding new tasks quickly without disturbing the current task content
+    To create new headings in a project file it is really convenient to use
+    C-S-RET.  This inserts a new headline.  With the following setting
+
+    #+begin_src emacs-lisp
+    (setq org-insert-heading-respect-content t)
+    #+end_src
+
+    Org adds the new heading after the content of the current item.
+    This lets you hit C-S-RET in the middle of an entry and the new
+    heading is added after the body of the current entry.
+*** Return does not follow links
+    I find return follows link annoying.  It only took a few accidents
+    of hitting return on an HTML link that fired up Firefox to get me
+    to disable that setting.
+
+#+begin_src emacs-lisp
 (setq org-return-follows-link nil)
+#+end_src
+*** Notes at the top
+    I enter notes for tasks with =C-c C-z= (or just =z= in the
+    agenda).  Changing tasks states also sometimes prompt for a note
+    (e.g. moving to =WAITING= prompts for a note and I enter a reason
+    for why it is waiting).  These notes are saved at the top of the
+    task so unfolding the task shows the note first.
+#+begin_src emacs-lisp
 (setq org-reverse-note-order nil)
+#+end_src
+*** Folding views shows headlines above and immediately following task
+    
+#+begin_src emacs-lisp
 (setq org-show-following-heading t)
 (setq org-show-hierarchy-above t)
 (setq org-show-siblings nil)
+#+end_src
+*** Special key handling
+#+begin_src emacs-lisp
 (setq org-special-ctrl-a/e t)
 (setq org-special-ctrl-k t)
 (setq org-yank-adjusted-subtrees t)
