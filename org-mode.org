@@ -280,6 +280,12 @@ speed up creation of standard text blocks in most editing modes.
 (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
 #+end_src
 
+   The main reason I have special key bindings (like =F11=, and =F12=)
+   is so that the keys work in any mode.  If I'm in the Gnus summary
+   buffer then =C-u C-c C-x C-i= doesn't work, but the =C-F11= key
+   combination does and this saves me time since I don't have to visit
+   an org-mode buffer first just to clock in a recent task.
+
 * Tasks and States
   I use one set of TODO keywords for all of my org files.  Org-mode
   lets you define TODO keywords per file but I find it's easier to
