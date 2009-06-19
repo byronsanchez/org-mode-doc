@@ -225,11 +225,11 @@ speed up creation of standard text blocks in most editing modes.
    I have the following custom key bindings set up for my emacs (sorted by frequency).
 #+end_example
 
-
 | Key     | For                                             | Used       |
 |---------+-------------------------------------------------+------------|
 | F12     | Agenda (1 key less than C-c a)                  | Very Often |
 | C-c b   | Switch to org file                              | Very Often |
+| C-F11   | Clock in a task (show menu with prefix)         | Very Often |
 | f9 g    | Gnus - I live in gnus                           | Often      |
 | C-M-r   | Create a remember task                          | Often      |
 | F11     | Goto currently clocked item                     | Often      |
@@ -277,7 +277,9 @@ speed up creation of standard text blocks in most editing modes.
 (global-set-key (kbd "C-x n r") 'narrow-to-region)
 (global-set-key (kbd "C-<f10>") 'next-buffer)
 (global-set-key (kbd "<f11>") 'org-clock-goto)
+(global-set-key (kbd "C-<f11>") 'org-clock-in)
 (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
+(global-set-key (kbd "C-M-r") 'org-remember)
 #+end_src
 
    The main reason I have special key bindings (like =F11=, and =F12=)
