@@ -2323,8 +2323,27 @@ Here are the =.emacs= settings:
    so unfolding the task shows *why* the task changed state - without the need
    to show the contents of the =LOGBOOK= drawer.
 ** UNFINISHED Limiting time spent on tasks
-   Task estimates and =org-clock-sound=
-   clock mode line property usage
+   Org-mode has this great new feature for signalling alarms when the
+   estimated time for a task is reached.
+
+   I use this to limit the amount of time I spend on a task during the
+   day.  As an example, I've been working on this document for over
+   two months now.  I want to get it finished but I can't just work on
+   it solely until it's done because then nothing else gets worked on.
+   I want to do a little bit every day I work on it and limit the
+   total amount of time I spend helping out with org-mode to an hour a
+   day.
+
+   To this end I have a task
+
+   : ** STARTED Document my use of org-mode
+   :    :LOGBOOK:...
+   :    :PROPERTIES:
+   :    :CLOCK_MODELINE_TOTAL: today
+   :    :Effort:   1:00
+   :    :END:
+
+   Task estimates and =org-clock-sound= clock mode line property usage
 
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
