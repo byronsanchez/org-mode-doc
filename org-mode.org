@@ -2322,17 +2322,16 @@ Here are the =.emacs= settings:
    I keep clock times in the =LOGBOOK= drawer but state change notes outside
    so unfolding the task shows *why* the task changed state - without the need
    to show the contents of the =LOGBOOK= drawer.
-** UNFINISHED Limiting time spent on tasks
+** Limiting time spent on tasks
    Org-mode has this great new feature for signalling alarms when the
-   estimated time for a task is reached.
+   estimated time for a task is reached.  I use this to limit the
+   amount of time I spend on a task during the day.  
 
-   I use this to limit the amount of time I spend on a task during the
-   day.  As an example, I've been working on this document for over
-   two months now.  I want to get it finished but I can't just work on
-   it solely until it's done because then nothing else gets worked on.
-   I want to do a little bit every day I work on it and limit the
-   total amount of time I spend helping out with org-mode to an hour a
-   day.
+   As an example, I've been working on this document for over two
+   months now.  I want to get it finished but I can't just work on it
+   solely until it's done because then nothing else gets done.  I want
+   to do a little bit every day but limit the total amount of time I
+   spend documenting org-mode to an hour a day.
 
    To this end I have a task
 
@@ -2343,8 +2342,33 @@ Here are the =.emacs= settings:
    :    :Effort:   1:00
    :    :END:
 
-   Task estimates and =org-clock-sound= clock mode line property usage
+   The task has an estimated effort of 1 hour and when I clock in the task
+   it gives me a total in the mode-line like this
 
+   : --:**  org-mode.org   91% (2348,73) Git:master  (Org Fly yas Font)-----[0:35/1:00 (Document my use of org-mode)]-------
+
+   I've spent 35 minutes of my 1 hour so far today on this document
+   and other help on IRC.
+
+   I set up an alarm so the Star Trek red alert klaxon goes off when
+   the total estimated time is hit.  (Yes I'm a Trekkie :) )
+
+#+begin_src emacs-lisp
+(setq org-clock-sound "/usr/local/lib/alert1.wav")
+#+end_src
+
+   When the one hour time limit is hit the alarm sound goes off and a
+   message states that I should be done working on this task.  If I
+   switch tasks and try to clock in this task again I get the sound
+   each and every time I clock in the task.  This nags me to go work on
+   something else :)
+
+   You can use similar setups for repeated tasks.  By default the last
+   repeat time is recorded as a property when a repeating task is
+   marked done.  For repeating tasks the mode-line clock total counts
+   since the last repeat time by default.  This lets you accumulate
+   time over multiple days and counts towards your estimated effort
+   limit.
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
