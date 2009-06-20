@@ -2001,12 +2001,9 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 *** Agenda view tweaks
     The following agenda customizations control 
     - display of repeating tasks
-
     - display of empty dates on the agenda
     - task sort order
-    - start the agenda display with today
-
-      for the weekly view
+    - start the agenda weekly view with =today=
     - display of the grid
 
 Here are the =.emacs= settings:
