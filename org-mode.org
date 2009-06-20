@@ -1823,15 +1823,21 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
   This section is a miscellaneous collection of Emacs customizations that I use
   with org-mode so that it Works-For-Me(tm).
 ** Yasnippets
-   Yasnippets is cool!  You type the snippet name and =TAB= and
+   [[http://code.google.com/p/yasnippet/][Yasnippets]] is cool!  You type the snippet name and =TAB= and
    yasnippet expands the name with the contents of the snippet text -
    substituting snippet variables as appropriate.
 
    Yasnippet comes with lots of snippets for programming languages.
    So far I only use 1 snippet (=block=) for =org-mode=.
 
-   Setup =yasnippet= with the following code in your =.emacs=
+   I downloaded and installed the unbundled version of yasnippet so
+   that I can edit the predefined snippets.  I unpacked the yasnippet
+   software in my =~/.emacs.d/plugins= directory, renamed
+   =yasnippet0.5.10= to =yasnippet= and added the following setup in my =.emacs=:
+
 #+begin_src emacs-lisp
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins"))
+
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
