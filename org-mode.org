@@ -1991,7 +1991,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     This allows me to search the current file and the archive when I need to
     dig up old information from the archives.
 
-    I don't need this often but it sure it handy on the occasions that
+    I don't need this often but it sure is handy on the occasions that
     I do need it.
 
 #+begin_src emacs-lisp
