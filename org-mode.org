@@ -2281,26 +2281,150 @@ Here are the =.emacs= settings:
 (setq org-yank-adjusted-subtrees t)
 #+end_src
 
-** UNFINISHED Attachments
+** Attachments					
+   Attachments are great for getting large amounts of data related to
+   your project out of your org-mode files.  Before attachments came
+   along I was including huge blocks of SQL code in my org files to
+   keep track of changes I made to project databases.  This bloated my
+   org file sizes badly.
+
+   Now I can create the data in a separate file and attach it to my
+   project task so it's easily located again in the future.
+
+   I set up org-mode to generate unique attachment IDs with
+   =org-id-method= as follows:
+
 #+begin_src emacs-lisp
 (setq org-id-method (quote uuidgen))
 #+end_src
 
-** UNFINISHED Deadlines and Agenda Visibility
+   Say you want to attach a file =x.sql= to your current task.  Create
+   the file data in =/tmp/x.sql= and save it.
+
+   Attach the file with =C-c C-a a= and enter the filename: =x.sql=.
+   This generates a unique ID for the task and adds the file in the
+   attachment directory.
+
+   : ** Attachments		                                   :ATTACH:
+   :    :PROPERTIES:
+   :    :Attachments: x.sql
+   :    :ID:       f1d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b
+   :    :END:
+
+   The attached file is saved in
+   =data/f1/d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b/=.  Where it goes
+   exactly isn't important for me -- as long as it is saved and
+   retrievable easily.  Org-mode copies the original file =/tmp/x.sql=
+   into the appropriate attachment directory.
+
+   Tasks with attachments automatically get an =ATTACH= tag so you can
+   easily find tasks with attachments with a tag search.
+   
+   To open the attachment for a task use =C-c C-a o=.  This prompts for the
+   attachment to open and =TAB= completion works here.
+
+   The =ID= changes for every task header when a new =ID= is generated.
+   
+   It's possible to use named directories for attachments but I
+   haven't needed this functionality yet -- it's there if you need it.
+
+   I store my org-mode attachments with my org files in a subdirectory
+   =data=.  These are automatically added to my =git= repository along
+   with any other org-mode changes I've made.
+
+** Deadlines and Agenda Visibility
+
+   Deadlines and due dates are a fact or life.  By default I want to
+   see deadlines in the agenda 30 days before the due date.
+
+   The following setting accomplishes this:
+
 #+begin_src emacs-lisp
 (setq org-deadline-warning-days 30)
 #+end_src
 
-** UNFINISHED Exporting Tables to CVS
+   This gives me plenty of time to deal with the task so that it is completed
+   on or before the due date.
+
+   I also use deadlines for repeating tasks.  If the task repeats more often
+   than once per month it would be always bugging me on the agenda view.
+   For these types of tasks I set an explicit deadline warning date as follows:
+
+   : ** TODO Pay Wages
+   :    DEADLINE: <2009-07-01 Wed +1m -0d> 
+
+   This example repeats monthly and shows up in the agenda on the day
+   it is due (with no prior warning).  You can set any number of lead
+   days you want on DEADLINES using -Nd where N is the number of days
+   in advance the task should show up in the agenda.  If no value is
+   specified the default =org-deadline-warning-days= is used.
+
+** Exporting Tables to CVS
+   I generate org-mode tables with details of task specifications and
+   record structures for some of my projects.  My clients like to use
+   spreadsheets for this type of detail.
+
+   It's easy to share the details of the org-mode table by exporting
+   in HTML but that isn't easy for anyone else to work with if they
+   need to edit data.
+
+   To solve this problem I export my table as comma delimited values
+   (CSV) and then send that to the client (or read it into a
+   spreadsheet and email the resulting spreadsheet file).
+
+   Org-mode can export tables as TAB or comma delimited formats.  I
+   set the default format to CSV with:
+
 #+begin_src emacs-lisp
 (setq org-table-export-default-format "orgtbl-to-csv")
 #+end_src lisp
-** UNFINISHED Visiting links
+
+   Exporting to CSV format is the only one I use and this provides the
+   default so I can just hit RETURN when prompted for the format.
+
+   To export the following table I put the cursor inside the table and
+   hit =M-x org-table-export= which prompts for a filename and the
+   format which defaults to orgtbl-to-csv from the setting above.
+
+   |   One |    Two | Three |
+   |-------+--------+-------|
+   |     1 |      1 |     2 |
+   |     3 |      6 |     5 |
+   |  fred |    kpe |  mary |
+   | 234.5 | 432.12 | 324.3 |
+
+   This creates the file with the following data
+
+#+begin_example 
+One,Two,Three
+1,1,2
+3,6,5
+fred,kpe,mary
+234.5,432.12,324.3
+#+end_example
+
+** Visiting links
+
+   Links to emails, web pages, and other files are sprinkled all over
+   my org files.  The following setting control how org-mode handles
+   opening the link.
+
 #+begin_src emacs-lisp
 (setq org-link-frame-setup (quote ((vm . vm-visit-folder-other-frame)
 				   (gnus . gnus-other-frame)
 				   (file . find-file-other-window))))
 #+end_src
+
+   I like to keep 2 frames open for Emacs - one for org and one for
+   Gnus.  When I open a link to an email org loads the message in the
+   other gnus frame.  I find this much better than replacing the task
+   data I'm currently looking at.
+
+   Similarly opening a file splits the window and displays the file in
+   the other window of the current frame.
+
+   This works well for me.  Your mileage may vary :)
+
 ** Logging stuff
    Most of my logging is controlled by the global =org-todo-keywords=
 
