@@ -1436,7 +1436,7 @@ Original Estimate
    the first of the month and after using the time clock information
    for the previous month I archive any =DONE= tasks and projects.
 
-   This keeps my main working files clutter-free.  If I never need the
+   This keeps my main working files clutter-free.  If I ever need the
    detail for the archived tasks they are available in the appropriate
    archive file.
 * Publishing
