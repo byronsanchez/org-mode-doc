@@ -35,9 +35,8 @@
   can be found [[http://git.norang.ca/?p=org-mode-doc.git;a=summary][here]].
 
   This document is created using the publishing features of org-mode.
-  The source for this document can be found at
-  http://doc.norang.ca/org-mode.org.html and
-  http://doc.norang.ca/org-mode.org
+  The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
+  [[http://doc.norang.ca/org-mode.org][plain text org file]].
 
   Some of the customized Emacs settings described in this document are
   set at their default values.  This explicitly shows the setting for
