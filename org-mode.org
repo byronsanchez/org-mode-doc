@@ -1923,7 +1923,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     You can use the agenda restriction lock =C-c C-x <= on the any
     line before the first heading to set the agenda restriction lock
     to this file only.  This lock stays in effect until you remove it
-    with =C-c C-x C-r=.
+    with =C-c C-x >=.
 
     Another way is to invoke the agenda with =F12 1 a= while visiting
     an org-mode file.  This limits the agenda view to just this file.
