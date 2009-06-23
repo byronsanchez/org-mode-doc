@@ -18,7 +18,7 @@
 <div class="sidebar">
 #+end_html
   [[http://orgmode.org][Org-mode]] is a finalist in the 2009 Sourceforge Community Choice
-  Awards in the final category /Most Likely to Change the Way you do
+  Awards in the category /Most Likely to Change the Way you do
   Everything/.
 
   This is a fantastic opportunity to make more people aware of this
