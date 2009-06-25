@@ -22,7 +22,7 @@
   Everything/.
 
   This is a fantastic opportunity to make more people aware of this
-  great package.  Please [[http://sourceforge.net/community/cca09/vote][vote for Org-mode]].
+  great package.  Please [[http://sf.net/community/cca09/vote/?f=401][vote for Org-mode]].
 
 #+begin_html
 </div>
