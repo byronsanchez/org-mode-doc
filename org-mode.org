@@ -123,13 +123,11 @@ speed up creation of standard text blocks in most editing modes.
    | git.org      | Git related tasks                          |
    | bzflag.org   | BZFlag related tasks                       | 
 
-   The following org-files are the targets for remember notes:
+   The following org-file collects remember notes and tasks:
 
-   | Filename  | Description            |
-   |-----------+------------------------|
-   | tasks.org | New task bucket        |
-   | notes.org | New notes bucket       |
-   | phone.org | New phone calls bucket |
+   | Filename   | Description            |
+   |------------+------------------------|
+   | refile.org | Remember task bucket   |
 
    The following work-related org-files keep my business notes (using
    fictitious client names)
@@ -161,12 +159,10 @@ speed up creation of standard text blocks in most editing modes.
    formatted as a =setq= for clarity but in reality this is saved in
    my custom.el file.
 #+begin_src emacs-lisp
-(setq org-agenda-files (quote ("~/git/org/tasks.org"
+(setq org-agenda-files (quote ("~/git/org/refile.org"
 			       "~/git/org/gsoc2009.org"
 			       "~/git/org/farm.org" 
 			       "~/git/org/mark.org"
-			       "~/git/org/notes.org"
-			       "~/git/org/phone.org"
 			       "~/git/org/org.org"
 			       "~/git/org/norang.org"
 			       ; client org files removed
@@ -516,72 +512,64 @@ that can be estimated and clocked.  Projects use the following state transitions
    Here is my setup for org-remember
 
 #+begin_src emacs-lisp
-;;
-;;;  Load Org Remember Stuff
-(require 'remember)
-(org-remember-insinuate)
-
-;; Start clock if a remember buffer includes :CLOCK-IN:
-(add-hook 'remember-mode-hook 'my-start-clock-if-needed 'append)
-
-(defun my-start-clock-if-needed ()
-  (save-excursion
-    (goto-char (point-min))
-    (when (re-search-forward " *:CLOCK-IN: *" nil t)
-      (replace-match "")
-      (org-clock-in))))
-
-;; I use C-M-r to start org-remember
-(global-set-key (kbd "C-M-r") 'org-remember)
-
-;; Keep clocks running
-(setq org-remember-clock-out-on-exit nil)
-
-;; C-c C-c stores the note immediately
-(setq org-remember-store-without-prompt t)
-
-;; I don't use this -- but set it in case I forget to specify a location in a future template
-(setq org-remember-default-headline "Tasks")
-
-;; 3 remember templates for TODO tasks, Notes, and Phone calls
-(setq org-remember-templates (quote (("todo" ?t "* TODO %?
-  %u
-  %a" "~/git/org/tasks.org" bottom nil)
-				     ("note" ?n "* %?                                        :NOTE:
-  %u
-  %a" nil bottom nil)
-				     ("phone" ?p "* PHONE %:name - %:company -                :PHONE:
-  Contact Info: %a
-  %u
-  :CLOCK-IN:
-  %?" "~/git/org/phone.org" bottom nil))))
+  (setq org-default-notes-file "~/git/org/refile.org")
+  
+  ;;
+  ;;;  Load Org Remember Stuff
+  (require 'remember)
+  (org-remember-insinuate)
+  
+  ;; Start clock if a remember buffer includes :CLOCK-IN:
+  (add-hook 'remember-mode-hook 'my-start-clock-if-needed 'append)
+  
+  (defun my-start-clock-if-needed ()
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward " *:CLOCK-IN: *" nil t)
+        (replace-match "")
+        (org-clock-in))))
+  
+  ;; I use C-M-r to start org-remember
+  (global-set-key (kbd "C-M-r") 'org-remember)
+  
+  ;; Keep clocks running
+  (setq org-remember-clock-out-on-exit nil)
+  
+  ;; C-c C-c stores the note immediately
+  (setq org-remember-store-without-prompt t)
+  
+  ;; I don't use this -- but set it in case I forget to specify a location in a future template
+  (setq org-remember-default-headline "Tasks")
+  
+  ;; 3 remember templates for TODO tasks, Notes, and Phone calls
+  (setq org-remember-templates (quote (("todo" ?t "* TODO %?
+    %u
+    %a" nil bottom nil)
+                                       ("note" ?n "* %?                                        :NOTE:
+    %u
+    %a" nil bottom nil)
+                                       ("phone" ?p "* PHONE %:name - %:company -                :PHONE:
+    Contact Info: %a
+    %u
+    :CLOCK-IN:
+    %?" nil bottom nil))))
 #+end_src
 
    Each type of remember note goes in a separate org file with a =#+FILETAGS:= header which gives all tasks in that
    file a tag.
-** Separate files for Remember Tasks
-   I have 3 org files which are targets for my remember templates:
+** Separate file for Remember Tasks
+   I have a single org file which is the target for my remember templates.
 
-   | Remember File | Used for       |
-   |---------------+----------------|
-   | notes.org     | notes          |
-   | tasks.org     | new TODO tasks |
-   | phone.org     | phone calls    |
+   I store notes, tasks, and phone calls in refile.org.  I used to use
+   multiple files but found that didn't really have any advantage over
+   a single file.
 
-   Normally these files are empty except for a single line at the top which creates tags for anything in
-   the files.  The three files look like this:
+   Normally this file is empty except for a single line at the top
+   which creates a REFILE tag for anything in the files.
 
-*** Notes.org - Remember file for notes
-#+begin_example
-#+FILETAGS: NOTES REFILE
-#+end_example
-*** Tasks.org - Remember file for TODO tasks
+   The file has a single permanent line at the top like this
 #+begin_example
 #+FILETAGS: REFILE
-#+end_example
-*** Phone.org - Remember file for clocking phone calls
-#+begin_example
-#+FILETAGS: PHONE REFILE
 #+end_example
 ** Remember Tasks is all about begin FAST
    Okay I'm in the middle of something and oh yeah - I have to remember to do that.
@@ -589,7 +577,7 @@ that can be estimated and clocked.  Projects use the following state transitions
    lose my focus on that but I can't afford to forget this little thing that just came up.
 
    So what do I do?  Hit =C-M-r= to start remember mode and select =t= since it's a new task and I get a buffer like this
-:  ##     C-c C-c  "~/git/org/tasks.org" -> "* bottom"
+:  ##     C-c C-c  "~/git/org/refile.org" -> "* bottom"
 :  ## C-u C-c C-c  like C-c C-c, and immediately visit note at target location
 :  ## C-0 C-c C-c  "???" -> "* ???"
 :  ## C-1 C-c C-c  to select file and header location interactively.
@@ -600,7 +588,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 :    [2009-04-19 Sun]
 :    [[file:~/git/doc.norang.ca/org-mode.org::*Remember%20Tasks%20is%20all%20about%20begin%20FAST][file:~/git/doc.norang.ca/org-mode.org::*Remember Tasks is all about begin FAST]]
 
-   Enter the details of the TODO item and =C-c C-c= to file it away in tasks.org and go right back
+   Enter the details of the TODO item and =C-c C-c= to file it away in refile.org and go right back
    to what I'm really working on secure in the knowledge that that item isn't going to get lost and 
    I don't have to think about it anymore at all now.
 * Refiling Tasks
@@ -608,16 +596,15 @@ that can be estimated and clocked.  Projects use the following state transitions
   :CUSTOM_ID: Refiling
   :END:
   Refiling tasks is easy.  After collecting a bunch of new tasks in my
-  tasks.org file using remember mode I need to move these to the
+  refile.org file using remember mode I need to move these to the
   correct org file and topic.  All of my active org-files are in my
   =org-agenda-files= variable and contribute to the agenda.
 
-  I collect tasks in my remember org files (tasks.org, phone.org,
-  notes.org) for up to a week.  I do my weekly review every Monday and
-  one of the tasks for that is to refile all remember tasks.  Often I
-  end up refiling tasks the same day I create them because they show
-  up in my daily clock report summary and are obviously in the wrong
-  place.
+  I collect remember tasks in refile.org for up to a week.  I do my
+  weekly review every Monday and one of the tasks for that is to
+  refile all remember tasks.  Often I end up refiling tasks the same
+  day I create them because they show up in my daily clock report
+  summary and are obviously in the wrong place.
 ** Refile Setup
    To refile tasks in org you need to tell it where you want to refile things.
 
@@ -666,23 +653,24 @@ that can be estimated and clocked.  Projects use the following state transitions
    Refiling all of my tasks tends to take less than a minute so I may
    do this a couple of times a day.
 ** Refiling Notes
-   I keep a =* Notes*= headline in each of my org-mode files.
-   These headlines have a =NOTES= tag which allows finding notes 
-   across multiple files easily using the agenda search functions.
+   I keep a =* Notes= headline in most of my org-mode files.  Notes
+   have a =NOTES= tag which is created by the remember template for
+   notes.  This allows finding notes across multiple files easily
+   using the agenda search functions.
 
-   Notes created by remember tasks go first to =notes.org= and are
+   Notes created by remember tasks go first to =refile.org= and are
    later refiled to the appropriate project file.  Some notes that are
-   project related get filed to the appropriate project instead of the
-   =NOTES= task.  Generally these types of note are specific to the
-   project and not generally useful -- so removing them from the notes
-   list when the project is archived makes sense.
+   project related get filed to the appropriate project instead of
+   under the catchall =* NOTES= task.  Generally these types of notes
+   are specific to the project and not generally useful -- so removing
+   them from the notes list when the project is archived makes sense.
 ** Refiling Phone Calls
    Phone calls are handled the same as notes.  I time my calls,
-   creating them with =F12 p= and filing them in =phone.org=.  Later
-   these are refiled to a =* Phone Calls= task which has a =PHONE= tag
-   or to the project task that this clocked phone call should
-   contribute clocked time to.  Some phone calls are billable and we
-   want these tracked in the appropriate category.
+   creating them with =F12 p= and filing them in =refile.org=.  Later
+   these are refiled to a =* Phone Calls= task or to the project task
+   that this clocked phone call should contribute clocked time to.
+   Some phone calls are billable and we want these tracked in the
+   appropriate category.
 * Custom agenda views
   I only have 5 custom agenda views defined.  Most of my old custom
   agenda views were rendered obsolete when filtering functionality was
@@ -716,9 +704,10 @@ that can be estimated and clocked.  Projects use the following state transitions
      - Clock it in since (=I= in the agenda while on the task -- this marks it as =STARTED=)
      - Work on it until it is =DONE= or it gets interrupted
    - Check today's time log report and refile tasks with clocked time
-     - =F12 a R= - any tasks in =tasks.org= should be moved to the appropriate file
+     - =F12 a R= - any tasks in =refile.org= should be moved to the appropriate file
      - =F12 r= to get to refile tasks
-     - =RET= on any task that needs to be refiled
+     - Tag files to be filed with =m= collecting all tasks for the same target
+     - Bulk refile the tasks to the target location with =B r=
      - repeat until the agenda timeclock report has all of the time in project files
      
 ** What do I work on next?
@@ -1203,6 +1192,7 @@ Original Estimate
   - providing context to some tasks
   - tagging notes
   - tagging phone calls
+  - tagging tasks to be refiled
   - tagging NEXT actions for project tasks
   - tagging tasks in a WAITING state because a parent task is WAITING
   - preventing export of some subtrees when publishing
@@ -1300,12 +1290,10 @@ Original Estimate
 | YYY.org      | YYY @Work      |
 
 *** Refile tasks
-| File         | Tags           |
-|--------------+----------------|
-| phone.org    | PHONE REFILE   |
-| notes.org    | NOTES REFILE   |
-| tasks.org    | REFILE         |
-|--------------+----------------|
+| File       | Tags         |
+|------------+--------------|
+| refile.org | REFILE       |
+|------------+--------------|
 
 ** Trigger Tags
    The following tags are automatically added or removed by todo state
@@ -2749,12 +2737,3 @@ done
    - Remember tasks for phone calls and bbdb searches
 
 ** UNFINISHED Recurring tasks and copy subtree
-** UNFINISHED Notes are gone
-  I have a default notes-file defined but the only time I really reference
-  notes is from the agenda template.
-
-#+begin_src emacs-lisp
-(setq org-default-notes-file "~/git/org/notes.org")
-#+end_src
-
-  They go to refile.org now
