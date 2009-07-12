@@ -654,7 +654,7 @@ that can be estimated and clocked.  Projects use the following state transitions
    do this a couple of times a day.
 ** Refiling Notes
    I keep a =* Notes= headline in most of my org-mode files.  Notes
-   have a =NOTES= tag which is created by the remember template for
+   have a =NOTE= tag which is created by the remember template for
    notes.  This allows finding notes across multiple files easily
    using the agenda search functions.
 
@@ -690,7 +690,7 @@ that can be estimated and clocked.  Projects use the following state transitions
 	      ("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
 	      ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil)))
 	      ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
-	      ("n" "Notes" tags "NOTES" nil))))
+	      ("n" "Notes" tags "NOTE" nil))))
 #+end_src
 
    My day goes generally like this:
