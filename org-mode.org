@@ -1793,6 +1793,9 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
 
 
 * Reminders
+  :PROPERTIES:
+  :CUSTOM_ID: Reminders
+  :END:
   I use appt for reminders.  It's simple and unobtrusive -- putting
   pending appointments in the status bar and beeping as 12, 9, 6, 3,
   and 0 minutes before the appointment is due.
