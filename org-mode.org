@@ -1470,11 +1470,11 @@ Original Estimate
   - ASCII
     (plain text - but not the original org-mode file)
   - HTML 
-  - LaTex
+  - LaTeX
   - Docbook
     which enables getting to lots of other formats like ODF, XML, etc
   - PDF
-    via LaTex or Docbook
+    via LaTeX or Docbook
   - iCal
 
   I haven't begun the scratch the surface of what org-mode is capable
