@@ -17,6 +17,7 @@
 #+begin_html
 <div class="sidebar">
 #+end_html
+
   [[http://orgmode.org][Org-mode]] is a finalist in the 2009 Sourceforge Community Choice
   Awards in the category /Most Likely to Change the Way you do
   Everything/.
@@ -65,28 +66,28 @@ The following setup in my .emacs enables org-mode for most buffers.
 files.
 
 #+begin_src emacs-lisp
-;;;
-;;; Org Mode
-;;;
-(add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp"))
-(add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-(require 'org-install)
-;;
-;; Standard key bindings
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
+  ;;;
+  ;;; Org Mode
+  ;;;
+  (add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp"))
+  (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+  (require 'org-install)
+  ;;
+  ;; Standard key bindings
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cb" 'org-iswitchb)
 #+end_src
 
 =orgstruct++-mode= is enabled in =Gnus= message buffers to aid in
 creating structured email messages.
 
 #+begin_src emacs-lisp
-(setq message-mode-hook
-      (quote (orgstruct++-mode
-	      (lambda nil (setq fill-column 72) (flyspell-mode 1))
-	      turn-on-auto-fill
-	      bbdb-define-all-aliases)))
+  (setq message-mode-hook
+        (quote (orgstruct++-mode
+                (lambda nil (setq fill-column 72) (flyspell-mode 1))
+                turn-on-auto-fill
+                bbdb-define-all-aliases)))
 #+end_src
 
 =flyspell-mode= is enabled for almost everything to help prevent
@@ -94,15 +95,15 @@ creating documents with spelling errors.  =yasnippets= are enabled to
 speed up creation of standard text blocks in most editing modes.
 
 #+begin_src emacs-lisp
-;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    ;; yasnippet
-	    (make-variable-buffer-local 'yas/trigger-key)
-	    (setq yas/trigger-key [tab])
-	    (define-key yas/keymap [tab] 'yas/next-field-group)
-	    ;; flyspell mode to spell check everywhere
-	    (flyspell-mode 1)))
+  ;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
+  (add-hook 'org-mode-hook
+            (lambda ()
+              ;; yasnippet
+              (make-variable-buffer-local 'yas/trigger-key)
+              (setq yas/trigger-key [tab])
+              (define-key yas/keymap [tab] 'yas/next-field-group)
+              ;; flyspell mode to spell check everywhere
+              (flyspell-mode 1)))
 #+end_src
 
 ** Organizing Your Life Into Org Files
@@ -159,16 +160,16 @@ speed up creation of standard text blocks in most editing modes.
    formatted as a =setq= for clarity but in reality this is saved in
    my custom.el file.
 #+begin_src emacs-lisp
-(setq org-agenda-files (quote ("~/git/org/refile.org"
-			       "~/git/org/gsoc2009.org"
-			       "~/git/org/farm.org" 
-			       "~/git/org/mark.org"
-			       "~/git/org/org.org"
-			       "~/git/org/norang.org"
-			       ; client org files removed
-			       "~/git/org/git.org"
-			       "~/git/org/todo.org"
-			       "~/git/org/bzflag.org")))
+  (setq org-agenda-files (quote ("~/git/org/refile.org"
+                                 "~/git/org/gsoc2009.org"
+                                 "~/git/org/farm.org"
+                                 "~/git/org/mark.org"
+                                 "~/git/org/org.org"
+                                 "~/git/org/norang.org"
+                                 ; client org files removed
+                                 "~/git/org/git.org"
+                                 "~/git/org/todo.org"
+                                 "~/git/org/bzflag.org")))
 #+end_src
 
    =org-mode= manages the =org-agenda-files= variable.  I just visit
@@ -270,32 +271,32 @@ speed up creation of standard text blocks in most editing modes.
    
    Here is the keybinding setup in lisp:
 #+begin_src emacs-lisp
-;; Custom Key Bindings
-(global-set-key (kbd "<f12>") 'org-agenda)
-(global-set-key (kbd "<f5>") 'my-org-todo)
-(global-set-key (kbd "<S-f5>") 'widen)
-(global-set-key (kbd "<f7>") 'set-truncate-lines)
-(global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
-(global-set-key (kbd "<f9> b") 'bbdb)
-(global-set-key (kbd "<f9> c") 'calendar)
-(global-set-key (kbd "<f9> f") 'boxquote-insert-file)
-(global-set-key (kbd "<f9> g") 'gnus)
-(global-set-key (kbd "<f9> i") (lambda ()
-				 (interactive)
-				 (info "~/git/org-mode/doc/org.info")))
-(global-set-key (kbd "<f9> o") 'org-occur)
-(global-set-key (kbd "<f9> r") 'boxquote-region)
-(global-set-key (kbd "<f9> u") (lambda ()
-				 (interactive)
-				 (untabify (point-min) (point-max))))
-(global-set-key (kbd "<f9> v") 'visible-mode)
-(global-set-key (kbd "C-<f9>") 'previous-buffer)
-(global-set-key (kbd "C-x n r") 'narrow-to-region)
-(global-set-key (kbd "C-<f10>") 'next-buffer)
-(global-set-key (kbd "<f11>") 'org-clock-goto)
-(global-set-key (kbd "C-<f11>") 'org-clock-in)
-(global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
-(global-set-key (kbd "C-M-r") 'org-remember)
+  ;; Custom Key Bindings
+  (global-set-key (kbd "<f12>") 'org-agenda)
+  (global-set-key (kbd "<f5>") 'my-org-todo)
+  (global-set-key (kbd "<S-f5>") 'widen)
+  (global-set-key (kbd "<f7>") 'set-truncate-lines)
+  (global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
+  (global-set-key (kbd "<f9> b") 'bbdb)
+  (global-set-key (kbd "<f9> c") 'calendar)
+  (global-set-key (kbd "<f9> f") 'boxquote-insert-file)
+  (global-set-key (kbd "<f9> g") 'gnus)
+  (global-set-key (kbd "<f9> i") (lambda ()
+                                   (interactive)
+                                   (info "~/git/org-mode/doc/org.info")))
+  (global-set-key (kbd "<f9> o") 'org-occur)
+  (global-set-key (kbd "<f9> r") 'boxquote-region)
+  (global-set-key (kbd "<f9> u") (lambda ()
+                                   (interactive)
+                                   (untabify (point-min) (point-max))))
+  (global-set-key (kbd "<f9> v") 'visible-mode)
+  (global-set-key (kbd "C-<f9>") 'previous-buffer)
+  (global-set-key (kbd "C-x n r") 'narrow-to-region)
+  (global-set-key (kbd "C-<f10>") 'next-buffer)
+  (global-set-key (kbd "<f11>") 'org-clock-goto)
+  (global-set-key (kbd "C-<f11>") 'org-clock-in)
+  (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
+  (global-set-key (kbd "C-M-r") 'org-remember)
 #+end_src
 
    The main reason I have special key bindings (like =F11=, and =F12=)
@@ -319,22 +320,22 @@ speed up creation of standard text blocks in most editing modes.
 Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp 
-(setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
- (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
- (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
+  (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
+   (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
+   (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
 
-(setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
- ("STARTED" :foreground "blue" :weight bold)
- ("DONE" :foreground "forest green" :weight bold)
- ("WAITING" :foreground "orange" :weight bold)
- ("SOMEDAY" :foreground "magenta" :weight bold)
- ("CANCELLED" :foreground "forest green" :weight bold)
- ("QUOTE" :foreground "red" :weight bold)
- ("QUOTED" :foreground "magenta" :weight bold)
- ("APPROVED" :foreground "forest green" :weight bold)
- ("EXPIRED" :foreground "forest green" :weight bold)
- ("REJECTED" :foreground "forest green" :weight bold)
- ("OPEN" :foreground "blue" :weight bold))))
+  (setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
+   ("STARTED" :foreground "blue" :weight bold)
+   ("DONE" :foreground "forest green" :weight bold)
+   ("WAITING" :foreground "orange" :weight bold)
+   ("SOMEDAY" :foreground "magenta" :weight bold)
+   ("CANCELLED" :foreground "forest green" :weight bold)
+   ("QUOTE" :foreground "red" :weight bold)
+   ("QUOTED" :foreground "magenta" :weight bold)
+   ("APPROVED" :foreground "forest green" :weight bold)
+   ("EXPIRED" :foreground "forest green" :weight bold)
+   ("REJECTED" :foreground "forest green" :weight bold)
+   ("OPEN" :foreground "blue" :weight bold))))
 #+end_src
 *** Normal Task States
 Normal tasks go through the sequence =TODO= -> =STARTED= -> =DONE=.
@@ -433,7 +434,7 @@ This has several advantages:
    todo selection key menu.  This is a great feature!
 
 #+begin_src emacs-lisp 
-(setq org-use-fast-todo-selection t)
+  (setq org-use-fast-todo-selection t)
 #+end_src lisp
 
     Changing a task state is done with 
@@ -459,21 +460,21 @@ This has several advantages:
    The tags are used to filter tasks in the agenda views conveniently.
 
 #+begin_src emacs-lisp 
-(setq org-todo-state-tags-triggers
-      (quote (("CANCELLED" ("CANCELLED" . t))
-	      ("WAITING" ("WAITING" . t) ("NEXT"))
-	      ("SOMEDAY" ("WAITING" . t))
-	      (done ("NEXT") ("WAITING"))
-	      ("TODO" ("WAITING") ("CANCELLED"))
-	      ("STARTED" ("WAITING") ("NEXT" . t)))))
+  (setq org-todo-state-tags-triggers
+        (quote (("CANCELLED" ("CANCELLED" . t))
+                ("WAITING" ("WAITING" . t) ("NEXT"))
+                ("SOMEDAY" ("WAITING" . t))
+                (done ("NEXT") ("WAITING"))
+                ("TODO" ("WAITING") ("CANCELLED"))
+                ("STARTED" ("WAITING") ("NEXT" . t)))))
 #+end_src
 
 *** Using =STARTED= for clocked tasks
     Tasks automatically change to =STARTED= whenever they are clocked in.
 
 #+begin_src emacs-lisp
-;; Change task state to STARTED when clocking in
-(setq org-clock-in-switch-to-state "STARTED")
+  ;; Change task state to STARTED when clocking in
+  (setq org-clock-in-switch-to-state "STARTED")
 #+end_src
 
 * Adding New Tasks Quickly with Remember
@@ -560,7 +561,7 @@ This has several advantages:
 
    The file has a single permanent line at the top like this
 #+begin_example
-#+FILETAGS: REFILE
+  ,#+FILETAGS: REFILE
 #+end_example
 ** Remember Tasks is all about begin FAST
    Okay I'm in the middle of something and oh yeah - I have to
@@ -607,17 +608,17 @@ This has several advantages:
 
    Here is my refile configuration:
 #+begin_src emacs-lisp
-; Use IDO for target completion
-(setq org-completion-use-ido t)
+  ; Use IDO for target completion
+  (setq org-completion-use-ido t)
 
-; Targets include this file and any file contributing to the agenda - up to 5 levels deep
-(setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
+  ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
+  (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
 
-; Targets start with the file name - allows creating level 1 tasks
-(setq org-refile-use-outline-path (quote file))
+  ; Targets start with the file name - allows creating level 1 tasks
+  (setq org-refile-use-outline-path (quote file))
 
-; Targets complete in steps so we start with filename, TAB shows the next level of targets etc 
-(setq org-outline-path-complete-in-steps t)
+  ; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
+  (setq org-outline-path-complete-in-steps t)
 #+end_src
 
    To refile a task to my =norang.org= file under =System Maintenance=
@@ -677,12 +678,12 @@ This has several advantages:
 
 ** Setup
 #+begin_src emacs-lisp
-(setq org-agenda-custom-commands 
-      (quote (("P" "Projects" tags "/!PROJECT" ((org-use-tag-inheritance nil)))
-	      ("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
-	      ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil)))
-	      ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
-	      ("n" "Notes" tags "NOTE" nil))))
+  (setq org-agenda-custom-commands
+        (quote (("P" "Projects" tags "/!PROJECT" ((org-use-tag-inheritance nil)))
+                ("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
+                ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil)))
+                ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
+                ("n" "Notes" tags "NOTE" nil))))
 #+end_src
 
    My day goes generally like this:
@@ -845,24 +846,24 @@ This has several advantages:
    I have the following org-mode setup for clocking:
 
 #+begin_src emacs-lisp
-;;
-;; Resume clocking tasks when emacs is restarted
-(setq org-clock-persistence-insinuate)
-;;
-;; Yes it's long... but more is better ;)
-(setq org-clock-history-length 35)
-;; Resume clocking task on clock-in if the clock is open
-(setq org-clock-in-resume t)
-;; Change task state to STARTED when clocking in
-(setq org-clock-in-switch-to-state "STARTED")
-;; Save clock data and notes in the LOGBOOK drawer
-(setq org-clock-into-drawer t)
-;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
-(setq org-clock-out-remove-zero-time-clocks t)
-;; Don't clock out when moving task to a done state
-(setq org-clock-out-when-done nil)
-;; Save the running clock and all clock history when exiting Emacs, load it on startup
-(setq org-clock-persist t)
+  ;;
+  ;; Resume clocking tasks when emacs is restarted
+  (setq org-clock-persistence-insinuate)
+  ;;
+  ;; Yes it's long... but more is better ;)
+  (setq org-clock-history-length 35)
+  ;; Resume clocking task on clock-in if the clock is open
+  (setq org-clock-in-resume t)
+  ;; Change task state to STARTED when clocking in
+  (setq org-clock-in-switch-to-state "STARTED")
+  ;; Save clock data and notes in the LOGBOOK drawer
+  (setq org-clock-into-drawer t)
+  ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
+  (setq org-clock-out-remove-zero-time-clocks t)
+  ;; Don't clock out when moving task to a done state
+  (setq org-clock-out-when-done nil)
+  ;; Save the running clock and all clock history when exiting Emacs, load it on startup
+  (setq org-clock-persist t)
 #+end_src
 ** Clocking in
   When I start or continue working on a task I clock it in with =C-c
@@ -902,17 +903,17 @@ This has several advantages:
 
 *Clock history selection buffer for C-u C-c C-x C-i*
 #+begin_example
-Default Task
-[d] norang          STARTED Organization                  <-- Task B
-The task interrupted by starting the last one
-[i] norang          STARTED Organization                  <-- Task B
-Current Clocking Task
-[c] org             STARTED Document my use of org-mode   <-- Task A
-Recent Tasks
-[1] org             STARTED Document my use of org-mode   <-- Task A
-[2] norang          STARTED Organization                  <-- Task B
-...
-[Z] org             DONE Fix default section links        <-- 35 clock task entries ago
+  Default Task
+  [d] norang          STARTED Organization                  <-- Task B
+  The task interrupted by starting the last one
+  [i] norang          STARTED Organization                  <-- Task B
+  Current Clocking Task
+  [c] org             STARTED Document my use of org-mode   <-- Task A
+  Recent Tasks
+  [1] org             STARTED Document my use of org-mode   <-- Task A
+  [2] norang          STARTED Organization                  <-- Task B
+  ...
+  [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
 #+end_example
 ** Clock Everything - Create New Tasks
    In order to clock everything you need a task for everything.
@@ -980,7 +981,7 @@ Recent Tasks
    The following setting makes time editing round to 5 minute
    increments:
 #+begin_src emacs-lisp
-(setq org-time-stamp-rounding-minutes (quote (1 5)))
+  (setq org-time-stamp-rounding-minutes (quote (1 5)))
 #+end_src lisp
 
    Editing the time with the shift arrow combination also updates the
@@ -1015,8 +1016,8 @@ Recent Tasks
    Since I change tasks often (sometimes more than once in a minute) I use the following setting
    to remove clock entries with a zero duration.
 #+begin_src emacs-lisp
-;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
-(setq org-clock-out-remove-zero-time-clocks t)
+  ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
+  (setq org-clock-out-remove-zero-time-clocks t)
 #+end_src
 
    This setting just keeps my clocked log entries clean - only
@@ -1046,8 +1047,8 @@ Recent Tasks
    Use the following setup to get log mode in the agenda to only show
    clocked times:
 #+begin_src emacs-lisp
-;; Agenda log mode items to display (clock time only by default)
-(setq org-agenda-log-mode-items (quote (clock)))
+  ;; Agenda log mode items to display (clock time only by default)
+  (setq org-agenda-log-mode-items (quote (clock)))
 #+end_src
 *** Using clock reports to summarize time spent
    Billable time for clients are kept in separate org files.
@@ -1067,8 +1068,8 @@ Recent Tasks
    not show links so that they are easier to cut and paste into other
    applications.
 #+begin_src emacs-lisp
-;; Agenda clock report parameters (no links, 2 levels deep)
-(setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
+  ;; Agenda clock report parameters (no links, 2 levels deep)
+  (setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
 #+end_src
 
    I used to have a monthly clock report dynamic block in each project
@@ -1091,8 +1092,8 @@ Recent Tasks
 
    I set up column view globally with the following headlines
 #+begin_src emacs-lisp
-; Set default column view headings: Task Effort Clock_Summary
-(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
+  ; Set default column view headings: Task Effort Clock_Summary
+  (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
 #+end_src
 
    This makes column view show estimated task effort and clocked times
@@ -1115,8 +1116,8 @@ Recent Tasks
    These are stored for easy use in =column mode= in the global property
    =Effort_ALL=.
 #+begin_src emacs-lisp
-; global Effort estimate values
-(setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 8:00"))))
+  ; global Effort estimate values
+  (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 8:00"))))
 #+end_src
 
    To create an estimate for a task or subtree start column mode
@@ -1143,19 +1144,19 @@ Recent Tasks
     values and any clocked time to date.
 
 #+begin_example 
-Original Estimate
-#+BEGIN: columnview :hlines 1 :id local
-| Task                        | Estimated Effort | CLOCKSUM |
-|-----------------------------+------------------+----------|
-| ** TODO Project to estimate |             5:40 |          |
-| *** TODO Step 1             |             0:10 |          |
-| *** TODO Step 2             |             0:10 |          |
-| *** TODO Step 3             |             5:10 |          |
-| **** TODO Step 3.1          |             2:00 |          |
-| **** TODO Step 3.2          |             3:00 |          |
-| **** TODO Step 3.3          |             0:10 |          |
-| *** TODO Step 4             |             0:10 |          |
-#+END:
+  Original Estimate
+  ,#+BEGIN: columnview :hlines 1 :id local
+  | Task                        | Estimated Effort | CLOCKSUM |
+  |-----------------------------+------------------+----------|
+  | ** TODO Project to estimate |             5:40 |          |
+  | *** TODO Step 1             |             0:10 |          |
+  | *** TODO Step 2             |             0:10 |          |
+  | *** TODO Step 3             |             5:10 |          |
+  | **** TODO Step 3.1          |             2:00 |          |
+  | **** TODO Step 3.2          |             3:00 |          |
+  | **** TODO Step 3.3          |             0:10 |          |
+  | *** TODO Step 4             |             0:10 |          |
+  ,#+END:
 #+end_example
 
     I normally delete the =#+BEGIN:= and =#+END:= lines from the original
@@ -1223,28 +1224,28 @@ Original Estimate
    filtering on the agenda.
 
 #+begin_src emacs-lisp
-; Tags with fast selection keys
-(setq org-tag-alist (quote ((:startgroup)
-			    ("@InTown" . ?t)
-			    ("@Work" . ?w)
-			    ("@Home" . ?h)
-			    ("@Farm" . ?f)
-			    (:endgroup)
-			    ("QUOTE" . ?q)
-			    ("NEXT" . ?N)
-			    ("GSOC" . ?g)
-			    ("WAITING" . ?W)
-			    ("FARM" . ?F)
-			    ("HOME" . ?H)
-			    ("ORG" . ?O)
-			    ("PLAY" . ?p)
-			    ("CANCELLED" . ?C))))
+  ; Tags with fast selection keys
+  (setq org-tag-alist (quote ((:startgroup)
+                              ("@InTown" . ?t)
+                              ("@Work" . ?w)
+                              ("@Home" . ?h)
+                              ("@Farm" . ?f)
+                              (:endgroup)
+                              ("QUOTE" . ?q)
+                              ("NEXT" . ?N)
+                              ("GSOC" . ?g)
+                              ("WAITING" . ?W)
+                              ("FARM" . ?F)
+                              ("HOME" . ?H)
+                              ("ORG" . ?O)
+                              ("PLAY" . ?p)
+                              ("CANCELLED" . ?C))))
 
-; Allow setting single tags without the menu
-(setq org-fast-tag-selection-single-key (quote expert))
+  ; Allow setting single tags without the menu
+  (setq org-fast-tag-selection-single-key (quote expert))
 
-; For tag searches ignore tasks with scheduled and deadline dates
-(setq org-agenda-tags-todo-honor-ignore-options t)
+  ; For tag searches ignore tasks with scheduled and deadline dates
+  (setq org-agenda-tags-todo-honor-ignore-options t)
 #+end_src
 
 ** Filetags
@@ -1254,7 +1255,7 @@ Original Estimate
    Filetags look like this:
 
 #+begin_example 
-#+FILETAGS: NORANG @Work
+  ,#+FILETAGS: NORANG @Work
 #+end_example
 
    I have the following =#+FILETAGS:= entries in my org-mode files:
@@ -1402,7 +1403,7 @@ Original Estimate
    projects moving forwards.
 
 #+begin_src emacs-lisp
-(setq org-stuck-projects (quote ("LEVEL=2/!-DONE-CANCELLED-OPEN-SOMEDAY-WAITING" nil ("NEXT") "")))
+  (setq org-stuck-projects (quote ("LEVEL=2/!-DONE-CANCELLED-OPEN-SOMEDAY-WAITING" nil ("NEXT") "")))
 #+end_src
 
    Todo state triggers (see [[*ToDo%20state%20triggers][*ToDo state triggers]]) automatically remove
@@ -1483,32 +1484,32 @@ ditaa:
 
 This
 
-: #+begin_ditaa communication.png -r -s 0.8 
-: :      +-----------+        +---------+   
-: :      |    PLC    |        |         |                 
-: :      |  Network  +<------>+   PLC   +<---=---------+  
-: :      |    cRED   |        |  c707   |              |  
-: :      +-----------+        +----+----+              |  
-: :                                ^                   |  
-: :                                |                   |  
-: :                                |  +----------------|-----------------+ 
-: :                                |  |                |                 | 
-: :                                v  v                v                 v 
-: :        +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients 
-: :        |          |       |          |      |           |      |           |      +----+      +----+ 
-: :        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL| 
-: :        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    | 
-: :        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+ 
-: :           ^    ^          +----------+             ^           +-------+---+ 
-: :           |    |                                   |                         
-: :           |    +--------=--------------------------+                     
-: :           v                                                              
-: :  +--------+--------+                                                          
-: :  |                 |                                                          
-: :  | Millwide System |            -------- Data ---------                       
-: :  | cBLU            |            --=----- Signals ---=--                       
-: :  +-----------------+                                                         
-: #+end_ditaa
+: ,#+begin_ditaa communication.png -r -s 0.8
+:      +-----------+        +---------+
+:      |    PLC    |        |         |
+:      |  Network  +<------>+   PLC   +<---=---------+
+:      |    cRED   |        |  c707   |              |
+:      +-----------+        +----+----+              |
+:                                ^                   |
+:                                |                   |
+:                                |  +----------------|-----------------+
+:                                |  |                |                 |
+:                                v  v                v                 v
+:        +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients
+:        |          |       |          |      |           |      |           |      +----+      +----+
+:        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL|
+:        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    |
+:        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+
+:           ^    ^          +----------+             ^           +-------+---+
+:           |    |                                   |
+:           |    +--------=--------------------------+
+:           v
+:  +--------+--------+
+:  |                 |
+:  | Millwide System |            -------- Data ---------
+:  | cBLU            |            --=----- Signals ---=--
+:  +-----------------+
+: ,#+end_ditaa
 
 becomes this!
 
@@ -1540,11 +1541,11 @@ becomes this!
 #+end_ditaa
 
 #+begin_src emacs-lisp
-; Note: The following line is no longer required with latest development code since
-;       org-exp-blocks was moved into the core
-(load "~/git/org-mode/contrib/lisp/org-exp-blocks")
+  ; Note: The following line is no longer required with latest development code since
+  ;       org-exp-blocks was moved into the core
+  (load "~/git/org-mode/contrib/lisp/org-exp-blocks")
 
-(setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+  (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
 #+end_src
 ** Playing with graphviz
 [[http://www.graphviz.org/][Graphviz]] is another great tool for creating graphics in your documents.
@@ -1552,73 +1553,73 @@ becomes this!
 This
 
 : #+begin_dot gv01.png -Kdot -Tpng
-: : digraph G {
-: :   concentrate=true;
-: :   subgraph cluster_wrapline {
-: :     label="Wrapline Control System";
-: :     color=purple;
-: :     sharedmem [style=filled, fillcolor=lightgrey, shape=box];
-: :     sharedmem -> exec [style=dotted];
-: :     sharedmem -> db [style=dotted];
-: :     sharedmem -> plc [style=dotted];
-: :     sharedmem -> opserver [style=dotted];
-: :     exec -> db;
-: :     exec -> opserver;
-: :     plc -> exec;
-: :   };
-: :   plcnet [shape=box, label="PLC Network"];
-: :   plcnet -> plc;
-: :   millwide [shape=box, label="Millwide System"];
-: :   db -> millwide;
-: : 
-: :   subgraph cluster_opclients {
-: :     color=blue;
-: :     client1[label="client"];
-: :     client2[label="client"];
-: :     client3[label="client"];
-: :     clientn[label="client"];
-: :     opserver -> client1;
-: :     opserver -> client2;
-: :     opserver -> client3;
-: :     opserver -> clientn;
-: :   };
-: : };
+: digraph G {
+:   concentrate=true
+:   subgraph cluster_wrapline {
+:     label="Wrapline Control System"
+:     color=purple
+:     sharedmem [style=filled, fillcolor=lightgrey, shape=box]
+:     sharedmem -> exec [style=dotted]
+:     sharedmem -> db [style=dotted]
+:     sharedmem -> plc [style=dotted]
+:     sharedmem -> opserver [style=dotted]
+:     exec -> db
+:     exec -> opserver
+:     plc -> exec
+:   }
+:   plcnet [shape=box, label="PLC Network"]
+:   plcnet -> plc
+:   millwide [shape=box, label="Millwide System"]
+:   db -> millwide
+:
+:   subgraph cluster_opclients {
+:     color=blue
+:     client1[label="client"]
+:     client2[label="client"]
+:     client3[label="client"]
+:     clientn[label="client"]
+:     opserver -> client1
+:     opserver -> client2
+:     opserver -> client3
+:     opserver -> clientn
+:   }
+: }
 : #+end_dot
 
 becomes this!
 
 #+begin_dot gv01.png -Kdot -Tpng
 digraph G {
-  concentrate=true;
+  concentrate=true
   subgraph cluster_wrapline {
-    label="Wrapline Control System";
-    color=purple;
-    sharedmem [style=filled, fillcolor=lightgrey, shape=box];
-    sharedmem -> exec [style=dotted];
-    sharedmem -> db [style=dotted];
-    sharedmem -> plc [style=dotted];
-    sharedmem -> opserver [style=dotted];
-    exec -> db;
-    exec -> opserver;
-    plc -> exec;
-  };
-  plcnet [shape=box, label="PLC Network"];
-  plcnet -> plc;
-  millwide [shape=box, label="Millwide System"];
-  db -> millwide;
+    label="Wrapline Control System"
+    color=purple
+    sharedmem [style=filled, fillcolor=lightgrey, shape=box]
+    sharedmem -> exec [style=dotted]
+    sharedmem -> db [style=dotted]
+    sharedmem -> plc [style=dotted]
+    sharedmem -> opserver [style=dotted]
+    exec -> db
+    exec -> opserver
+    plc -> exec
+  }
+  plcnet [shape=box, label="PLC Network"]
+  plcnet -> plc
+  millwide [shape=box, label="Millwide System"]
+  db -> millwide
 
   subgraph cluster_opclients {
-    color=blue;
-    client1[label="client"];
-    client2[label="client"];
-    client3[label="client"];
-    clientn[label="client"];
-    opserver -> client1;
-    opserver -> client2;
-    opserver -> client3;
-    opserver -> clientn;
-  };
-};
+    color=blue
+    client1[label="client"]
+    client2[label="client"]
+    client3[label="client"]
+    clientn[label="client"]
+    opserver -> client1
+    opserver -> client2
+    opserver -> client3
+    opserver -> clientn
+  }
+}
 #+end_dot
 
 The =-Kdot= is optional (defaults to =dot=) but you can substitute other graphviz
@@ -1654,105 +1655,105 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
    Here's my publishing setup:
 
 #+begin_src emacs-lisp
-; experimenting with docbook exports - not finished
-(setq org-export-docbook-xsl-fo-proc-command "fop %s %s")
-(setq org-export-docbook-xslt-proc-command "xsltproc --output %s /usr/share/xml/docbook/stylesheet/nwalsh/fo/docbook.xsl %s")
-;
-; Inline images in HTML instead of producting links to the image
-(setq org-export-html-inline-images t)
-; Do not use sub or superscripts - I currently don't need this functionality in my documents
-(setq org-export-with-sub-superscripts nil)
+  ; experimenting with docbook exports - not finished
+  (setq org-export-docbook-xsl-fo-proc-command "fop %s %s")
+  (setq org-export-docbook-xslt-proc-command "xsltproc --output %s /usr/share/xml/docbook/stylesheet/nwalsh/fo/docbook.xsl %s")
+  ;
+  ; Inline images in HTML instead of producting links to the image
+  (setq org-export-html-inline-images t)
+  ; Do not use sub or superscripts - I currently don't need this functionality in my documents
+  (setq org-export-with-sub-superscripts nil)
 
-; List of projects
-; norang - http://www.norang.ca/
-; doc    - http://doc.norang.ca/
-; org    - miscellaneous todo lists for publishing
-(setq org-publish-project-alist
-;
-; http://www.norang.ca/  (norang website)
-; norang-org are the org-files that generate the content
-; norang-extra are images and css files that need to be included
-; norang is the top-level project that gets published
-      (quote (("norang-org"
-	       :base-directory "~/git/www.norang.ca"
-	       :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs"
-	       :recursive t
-	       :section_numbers nil
-	       :table-of-contents nil
-	       :base-extension "org"
-	       :publishing-function org-publish-org-to-html
-	       :style-include-default nil
-	       :section-numbers nil
-	       :table-of-contents nil
-	       :style-include-default nil
-	       :style "<link rel=\"stylesheet\" href=\"norang.css\" type=\"text/css\">"
-	       :author-info nil
-	       :creator-info nil)
-	      ("norang-extra"
-	       :base-directory "~/git/www.norang.ca/"
-	       :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs"
-	       :base-extension "css\\|pdf\\|png\\|jpg\\|gif"
-	       :publishing-function org-publish-attachment
-	       :recursive t
-	       :author nil)
-	      ("norang"
-	       :components ("norang-org" "norang-extra"))
-;
-; http://doc.norang.ca/  (norang website)
-; doc-org are the org-files that generate the content
-; doc-extra are images and css files that need to be included
-; doc is the top-level project that gets published
-	      ("doc-org"
-	       :base-directory "~/git/doc.norang.ca/"
-	       :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
-	       :recursive t
-	       :section_numbers nil
-	       :table-of-contents nil
-	       :base-extension "org"
-	       :publishing-function (org-publish-org-to-html org-publish-org-to-org)
-	       :plain-source t
-	       :htmlized-source t
-	       :style-include-default nil
-	       :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\">"
-	       :author-info nil
-	       :creator-info nil)
-	      ("doc-extra"
-	       :base-directory "~/git/doc.norang.ca/"
-	       :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
-	       :base-extension "css\\|pdf\\|png\\|jpg\\|gif"
-	       :publishing-function org-publish-attachment
-	       :recursive t
-	       :author nil)
-	      ("doc"
-	       :components ("doc-org" "doc-extra"))
-;
-; Miscellaneous pages for other websites
-; org are the org-files that generate the content
-	      ("org"
-	       :base-directory "~/git/org/"
-	       :publishing-directory "/ssh:www-data@www:~/org"
-	       :recursive t
-	       :section_numbers nil
-	       :table-of-contents nil
-	       :base-extension "org"
-	       :publishing-function org-publish-org-to-html
-	       :style-include-default nil
-	       :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\">"
-	       :author-info nil
-	       :creator-info nil))))
+  ; List of projects
+  ; norang - http://www.norang.ca/
+  ; doc    - http://doc.norang.ca/
+  ; org    - miscellaneous todo lists for publishing
+  (setq org-publish-project-alist
+  ;
+  ; http://www.norang.ca/  (norang website)
+  ; norang-org are the org-files that generate the content
+  ; norang-extra are images and css files that need to be included
+  ; norang is the top-level project that gets published
+        (quote (("norang-org"
+                 :base-directory "~/git/www.norang.ca"
+                 :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs"
+                 :recursive t
+                 :section_numbers nil
+                 :table-of-contents nil
+                 :base-extension "org"
+                 :publishing-function org-publish-org-to-html
+                 :style-include-default nil
+                 :section-numbers nil
+                 :table-of-contents nil
+                 :style-include-default nil
+                 :style "<link rel=\"stylesheet\" href=\"norang.css\" type=\"text/css\">"
+                 :author-info nil
+                 :creator-info nil)
+                ("norang-extra"
+                 :base-directory "~/git/www.norang.ca/"
+                 :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs"
+                 :base-extension "css\\|pdf\\|png\\|jpg\\|gif"
+                 :publishing-function org-publish-attachment
+                 :recursive t
+                 :author nil)
+                ("norang"
+                 :components ("norang-org" "norang-extra"))
+  ;
+  ; http://doc.norang.ca/  (norang website)
+  ; doc-org are the org-files that generate the content
+  ; doc-extra are images and css files that need to be included
+  ; doc is the top-level project that gets published
+                ("doc-org"
+                 :base-directory "~/git/doc.norang.ca/"
+                 :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
+                 :recursive t
+                 :section_numbers nil
+                 :table-of-contents nil
+                 :base-extension "org"
+                 :publishing-function (org-publish-org-to-html org-publish-org-to-org)
+                 :plain-source t
+                 :htmlized-source t
+                 :style-include-default nil
+                 :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\">"
+                 :author-info nil
+                 :creator-info nil)
+                ("doc-extra"
+                 :base-directory "~/git/doc.norang.ca/"
+                 :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
+                 :base-extension "css\\|pdf\\|png\\|jpg\\|gif"
+                 :publishing-function org-publish-attachment
+                 :recursive t
+                 :author nil)
+                ("doc"
+                 :components ("doc-org" "doc-extra"))
+  ;
+  ; Miscellaneous pages for other websites
+  ; org are the org-files that generate the content
+                ("org"
+                 :base-directory "~/git/org/"
+                 :publishing-directory "/ssh:www-data@www:~/org"
+                 :recursive t
+                 :section_numbers nil
+                 :table-of-contents nil
+                 :base-extension "org"
+                 :publishing-function org-publish-org-to-html
+                 :style-include-default nil
+                 :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\">"
+                 :author-info nil
+                 :creator-info nil))))
 
-; I'm lazy and don't want to remember the name of the project to publish when I modify 
-; a file that is part of a project.  So this function saves the file, and publishes
-; the project that includes this file
-;
-; It's bound to C-S-F12 so I just edit and hit C-S-F12 when I'm done and move on to the next thing
-(defun my-save-then-publish ()
-  (interactive)
-  (save-buffer)
-  (org-save-all-org-buffers)
-  (org-publish-current-project))
+  ; I'm lazy and don't want to remember the name of the project to publish when I modify
+  ; a file that is part of a project.  So this function saves the file, and publishes
+  ; the project that includes this file
+  ;
+  ; It's bound to C-S-F12 so I just edit and hit C-S-F12 when I'm done and move on to the next thing
+  (defun my-save-then-publish ()
+    (interactive)
+    (save-buffer)
+    (org-save-all-org-buffers)
+    (org-publish-current-project))
 
-(global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
+  (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
 #+end_src
 
    The =norang= and =doc= projects publish directly into the webserver
@@ -1796,23 +1797,23 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
   
 ** Reminder Setup
 #+begin_src emacs-lisp
-; Erase all reminders and rebuilt reminders for today from the agenda
-(defun my-org-agenda-to-appt ()
-  (interactive)
-  (setq appt-time-msg-list nil)
-  (org-agenda-to-appt))
+  ; Erase all reminders and rebuilt reminders for today from the agenda
+  (defun my-org-agenda-to-appt ()
+    (interactive)
+    (setq appt-time-msg-list nil)
+    (org-agenda-to-appt))
 
-; Rebuild the reminders everytime the agenda is displayed
-(add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
+  ; Rebuild the reminders everytime the agenda is displayed
+  (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
 
-; This is at the end of my .emacs - so appointments are set up when Emacs starts
-(my-org-agenda-to-appt)
+  ; This is at the end of my .emacs - so appointments are set up when Emacs starts
+  (my-org-agenda-to-appt)
 
-; Activate appointments so we get notifications
-(appt-activate t)
+  ; Activate appointments so we get notifications
+  (appt-activate t)
 
-; If we leave Emacs running overnight - reset the appointments one minute after midnight
-(run-at-time "24:01" nil 'my-org-agenda-to-appt)
+  ; If we leave Emacs running overnight - reset the appointments one minute after midnight
+  (run-at-time "24:01" nil 'my-org-agenda-to-appt)
 #+end_src
 * Productivity Tools
   :PROPERTIES:
@@ -1835,32 +1836,32 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
    =yasnippet0.5.10= to =yasnippet= and added the following setup in my =.emacs=:
 
 #+begin_src emacs-lisp
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins"))
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins"))
 
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
+  (require 'yasnippet)
+  (yas/initialize)
+  (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
 
-;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    ;; yasnippet
-	    (make-variable-buffer-local 'yas/trigger-key)
-	    (setq yas/trigger-key [tab])
-	    (define-key yas/keymap [tab] 'yas/next-field-group)
-	    ;; flyspell mode to spell check everywhere
-	    (flyspell-mode 1)))
+  ;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
+  (add-hook 'org-mode-hook
+            (lambda ()
+              ;; yasnippet
+              (make-variable-buffer-local 'yas/trigger-key)
+              (setq yas/trigger-key [tab])
+              (define-key yas/keymap [tab] 'yas/next-field-group)
+              ;; flyspell mode to spell check everywhere
+              (flyspell-mode 1)))
 #+end_src
 
    Here is the definition for the =block= snippet:
 
 org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/block
 #+begin_example 
-#name : #+begin_...#+end_
-# --
-#+begin_$1 $2
-$0
-#+end_$1
+  #name : #+begin_...#+end_
+  # --
+  ,#+begin_$1 $2
+  $0
+  ,#+end_$1
 #+end_example
 
    I use this to create =#+begin_*= blocks like 
@@ -1891,13 +1892,13 @@ $0
 =f5= is bound the function =my-org-todo= which is defined as follows:
 
 #+begin_src emacs-lisp
-(global-set-key (kbd "<f5>") 'my-org-todo)
+  (global-set-key (kbd "<f5>") 'my-org-todo)
 
-(defun my-org-todo ()
-  (interactive)
-  (org-narrow-to-subtree)
-  (org-show-todo-tree nil)
-  (widen))
+  (defun my-org-todo ()
+    (interactive)
+    (org-narrow-to-subtree)
+    (org-show-todo-tree nil)
+    (widen))
 #+end_src
 
 This makes it easy to hide all of the other details in your org-file
@@ -1940,8 +1941,8 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     wrong task by mistake!
 
 #+begin_src emacs-lisp
-;; Always hilight the current agenda line
-(add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
+  ;; Always hilight the current agenda line
+  (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
 #+end_src
 
 *** Remove tasks with dates from the global todo lists
@@ -1955,14 +1956,14 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     Tasks with dates are scheduled into the future sometime and you
     don't need to deal with them until the date approaches.
 #+begin_src emacs-lisp
-;; Keep tasks with dates off the global todo lists
-(setq org-agenda-todo-ignore-with-date t)
+  ;; Keep tasks with dates off the global todo lists
+  (setq org-agenda-todo-ignore-with-date t)
 
-;; Remove completed deadline tasks from the agenda view
-(setq org-agenda-skip-deadline-if-done t)
+  ;; Remove completed deadline tasks from the agenda view
+  (setq org-agenda-skip-deadline-if-done t)
 
-;; Remove completed scheduled tasks from the agenda view
-(setq org-agenda-skip-scheduled-if-done t)
+  ;; Remove completed scheduled tasks from the agenda view
+  (setq org-agenda-skip-scheduled-if-done t)
 #+end_src
 
 *** Use the Diary for Holidays only
@@ -1971,7 +1972,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     when you're not supposed to be working.
 
 #+begin_src emacs-lisp
-(setq org-agenda-include-diary nil)
+  (setq org-agenda-include-diary nil)
 #+end_src
 
     I don't have a =~/diary= file anymore.
@@ -2000,8 +2001,8 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     I do need it.
 
 #+begin_src emacs-lisp
-;; Include agenda archive files when searching for things
-(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
+  ;; Include agenda archive files when searching for things
+  (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
 #+end_src
 *** Agenda view tweaks
     The following agenda customizations control 
@@ -2013,25 +2014,25 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 
 Here are the =.emacs= settings:
 #+begin_src emacs-lisp
-;; Show all future entries for repeating tasks
-(setq org-agenda-repeating-timestamp-show-all t)
+  ;; Show all future entries for repeating tasks
+  (setq org-agenda-repeating-timestamp-show-all t)
 
-;; Show all agenda dates - even if they are empty
-(setq org-agenda-show-all-dates t)
+  ;; Show all agenda dates - even if they are empty
+  (setq org-agenda-show-all-dates t)
 
-;; Sorting order for tasks on the agenda
-(setq org-agenda-sorting-strategy
-      (quote ((agenda time-up priority-down effort-up category-up)
-	      (todo priority-down)
-	      (tags priority-down))))
+  ;; Sorting order for tasks on the agenda
+  (setq org-agenda-sorting-strategy
+        (quote ((agenda time-up priority-down effort-up category-up)
+                (todo priority-down)
+                (tags priority-down))))
 
-;; Start the weekly agenda today
-(setq org-agenda-start-on-weekday nil)
+  ;; Start the weekly agenda today
+  (setq org-agenda-start-on-weekday nil)
 
-;; Disable display of the time grid
-(setq org-agenda-time-grid
-      (quote (nil "----------------"
-		  (800 1000 1200 1400 1600 1800 2000))))
+  ;; Disable display of the time grid
+  (setq org-agenda-time-grid
+        (quote (nil "----------------"
+                    (800 1000 1200 1400 1600 1800 2000))))
 #+end_src
 
 ** Checklist handling
@@ -2042,7 +2043,7 @@ Here are the =.emacs= settings:
 
    Add the following to your =.emacs=
 #+begin_src emacs-lisp
-(load "~/git/org-mode/contrib/lisp/org-checklist")
+  (load "~/git/org-mode/contrib/lisp/org-checklist")
 #+end_src
 
    and then to use it in a task you simply set the property =RESET_CHECK_BOXES= to =t= 
@@ -2066,9 +2067,9 @@ Here are the =.emacs= settings:
    that litter my hard drive rather annoying actually so I turn
    them off with the following customization:
 
-   #+begin_src emacs-lisp
-   (setq backup-inhibited t)
-   #+end_src
+#+begin_src emacs-lisp
+  (setq backup-inhibited t)
+#+end_src
 
    The main reason I turn off backups is that I have a few encrypted
    files on my system that I occassionally decrypt, edit with Emacs, 
@@ -2122,7 +2123,7 @@ Here are the =.emacs= settings:
    To enable task blocking set the following variable:
 
 #+begin_src emacs-lisp
-(setq org-enforce-todo-dependencies t)
+  (setq org-enforce-todo-dependencies t)
 #+end_src
 
    This setting prevents tasks from changing to =DONE= if any subtasks
@@ -2178,7 +2179,7 @@ Here are the =.emacs= settings:
     To make org show leading stars use
 
 #+begin_src emacs-lisp 
-(setq org-hide-leading-stars nil)
+  (setq org-hide-leading-stars nil)
 #+end_src emacs-lisp
 *** Show headings at odd levels only or odd-even levels
     I've converted my files between odd-levels-only and odd-even using
@@ -2189,7 +2190,7 @@ Here are the =.emacs= settings:
     headlines and tasks in odd-levels-only to be all that helpful.
 
 #+begin_src emacs-lisp
-(setq org-odd-levels-only nil)
+  (setq org-odd-levels-only nil)
 #+end_src
 *** Handling blank lines
     Blank lines are evil :).  They keep getting inserted in between
@@ -2201,7 +2202,7 @@ Here are the =.emacs= settings:
     of a tasks:
 
 #+begin_src emacs-lisp
-(setq org-cycle-separator-lines 0)
+  (setq org-cycle-separator-lines 0)
 #+end_src
 
     I find extra blank lines in lists and headings a bit of a
@@ -2214,16 +2215,16 @@ Here are the =.emacs= settings:
     and headings:
 
 #+begin_src emacs-lisp
-(setq org-blank-before-new-entry (quote ((heading)
-					 (plain-list-item))))
+  (setq org-blank-before-new-entry (quote ((heading)
+                                           (plain-list-item))))
 #+end_src
 *** Adding new tasks quickly without disturbing the current task content
     To create new headings in a project file it is really convenient to use
     C-S-RET.  This inserts a new headline.  With the following setting
 
-    #+begin_src emacs-lisp
-    (setq org-insert-heading-respect-content t)
-    #+end_src
+#+begin_src emacs-lisp
+  (setq org-insert-heading-respect-content t)
+#+end_src
 
     Org adds the new heading after the content of the current item.
     This lets you hit C-S-RET in the middle of an entry and the new
@@ -2234,7 +2235,7 @@ Here are the =.emacs= settings:
     to disable that setting.
 
 #+begin_src emacs-lisp
-(setq org-return-follows-link nil)
+  (setq org-return-follows-link nil)
 #+end_src
 *** Notes at the top
     I enter notes for tasks with =C-c C-z= (or just =z= in the
@@ -2243,7 +2244,7 @@ Here are the =.emacs= settings:
     for why it is waiting).  These notes are saved at the top of the
     task so unfolding the task shows the note first.
 #+begin_src emacs-lisp
-(setq org-reverse-note-order nil)
+  (setq org-reverse-note-order nil)
 #+end_src
 *** Searching and showing results
     Org-mode's searching capabilities are really effective at finding
@@ -2255,11 +2256,11 @@ Here are the =.emacs= settings:
     entries and also the immediately following sibling task (but not
     all siblings) with the following settings:
 
-    #+begin_src emacs-lisp
-    (setq org-show-following-heading t)
-    (setq org-show-hierarchy-above t)
-    (setq org-show-siblings nil)
-    #+end_src
+#+begin_src emacs-lisp
+  (setq org-show-following-heading t)
+  (setq org-show-hierarchy-above t)
+  (setq org-show-siblings nil)
+#+end_src
 
     This keeps the results of the search relatively compact and
     mitigates accidental errors by cutting too much data from your org
@@ -2275,9 +2276,9 @@ Here are the =.emacs= settings:
     for more details on each variable and what it does.
 
 #+begin_src emacs-lisp
-(setq org-special-ctrl-a/e t)
-(setq org-special-ctrl-k t)
-(setq org-yank-adjusted-subtrees t)
+  (setq org-special-ctrl-a/e t)
+  (setq org-special-ctrl-k t)
+  (setq org-yank-adjusted-subtrees t)
 #+end_src
 
 ** Attachments					
@@ -2294,7 +2295,7 @@ Here are the =.emacs= settings:
    =org-id-method= as follows:
 
 #+begin_src emacs-lisp
-(setq org-id-method (quote uuidgen))
+  (setq org-id-method (quote uuidgen))
 #+end_src
 
    Say you want to attach a file =x.sql= to your current task.  Create
@@ -2339,7 +2340,7 @@ Here are the =.emacs= settings:
    The following setting accomplishes this:
 
 #+begin_src emacs-lisp
-(setq org-deadline-warning-days 30)
+  (setq org-deadline-warning-days 30)
 #+end_src
 
    This gives me plenty of time to deal with the task so that it is completed
@@ -2375,7 +2376,7 @@ Here are the =.emacs= settings:
    set the default format to CSV with:
 
 #+begin_src emacs-lisp
-(setq org-table-export-default-format "orgtbl-to-csv")
+  (setq org-table-export-default-format "orgtbl-to-csv")
 #+end_src lisp
 
    Exporting to CSV format is the only one I use and this provides the
@@ -2395,11 +2396,11 @@ Here are the =.emacs= settings:
    This creates the file with the following data
 
 #+begin_example 
-One,Two,Three
-1,1,2
-3,6,5
-fred,kpe,mary
-234.5,432.12,324.3
+  One,Two,Three
+  1,1,2
+  3,6,5
+  fred,kpe,mary
+  234.5,432.12,324.3
 #+end_example
 
 ** Visiting links
@@ -2409,9 +2410,9 @@ fred,kpe,mary
    opening the link.
 
 #+begin_src emacs-lisp
-(setq org-link-frame-setup (quote ((vm . vm-visit-folder-other-frame)
-				   (gnus . gnus-other-frame)
-				   (file . find-file-other-window))))
+  (setq org-link-frame-setup (quote ((vm . vm-visit-folder-other-frame)
+                                     (gnus . gnus-other-frame)
+                                     (file . find-file-other-window))))
 #+end_src
 
    I like to keep 2 frames open for Emacs - one for org and one for
@@ -2429,16 +2430,16 @@ fred,kpe,mary
 
    My logging settings are set as follows:
 #+begin_src emacs-lisp
-(setq org-log-done (quote time))
-(setq org-log-into-drawer nil)
+  (setq org-log-done (quote time))
+  (setq org-log-into-drawer nil)
 #+end_src
 
    With =org-todo-keywords= set as 
 
 #+begin_src emacs-lisp
-(setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
- (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
- (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
+  (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
+   (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
+   (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
 #+end_src
 
    This adds a log entry whenever a task moves to any of the following states:
@@ -2489,7 +2490,7 @@ fred,kpe,mary
    the total estimated time is hit.  (Yes I'm a Trekkie :) )
 
 #+begin_src emacs-lisp
-(setq org-clock-sound "/usr/local/lib/alert1.wav")
+  (setq org-clock-sound "/usr/local/lib/alert1.wav")
 #+end_src
 
    When the one hour time limit is hit the alarm sound goes off and a
@@ -2519,8 +2520,8 @@ fred,kpe,mary
    and then need to remove it again.
 
 #+begin_src emacs-lisp
-(setq org-default-priority ?G)
-(setq org-lowest-priority ?G)
+  (setq org-default-priority ?G)
+  (setq org-lowest-priority ?G)
 #+end_src emacs-lisp
 
 ** Archive Sibling
@@ -2530,7 +2531,7 @@ fred,kpe,mary
 ** Cycling plain lists
     Org mode can fold (cycle) plain lists.  I don't use this feature.
 #+begin_src emacs-lisp
-(setq org-cycle-include-plain-lists nil)
+  (setq org-cycle-include-plain-lists nil)
 #+end_src
 
 * Using Git for Automatic History, Backups, and Synchronization
@@ -2549,7 +2550,7 @@ fred,kpe,mary
    My Emacs setup saves all org buffers at 1 minute before the hour using the following code in my =.emacs=
 
 #+begin_src emacs-lisp
-(run-at-time "00:59" 3600 'org-save-all-org-buffers)
+  (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 #+end_src
 
    A =cron= job runs at the top of the hour to commit any changes just
@@ -2559,7 +2560,7 @@ fred,kpe,mary
 
    =crontab= details:
 #+begin_example 
-0 * * * * ~/bin/org-git-sync.sh >/dev/null
+  0 * * * * ~/bin/org-git-sync.sh >/dev/null
 #+end_example
 
 *** ~/bin/org-git-sync.sh
@@ -2582,20 +2583,20 @@ fred,kpe,mary
 This script does not create empty commits - =git= only creates a commit
 if something was modified.
 #+begin_src sh
-#!/bin/sh
-# Add org file changes to the repository
-REPOS="org doc.norang.ca www.norang.ca"
+  #!/bin/sh
+  # Add org file changes to the repository
+  REPOS="org doc.norang.ca www.norang.ca"
 
-for REPO in $REPOS
-do
-    echo "Repository: $REPO"
-    cd ~/git/$REPO
-    # Remove deleted files
-    git ls-files --deleted -z | xargs -0 git rm >/dev/null 2>&1
-    # Add new files
-    git add . >/dev/null 2>&1
-    git commit -m "$(date)"
-done
+  for REPO in $REPOS
+  do
+      echo "Repository: $REPO"
+      cd ~/git/$REPO
+      # Remove deleted files
+      git ls-files --deleted -z | xargs -0 git rm >/dev/null 2>&1
+      # Add new files
+      git add . >/dev/null 2>&1
+      git commit -m "$(date)"
+  done
 #+end_src sh
 
 I use the following =.gitignore= file in my org-mode =git=
@@ -2605,24 +2606,24 @@ ditaa or graphviz then I'll add it to the repository manually.  By
 default all PNG graphic files are ignored (since I assume they are
 produced by ditaa during export)
 #+begin_example 
-core
-core.*
-*.html
-*~
-.#*
-\#*\#
-*.txt
-*.tex
-*.aux
-*.dvi
-*.log
-*.out
-*.ics
-*.pdf
-*.xml
-*.org-source
-*.png
-*.toc
+  core
+  core.*
+  ,*.html
+  ,*~
+  .#*
+  \#*\#
+  ,*.txt
+  ,*.tex
+  ,*.aux
+  ,*.dvi
+  ,*.log
+  ,*.out
+  ,*.ics
+  ,*.pdf
+  ,*.xml
+  ,*.org-source
+  ,*.png
+  ,*.toc
 #+end_example
 ** Git - Edit files with confidence
    I use =git= in all of my directories where editing a file should be
@@ -2688,39 +2689,39 @@ core.*
 
 Here is the =usb-git-fetch= script
 #+begin_src sh
-#!/bin/sh
-find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
-  if test -d ~/${repo/.git}
-  then
-    echo REPO: $repo
-    cd ~/$repo
-    git fetch usb
-  fi
-done
+  #!/bin/sh
+  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
+    if test -d ~/${repo/.git}
+    then
+      echo REPO: $repo
+      cd ~/$repo
+      git fetch usb
+    fi
+  done
 #+end_src
 
 Here is the =usb-git-push= script
 #+begin_src sh
-#!/bin/sh
-find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
-  if test -d ~/${repo/.git}
-  then
-    echo REPO: $repo
-    cd ~/$repo 
-    git push usb
-  fi
-done
+  #!/bin/sh
+  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
+    if test -d ~/${repo/.git}
+    then
+      echo REPO: $repo
+      cd ~/$repo
+      git push usb
+    fi
+  done
 #+end_src
 
 Here is the =usb-git-missing= script
 #+begin_src sh
-#!/bin/sh
-find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
-  if ! test -d ~/${repo/.git}
-  then
-    echo REPO: $repo
-  fi
-done
+  #!/bin/sh
+  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
+    if ! test -d ~/${repo/.git}
+    then
+      echo REPO: $repo
+    fi
+  done
 #+end_src
 
 * Other stuff we may not want to include 			   :noexport:
