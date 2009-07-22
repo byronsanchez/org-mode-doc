@@ -1369,15 +1369,18 @@ Original Estimate
 :       - otherwise assign an estimated time and file it somewhere
 :       - Refile billable work to appropriate location
 :     - [ ] Check for stuck projects and add next tasks       F12-#         
-:     - [ ] Review all tasks F12 t
-:       - [ ] Work tasks F12 t / w / - W
-:       - [ ] Miscellaneous work tasks / - P / - W
-:       - [ ] Projects F12 P
-:       - [ ] Next Tasks F12 t / N / - W (Next tasks can not be blocked)
-: 	- Move NEXT tag to subtasks or remove as required
-:       - [ ] Waiting Tasks F12 t 4 r
-:       - [ ] Someday Tasks F12 t 5 r
+:     - [ ] Review tasks                                      F12 t
+:       - [ ] Waiting tasks                                         / W
+:       - [ ] Next Tasks                                      F12 n
+:         - Move NEXT tag to subtasks or remove as required
 :     - [ ] Make plan for the week (out of NEXT tasks)
+:       - schedule important items onto the agenda
+:       - [ ] Review weekly plan                              F12 a w
+:
+:     - start work
+:       - daily agenda first - knock off items
+:         - complete them or adjust deadline warning days appropriately
+:       - when agenda is empty - work on next tasks
 
    The first item [ ] Check follow-up folder makes me pull out the
    paper file I dump stuff into all week long - things I need to take
