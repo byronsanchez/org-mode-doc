@@ -560,9 +560,9 @@ This has several advantages:
    which creates a REFILE tag for anything in the files.
 
    The file has a single permanent line at the top like this
-#+begin_example
+#+begin_src org
   ,#+FILETAGS: REFILE
-#+end_example
+#+end_src
 ** Remember Tasks is all about begin FAST
    Okay I'm in the middle of something and oh yeah - I have to
    remember to do that.  I don't stop what I'm doing.  I'm probably
@@ -1143,7 +1143,7 @@ This has several advantages:
     =C-c C-x i RET= inserts a clock table report with your estimated
     values and any clocked time to date.
 
-#+begin_example 
+#+begin_src org
   Original Estimate
   ,#+BEGIN: columnview :hlines 1 :id local
   | Task                        | Estimated Effort | CLOCKSUM |
@@ -1157,7 +1157,7 @@ This has several advantages:
   | **** TODO Step 3.3          |             0:10 |          |
   | *** TODO Step 4             |             0:10 |          |
   ,#+END:
-#+end_example
+#+end_src
 
     I normally delete the =#+BEGIN:= and =#+END:= lines from the original
     table after providing the estimate to the client to ensure I don't
@@ -1254,9 +1254,9 @@ This has several advantages:
 
    Filetags look like this:
 
-#+begin_example 
+#+begin_src org
   ,#+FILETAGS: NORANG @Work
-#+end_example
+#+end_src
 
    I have the following =#+FILETAGS:= entries in my org-mode files:
 
@@ -1856,7 +1856,7 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
    Here is the definition for the =block= snippet:
 
 org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/block
-#+begin_example 
+#+begin_example
   #name : #+begin_...#+end_
   # --
   ,#+begin_$1 $2
@@ -2395,13 +2395,13 @@ Here are the =.emacs= settings:
 
    This creates the file with the following data
 
-#+begin_example 
+#+begin_src csv
   One,Two,Three
   1,1,2
   3,6,5
   fred,kpe,mary
   234.5,432.12,324.3
-#+end_example
+#+end_src
 
 ** Visiting links
 
