@@ -792,6 +792,9 @@ This has several advantages:
    agenda view simply by moving the task state keyword back to =TODO=.
 
 * Time Clocking
+  :PROPERTIES:
+  :CUSTOM_ID: Clocking
+  :END:
   Okay, I admit it.  I'm a clocking fanatic.
 
   I clock everything (well almost everything).  Org-mode makes this
