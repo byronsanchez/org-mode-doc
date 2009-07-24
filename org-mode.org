@@ -14,20 +14,6 @@
 #+LINK_UP:   
 #+LINK_HOME: 
 
-#+begin_html
-<div class="sidebar">
-#+end_html
-
-  [[http://orgmode.org][Org-mode]] is a finalist in the 2009 Sourceforge Community Choice
-  Awards in the category /Most Likely to Change the Way you do
-  Everything/.
-
-  This is a fantastic opportunity to make more people aware of this
-  great package.  Please [[http://sf.net/community/cca09/vote/?f=401][vote for Org-mode]].
-
-#+begin_html
-</div>
-#+end_html
 * Overview
   Org-mode is a fabulous organizational tool built by Carsten Dominik
   that operates on plain text files.  Org-mode is part of Emacs.
