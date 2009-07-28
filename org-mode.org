@@ -837,7 +837,7 @@ This has several advantages:
 #+begin_src emacs-lisp
   ;;
   ;; Resume clocking tasks when emacs is restarted
-  (setq org-clock-persistence-insinuate)
+  (org-clock-persistence-insinuate)
   ;;
   ;; Yes it's long... but more is better ;)
   (setq org-clock-history-length 35)
