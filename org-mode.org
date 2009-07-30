@@ -1624,6 +1624,9 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
    get the narrowed detail in the export.
 
 ** Publishing Projects
+   :PROPERTIES:
+   :CUSTOM_ID: PublishingProjects
+   :END:
 
    I mainly use publishing for publishing multiple files or projects.
    I don't want to remember where the created export file needs to
