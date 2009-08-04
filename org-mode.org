@@ -395,9 +395,9 @@ The following states track purchase orders.
 #+end_ditaa
 
 *** Project Task States
-I no longer have explicit =PROJECT= tasks.  Every level 2 task is a project.
+Every level 2 task is a project.
 
-This has several advantages:
+This has several advantages over keeping an explicit project task:
 
   - It simplifies my weekly review process
   - Every task is considered a project so stuck project tasks stand out automatically
@@ -405,13 +405,9 @@ This has several advantages:
   - Clocking in the top level project task works
 
     I can clock in the top level task which changes it to =STARTED=
-    without losing project context for the task.  I used to have a
-    =PROJECT= keyword for project tasks but whenever I clocked in a
-    =PROJECT= task (by mistake or to track miscellaneous time) it
-    changes to =STARTED= and was no longer considered a project task
-    for stuck project view.  This really wasn't convenient for me.
+    without losing project context for the task.
 
-  - Simple one-level tasks can be marked unstuck by simply giving them a =NEXT= tag
+  - Tasks with no children can be marked unstuck by simply giving them a =NEXT= tag
 
 ** Fast Todo Selection
    Fast todo selection allows changing from any task todo state to any
@@ -466,9 +462,11 @@ This has several advantages:
   :PROPERTIES:
   :CUSTOM_ID: Remember
   :END:
-  To add new tasks efficiently I use a minimal number of remember templates.
-  I used to have lots of remember templates, one for each org-file.  I'd start org-remember with
-  C-M-r and then pick a template that filed the task under =* Tasks= in the appropriate file.
+  To add new tasks efficiently I use a minimal number of remember
+  templates.  I used to have lots of remember templates, one for each
+  org-file.  I'd start org-remember with C-M-r and then pick a
+  template that filed the task under =* Tasks= in the appropriate
+  file.
 
   I found I still needed to refile these remember tasks again to the
   correct location within the org-file so all of these different
@@ -726,10 +724,10 @@ This has several advantages:
     spend time hunting through my org files for the task that needs to
     be clocked-in.
 
-    I just find it easier to have it all in one short list.  My
-    =STARTED= list has less than 20 entries so it's pretty easy to find
-    what I want.  The whole point of the =STARTED= list is to make it
-    quick and easy to find the task to clock-in.
+    It is just easier to have it all in one short list.  My =STARTED=
+    list has less than 20 entries so it's pretty easy to find what I
+    want.  The whole point of the =STARTED= list is to make it quick
+    and easy to find the task to clock-in.
 
     I only have 2 tasks that are permanently in a =STARTED= state.  These are:
 
@@ -737,11 +735,8 @@ This has several advantages:
       - Email, News, and IRC
 
     Everything else will eventually move to a =DONE= state and fall off
-    the list.
-
-    I found having two lists more confusing than just the single
-    =STARTED= list.
-
+    the list.  To drop a task off the =STARTED= simply move it back to
+    the =TODO= state.
 ** Reading email, newsgroups, and conversations on IRC
    To read email I do =F12 s C-s email RET I= which goes to the agenda
    view for started tasks, searches for 'email' and clocks it in.
@@ -2418,7 +2413,7 @@ Here are the =.emacs= settings:
    My logging settings are set as follows:
 #+begin_src emacs-lisp
   (setq org-log-done (quote time))
-  (setq org-log-into-drawer nil)
+  (setq org-log-into-drawer t)
 #+end_src
 
    With =org-todo-keywords= set as 
@@ -2442,9 +2437,10 @@ Here are the =.emacs= settings:
    - to =EXPIRED= status (with a note)
    - to =REJECTED= status (with a note)
 
-   I keep clock times in the =LOGBOOK= drawer but state change notes outside
-   so unfolding the task shows *why* the task changed state - without the need
-   to show the contents of the =LOGBOOK= drawer.
+   I keep clock times and states in the =LOGBOOK= drawer to keep my
+   tasks uncluttered.  If a task is WAITING then the reason for why it
+   is waiting is near the top of the LOGBOOK and unfolding the LOGBOOK
+   drawer provides that information.
 ** Limiting time spent on tasks
    Org-mode has this great new feature for signalling alarms when the
    estimated time for a task is reached.  I use this to limit the
