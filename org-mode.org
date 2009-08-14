@@ -2341,7 +2341,7 @@ Here are the =.emacs= settings:
    in advance the task should show up in the agenda.  If no value is
    specified the default =org-deadline-warning-days= is used.
 
-** Exporting Tables to CVS
+** Exporting Tables to CSV
    I generate org-mode tables with details of task specifications and
    record structures for some of my projects.  My clients like to use
    spreadsheets for this type of detail.
