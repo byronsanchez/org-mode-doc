@@ -489,7 +489,6 @@ This has several advantages over keeping an explicit project task:
 #+begin_src emacs-lisp
   (setq org-default-notes-file "~/git/org/refile.org")
   
-  ;;
   ;;;  Load Org Remember Stuff
   (require 'remember)
   (org-remember-insinuate)
@@ -544,7 +543,7 @@ This has several advantages over keeping an explicit project task:
 
    The file has a single permanent line at the top like this
 #+begin_src org
-  ,#+FILETAGS: REFILE
+  #+FILETAGS: REFILE
 #+end_src
 ** Remember Tasks is all about begin FAST
    Okay I'm in the middle of something and oh yeah - I have to
@@ -1128,7 +1127,7 @@ This has several advantages over keeping an explicit project task:
 
 #+begin_src org
   Original Estimate
-  ,#+BEGIN: columnview :hlines 1 :id local
+  #+BEGIN: columnview :hlines 1 :id local
   | Task                        | Estimated Effort | CLOCKSUM |
   |-----------------------------+------------------+----------|
   | ** TODO Project to estimate |             5:40 |          |
@@ -1139,7 +1138,7 @@ This has several advantages over keeping an explicit project task:
   | **** TODO Step 3.2          |             3:00 |          |
   | **** TODO Step 3.3          |             0:10 |          |
   | *** TODO Step 4             |             0:10 |          |
-  ,#+END:
+  #+END:
 #+end_src
 
     I normally delete the =#+BEGIN:= and =#+END:= lines from the original
@@ -1238,7 +1237,7 @@ This has several advantages over keeping an explicit project task:
    Filetags look like this:
 
 #+begin_src org
-  ,#+FILETAGS: NORANG @Work
+  #+FILETAGS: NORANG @Work
 #+end_src
 
    I have the following =#+FILETAGS:= entries in my org-mode files:
@@ -1467,7 +1466,7 @@ ditaa:
 
 This
 
-: ,#+begin_ditaa communication.png -r -s 0.8
+: #+begin_ditaa communication.png -r -s 0.8
 :      +-----------+        +---------+
 :      |    PLC    |        |         |
 :      |  Network  +<------>+   PLC   +<---=---------+
@@ -1492,7 +1491,7 @@ This
 :  | Millwide System |            -------- Data ---------
 :  | cBLU            |            --=----- Signals ---=--
 :  +-----------------+
-: ,#+end_ditaa
+: #+end_ditaa
 
 becomes this!
 
@@ -1841,9 +1840,9 @@ org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/blo
 #+begin_example
   #name : #+begin_...#+end_
   # --
-  ,#+begin_$1 $2
+  #+begin_$1 $2
   $0
-  ,#+end_$1
+  #+end_$1
 #+end_example
 
    I use this to create =#+begin_*= blocks like 
