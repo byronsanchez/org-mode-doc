@@ -528,13 +528,10 @@ This has several advantages over keeping an explicit project task:
     :CLOCK-IN:
     %?" nil bottom nil))))
 #+end_src
-
-   Each type of remember note goes in a separate org file with a =#+FILETAGS:= header which gives all tasks in that
-   file a tag.
 ** Separate file for Remember Tasks
    I have a single org file which is the target for my remember templates.
 
-   I store notes, tasks, and phone calls in refile.org.  I used to use
+   I store notes, tasks, and phone calls in =refile.org=.  I used to use
    multiple files but found that didn't really have any advantage over
    a single file.
 
