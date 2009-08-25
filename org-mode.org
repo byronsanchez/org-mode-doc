@@ -1758,7 +1758,6 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
    All I need to remember to do is edit the appropriate org file and
    publish it with C-S-F12 -- not exactly hard :)
 
-
 * Reminders
   :PROPERTIES:
   :CUSTOM_ID: Reminders
@@ -2514,6 +2513,9 @@ Here are the =.emacs= settings:
 #+end_src
 
 * Using Git for Automatic History, Backups, and Synchronization
+  :PROPERTIES:
+  :CUSTOM_ID: GitSync
+  :END:
   Editing folded regions of your org-mode file can be hazardous to
   your data.  My method for dealing with this is to put my org files
   in a =Git= source repository.
