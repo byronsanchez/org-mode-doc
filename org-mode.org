@@ -1059,6 +1059,9 @@ This has several advantages over keeping an explicit project task:
    clock report format is great for my use-case.
 
 ** Task Estimates and column view
+   :PROPERTIES:
+   :CUSTOM_ID: TaskEstimates
+   :END:
    Estimating how long tasks take to complete is a difficult skill to
    master.  Org-mode makes it easy to practice creating estimates for
    tasks and then clock the actual time it takes to complete.
