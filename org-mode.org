@@ -1325,6 +1325,14 @@ This has several advantages over keeping an explicit project task:
    The first day of the week (usually Monday) I do my weekly review. 
    I keep a list like this one to remind me what needs to be done.
 
+   To keep the agenda fast I set
+#+begin_src elisp
+  (setq org-agenda-ndays 1)
+#+end_src
+  so only today's date is shown by default.  I only need the weekly
+  view during my weekly review and this keeps my agenda generation
+  fast.
+
    I have a recurring task which keeps my weekly review checklist
    handy.  This pops up as a reminder on Monday's.  This week I'm
    doing my weekly review on Tuesday since Monday was a holiday.
