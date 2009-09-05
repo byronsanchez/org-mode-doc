@@ -673,7 +673,7 @@ This has several advantages over keeping an explicit project task:
      - create notes, and tasks for things that need responses with org-remember
    - Check refile tasks and respond to emails
    - Look at my agenda and knock off tasks scheduled for today
-     - Clock it in since (=I= in the agenda while on the task -- this marks it as =STARTED=)
+     - Clock it in (=I= in the agenda while on the task -- this marks it as =STARTED=)
      - Work on it until it is =DONE= or it gets interrupted
    - Check today's time log report and refile tasks with clocked time
      - =F12 a R= - any tasks in =refile.org= should be moved to the appropriate file
