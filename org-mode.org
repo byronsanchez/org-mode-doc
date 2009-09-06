@@ -2650,7 +2650,7 @@ produced by ditaa during export)
    repositories I'm interested in.
    
    Just before I leave I mount my USB stick on my workstation and run
-   =usb-git-fetch= then =usb-git-push=.  For any repositories that
+   =usb-git-pull= then =usb-git-push=.  For any repositories that
    give errors due to non-fast-forward merges I manually merge as
    required and rerun =usb-git-push= until it reports no errors.  This
    normally takes a minute to two to do.  Then I grab my Eee PC and my
@@ -2671,18 +2671,28 @@ produced by ditaa during export)
    I mount my USB stick in a directory =/usb= using the =fstab= entry as follows:
 : /dev/sdb1 /usb vfat defaults,user,noauto,shortname=mixed 0 0
 
+   Each of my repositories has a remote =usb= and I push matching branches to the remote
+   by default.
+   : git push usb
+   in any repo will push all refs (branches) that already exist in the repo on the usb stick.
+
    The 3 scripts I use do the following:
 
    | Script          | Description                                                               |
    |-----------------+---------------------------------------------------------------------------|
    | usb-git-fetch   | For each repo on the USB stick fetch from it if it exists on this machine |
+   | usb-git-pull    | For each repo on the USB stick pull into the current branch               |
    | usb-git-push    | For each repo on the USB stick push to it if it exists on this machine    |
    | usb-git-missing | For each repo on the USB stick report if we don't have a local copy of it |
+
+   Lately I've been using =usb-git-pull= and =usb-git-push= only.  If anything goes wrong the script
+   stops so I can fix whatever made the pull or push operation fail.  Then I just rerun the script
+   until it runs to completion.
 
 Here is the =usb-git-fetch= script
 #+begin_src sh
   #!/bin/sh
-  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
+  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
     if test -d ~/${repo/.git}
     then
       echo REPO: $repo
@@ -2692,23 +2702,56 @@ Here is the =usb-git-fetch= script
   done
 #+end_src
 
+Here is the =usb-git-pull= script
+#+begin_src sh
+  #!/bin/sh
+  if find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
+        if test -d ~/${repo/.git}
+        then
+          echo REPO: $repo
+          cd ~/$repo 
+          if ! git pull usb
+          then
+            exit 1
+          fi
+        fi
+      done
+  then
+      echo Unmounting USB stick...
+      umount /usb
+      echo All done.
+  else
+      echo Fix and redo.
+  fi
+#+end_src
+
 Here is the =usb-git-push= script
 #+begin_src sh
   #!/bin/sh
-  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
-    if test -d ~/${repo/.git}
-    then
-      echo REPO: $repo
-      cd ~/$repo
-      git push usb
-    fi
-  done
+  if find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
+        if test -d ~/${repo/.git}
+        then
+          echo REPO: $repo
+          cd ~/$repo
+          if ! git push usb
+          then
+            exit 1
+          fi
+        fi
+      done
+  then
+      echo Unmounting USB stick...
+      umount /usb
+      echo All done.
+  else
+      echo Fix and redo.
+  fi
 #+end_src
 
 Here is the =usb-git-missing= script
 #+begin_src sh
   #!/bin/sh
-  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
+  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
     if ! test -d ~/${repo/.git}
     then
       echo REPO: $repo
