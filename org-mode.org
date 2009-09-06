@@ -2217,6 +2217,13 @@ Here are the =.emacs= settings:
     Org adds the new heading after the content of the current item.
     This lets you hit C-S-RET in the middle of an entry and the new
     heading is added after the body of the current entry.
+
+    I personally have =org-insert-heading-respect-content= set to =nil=
+    now since I create blocks of text without structure first and then
+    add headings in the middle to organize the text.  I found jumping
+    to the end (respecting content) was slowing me down since I don't
+    normally have a lot of blank lines in the middle of my text.
+
 *** Return does not follow links
     I find return follows link annoying.  It only took a few accidents
     of hitting return on an HTML link that fired up Firefox to get me
