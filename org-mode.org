@@ -659,10 +659,10 @@ This has several advantages over keeping an explicit project task:
 #+begin_src emacs-lisp
   (setq org-agenda-custom-commands
         (quote (("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
-                ("w" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil)))
-                ("r" "Refile New Notes and Tasks" tags "REFILE" ((org-agenda-todo-ignore-with-date nil)))
+                ("w" "Tasks waiting on something" tags "WAITING/!" ((org-use-tag-inheritance nil)))
+                ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE" ((org-agenda-todo-ignore-with-date nil)))
                 ("N" "Notes" tags "NOTE" nil)
-		("n" "Next" tags "NEXT-WAITING-CANCELLED/!" nil))))
+                ("n" "Next" tags "NEXT-WAITING-CANCELLED/!" nil))))
 #+end_src
 
    My day goes generally like this:
