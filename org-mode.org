@@ -591,7 +591,7 @@ This has several advantages over keeping an explicit project task:
    To refile tasks in org you need to tell it where you want to refile things.
 
    In my setup I let any file in =org-agenda-files= and the current file contribute to the list of valid refile targets.
-   I don't refile to tasks more then 5 levels deep just to limit the number of displayed targets.
+   I don't refile to tasks more then 3 levels deep just to limit the number of displayed targets.
    I also use ido to help find targets quickly.
 
    Here is my refile configuration:
@@ -600,37 +600,39 @@ This has several advantages over keeping an explicit project task:
   (setq org-completion-use-ido t)
 
   ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
-  (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
+  (setq org-refile-targets (quote ((nil :maxlevel . 3) (org-agenda-files :maxlevel . 3))))
 
   ; Targets start with the file name - allows creating level 1 tasks
-  (setq org-refile-use-outline-path (quote file))
+  (setq org-refile-use-outline-path nil)
 
   ; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
-  (setq org-outline-path-complete-in-steps t)
+  (setq org-outline-path-complete-in-steps nil)
 #+end_src
 
    To refile a task to my =norang.org= file under =System Maintenance=
-   I just put the cursor on the task and hit =C-c C-w= and enter =nor
-   TAB sys TAB RET= and it's done.  I always know what file it's going
-   into but if I don't remember the exact task name I can just hit TAB
-   twice and all remember targets that match show up in a list.  Just
-   scroll through the list and pick the right refile target.  This
-   works great!
+   I just put the cursor on the task and hit =C-c C-w= and enter =SY
+   TAB RET= and it's done (since 'System Maintenance' only shows up in
+   my norang.org file).  If the entered text matches multiple targets
+   a second =TAB= displays all of the matches and all you need to do
+   is pick one.  This works great!
 ** Refiling Tasks
    To find tasks to refile I run my agenda view (=F12 r= = =C-c a r=)
    which shows tasks with the =REFILE= tag.  This view shows all tasks
-   (even ones marked in a =done= state).
+   (even ones marked in a =done= state).  (Now that all my refile
+   tasks are in a single refile.org file... I could just visit the
+   file directly but I'm used to =F12 r= for refiling and there really
+   is no benefit in doing it another way at this time.)
 
-   All of my remember target files have this tag in the FILETAGS
-   header so every task in the file can be found using this view.
+   =refile.org= has 
+   : #+FILETAGS: REFILE
+   so every task in the file can be found using this view.
 
-   I visit each file with =REFILE= tasks to refile.  If there are a
-   few files going to the same place (3 or less) I refile the first
-   one, then move to the second one and use =C-c C-w up-arrow RET= to
-   refile to the same location again.  If more than 3 tasks are going
-   to the same place I try to do those last - since refiling
-   everything else away helps to group those together.  Then I select
-   the group of tasks and refile them in a single operation.
+   If there are a few tasks going to the same place (3 or less) I
+   refile the first one, then move to the second one and use =C-c C-w
+   up-arrow RET= to refile to the same location again.  If more than 3
+   tasks are going to the same place I use the agenda bulk refile 
+   function to mark multiple tasks (=m=) and then move them all to 
+   the same target with =B r=.  
 
    Refiling all of my tasks tends to take less than a minute so I may
    do this a couple of times a day.
