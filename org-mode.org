@@ -1820,6 +1820,9 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
   This section is a miscellaneous collection of Emacs customizations that I use
   with org-mode so that it Works-For-Me(tm).
 ** Yasnippets
+   :PROPERTIES:
+   :CUSTOM_ID: Yasnippets
+   :END:
    [[http://code.google.com/p/yasnippet/][Yasnippets]] is cool!  You type the snippet name and =TAB= and
    yasnippet expands the name with the contents of the snippet text -
    substituting snippet variables as appropriate.
