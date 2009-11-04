@@ -2495,6 +2495,58 @@ Here are the =.emacs= settings:
    since the last repeat time by default.  This lets you accumulate
    time over multiple days and counts towards your estimated effort
    limit.
+** Habit Tracking
+   John Wiegley recently added support for Habit tracking to org-mode.
+
+   I have lots of habits (some bad) but I'd still like to improve and
+   build new good habits.  This is what habit tracking is for.  It
+   shows a graph on the agenda of how well you have been doing on
+   developing your habits.
+
+   I have habits like:
+
+     - Hand wash the dishes
+     - 30 minute brisk walk
+     - Clean the house
+
+   etc. and most of these need a push to get done regularly.  Logging
+   of the done state needs to be enabled for habit tracking to work.
+
+   A habit is just like a regular task except it has a special
+   =PROPERTY= value setting and a special =SCHEDULED= date entry like
+   this:
+
+:   ** TODO 30 minute brisk walk
+:      SCHEDULED: <2009-11-04 Wed .+1d/2d>                                         
+:      :PROPERTIES:
+:      :STYLE:    habit
+:      :END:
+
+   This marks the task as a habit and separates it from the regular
+   task display on the agenda.  When you mark a habit done it shows up
+   on your daily agenda the next time based on the first interval in
+   the SCHEDULED entry (=.+1d=)
+
+   The special =SCHEDULED= entry states that I want to do this every
+   day but at least every 2 days.  If I go 3 days without marking it
+   DONE it shows up RED on the agenda indicating that I have been
+   neglecting this habit.
+
+   The world isn't going to end if you neglect your habits.
+   You can hide and display habits quickly using the =K= key on the
+   agenda.
+
+   These are my settings for habit tracking.
+
+#+begin_src emacs-lisp
+  ; Enable habit tracking (and a bunch of other modules)
+  (setq org-modules (quote (org-bbdb org-bibtex org-crypt org-gnus org-id org-info org-jsinfo org-habit org-inlinetask org-irc org-mew org-mhe org-protocol org-rmail org-vm org-wl org-w3m)))
+  ; global STYLE property values for completion
+  (setq org-global-properties (quote (("STYLE_ALL" . "habit"))))
+  ; position the habit graph on the agenda to the right of the default
+  (setq org-habit-graph-column 50)
+#+end_src
+
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
