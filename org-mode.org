@@ -252,10 +252,11 @@ speed up creation of standard text blocks in most editing modes.
 | C-x n r | Narrow to region                                | Sometimes  |
 | f9 f    | Boxquote insert a file                          | Sometimes  |
 | f9 i    | Org-mode Info manual                            | Sometimes  |
-| f9 o    | Org occur search                                | Rare       |
+| f9 h    | Hide other tasks                                | Rare       |
 | f7      | Toggle line truncation/wrap                     | Rare       |
 | f9 u    | Untabify region                                 | Rare       |
 | C-c a   | Enter Agenda (minimal emacs testing)            | Rare       |
+| M-f11   | Resolve open clocks                             | Rare       |
    
    Here is the keybinding setup in lisp:
 #+begin_src emacs-lisp
@@ -269,10 +270,10 @@ speed up creation of standard text blocks in most editing modes.
   (global-set-key (kbd "<f9> c") 'calendar)
   (global-set-key (kbd "<f9> f") 'boxquote-insert-file)
   (global-set-key (kbd "<f9> g") 'gnus)
+  (global-set-key (kbd "<f9> h") 'hide-other)
   (global-set-key (kbd "<f9> i") (lambda ()
                                    (interactive)
                                    (info "~/git/org-mode/doc/org.info")))
-  (global-set-key (kbd "<f9> o") 'org-occur)
   (global-set-key (kbd "<f9> r") 'boxquote-region)
   (global-set-key (kbd "<f9> u") (lambda ()
                                    (interactive)
@@ -284,6 +285,7 @@ speed up creation of standard text blocks in most editing modes.
   (global-set-key (kbd "<f11>") 'org-clock-goto)
   (global-set-key (kbd "C-<f11>") 'org-clock-in)
   (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
+  (global-set-key (kbd "M-<f11>") 'org-resolve-clocks)
   (global-set-key (kbd "C-M-r") 'org-remember)
 #+end_src
 
