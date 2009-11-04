@@ -1419,11 +1419,25 @@ This has several advantages over keeping an explicit project task:
 ** Archiving Subtrees
    My normal archiving procedure is to move entire subtrees to a
    separate archive file for the project.  Task subtrees in =FILE.org=
-   get archived to =FILE.org_archive= using the =C-c C-x C-s= command.
+   get archived to =FILE.org_archive= using the =a y= command in the
+   agenda.
 
    I archive entire projects and subtrees into a single
    forever-growing file.  My archive files are huge but so far I
    haven't found a need to split them by year (or decade) :)
+
+   All of my tasks to archive start at level 2 so I use an agenda
+   custom command to list all tasks that are ready to archive.  =F12
+   A= shows all tasks ready to archive and I can just run a simple
+   macro to archive each one in turn.  My normal sequence is =F12 A
+   C-n C-n= to get to the first task to archive followed by a keyboard
+   macro to archive and display the next task =C-x ( a y SPC C-x )=.
+   Then I just execute the macro repeatedly with =C-x e e e e=,
+   ... for each subtree to archive.
+
+   I used to archive by visiting one file at a time and doing a tags
+   match for LEVEL=2 -- using the agenda does all of my files in
+   org-agenda-files much more efficiently.
 
 ** Archive Tag - Hiding Information
    The only time I set the ARCHIVE tag on a task is to prevent it from
