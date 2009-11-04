@@ -2759,9 +2759,3 @@ Here is the =usb-git-missing= script
     fi
   done
 #+end_src
-
-* Other stuff we may not want to include 			   :noexport:
-** UNFINISHED Handling Phone calls
-   - Remember tasks for phone calls and bbdb searches
-
-** UNFINISHED Recurring tasks and copy subtree
