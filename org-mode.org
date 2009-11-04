@@ -46,6 +46,9 @@
 * Getting Started
   I use =org-mode= in most of my emacs buffers.
 ** Org-Mode Setup
+   :PROPERTIES:
+   :CUSTOM_ID: Setup
+   :END:
 The following setup in my .emacs enables org-mode for most buffers.
 =org-mode= is the default mode for =.org=, =.org_archive=, and =.txt=
 files.
