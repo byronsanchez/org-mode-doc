@@ -261,7 +261,7 @@ speed up creation of standard text blocks in most editing modes.
 #+begin_src emacs-lisp
   ;; Custom Key Bindings
   (global-set-key (kbd "<f12>") 'org-agenda)
-  (global-set-key (kbd "<f5>") 'my-org-todo)
+  (global-set-key (kbd "<f5>") 'bh/org-todo)
   (global-set-key (kbd "<S-f5>") 'widen)
   (global-set-key (kbd "<f7>") 'set-truncate-lines)
   (global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
@@ -283,7 +283,7 @@ speed up creation of standard text blocks in most editing modes.
   (global-set-key (kbd "C-<f10>") 'next-buffer)
   (global-set-key (kbd "<f11>") 'org-clock-goto)
   (global-set-key (kbd "C-<f11>") 'org-clock-in)
-  (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
+  (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
   (global-set-key (kbd "C-M-r") 'org-remember)
 #+end_src
 
@@ -506,9 +506,9 @@ This has several advantages over keeping an explicit project task:
   (org-remember-insinuate)
   
   ;; Start clock if a remember buffer includes :CLOCK-IN:
-  (add-hook 'remember-mode-hook 'my-start-clock-if-needed 'append)
+  (add-hook 'remember-mode-hook 'bh/start-clock-if-needed 'append)
   
-  (defun my-start-clock-if-needed ()
+  (defun bh/start-clock-if-needed ()
     (save-excursion
       (goto-char (point-min))
       (when (re-search-forward " *:CLOCK-IN: *" nil t)
@@ -1748,13 +1748,13 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
   ; the project that includes this file
   ;
   ; It's bound to C-S-F12 so I just edit and hit C-S-F12 when I'm done and move on to the next thing
-  (defun my-save-then-publish ()
+  (defun bh/save-then-publish ()
     (interactive)
     (save-buffer)
     (org-save-all-org-buffers)
     (org-publish-current-project))
 
-  (global-set-key (kbd "C-s-<f12>") 'my-save-then-publish)
+  (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
 #+end_src
 
    The =norang= and =doc= projects publish directly into the webserver
@@ -1798,22 +1798,22 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
 ** Reminder Setup
 #+begin_src emacs-lisp
   ; Erase all reminders and rebuilt reminders for today from the agenda
-  (defun my-org-agenda-to-appt ()
+  (defun bh/org-agenda-to-appt ()
     (interactive)
     (setq appt-time-msg-list nil)
     (org-agenda-to-appt))
 
   ; Rebuild the reminders everytime the agenda is displayed
-  (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
+  (add-hook 'org-finalize-agenda-hook 'bh/org-agenda-to-appt)
 
   ; This is at the end of my .emacs - so appointments are set up when Emacs starts
-  (my-org-agenda-to-appt)
+  (bh/org-agenda-to-appt)
 
   ; Activate appointments so we get notifications
   (appt-activate t)
 
   ; If we leave Emacs running overnight - reset the appointments one minute after midnight
-  (run-at-time "24:01" nil 'my-org-agenda-to-appt)
+  (run-at-time "24:01" nil 'bh/org-agenda-to-appt)
 #+end_src
 * Productivity Tools
   :PROPERTIES:
@@ -1891,17 +1891,17 @@ org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/blo
    :CUSTOM_ID: LimitingAgendaView
    :END:
    There is more than one way to do this.  Use what works for you.
-*** Narrowing to a subtree with =my-org-todo=
-=f5= is bound the function =my-org-todo= which is defined as follows:
+*** Narrowing to a subtree with =bh/org-todo=
+=f5= is bound the function =bh/org-todo= which is defined as follows:
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "<f5>") 'my-org-todo)
 
-  (defun my-org-todo ()
+  (global-set-key (kbd "<f5>") 'bh/org-todo)
+
+  (defun bh/org-todo ()
     (interactive)
     (org-narrow-to-subtree)
-    (org-show-todo-tree nil)
-    (widen))
+    (org-show-todo-tree nil))
 #+end_src
 
 This makes it easy to hide all of the other details in your org-file
