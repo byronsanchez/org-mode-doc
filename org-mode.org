@@ -2065,29 +2065,6 @@ Here are the =.emacs= settings:
 :    ...
 :    - [ ] Do task 7
 
-** No Emacs backup files
-   This isn't strictly an org-mode customization.
-
-   I don't use Emacs backup files at all.  I find the =*~= files
-   that litter my hard drive rather annoying actually so I turn
-   them off with the following customization:
-
-#+begin_src emacs-lisp
-  (setq backup-inhibited t)
-#+end_src
-
-   The main reason I turn off backups is that I have a few encrypted
-   files on my system that I occassionally decrypt, edit with Emacs, 
-   and encrypt again.  After encrypting I delete the plain-text version 
-   of the file.  I always forget to delete the Emacs backup file... and
-   this leaves the plain-text version of the file on disk which is 
-   unacceptable.  My solution is no more Emacs backup files.
-
-   org-mode can also encrypt entries but I've never looked into that
-   yet.  This may be a good alternative for some of my existing
-   encrypted file work flows but I haven't had the time to explore it.
-   Emacs and org-mode is an adventure!
-
 ** Backups
    =Backups that you have to work hard at don't get gone=.
 
