@@ -1412,7 +1412,7 @@ This has several advantages over keeping an explicit project task:
    projects moving forwards.
 
 #+begin_src emacs-lisp
-  (setq org-stuck-projects (quote ("LEVEL=2/!-DONE-CANCELLED-OPEN-SOMEDAY-WAITING" nil ("NEXT") "")))
+  (setq org-stuck-projects (quote ("LEVEL=2-REFILE-WAITING|LEVEL=1+REFILE/!-DONE-CANCELLED-OPEN" nil ("NEXT") "")))
 #+end_src
 
    Todo state triggers (see [[*ToDo%20state%20triggers][*ToDo state triggers]]) automatically remove
