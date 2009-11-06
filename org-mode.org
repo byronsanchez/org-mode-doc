@@ -976,10 +976,10 @@ This has several advantages over keeping an explicit project task:
    for that day) and hit the =S-<up arrow>= or =S-<down arrow>= keys
    to change the time.
 
-   The following setting makes time editing round to 5 minute
+   The following setting makes time editing round to 15 minute
    increments:
 #+begin_src emacs-lisp
-  (setq org-time-stamp-rounding-minutes (quote (1 5)))
+  (setq org-time-stamp-rounding-minutes (quote (1 15)))
 #+end_src lisp
 
    Editing the time with the shift arrow combination also updates the
@@ -989,8 +989,10 @@ This has several advantages over keeping an explicit project task:
    time clock entries by viewing them with log mode on in the agenda.
 
    I want my clock entries to be as accurate as possible but editing
-   to the exact minute (instead of rounding to 5 minutes) takes more
-   time and isn't worth the hassle.
+   to the exact minute (instead of rounding to 15 minutes) takes more
+   time and isn't worth the hassle.  Rounding to 15 minutes gets me
+   close to the time I want quickly and if extra refining is needed I
+   can edit the timestamp directly and update the total with C-c C-y.
 * Time reporting and tracking
 ** Billing clients based on clocked time
    At the beginning of the month I invoice my clients for work done
