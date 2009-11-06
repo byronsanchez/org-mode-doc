@@ -836,7 +836,10 @@ This has several advantages over keeping an explicit project task:
    the next task from the parent and clock that in without losing a
    minute or two while I'm deciding what to work on next.
 
-   I have the following org-mode setup for clocking:
+   I keep clock times in a =:CLOCK:= drawer and state changes in a
+   =:LOGBOOK:= drawer.
+
+   I have the following org-mode settings for clocking:
 
 #+begin_src emacs-lisp
   ;;
@@ -849,8 +852,10 @@ This has several advantages over keeping an explicit project task:
   (setq org-clock-in-resume t)
   ;; Change task state to STARTED when clocking in
   (setq org-clock-in-switch-to-state "STARTED")
-  ;; Save clock data and notes in the LOGBOOK drawer
-  (setq org-clock-into-drawer t)
+  ;; Separate drawers for clocking and logs
+  (setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK"))
+  ;; Save clock data in the CLOCK drawer and state changes and notes in the LOGBOOK drawer
+  (setq org-clock-into-drawer "CLOCK")
   ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
   (setq org-clock-out-remove-zero-time-clocks t)
   ;; Don't clock out when moving task to a done state
