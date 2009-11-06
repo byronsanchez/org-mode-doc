@@ -2561,6 +2561,25 @@ Here are the =.emacs= settings:
   (setq org-habit-graph-column 50)
 #+end_src
 
+
+** Auto revert mode
+   I use git to synchronize my org-mode files between my laptop and my
+   workstation.  This normally requires saving all the current
+   changes, pushing to a bare repo, and fetching on the other system.
+   After that I need to revert all of my org-mode files to get the
+   updated information.
+
+   I used to use =org-revert-all-org-buffers= but have since
+   discovered =global-auto-revert-mode=.  With this setting any files
+   that change on disk where there are no changes in the buffer
+   automatically revert to the on-disk version.
+
+   This is perfect for synchronizing my org-mode files between systems.
+
+#+begin_src emacs-lisp
+(setq global-auto-revert-mode t)
+#+end_src
+
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
