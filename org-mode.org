@@ -1983,6 +1983,9 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 
   ;; Remove completed scheduled tasks from the agenda view
   (setq org-agenda-skip-scheduled-if-done t)
+
+  ;; Remove completed items from search results
+  (setq org-agenda-skip-timestamp-if-done t)
 #+end_src
 
 *** Use the Diary for Holidays only
@@ -2030,6 +2033,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     - task sort order
     - start the agenda weekly view with =today=
     - display of the grid
+    - habits at the bottom
 
 Here are the =.emacs= settings:
 #+begin_src emacs-lisp
@@ -2041,7 +2045,7 @@ Here are the =.emacs= settings:
 
   ;; Sorting order for tasks on the agenda
   (setq org-agenda-sorting-strategy
-        (quote ((agenda time-up priority-down effort-up category-up)
+        (quote ((agenda habit-down time-up priority-down effort-up category-up)
                 (todo priority-down)
                 (tags priority-down))))
 
@@ -2052,6 +2056,11 @@ Here are the =.emacs= settings:
   (setq org-agenda-time-grid
         (quote (nil "----------------"
                     (800 1000 1200 1400 1600 1800 2000))))
+
+  ;; Display tags farther right
+  (setq org-agenda-tags-column -102)
+
+  
 #+end_src
 
 ** Checklist handling
