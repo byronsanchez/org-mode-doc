@@ -1444,6 +1444,14 @@ This has several advantages over keeping an explicit project task:
    match for LEVEL=2 -- using the agenda does all of my files in
    org-agenda-files much more efficiently.
 
+   The following setting ensures that task states are untouched when
+   they are archived.  This makes it possible to archive tasks that
+   are not marked DONE.
+
+#+begin_src emacs-lisp
+(setq org-archive-mark-done nil)
+#+end_src
+
 ** Archive Tag - Hiding Information
    The only time I set the ARCHIVE tag on a task is to prevent it from
    opening by default because it has tons of information I don't
