@@ -795,18 +795,22 @@ This has several advantages over keeping an explicit project task:
    take off for lunch.
 
 *** Automatically removing context based tasks with / RET
-    =/ RET= in the agenda is special.  It removes tasks automatically by
-    filtering based on a user-provided function.
+    =/ RET= in the agenda is really useful.  This awesome feature was
+    added to org-mode by John Wiegley.  It removes tasks automatically
+    by filtering based on a user-provided function.
 
     I work from home and set up my day as follows:
 
-      - On weekdays 8am-12am, 1pm,5pm I'm working (@office)
-      - My son (Mark) is available on weekdays before school 8am-9am and after school to bedtime 4pm-8pm (MARK), and weekends 10am-8pm
+      - On weekdays 8am-12am, 1pm-5pm I'm working (@office)
+      - My son (Mark) is available on weekdays before school 8am-9am
+        and after school to bedtime 4pm-8pm (MARK), and weekends
+        10am-8pm
       - Tasks requiring internet access need to be able to ping norang.ca (@inet)
       - Home tasks are done outside working hours (@home)
 
-    I have the following setup to allow =/ RET= to filter based on what the computer can figure out as relative
-    context for the time I run the / RET 
+    I have the following setup to allow =/ RET= to filter tasks based
+    on what the computer determines my current context to be at the
+    time I run the =/ RET= filter command.
 
 #+begin_src emacs-lisp
   (defun bh/weekday-p ()
@@ -841,6 +845,7 @@ This has several advantages over keeping an explicit project task:
   This lets me filter tasks with just =/ RET= on the agenda which removes tasks I'm not
   supposed to be working on now from the list of returned results.
 
+  This helps to keep my agenda clutter-free.
 ** Keeping the =STARTED= task list under control
    Some tasks are periodic.  Things I need to do weekly.
    Since I clock these tasks in they change to a =STARTED= state.
