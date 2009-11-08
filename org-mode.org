@@ -2634,7 +2634,6 @@ Here are the =.emacs= settings:
   (setq org-habit-graph-column 50)
 #+end_src
 
-
 ** Auto revert mode
    I use git to synchronize my org-mode files between my laptop and my
    workstation.  This normally requires saving all the current
@@ -2652,6 +2651,45 @@ Here are the =.emacs= settings:
 #+begin_src emacs-lisp
 (setq global-auto-revert-mode t)
 #+end_src
+
+** Handling Encryption
+   I used to keep my encrypted data like account passwords in a separate GPG encrypted file.
+   Now I keep them in my org-mode files with a special tag instead.
+   Encrypted data is kept in the org-mode file that it is associated with.
+ 
+   =org-crypt= allows you to tag headings with a special tag =crypt= and org-mode can keep
+   data in these headings encrypted when saved to disk.  You decrypt the heading temporarily 
+   when you need access to the data and org-mode re-encrypts the heading as soon as you 
+   save the file.
+
+   I use the following setup for encryption:
+#+begin_src emacs-lisp
+    (require 'org-crypt)
+    ; Encrypt all entries before saving
+    (org-crypt-use-before-save-magic)
+    ; Which tag is used to mark headings to be encrypted
+    (setq org-tags-exclude-from-inheritance (quote ("crypt")))
+    ; GPG key to use for encryption
+    (setq org-crypt-key "F0B66B40")
+#+end_src
+
+  =M-x org-decrypt-entry= will prompt for the passphrase associated
+  with your encryption key and replace the encrypted data where the
+  point is with the plaintext details for your encrypted entry.  As
+  soon as you save the file the data is re-encrypted for your key.
+  Encrypting does not require prompting for the passphrase - that's
+  only for looking at the plain text version of the data.
+
+  I tend to have a single encrypted entry per file (like 
+  =* Passwords=).  I prevent the =crypt= tag from using inheritance so
+  that I don't have encrypted data inside encrypted data.  I found
+  =M-x org-decrypt-entries= prompting for the passphrase to decrypt
+  data over and over again (once per entry to decrypt) too
+  inconvenient.
+
+  I leave my entries encrypted unless I have to look up data - I
+  decrypt on demand and then save the file again to re-encrypt the
+  data.  This keeps the data in plain text as short as possible.
 
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
