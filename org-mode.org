@@ -771,7 +771,7 @@ This has several advantages over keeping an explicit project task:
 ** Filtering
 
    So many tasks, so little time.  I have hundreds of tasks at any
-   give time (373 right now).  There is so much stuff to look at it
+   given time (373 right now).  There is so much stuff to look at it
    can be daunting.  This is where agenda filtering saves the day.
 
    It's 11:53AM and I'm in work mode just before lunch.  I don't want
