@@ -659,35 +659,42 @@ This has several advantages over keeping an explicit project task:
    Some phone calls are billable and we want these tracked in the
    appropriate category.
 * Custom agenda views
-  I only have 5 custom agenda views defined.  Most of my old custom
+  I have 7 custom agenda views defined.  Most of my old custom
   agenda views were rendered obsolete when filtering functionality was
   added to the agenda in newer versions of =org-mode=.
 
-  Custom agenda views are used for
-  - Finding =STARTED= tasks
-  - Finding tasks to be refiled
-  - Finding tasks waiting on something (=WAITING= or =SOMEDAY=)
-  - Finding notes
+  Custom agenda views are used for:
+  1. Finding =STARTED= tasks
+  2. Finding tasks waiting on something
+  3. Finding tasks to be refiled
+  4. Finding notes
+  5. Finding =NEXT= tasks to work on
+  6. Finding projects
+  7. Findings tasks to be archived
 
 ** Setup
 #+begin_src emacs-lisp
-  (setq org-agenda-custom-commands
-        (quote (("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil)))
-                ("w" "Tasks waiting on something" tags "WAITING/!" ((org-use-tag-inheritance nil)))
-                ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE" ((org-agenda-todo-ignore-with-date nil)))
-                ("N" "Notes" tags "NOTE" nil)
-                ("n" "Next" tags "NEXT-WAITING-CANCELLED/!" nil))))
+    (setq org-agenda-custom-commands
+          (quote (("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-scheduled nil)
+                                                       (org-agenda-todo-ignore-deadlines nil)
+                                                       (org-agenda-todo-ignore-with-date nil)))
+                  ("w" "Tasks waiting on something" tags "WAITING/!" ((org-use-tag-inheritance nil)))
+                  ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE" ((org-agenda-todo-ignore-with-date nil)))
+                  ("N" "Notes" tags "NOTE" nil)
+                  ("n" "Next" tags "NEXT-WAITING-CANCELLED/!" nil)
+                  ("p" "Projects" tags-todo "LEVEL=2-NEXT-WAITING-CANCELLED/!-DONE" nil)
+                  ("A" "Tasks to be Archived" tags "LEVEL=2/DONE|CANCELLED" nil))))
 #+end_src
 
    My day goes generally like this:
 
    - Look at my agenda =F12 a=
-     - make note of anything important to deal with today
+     - make a note of anything important to deal with today
    - Read email and news
      - create notes, and tasks for things that need responses with org-remember
    - Check refile tasks and respond to emails
    - Look at my agenda and knock off tasks scheduled for today
-     - Clock it in (=I= in the agenda while on the task -- this marks it as =STARTED=)
+     - Clock it in (=I= in the agenda or on the beginning of a task headline -- this marks it as =STARTED=)
      - Work on it until it is =DONE= or it gets interrupted
    - Check today's time log report and refile tasks with clocked time
      - =F12 a R= - any tasks in =refile.org= should be moved to the appropriate file
