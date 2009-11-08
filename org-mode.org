@@ -779,13 +779,60 @@ This has several advantages over keeping an explicit project task:
    want to work on a big project just before lunch... so I need to
    find small tasks that I can knock off the list.
 
-   How do we do this?  Get a list of all tasks with =F12 t= and then narrow it down with filtering.
-   To find leftover/orphaned (non-project, non-waiting, work) tasks on my list I do 
-   =F12 t= to show all tasks then filter with =/w= to limit it to work tasks only, then
-   =/-W= to remove waiting tasks and =/-P= to remove project tasks.
-
-   That leaves me with about 30 tasks to look at and I can pick something that fits the minutes I have left before I 
+   How do we do this?  Get a list of all tasks with =F12 t= and then
+   narrow it down with filtering.  To find tasks to work on I remove
+   tasks I'm not supposed to be working on now with =/ RET=.  Then
+   limit to tasks with estimates of 10 minutes or less with =/ + 1=
+   and I can pick something that fits the minutes I have left before I
    take off for lunch.
+
+*** Automatically removing context based tasks with / RET
+    =/ RET= in the agenda is special.  It removes tasks automatically by
+    filtering based on a user-provided function.
+
+    I work from home and set up my day as follows:
+
+      - On weekdays 8am-12am, 1pm,5pm I'm working (@office)
+      - My son (Mark) is available on weekdays before school 8am-9am and after school to bedtime 4pm-8pm (MARK), and weekends 10am-8pm
+      - Tasks requiring internet access need to be able to ping norang.ca (@inet)
+      - Home tasks are done outside working hours (@home)
+
+    I have the following setup to allow =/ RET= to filter based on what the computer can figure out as relative
+    context for the time I run the / RET 
+
+#+begin_src emacs-lisp
+  (defun bh/weekday-p ()
+    (let ((wday (nth 6 (decode-time))))
+      (and (< wday 6) (> wday 0))))
+  
+  (defun bh/working-p ()
+    (let ((hour (nth 2 (decode-time))))
+      (and (bh/weekday-p) (or (and (>= hour 8) (<= hour 11))
+                             (and (>= hour 13) (<= hour 16))))))
+  
+  (defun bh/network-p ()
+    (= 0 (call-process "/bin/ping" nil nil nil
+                       "-c1" "-q" "-t1" "norang.ca")))
+  
+  (defun bh/org-auto-exclude-function (tag)
+    (and (cond
+         ((string= tag "inet")
+          (not (bh/network-p)))
+         ((string= tag "@home")
+          (bh/working-p))
+         ((string= tag "@office")
+          (not (bh/working-p)))
+         ((or (string= tag "@errand") (string= tag "PHONE"))
+          (let ((hour (nth 2 (decode-time))))
+            (or (< hour 8) (> hour 21)))))
+         (concat "-" tag)))
+  
+  (setq org-agenda-auto-exclude-function 'bh/org-auto-exclude-function)
+#+end_src
+
+  This lets me filter tasks with just =/ RET= on the agenda which removes tasks I'm not
+  supposed to be working on now from the list of returned results.
+
 ** Keeping the =STARTED= task list under control
    Some tasks are periodic.  Things I need to do weekly.
    Since I clock these tasks in they change to a =STARTED= state.
