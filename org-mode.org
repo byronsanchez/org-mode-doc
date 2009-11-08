@@ -489,6 +489,9 @@ This has several advantages over keeping an explicit project task:
   I create the new task quickly and refile it once.  This also saves
   me from maintaining my org-remember templates when I add a new org file.
 ** Remember Templates
+   :PROPERTIES:
+   :ID:       9507648b-dbfc-4ba1-96c2-36e8ba15cbd0
+   :END:
    When a new task needs to be added I categorize it into one of three
    things:
 
@@ -530,27 +533,21 @@ This has several advantages over keeping an explicit project task:
   (setq org-remember-default-headline "Tasks")
   
   ;; 3 remember templates for TODO tasks, Notes, and Phone calls
-  (setq org-remember-templates (quote (("todo" ?t "* TODO %?
-    %u
-    %a" nil bottom nil)
-                                       ("note" ?n "* %?                                        :NOTE:
-    %u
-    %a" nil bottom nil)
-                                       ("phone" ?p "* PHONE %:name - %:company -                :PHONE:
-    Contact Info: %a
-    %u
-    :CLOCK-IN:
-    %?" nil bottom nil))))
+  (setq org-remember-templates (quote (("todo" ?t "* TODO %?\n  %u\n  %a" nil bottom nil)
+                                       ("note" ?n "* %?                                        :NOTE:\n  %u\n  %a" nil bottom nil)
+                                       ("phone" ?p "* PHONE %:name - %:company -                :PHONE:\n  Contact Info: %a\n  %u\n  :CLOCK-IN:\n  %?" nil bottom nil)
+                                       ("appointment" ?a "* %?\n  %U" "~/git/org/todo.org" "Appointments" nil)
+                                       ("org-protocol" ?w "* TODO Review %c%!  :NEXT:\n  %U\n  :PROPERTIES:\n  :Effort: 0:10\n  :END:" nil bottom nil))))
 #+end_src
 ** Separate file for Remember Tasks
    I have a single org file which is the target for my remember templates.
 
-   I store notes, tasks, and phone calls in =refile.org=.  I used to use
+   I store notes, tasks, phone calls, and org-protocol tasks in =refile.org=.  I used to use
    multiple files but found that didn't really have any advantage over
    a single file.
 
    Normally this file is empty except for a single line at the top
-   which creates a REFILE tag for anything in the files.
+   which creates a REFILE tag for anything in the file.
 
    The file has a single permanent line at the top like this
 #+begin_src org
@@ -2715,6 +2712,23 @@ Here are the =.emacs= settings:
    The variable =org-speed-commands-default= sets a lot of useful defaults for speed command keys.
    The default keys I use the most are =I= and =O= for clocking in and out and =t= to change
    todo state.
+** Org Protocol 
+   [2009-11-07 Sat 23:24]
+   Org protocol is a great way to create remember notes in org-mode from other applications.
+   I use this to create tasks to review interesting web pages I visit in Firefox.
+
+   I have a special remember template set up for org-protocol to use (set up with the =w= key).
+
+   My org-mode setup for org-protocol is really simple.  It enables org-protocol and creates a 
+   single org-protocol remember template as described in [[id:9507648b-dbfc-4ba1-96c2-36e8ba15cbd0][Remember Templates]].
+#+begin_src emacs-lisp
+    (require 'org-protocol)
+#+end_src
+   The bulk of the setup is in the Firefox application so that C-M-r on a page in Firefox will 
+   trigger the org-protocol remember template with details of the page I'm currently viewing
+   in firefox.
+
+   I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
