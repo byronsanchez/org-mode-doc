@@ -1227,28 +1227,30 @@ This has several advantages over keeping an explicit project task:
    filtering on the agenda.
 
 #+begin_src emacs-lisp
-  ; Tags with fast selection keys
-  (setq org-tag-alist (quote ((:startgroup)
-                              ("@InTown" . ?t)
-                              ("@Work" . ?w)
-                              ("@Home" . ?h)
-                              ("@Farm" . ?f)
-                              (:endgroup)
-                              ("QUOTE" . ?q)
-                              ("NEXT" . ?N)
-                              ("GSOC" . ?g)
-                              ("WAITING" . ?W)
-                              ("FARM" . ?F)
-                              ("HOME" . ?H)
-                              ("ORG" . ?O)
-                              ("PLAY" . ?p)
-                              ("CANCELLED" . ?C))))
-
-  ; Allow setting single tags without the menu
-  (setq org-fast-tag-selection-single-key (quote expert))
-
-  ; For tag searches ignore tasks with scheduled and deadline dates
-  (setq org-agenda-tags-todo-honor-ignore-options t)
+    ; Tags with fast selection keys
+    (setq org-tag-alist (quote ((:startgroup)
+                                ("@errand" . ?e)
+                                ("@office" . ?o)
+                                ("@home" . ?h)
+                                ("@farm" . ?f)
+                                (:endgroup)
+                                ("PHONE" . ?p)
+                                ("QUOTE" . ?q)
+                                ("NEXT" . ?n)
+                                ("WAITING" . ?w)
+                                ("FARM" . ?F)
+                                ("HOME" . ?H)
+                                ("ORG" . ?O)
+                                ("NORANG" . ?N)
+                                ("crypt" . ?c)
+                                ("inet" . ?i)
+                                ("MARK" . ?M))))
+  
+    ; Allow setting single tags without the menu
+    (setq org-fast-tag-selection-single-key (quote expert))
+  
+    ; For tag searches ignore tasks with scheduled and deadline dates
+    (setq org-agenda-tags-todo-honor-ignore-options t)
 #+end_src
 
 ** Filetags
