@@ -2691,6 +2691,25 @@ Here are the =.emacs= settings:
   decrypt on demand and then save the file again to re-encrypt the
   data.  This keeps the data in plain text as short as possible.
 
+** Speed Commands
+   There's a new and exciting feature called =org-speed-commands= in the latest development version of org-mode.
+
+   Speed commands allow access to frequently used commands when on the beginning of a headline - similar to
+   one-key agenda commands.  Speed commands are user configurable and org-mode provides a good set of
+   default commands.
+
+   I have the following speed commands set up in addition to the defaults.  I don't use priorities so
+   I override the default settings for the 1, 2, and 3 keys.
+#+begin_src emacs-lisp
+  (setq org-use-speed-commands t)
+  (setq org-speed-commands-user (quote (("1" . delete-other-windows)
+                                        ("2" . split-window-horizontally)
+                                        ("3" . split-window-vertically))))
+#+end_src
+
+   The variable =org-speed-commands-default= sets a lot of useful defaults for speed command keys.
+   The default keys I use the most are =I= and =O= for clocking in and out and =t= to change
+   todo state.
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
