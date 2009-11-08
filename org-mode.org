@@ -720,7 +720,8 @@ This has several advantages over keeping an explicit project task:
      - deadline that is coming up soon
      - a scheduled task for today (or in the past)
    - pick a STARTED task (it's unfinished)
-   - If you run out of items to work on (yeah right) look for NEXT tasks to work on
+   - If you run out of items to work on look for NEXT task in the current context
+     F12 n / RET
 
 *** Why keep it all on the =STARTED= list?
     I used to have a special keyword =ONGOING= for things that I do a
@@ -786,7 +787,7 @@ This has several advantages over keeping an explicit project task:
    want to work on a big project just before lunch... so I need to
    find small tasks that I can knock off the list.
 
-   How do we do this?  Get a list of all tasks with =F12 t= and then
+   How do we do this?  Get a list of NEXT tasks with =F12 n= and then
    narrow it down with filtering.  To find tasks to work on I remove
    tasks I'm not supposed to be working on now with =/ RET=.  Then
    limit to tasks with estimates of 10 minutes or less with =/ + 1=
