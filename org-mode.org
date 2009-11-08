@@ -2318,14 +2318,6 @@ Here are the =.emacs= settings:
     to the end (respecting content) was slowing me down since I don't
     normally have a lot of blank lines in the middle of my text.
 
-*** Return does not follow links
-    I find return follows link annoying.  It only took a few accidents
-    of hitting return on an HTML link that fired up Firefox to get me
-    to disable that setting.
-
-#+begin_src emacs-lisp
-  (setq org-return-follows-link nil)
-#+end_src
 *** Notes at the top
     I enter notes for tasks with =C-c C-z= (or just =z= in the
     agenda).  Changing tasks states also sometimes prompt for a note
