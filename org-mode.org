@@ -1257,15 +1257,15 @@ This has several advantages over keeping an explicit project task:
   Some tags are mutually exclusive.  These are defined in a group so
   that only one of the tags can be applied to a task at a time
   (disregarding tag inheritance).  I use these types for tags for
-  applying context to a task.  (Work tasks have an =@Work= tag, and are
-  done at the office, Farm tasks have an =@Farm= tag and are done at the
+  applying context to a task.  (Work tasks have an =@office= tag, and are
+  done at the office, Farm tasks have an =@farm= tag and are done at the
   farm -- I can't change the oil on the tractor if I'm not at the
   farm... so I hide these and other tasks by filtering my agenda view
-  to only =@Work= tasks when I'm at the office.)
+  to only =@office= tasks when I'm at the office.)
 
   Tasks are grouped together in org-files and a =#+FILETAGS:= entry
   applies a tag to all tasks in the file.  I use this to apply the
-  =@Work= tag to projects that are Work related.
+  =@office= tag to projects that are Work related.
 
 ** Tags
    Here are my tag definitions with associated keys for filtering in
@@ -1274,7 +1274,7 @@ This has several advantages over keeping an explicit project task:
    The startgroup - endgroup (=@XXX=) tags are mutually exclusive -
    selecting one removes a similar tag already on the task.  These are
    the context tags - you can't be in two places at once so if a task
-   is marked with @Farm and you add @Work then the @Farm tag is
+   is marked with @farm and you add @office then the @farm tag is
    removed automagically.
 
    The other tags =QUOTE= .. =CANCELLED= are not mutually exclusive and
@@ -1317,7 +1317,7 @@ This has several advantages over keeping an explicit project task:
    Filetags look like this:
 
 #+begin_src org
-  #+FILETAGS: NORANG @Work
+  #+FILETAGS: NORANG @office
 #+end_src
 
    I have the following =#+FILETAGS:= entries in my org-mode files:
@@ -1334,14 +1334,14 @@ This has several advantages over keeping an explicit project task:
 | farm.org     | FARM           |
 
 *** Work related org-mode files
-| File         | Tags           |
-|--------------+----------------|
-| norang.org   | NORANG @Work   |
-| ABC.org      | ABC @Work      |
-| XYZ.org      | XYZ @Work      |
-| ABC-DEF.org  | ABC DEF @Work  |
-| ABC-KKK.org  | ABC KKK @Work  |
-| YYY.org      | YYY @Work      |
+| File        | Tags            |
+|-------------+-----------------|
+| norang.org  | NORANG @office  |
+| ABC.org     | ABC @office     |
+| XYZ.org     | XYZ @office     |
+| ABC-DEF.org | ABC DEF @office |
+| ABC-KKK.org | ABC KKK @office |
+| YYY.org     | YYY @office     |
 
 *** Refile tasks
 | File       | Tags         |
