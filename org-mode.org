@@ -1283,6 +1283,13 @@ This has several advantages over keeping an explicit project task:
    add or remove the tag using =C-c C-q= or to apply the task for
    filtering on the agenda.
 
+   I have both =FARM= and =@farm= tags.  =FARM= is set by a =FILETAGS=
+   entry and just gives me a way to filter anything farm related.  The
+   =@farm= tag signifies that the task as to be done /at the farm/.
+   If I have to call someone about something that would have a =FARM=
+   tag but I can do that at home on my lunch break.  I don't
+   physically have to be at the farm to make the call.
+
 #+begin_src emacs-lisp
     ; Tags with fast selection keys
     (setq org-tag-alist (quote ((:startgroup)
