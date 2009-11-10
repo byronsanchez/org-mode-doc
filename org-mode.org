@@ -449,8 +449,8 @@ This has several advantages over keeping an explicit project task:
    - Moving a task to =WAITING= adds a =WAITING= tag and removes any =NEXT= tag
    - Moving a task to =SOMEDAY= adds a =WAITING= tag
    - Moving a task to a done state removes =NEXT= and =WAITING= tags
-   - Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
-   - Moving a task to =STARTED= removes a =WAITING= tag and adds a =NEXT= tag
+   - Moving a task to =TODO= removes =WAITING=, =CANCELLED=, and =NEXT= tags
+   - Moving a task to =DONE= removes =WAITING=, =CANCELLED=, and =NEXT= tags
 
    The tags are used to filter tasks in the agenda views conveniently.
 
@@ -460,8 +460,8 @@ This has several advantages over keeping an explicit project task:
                 ("WAITING" ("WAITING" . t) ("NEXT"))
                 ("SOMEDAY" ("WAITING" . t))
                 (done ("NEXT") ("WAITING"))
-                ("TODO" ("WAITING") ("CANCELLED"))
-                ("STARTED" ("WAITING") ("NEXT" . t)))))
+                ("TODO" ("WAITING") ("CANCELLED") ("NEXT"))
+                ("DONE" ("WAITING") ("CANCELLED") ("NEXT")))
 #+end_src
 
 *** Using =STARTED= for clocked tasks
