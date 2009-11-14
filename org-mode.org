@@ -802,7 +802,6 @@ This has several advantages over keeping an explicit project task:
       - My son (Mark) is available on weekdays before school 8am-9am
         and after school to bedtime 4pm-8pm (MARK), and weekends
         10am-8pm
-      - Tasks requiring internet access need to be able to ping norang.ca (@inet)
       - Home tasks are done outside working hours (@home)
 
     I have the following setup to allow =/ RET= to filter tasks based
@@ -825,8 +824,6 @@ This has several advantages over keeping an explicit project task:
   
   (defun bh/org-auto-exclude-function (tag)
     (and (cond
-         ((string= tag "inet")
-          (not (bh/network-p)))
          ((string= tag "@home")
           (bh/working-p))
          ((string= tag "@office")
@@ -1307,7 +1304,6 @@ This has several advantages over keeping an explicit project task:
                                 ("ORG" . ?O)
                                 ("NORANG" . ?N)
                                 ("crypt" . ?c)
-                                ("inet" . ?i)
                                 ("MARK" . ?M))))
   
     ; Allow setting single tags without the menu
