@@ -203,17 +203,17 @@ speed up creation of standard text blocks in most editing modes.
    specifying the archive location and category for any tasks in that
    tree.  Level 1 headings are set up like this:
 
-: ** Appointments
-:    :PROPERTIES:
-:    :CATEGORY: Appt
-:    :ARCHIVE:  %s_archive::* Appointments
-:    :END:      
-:    ...
-: ** Miscellaneous
-:    :PROPERTIES:
-:      :CATEGORY: todo
-:      :ARCHIVE: %s_archive::* Miscellaneous
-:    :END:
+   : ** Appointments
+   :    :PROPERTIES:
+   :    :CATEGORY: Appt
+   :    :ARCHIVE:  %s_archive::* Appointments
+   :    :END:      
+   :    ...
+   : ** Miscellaneous
+   :    :PROPERTIES:
+   :      :CATEGORY: todo
+   :      :ARCHIVE: %s_archive::* Miscellaneous
+   :    :END:
 
    This ensures that any level 2 task that I archive from this heading
    (I archive by subtree) gets saved in the archive file under the
@@ -561,16 +561,16 @@ This has several advantages over keeping an explicit project task:
    came up.
 
    So what do I do?  Hit =C-M-r= to start remember mode and select =t= since it's a new task and I get a buffer like this
-:  ##     C-c C-c  "~/git/org/refile.org" -> "* bottom"
-:  ## C-u C-c C-c  like C-c C-c, and immediately visit note at target location
-:  ## C-0 C-c C-c  "???" -> "* ???"
-:  ## C-1 C-c C-c  to select file and header location interactively.
-:  ## C-2 C-c C-c  as child of the currently clocked item
-:  ## To switch templates, use `C-M-r'.  To abort use `C-c C-k'.
-: 
-:  * TODO 
-:    [2009-04-19 Sun]
-:    [[file:~/git/doc.norang.ca/org-mode.org::*Remember%20Tasks%20is%20all%20about%20begin%20FAST][file:~/git/doc.norang.ca/org-mode.org::*Remember Tasks is all about begin FAST]]
+   : ##     C-c C-c  "~/git/org/refile.org" -> "* bottom"
+   : ## C-u C-c C-c  like C-c C-c, and immediately visit note at target location
+   : ## C-0 C-c C-c  "???" -> "* ???"
+   : ## C-1 C-c C-c  to select file and header location interactively.
+   : ## C-2 C-c C-c  as child of the currently clocked item
+   : ## To switch templates, use `C-M-r'.  To abort use `C-c C-k'.
+   :
+   : * TODO 
+   :   [2009-04-19 Sun]
+   :   [[file:~/git/doc.norang.ca/org-mode.org::*Remember%20Tasks%20is%20all%20about%20begin%20FAST][file:~/git/doc.norang.ca/org-mode.org::*Remember Tasks is all about begin FAST]]
 
    Enter the details of the TODO item and =C-c C-c= to file it away in refile.org and go right back
    to what I'm really working on secure in the knowledge that that item isn't going to get lost and 
@@ -1424,31 +1424,31 @@ This has several advantages over keeping an explicit project task:
    handy.  This pops up as a reminder on Monday's.  This week I'm
    doing my weekly review on Tuesday since Monday was a holiday.
 
-: ** STARTED Weekly Review [0/5]
-:    SCHEDULED: <2009-05-18 Mon ++1w> 
-:    :LOGBOOK:...
-:    :PROPERTIES:...
-: 
-:    What to review:
-: 
-:     - [ ] Check follow-up folder
-:     - [ ] Review new tasks                                  F12-r
-:       - if it takes less than 5 minutes just do it
-:       - otherwise assign an estimated time and file it somewhere
-:       - Refile billable work to appropriate location
-:     - [ ] Check for stuck projects and add next tasks       F12-#         
-:     - [ ] Review tasks                                      F12 t
-:       - [ ] Waiting tasks                                         / W
-:       - [ ] Next Tasks                                      F12 n
-:         - Move NEXT tag to subtasks or remove as required
-:     - [ ] Make plan for the week (out of NEXT tasks)
-:       - schedule important items onto the agenda
-:       - [ ] Review weekly plan                              F12 a w
-:
-:     - start work
-:       - daily agenda first - knock off items
-:         - complete them or adjust deadline warning days appropriately
-:       - when agenda is empty - work on next tasks
+   : ** STARTED Weekly Review [0/5]
+   :    SCHEDULED: <2009-05-18 Mon ++1w> 
+   :    :LOGBOOK:...
+   :    :PROPERTIES:...
+   : 
+   :    What to review:
+   : 
+   :     - [ ] Check follow-up folder
+   :     - [ ] Review new tasks                                  F12-r
+   :       - if it takes less than 5 minutes just do it
+   :       - otherwise assign an estimated time and file it somewhere
+   :       - Refile billable work to appropriate location
+   :     - [ ] Check for stuck projects and add next tasks       F12-#         
+   :     - [ ] Review tasks                                      F12 t
+   :       - [ ] Waiting tasks                                         / W
+   :       - [ ] Next Tasks                                      F12 n
+   :         - Move NEXT tag to subtasks or remove as required
+   :     - [ ] Make plan for the week (out of NEXT tasks)
+   :       - schedule important items onto the agenda
+   :       - [ ] Review weekly plan                              F12 a w
+   :
+   :     - start work
+   :       - daily agenda first - knock off items
+   :         - complete them or adjust deadline warning days appropriately
+   :       - when agenda is empty - work on next tasks
 
    The first item [ ] Check follow-up folder makes me pull out the
    paper file I dump stuff into all week long - things I need to take
@@ -2081,19 +2081,19 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     I don't have a =~/diary= file anymore.
 
     I include holidays from the calendar in my =todo.org= file as follows:
-: #+FILETAGS: HOME
-: * Appointments
-:   :PROPERTIES:
-:   :CATEGORY: Appt
-:   :ARCHIVE:  %s_archive::* Appointments
-:   :END:      
-: ** Holidays
-:    :PROPERTIES:
-:    :Category: Holiday
-:    :END:
-: %%(org-calendar-holiday)
-: ** Some other Appointment
-:    ...
+    : #+FILETAGS: HOME
+    : * Appointments
+    :   :PROPERTIES:
+    :   :CATEGORY: Appt
+    :   :ARCHIVE:  %s_archive::* Appointments
+    :   :END:      
+    : ** Holidays
+    :    :PROPERTIES:
+    :    :Category: Holiday
+    :    :END:
+    : %%(org-calendar-holiday)
+    : ** Some other Appointment
+    :    ...
 
 *** Searches include archive files
     I keep a single archive file for each of my org-mode project files.
@@ -2158,16 +2158,16 @@ Here are the =.emacs= settings:
    and then to use it in a task you simply set the property =RESET_CHECK_BOXES= to =t= 
    like this
 
-: ** TODO Invoicing and Archive Tasks [0/7]
-:    DEADLINE: <2009-07-01 Wed +1m -0d> 
-:    :PROPERTIES:
-:    :RESET_CHECK_BOXES: t
-:    :END:
-: 
-:    - [ ] Do task 1
-:    - [ ] Do task 2
-:    ...
-:    - [ ] Do task 7
+   : ** TODO Invoicing and Archive Tasks [0/7]
+   :    DEADLINE: <2009-07-01 Wed +1m -0d> 
+   :    :PROPERTIES:
+   :    :RESET_CHECK_BOXES: t
+   :    :END:
+   : 
+   :    - [ ] Do task 1
+   :    - [ ] Do task 2
+   :    ...
+   :    - [ ] Do task 7
 
 ** Backups
    =Backups that you have to work hard at don't get gone=.
@@ -2222,13 +2222,13 @@ Here are the =.emacs= settings:
    =C-u C-u C-u C-c C-t= but I never remember that.  I set a permanent
    property on the repeated tasks as follows:
 
-: * TODO New Repeating Task
-:   SCHEDULED: <2009-06-16 Tue +1w>
-:   :PROPERTIES:
-:   :NOBLOCKING: t
-:   :END:
-: ...
-: ** TODO Subtask
+   : * TODO New Repeating Task
+   :   SCHEDULED: <2009-06-16 Tue +1w>
+   :   :PROPERTIES:
+   :   :NOBLOCKING: t
+   :   :END:
+   : ...
+   : ** TODO Subtask
 
    This prevents the =New Repeating Task= from being blocked if some
    of the items under it are not complete.
@@ -2236,13 +2236,13 @@ Here are the =.emacs= settings:
    Occassionally I need to complete tasks in a given order.  Org-mode has
    a property =ORDERED= that enforces this for subtasks.
 
-: * TODO Some Task
-:   :PROPERTY:
-:   :ORDERED: t
-:   :END:
-: ** TODO Step 1
-: ** TODO Step 2
-: ** TODO Step 3
+   : * TODO Some Task
+   :   :PROPERTY:
+   :   :ORDERED: t
+   :   :END:
+   : ** TODO Step 1
+   : ** TODO Step 2
+   : ** TODO Step 3
   
    In this case you need to complete =Step 1= before you can complete
    =Step 2=, etc. and org-mode prevents the state change to a done task
@@ -2612,11 +2612,12 @@ Here are the =.emacs= settings:
    =PROPERTY= value setting and a special =SCHEDULED= date entry like
    this:
 
-:   ** TODO 30 minute brisk walk
-:      SCHEDULED: <2009-11-04 Wed .+1d/2d>                                         
-:      :PROPERTIES:
-:      :STYLE:    habit
-:      :END:
+   : ** TODO Update Org Mode Doc
+   :    SCHEDULED: <2009-11-21 Sat .+7d/30d>
+   :    [2009-11-14 Sat 11:45]
+   :    :PROPERTIES:
+   :    :STYLE: habit
+   :    :END:
 
    This marks the task as a habit and separates it from the regular
    task display on the agenda.  When you mark a habit done it shows up
