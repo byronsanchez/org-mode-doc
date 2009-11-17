@@ -2779,14 +2779,10 @@ Here are the =.emacs= settings:
    use priorities at all.  I've played with them in the past and
    always go back to using no priorities.
 
-   If I could find a good way to disable the keys that set priorities
-   I would :).  Every so often I accidentally set a priority on a task
-   and then need to remove it again.
-
+   I disable the priority setting keys in org-mode using
 #+begin_src emacs-lisp
-  (setq org-default-priority ?G)
-  (setq org-lowest-priority ?G)
-#+end_src emacs-lisp
+(setq org-enable-priority-commands nil)
+#+end_src
 
 ** Archive Sibling
    This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
