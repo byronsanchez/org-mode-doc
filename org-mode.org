@@ -2814,6 +2814,21 @@ Here are the =.emacs= settings:
   (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
 #+end_src
 
+** Return follows links
+   The following setting make =RET= open links instead of inserting a
+   new line.  This setting is a love-hate relationship for me.  When
+   it first came out I immediately turned it off because I wanted to
+   insert new lines in front of my links and =RET= would open the link
+   instead which at the time I found extremely annoying.  Now I've
+   trained my fingers to do =C-o= instead for opening the line above
+   the link.  I find I'm hitting =RET= to visit links a lot more than
+   opening lines before the link - so retraining my fingers was the
+   right move for me.
+
+#+begin_src emacs-lisp
+  (setq org-return-follows-link t)
+#+end_src
+
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
