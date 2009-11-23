@@ -2771,6 +2771,11 @@ Here are the =.emacs= settings:
    in firefox.
 
    I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
+** Add final newline when saving files
+   #+begin_src emacs-lisp
+        (setq require-final-newline t)
+   #+end_src
+   
 ** Insert inactive timestamps
    I insert inactive timestamps when working on org-mode files.
 
