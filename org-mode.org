@@ -673,16 +673,19 @@ This has several advantages over keeping an explicit project task:
 
 ** Setup
 #+begin_src emacs-lisp
-    (setq org-agenda-custom-commands
-          (quote (("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-scheduled nil)
-                                                       (org-agenda-todo-ignore-deadlines nil)
-                                                       (org-agenda-todo-ignore-with-date nil)))
-                  ("w" "Tasks waiting on something" tags "WAITING/!" ((org-use-tag-inheritance nil)))
-                  ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE" ((org-agenda-todo-ignore-with-date nil)))
-                  ("N" "Notes" tags "NOTE" nil)
-                  ("n" "Next" tags "NEXT-WAITING-CANCELLED/!" nil)
-                  ("p" "Projects" tags-todo "LEVEL=2-NEXT-WAITING-CANCELLED/!-DONE" nil)
-                  ("A" "Tasks to be Archived" tags "LEVEL=2/DONE|CANCELLED" nil))))
+     (setq org-agenda-custom-commands
+           (quote (("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-scheduled nil)
+                                                        (org-agenda-todo-ignore-deadlines nil)
+                                                        (org-agenda-todo-ignore-with-date nil)))
+                   ("w" "Tasks waiting on something" tags "WAITING/!" ((org-use-tag-inheritance nil)))
+                   ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE" ((org-agenda-todo-ignore-with-date nil)
+                                                                            (org-agenda-todo-ignore-deadlines nil)
+                                                                            (org-agenda-todo-ignore-scheduled nil)))
+                   ("N" "Notes" tags "NOTE" nil)
+                   ("n" "Next" tags "NEXT-WAITING-CANCELLED/!" nil)
+                   ("p" "Projects" tags-todo "LEVEL=2-NEXT-WAITING-CANCELLED/!-DONE" nil)
+                   ("A" "Tasks to be Archived" tags "LEVEL=2/DONE|CANCELLED" nil)
+                   ("h" "Habits" tags "STYLE=\"habit\"" ((org-agenda-todo-ignore-with-date nil) (org-agenda-todo-ignore-scheduled nil) (org-agenda-todo-ignore-deadlines nil))))))
 #+end_src
 
    My day goes generally like this:
