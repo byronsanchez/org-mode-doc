@@ -1331,15 +1331,15 @@ This has several advantages over keeping an explicit project task:
    I have the following =#+FILETAGS:= entries in my org-mode files:
 
 *** Non-work related org-mode files
-| File         | Tags           |
-|--------------+----------------|
-| todo.org     | HOME           |
-| gsoc2009.org | GSOC HOME PLAY |
-| bzflag.org   | BZFLAG PLAY    |
-| git.org      | GIT PLAY       |
-| org.org      | ORG PLAY       |
-| mark.org     | MARK           |
-| farm.org     | FARM           |
+| File         | Tags         |
+|--------------+--------------|
+| todo.org     | HOME         |
+| gsoc2009.org | GSOC HOME    |
+| bzflag.org   | BZFLAG @home |
+| git.org      | GIT          |
+| org.org      | ORG          |
+| mark.org     | MARK         |
+| farm.org     | FARM         |
 
 *** Work related org-mode files
 | File        | Tags            |
