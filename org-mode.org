@@ -854,7 +854,7 @@ This has several advantages over keeping an explicit project task:
           (bh/working-p))
          ((string= tag "@office")
           (not (bh/working-p)))
-         ((or (string= tag "@errand") (string= tag "PHONE"))
+         ((or (string= tag "@errand") (string= tag "phone"))
           (let ((hour (nth 2 (decode-time))))
             (or (< hour 8) (> hour 21)))))
          (concat "-" tag)))
