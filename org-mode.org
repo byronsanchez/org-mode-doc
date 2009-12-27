@@ -562,10 +562,10 @@ This has several advantages over keeping an explicit project task:
   
   ;; 3 remember templates for TODO tasks, Notes, and Phone calls
   (setq org-remember-templates (quote (("todo" ?t "* TODO %?\n  %u\n  %a" nil bottom nil)
-                                       ("note" ?n "* %?                                        :NOTE:\n  %u\n  %a" nil bottom nil)
+                                       ("note" ?n "* %?                                        :NOTE:\n  :CLOCK:\n  :END:\n  %U\n  %a" nil bottom nil)
                                        ("phone" ?p "* PHONE %:name - %:company -                :PHONE:\n  Contact Info: %a\n  %u\n  :CLOCK-IN:\n  %?" nil bottom nil)
                                        ("appointment" ?a "* %?\n  %U" "~/git/org/todo.org" "Appointments" nil)
-                                       ("org-protocol" ?w "* TODO Review %c%!  :NEXT:\n  %U\n  :PROPERTIES:\n  :Effort: 0:10\n  :END:" nil bottom nil))))
+                                       ("org-protocol" ?w "* TODO Review %c%!\n  %U\n  :PROPERTIES:\n  :Effort: 0:10\n  :END:" nil bottom nil))))
 #+end_src
 ** Separate file for Remember Tasks
    I have a single org file which is the target for my remember templates.
