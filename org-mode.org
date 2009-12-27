@@ -256,6 +256,7 @@ speed up creation of standard text blocks in most editing modes.
 | f9 f    | Boxquote insert a file                          | Sometimes  |
 | f9 i    | Org-mode Info manual                            | Sometimes  |
 | f9 O    | Clock out                                       | Sometimes  |
+| f9 s    | Switch to scratch buffer                        | Sometimes  |
 | f9 h    | Hide other tasks                                | Rare       |
 | f7      | Toggle line truncation/wrap                     | Rare       |
 | f9 u    | Untabify region                                 | Rare       |
