@@ -623,15 +623,18 @@ This has several advantages over keeping an explicit project task:
 #+begin_src emacs-lisp
   ; Use IDO for target completion
   (setq org-completion-use-ido t)
-
+  
   ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
   (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
-
+  
   ; Targets start with the file name - allows creating level 1 tasks
   (setq org-refile-use-outline-path (quote file))
-
+  
   ; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
   (setq org-outline-path-complete-in-steps t)
+  
+  ; Allow refile to create parent tasks with confirmation
+  (setq org-refile-allow-creating-parent-nodes (quote confirm))
 #+end_src
 
    To refile a task to my =norang.org= file under =System Maintenance=
