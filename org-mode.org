@@ -2746,28 +2746,6 @@ Here are the =.emacs= settings:
   :   :LOGGING:  DONE(!)
   :   :ARCHIVE:  %s_archive::* Habits
   :   :END:
-** Automatically Mark Habits Done on Clock In
-   I clock everything so I clock habits too.  Clocking is completely manual and separate from
-   todo state changes -- so marking a task =DONE= does not stop the clock.  I need to manually
-   stop the clock or clock something else in to change what is clocking.
-
-   This allows me to mark habits as done as soon as I clock them in.
-   I'm working on a habit and as far as I'm concerned it's done for today.
-   I don't need to manually go back and mark it done later -- that's just extra work.
-
-   Here's my setup for automatically marking habits done:
-
-#+begin_src emacs-lisp
-  ;; Auto mark habits done on clock in
-  ;;
-  (defun bh/mark-habit-done-on-clock-in ()
-    (interactive)
-    (when (org-is-habit-p)
-      (org-todo 'done)))
-  
-  (add-hook 'org-clock-in-hook 'bh/mark-habit-done-on-clock-in)
-#+end_src
-
 ** Auto revert mode
    I use git to synchronize my org-mode files between my laptop and my
    workstation.  This normally requires saving all the current
