@@ -471,6 +471,7 @@ This has several advantages over keeping an explicit project task:
                 ("SOMEDAY" ("WAITING" . t))
                 (done ("NEXT") ("WAITING"))
                 ("TODO" ("WAITING") ("CANCELLED") ("NEXT"))
+		("STARTED" ("WAITING"))
                 ("DONE" ("WAITING") ("CANCELLED") ("NEXT")))
 #+end_src
 
