@@ -2945,6 +2945,15 @@ Here are the =.emacs= settings:
   (setq org-cycle-include-plain-lists nil)
 #+end_src
 
+** Strike-through emphasis
+   Strike-through emphasis is just unreadable and tends to only show up when pasting
+   data from other files into org-mode.  This just removes the strike-through completely
+   which I find a lot nicer.
+
+#+begin_src emacs-lisp
+  (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>") ("/" italic "<i>" "</i>") ("_" underline "<span style=\"text-decoration:underline;\">" "</span>") ("=" org-code "<code>" "</code>" verbatim) ("~" org-verbatim "<code>" "</code>" verbatim))))
+#+end_src
+
 * Using Git for Automatic History, Backups, and Synchronization
   :PROPERTIES:
   :CUSTOM_ID: GitSync
