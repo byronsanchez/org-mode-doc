@@ -976,8 +976,10 @@ This has several advantages over keeping an explicit project task:
   (defun bh/clock-in-task-by-id (id)
     "Clock in a task by id"
     (require 'org-id)
-    (org-with-point-at (org-id-find id 'marker)
-      (org-clock-in nil)))
+    (save-restriction
+      (widen)
+      (org-with-point-at (org-id-find id 'marker)
+        (org-clock-in nil))))
   
   (defun bh/clock-in-organization-task ()
     (interactive)
