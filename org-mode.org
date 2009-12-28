@@ -32,7 +32,7 @@
   tend to document changes to my workflow 30 days after implementing
   them (assuming they are still around at that point) so that the new
   workflow has a chance to mature.  History of changes to this document
-  can be found [[http://git.norang.ca/?p=org-mode-doc.git;a=summary][here]].
+  can be found at [[http://git.norang.ca/%3Fp%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
 
   This document is created using the publishing features of org-mode.
   The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
