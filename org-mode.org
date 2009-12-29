@@ -2406,7 +2406,12 @@ Here are the =.emacs= settings:
     This lets you hit C-S-RET in the middle of an entry and the new
     heading is added after the body of the current entry.
 
-    I personally have =org-insert-heading-respect-content= set to =nil=
+    I currently use 
+
+#+begin_src emacs-lisp
+  (setq org-insert-heading-respect-content nil)
+#+end_src
+
     now since I create blocks of text without structure first and then
     add headings in the middle to organize the text.  I found jumping
     to the end (respecting content) was slowing me down since I don't
@@ -2854,10 +2859,12 @@ Here are the =.emacs= settings:
    I insert inactive timestamps when working on org-mode files.
 
    For remember tasks the timestamp is in the remember template but for regular
-   structure editing I want the timestamp automatically added when I create the headline.
+   structure editing I want a clean outline without timestamps normally.
+   I find this easier to work with when brainstorming and generating the outline
+   structure for a project.
 
-   I have a function that is run by an org-mode hook to automatically insert the inactive
-   timestamp whenever a headline is created.
+   I have the following function bound to the key sequence =f9 t= to insert
+   an inactive timestamp in the text on demand.
 
    #+begin_src emacs-lisp
      (defun bh/insert-inactive-timestamp ()
@@ -2867,23 +2874,8 @@ Here are the =.emacs= settings:
          (org-cycle)
          (org-insert-time-stamp nil t t nil nil nil)))
      
-     (add-hook 'org-insert-heading-hook 'bh/insert-inactive-timestamp)
+     (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
    #+end_src
-   
-   Everytime I create a heading with =M-RET= or =M-S-RET= the hook invokes the function
-   and it inserts an inactive timestamp like this
-
-: ** <point here>
-:    [2009-11-22 Sun 18:45]
-
-   This keeps an automatic record of when tasks are created which I find very useful.
-
-   I also have a short cut key defined to invoke this function on demand so that I can 
-   insert the inactive timestamp anywhere on demand.
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
-#+end_src
 
 ** Return follows links
    The following setting make =RET= open links instead of inserting a
