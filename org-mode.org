@@ -1000,14 +1000,6 @@ This has several advantages over keeping an explicit project task:
       (org-clock-out)))
 #+end_src
 
-   I am using 2 patches on top of the current master branch from
-   org-mode to allow hooks to clock in tasks.  These patches are
-   5ffc5f6 (Update modeline with effort and task name on re-clock-in,
-   2009-12-02) and 3c658bc (Stop generating superfluous clock entries,
-   2009-11-27).  These normally get rebased on to of the master branch
-   regularly so the SHA1 values will change.  The patches are available 
-   through git at [[http://git.norang.ca/?p=org-mode.git;a=shortlog;h=refs/heads/clock-in][git://git.norang.ca/org-mode.git clock-in]].
-
 ** Clocking in
   When I start or continue working on a task I clock it in with =C-c
   C-x C-i= (or just =I= in the agenda or speed key setting).  This
