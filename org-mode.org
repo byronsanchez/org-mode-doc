@@ -2831,7 +2831,7 @@ Here are the =.emacs= settings:
    todo state.
 ** Org Protocol 
    [2009-11-07 Sat 23:24]
-   Org protocol is a great way to create remember notes in org-mode from other applications.
+   [[http://orgmode.org/worg/org-contrib/org-protocol.php][Org protocol]] is a great way to create remember notes in org-mode from other applications.
    I use this to create tasks to review interesting web pages I visit in Firefox.
 
    I have a special remember template set up for org-protocol to use (set up with the =w= key).
