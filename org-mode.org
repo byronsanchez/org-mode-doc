@@ -2765,6 +2765,9 @@ Here are the =.emacs= settings:
 #+end_src
 
 ** Handling Encryption
+   :PROPERTIES:
+   :CUSTOM_ID: HandlingEncryption
+   :END:
    I used to keep my encrypted data like account passwords in a separate GPG encrypted file.
    Now I keep them in my org-mode files with a special tag instead.
    Encrypted data is kept in the org-mode file that it is associated with.
