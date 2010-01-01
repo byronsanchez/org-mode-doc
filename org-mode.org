@@ -936,7 +936,7 @@ This has several advantages over keeping an explicit project task:
   ;; Change task state to STARTED when clocking in
   (setq org-clock-in-switch-to-state "STARTED")
   ;; Separate drawers for clocking and logs
-  (setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK"))
+  (setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK")))
   ;; Save clock data in the CLOCK drawer and state changes and notes in the LOGBOOK drawer
   (setq org-clock-into-drawer "CLOCK")
   ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
