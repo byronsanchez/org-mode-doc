@@ -499,8 +499,7 @@ This has several advantages over keeping an explicit project task:
   ;; Change task state to STARTED from TODO when clocking in
   (defun bh/clock-in-to-started (kw)
     "Switch task from TODO to STARTED when clocking in"
-    (if (and (string-equal kw "TODO")
-             (not (string-equal (buffer-name) "*Remember*")))
+    (if (string-equal kw "TODO")
         "STARTED"
       nil))
   
@@ -545,10 +544,6 @@ This has several advantages over keeping an explicit project task:
   (require 'remember)
   (org-remember-insinuate)
   
-  ;; Start clock in a remember buffer and switch back to previous clocking task on save
-  (add-hook 'remember-mode-hook 'org-clock-in 'append)
-  (add-hook 'org-remember-before-finalize-hook 'bh/clock-in-interrupted-task)
-  
   ;; I use C-M-r to start org-remember
   (global-set-key (kbd "C-M-r") 'org-remember)
   
@@ -563,7 +558,7 @@ This has several advantages over keeping an explicit project task:
   
   ;; 3 remember templates for TODO tasks, Notes, and Phone calls
   (setq org-remember-templates (quote (("todo" ?t "* TODO %?\n  %u\n  %a" nil bottom nil)
-                                       ("note" ?n "* %?                                        :NOTE:\n  :CLOCK:\n  :END:\n  %U\n  %a" nil bottom nil)
+                                       ("note" ?n "* %?                                        :NOTE:\n  %U\n  %a" nil bottom nil)
                                        ("phone" ?p "* PHONE %:name - %:company -                :PHONE:\n  Contact Info: %a\n  %u\n  %?" nil bottom nil)
                                        ("appointment" ?a "* %?\n  %U" "~/git/org/todo.org" "Appointments" nil)
                                        ("org-protocol" ?w "* TODO Review %c%!\n  %U\n  :PROPERTIES:\n  :Effort: 0:10\n  :END:" nil bottom nil))))
@@ -953,6 +948,7 @@ This has several advantages over keeping an explicit project task:
   (setq org-clock-persist (quote history))
   ;; Disable auto clock resolution
   (setq org-clock-auto-clock-resolution nil)
+  (setq org-clock-idle-time nil)
 #+end_src
 
    I keep two tasks specifically for clocking the time I spend organizing stuff and
