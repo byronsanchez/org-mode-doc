@@ -1893,6 +1893,8 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
   ; Use org.css from the norang website for export document stylesheets
   (setq org-export-html-style-extra "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />")
   (setq org-export-html-style-include-default nil)
+  ; Do not generate internal css formatting for HTML exports
+  (setq org-export-htmlize-output-type (quote css))
   
   ; List of projects
   ; norang - http://www.norang.ca/
