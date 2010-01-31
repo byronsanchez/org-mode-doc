@@ -157,7 +157,8 @@ speed up creation of standard text blocks in most editing modes.
                                  ; client org files removed
                                  "~/git/org/git.org"
                                  "~/git/org/todo.org"
-                                 "~/git/org/bzflag.org")))
+                                 "~/git/org/bzflag.org"
+                                 "~/git/org/diary.org")))
 #+end_src
 
    =org-mode= manages the =org-agenda-files= variable.  I just visit
@@ -2210,9 +2211,12 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 
 #+begin_src emacs-lisp
   (setq org-agenda-include-diary nil)
+  (setq org-agenda-diary-file "~/git/org/diary.org")
 #+end_src
 
-    I don't have a =~/diary= file anymore.
+    I don't use a =~/diary= file anymore.  That is just there as a zero-length file to keep 
+    Emacs happy.  I use org-mode's diary functions instead.  Inserting entries with =i= in 
+    the emacs agenda creates date entries in the =~/git/org/diary.org= file.
 
     I include holidays from the calendar in my =todo.org= file as follows:
     : #+FILETAGS: HOME
