@@ -345,70 +345,76 @@ states for tasks (=WAITING=, =SOMEDAY=, =CANCELLED=).
 
 The following diagram shows the possible state transitions for a task.
 
-#+begin_ditaa task_states.png -r -s 0.8
-:       +--------+       +---------+       +--------+
-:       |        |       |         |       |        |
-:    +--+  TODO  +------>+ STARTED +------>+  DONE  |
-:    |  | cRED   |       |  cBLU   |       | cGRE   |
-:    |  +--+-+---+       +--+---+--+       +--------+
-:    |     ^ ^              ^   |
-:    |     | |              |   |
-:    |     | :  +------=----+   +------=------+
-:    |     : +--|----=-------+                |
-:    |     |    |            |                |
-:    |     v    v            v                v
-:    |  +--+----+-+     +----+----+     +-----+-----+
-:    |  |         |     |         |     |           |
-:    |  | WAITING |     | SOMEDAY |     | CANCELLED |
-:    |  |   cF60  |     |  cC0C   |     |   cGRE    |
-:    |  +----+----+     +---+--+--+     +-----+--+--+
-:    |       ^              ^  |              ^  ^
-:    |       |              |  |              |  |
-:    |       +--=-----------+  +-=------------+  |
-:    |                                           |
-:    +---=---------------------------------------+
-: 
-: 
-:         -------- Normal state changes
-:         ----=--- Optional state changes
-#+end_ditaa
+#+begin_src ditaa :file task_states.png :cmdline -r -s 0.8
+      +--------+       +---------+       +--------+
+      |        |       |         |       |        |
+   +--+  TODO  +------>+ STARTED +------>+  DONE  |
+   |  | cRED   |       |  cBLU   |       | cGRE   |
+   |  +--+-+---+       +--+---+--+       +--------+
+   |     ^ ^              ^   |
+   |     | |              |   |
+   |     | :  +------=----+   +------=------+
+   |     : +--|----=-------+                |
+   |     |    |            |                |
+   |     v    v            v                v
+   |  +--+----+-+     +----+----+     +-----+-----+
+   |  |         |     |         |     |           |
+   |  | WAITING |     | SOMEDAY |     | CANCELLED |
+   |  |   cF60  |     |  cC0C   |     |   cGRE    |
+   |  +----+----+     +---+--+--+     +-----+--+--+
+   |       ^              ^  |              ^  ^
+   |       |              |  |              |  |
+   |       +--=-----------+  +-=------------+  |
+   |                                           |
+   +---=---------------------------------------+
+
+
+        -------- Normal state changes
+        ----=--- Optional state changes
+#+end_src
+
+#+results:
+[[file:task_states.png]]
 
 *** Quotation Task States
 I also do fixed-price quotation work.  Quotations use the following state transitions:
 
-#+begin_ditaa quote_states.png -r -s 0.8
-:                                              +----------+
-:                                              |          |
-:                                          +-->+ EXPIRED  |
-:                                          |   | cGRE     |
-:                                          |   +----------+
-:                                          |
-:                                          |
-:       +-------------+       +--------+   :   +----------+
-:       |             |       |        +---+   |          |
-:       |    QUOTE    +------>+ QUOTED +------>+ APPROVED |
-:       | cRED        |       |  cC0C  +---+   | cGRE     |
-:       +-------------+       +--+---+-+   :   +----------+
-:                                          |
-:                                          |
-:                                          |   +----------+
-:                                          |   |          |
-:                                          +-->+ REJECTED |
-:                                              | cGRE     |
-:                                              +----------+
-#+end_ditaa
+#+begin_src ditaa :file quote_states.png :cmdline -r -s 0.8
+                                             +----------+
+                                             |          |
+                                         +-->+ EXPIRED  |
+                                         |   | cGRE     |
+                                         |   +----------+
+                                         |
+                                         |
+      +-------------+       +--------+   :   +----------+
+      |             |       |        +---+   |          |
+      |    QUOTE    +------>+ QUOTED +------>+ APPROVED |
+      | cRED        |       |  cC0C  +---+   | cGRE     |
+      +-------------+       +--+---+-+   :   +----------+
+                                         |
+                                         |
+                                         |   +----------+
+                                         |   |          |
+                                         +-->+ REJECTED |
+                                             | cGRE     |
+                                             +----------+
+#+end_src
 
+#+results:
+[[file:quote_states.png
+]]
 *** Purchase Order Task States
 Fixed price jobs normally have a =Purchase Order= associated with it which is used for billing the client.
 The following states track purchase orders.
 
-#+begin_ditaa po_states.png -r -s 0.8
-:       +----------+       +---------+
-:       |          |       |         |
-:       |   OPEN   +------>+   DONE  |
-:       | cRED     |       |  cGRE   |
-:       +----------+       +---------+
-#+end_ditaa
+#+begin_src ditaa :file po_states.png :cmdline -r -s 0.8
+      +----------+       +---------+
+      |          |       |         |
+      |   OPEN   +------>+   DONE  |
+      | cRED     |       |  cGRE   |
+      +----------+       +---------+
+#+end_src
 
 *** Project Task States
 Every level 2 task is a project.
@@ -1653,14 +1659,37 @@ This has several advantages over keeping an explicit project task:
   get time to try out the other formats when I need them for
   something.
 
+** org-babel Setup
+  Now I've discovered org-babel and how easy it is to generate decent
+  graphics using ditta and graphviz.
+
+  The setup is really easy.  =ditaa= is provided with the org-mode source. 
+  You'll have to install the =graphviz= package for your system.
+
+#+begin_src emacs-lisp
+  (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+  
+  (require 'org-babel-init)
+  
+  (require 'org-babel-dot)
+  (require 'org-babel-ditaa)
+  
+  (org-babel-load-library-of-babel)
+#+end_src
+
+  Now you just create a =begin-src= block for the appropriate tool,
+  edit the text, and build the pictures with =C-c C-c=.  You can
+  view the result directly in Emacs with =C-c C-o= anywhere in the 
+  block.
+
 ** Playing with ditaa
    :PROPERTIES:
    :CUSTOM_ID: playingwithditaa
    :END:
 
 [[http://ditaa.sourceforge.net/][ditaa]] is a great tool for quickly generating graphics to convey ideas
-and =ditaa= is included with org-mode!  Some of the graphics in this document
-are automatically generated by org-mode and ditaa from plain text
+and =ditaa= is included with org-mode!  All of the graphics in this
+document are automatically generated by org-mode using plain text
 source.
 
 The following graphic is one example of what you can do easily with
@@ -1668,139 +1697,158 @@ ditaa:
 
 This
 
-: #+begin_ditaa communication.png -r -s 0.8
-:      +-----------+        +---------+
-:      |    PLC    |        |         |
-:      |  Network  +<------>+   PLC   +<---=---------+
-:      |    cRED   |        |  c707   |              |
-:      +-----------+        +----+----+              |
-:                                ^                   |
-:                                |                   |
-:                                |  +----------------|-----------------+
-:                                |  |                |                 |
-:                                v  v                v                 v
-:        +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients
-:        |          |       |          |      |           |      |           |      +----+      +----+
-:        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL|
-:        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    |
-:        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+
-:           ^    ^          +----------+             ^           +-------+---+
-:           |    |                                   |
-:           |    +--------=--------------------------+
-:           v
-:  +--------+--------+
-:  |                 |
-:  | Millwide System |            -------- Data ---------
-:  | cBLU            |            --=----- Signals ---=--
-:  +-----------------+
-: #+end_ditaa
+: #+begin_src ditaa :file communication.png :cmdline -r -s 0.8
+:         +-----------+        +---------+  
+:         |    PLC    |        |         |                
+:         |  Network  +<------>+   PLC   +<---=---------+ 
+:         |    cRED   |        |  c707   |              | 
+:         +-----------+        +----+----+              | 
+:                                   ^                   | 
+:                                   |                   | 
+:                                   |  +----------------|-----------------+
+:                                   |  |                |                 |
+:                                   v  v                v                 v
+:           +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients
+:           |          |       |          |      |           |      |           |      +----+      +----+
+:           | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL|
+:           |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    |
+:           +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+
+:              ^    ^          +----------+             ^           +-------+---+
+:              |    |                                   |                        
+:              |    +--------=--------------------------+                    
+:              v                                                             
+:     +--------+--------+                                                         
+:     |                 |                                                         
+:     | Millwide System |            -------- Data ---------                      
+:     | cBLU            |            --=----- Signals ---=--                      
+:     +-----------------+                                                         
+: #+end_src
 
 becomes this!
 
-#+begin_ditaa communication.png -r -s 0.8
-:      +-----------+        +---------+  
-:      |    PLC    |        |         |                
-:      |  Network  +<------>+   PLC   +<---=---------+ 
-:      |    cRED   |        |  c707   |              | 
-:      +-----------+        +----+----+              | 
-:                                ^                   | 
-:                                |                   | 
-:                                |  +----------------|-----------------+
-:                                |  |                |                 |
-:                                v  v                v                 v
-:        +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients
-:        |          |       |          |      |           |      |           |      +----+      +----+
-:        | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL|
-:        |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    |
-:        +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+
-:           ^    ^          +----------+             ^           +-------+---+
-:           |    |                                   |                        
-:           |    +--------=--------------------------+                    
-:           v                                                             
-:  +--------+--------+                                                         
-:  |                 |                                                         
-:  | Millwide System |            -------- Data ---------                      
-:  | cBLU            |            --=----- Signals ---=--                      
-:  +-----------------+                                                         
-#+end_ditaa
-
-#+begin_src emacs-lisp
-  (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+#+begin_src ditaa :file communication.png :cmdline -r -s 0.8
+        +-----------+        +---------+  
+        |    PLC    |        |         |                
+        |  Network  +<------>+   PLC   +<---=---------+ 
+        |    cRED   |        |  c707   |              | 
+        +-----------+        +----+----+              | 
+                                  ^                   | 
+                                  |                   | 
+                                  |  +----------------|-----------------+
+                                  |  |                |                 |
+                                  v  v                v                 v
+          +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients
+          |          |       |          |      |           |      |           |      +----+      +----+
+          | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL|
+          |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    |
+          +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+
+             ^    ^          +----------+             ^           +-------+---+
+             |    |                                   |                        
+             |    +--------=--------------------------+                    
+             v                                                             
+    +--------+--------+                                                         
+    |                 |                                                         
+    | Millwide System |            -------- Data ---------                      
+    | cBLU            |            --=----- Signals ---=--                      
+    +-----------------+                                                         
 #+end_src
+
+#+results:
+[[file:communication.png]]
+
 ** Playing with graphviz
 [[http://www.graphviz.org/][Graphviz]] is another great tool for creating graphics in your documents.
 
 This
 
-: #+begin_dot gv01.png -Kdot -Tpng
+: #+begin_src dot :file gv01.png :cmdline -Kdot -Tpng
 : digraph G {
-:   concentrate=true
+:   size="8,6"
+:   ratio=expand
+:   edge [dir=both]
+:   plcnet [shape=box, label="PLC Network"]
 :   subgraph cluster_wrapline {
 :     label="Wrapline Control System"
 :     color=purple
+:     subgraph {
+:     rank=same
+:     exec
 :     sharedmem [style=filled, fillcolor=lightgrey, shape=box]
-:     sharedmem -> exec [style=dotted]
-:     sharedmem -> db [style=dotted]
-:     sharedmem -> plc [style=dotted]
-:     sharedmem -> opserver [style=dotted]
-:     exec -> db
+:     }
+:     edge[style=dotted, dir=none]
 :     exec -> opserver
+:     exec -> db
 :     plc -> exec
+:     edge [style=line, dir=both]
+:     exec -> sharedmem
+:     sharedmem -> db
+:     plc -> sharedmem
+:     sharedmem -> opserver
 :   }
-:   plcnet [shape=box, label="PLC Network"]
-:   plcnet -> plc
+:   plcnet -> plc [constraint=false]
 :   millwide [shape=box, label="Millwide System"]
 :   db -> millwide
-:
+: 
 :   subgraph cluster_opclients {
 :     color=blue
-:     client1[label="client"]
-:     client2[label="client"]
-:     client3[label="client"]
-:     clientn[label="client"]
+:     label="Operator Clients"
+:     rankdir=LR
+:     labelloc=b
+:     node[label=client]
+:     client1 -> client2 -> client3 [constraint=false]
 :     opserver -> client1
 :     opserver -> client2
 :     opserver -> client3
-:     opserver -> clientn
 :   }
 : }
-: #+end_dot
+: #+end_src
 
 becomes this!
 
-#+begin_dot gv01.png -Kdot -Tpng
+#+begin_src dot :file gv01.png :cmdline -Kdot -Tpng
 digraph G {
-  concentrate=true
+  size="8,6"
+  ratio=expand
+  edge [dir=both]
+  plcnet [shape=box, label="PLC Network"]
   subgraph cluster_wrapline {
     label="Wrapline Control System"
     color=purple
+    subgraph {
+    rank=same
+    exec
     sharedmem [style=filled, fillcolor=lightgrey, shape=box]
-    sharedmem -> exec [style=dotted]
-    sharedmem -> db [style=dotted]
-    sharedmem -> plc [style=dotted]
-    sharedmem -> opserver [style=dotted]
-    exec -> db
+    }
+    edge[style=dotted, dir=none]
     exec -> opserver
+    exec -> db
     plc -> exec
+    edge [style=line, dir=both]
+    exec -> sharedmem
+    sharedmem -> db
+    plc -> sharedmem
+    sharedmem -> opserver
   }
-  plcnet [shape=box, label="PLC Network"]
-  plcnet -> plc
+  plcnet -> plc [constraint=false]
   millwide [shape=box, label="Millwide System"]
   db -> millwide
 
   subgraph cluster_opclients {
     color=blue
-    client1[label="client"]
-    client2[label="client"]
-    client3[label="client"]
-    clientn[label="client"]
+    label="Operator Clients"
+    rankdir=LR
+    labelloc=b
+    node[label=client]
+    client1 -> client2 -> client3 [constraint=false]
     opserver -> client1
     opserver -> client2
     opserver -> client3
-    opserver -> clientn
   }
 }
-#+end_dot
+#+end_src
+
+#+results:
+[[file:gv01.png]]
 
 The =-Kdot= is optional (defaults to =dot=) but you can substitute other graphviz
 types instead here (ie. =twopi=, =neato=, =circo=, etc).
