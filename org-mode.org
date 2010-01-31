@@ -561,7 +561,7 @@ This has several advantages over keeping an explicit project task:
                                        ("note" ?n "* %?                                        :NOTE:\n  %U\n  %a" nil bottom nil)
                                        ("phone" ?p "* PHONE %:name - %:company -                :PHONE:\n  Contact Info: %a\n  %u\n  %?" nil bottom nil)
                                        ("appointment" ?a "* %?\n  %U" "~/git/org/todo.org" "Appointments" nil)
-                                       ("org-protocol" ?w "* TODO Review %c%!\n  %U\n  :PROPERTIES:\n  :Effort: 0:10\n  :END:" nil bottom nil))))
+                                       ("org-protocol" ?w "* TODO Review %c%!\n  %U" nil bottom nil))))
 #+end_src
 ** Separate file for Remember Tasks
    I have a single org file which is the target for my remember templates.
