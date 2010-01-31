@@ -2385,18 +2385,20 @@ Here are the =.emacs= settings:
    This section describes various org-mode settings I use to control
    how tasks are displayed while I work on my org mode files.
 *** Controlling display of leading stars on headlines
-    Org-mode has the ability to show or hide the leading stars on
+    Org-mode has the ability to show or hide the leading starts on
     task headlines.  It's also possible to have headlines at odd
     levels only so that the stars and heading task names line up in
     sublevels.
 
-    I hide leading stars - this gives a cleaner view of headlines
-    when you have deep trees in your outline.
+    I don't hide leading stars - I want to see the heading levels
+    explicitly.  When I tried the hide leading stars setting I found
+    myself typing ' *' when adding a new heading and then the font
+    lock shows I messed up and created a list instead.
 
-    To make org hide leading stars use
+    To make org show leading stars use
 
 #+begin_src emacs-lisp 
-  (setq org-hide-leading-stars t)
+  (setq org-hide-leading-stars nil)
 #+end_src emacs-lisp
 *** Show headings at odd levels only or odd-even levels
     I've converted my files between odd-levels-only and odd-even using
