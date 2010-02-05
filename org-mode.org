@@ -204,17 +204,17 @@ speed up creation of standard text blocks in most editing modes.
    specifying the archive location and category for any tasks in that
    tree.  Level 1 headings are set up like this:
 
-   : ** Appointments
-   :    :PROPERTIES:
-   :    :CATEGORY: Appt
-   :    :ARCHIVE:  %s_archive::* Appointments
-   :    :END:      
-   :    ...
-   : ** Miscellaneous
-   :    :PROPERTIES:
-   :      :CATEGORY: todo
-   :      :ARCHIVE: %s_archive::* Miscellaneous
-   :    :END:
+   : * Appointments
+   :   :PROPERTIES:
+   :   :CATEGORY: Appt
+   :   :ARCHIVE:  %s_archive::* Appointments
+   :   :END:      
+   :   ...
+   : * Miscellaneous
+   :   :PROPERTIES:
+   :   :CATEGORY: todo
+   :   :ARCHIVE: %s_archive::* Miscellaneous
+   :   :END:
 
    This ensures that any level 2 task that I archive from this heading
    (I archive by subtree) gets saved in the archive file under the
