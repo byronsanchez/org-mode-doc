@@ -3093,8 +3093,8 @@ produced by ditaa during export)
 
    I have every version of my edits in a local =git= repository.
 
-** USB Stick synchronization
-   So I recently acquired a Eee PC 1000 HE which now serves as my main
+** Git Repository synchronization
+   I acquired a Eee PC 1000 HE which now serves as my main
    road-warrior laptop replacing my 6 year old Toshiba Tecra S1.
 
    I have a server on my LAN that hosts bare git repositories for all
@@ -3103,116 +3103,150 @@ produced by ditaa during export)
    everything I work on when I take it on the road (without Internet
    access).
 
-   To solve this I use a USB stick with bare git repositories on it.
+   To solve this I use a server with bare git repositories on it.
    This includes my org-mode repositories as well as any other git
    repositories I'm interested in.
    
-   Just before I leave I mount my USB stick on my workstation and run
-   =usb-git-pull= then =usb-git-push=.  For any repositories that
-   give errors due to non-fast-forward merges I manually merge as
-   required and rerun =usb-git-push= until it reports no errors.  This
-   normally takes a minute to two to do.  Then I grab my Eee PC and my
-   USB stick and leave.
+   Just before I leave I run the =git-sync= script on my workstation
+   to update the bare git repositories and then I run it again on my
+   Eee PC to update all my local repositories on the laptop.  For any
+   repositories that give errors due to non-fast-forward merges I
+   manually merge as required and rerun =git-sync= until it reports no
+   errors.  This normally takes a minute to two to do.  Then I grab my
+   Eee PC and leave.  When I'm on the road I have full up-to-date
+   history of all my git repositories.
 
-   Later I mount my USB stick in the Eee PC and do =usb-git-fetch= to
-   grab all of the commits from my workstation.  I can merge as
-   required for whatever I want to work on when I'm on the road
-   knowing I have full up-to-date history of all my git repos on the
-   USB stick.
+   The =git-sync= script replaces my previous scripts with an
+   all-in-one tool that basically does this:
 
-   This really works great!  The problem I had with using a local lan
-   bare repo was I'd forget to push/fetch a few repostories - always
-   the ones I actually wanted to use when offline.  Using the USB
-   stick guarantees that all repositories are up to date and allows me
-   to be completely mobile and not dependent on Internet access.
+   - for each repository on the current system
+     - fetch objects from the remote
+     - for each branch that tracks a remote branch
+       - Check if the ref can be moved
+	 - fast-forwards if behind the remote repository and is fast-forwardable
+	 - Does nothing if ref is up to date
+	 - Pushes ref to remote repository if ref is ahead of remote repository and fast-forwardable
+	 - Fails if ref and remote have diverged
 
-   I mount my USB stick in a directory =/usb= using the =fstab= entry as follows:
-: /dev/sdb1 /usb vfat defaults,user,noauto,shortname=mixed 0 0
+   This automatically advances changes on my 35+ git repositories with 
+   minimal manual intervention.  The only time I need to manually 
+   do something in a repository is when I make changes on my Eee PC and
+   my workstation at the same time - so that a merge is required.
 
-   Each of my repositories has a remote =usb= and I push matching branches to the remote
-   by default.
-   : git push usb
-   in any repo will push all refs (branches) that already exist in the repo on the usb stick.
-
-   The 3 scripts I use do the following:
-
-   | Script          | Description                                                               |
-   |-----------------+---------------------------------------------------------------------------|
-   | usb-git-fetch   | For each repo on the USB stick fetch from it if it exists on this machine |
-   | usb-git-pull    | For each repo on the USB stick pull into the current branch               |
-   | usb-git-push    | For each repo on the USB stick push to it if it exists on this machine    |
-   | usb-git-missing | For each repo on the USB stick report if we don't have a local copy of it |
-
-   Lately I've been using =usb-git-pull= and =usb-git-push= only.  If anything goes wrong the script
-   stops so I can fix whatever made the pull or push operation fail.  Then I just rerun the script
-   until it runs to completion.
-
-Here is the =usb-git-fetch= script
+Here is the =git-sync= script
 #+begin_src sh
   #!/bin/sh
-  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
-    if test -d ~/${repo/.git}
+  #
+  
+  # Local bare repository name
+  syncrepo=norang
+  reporoot=~/git
+  
+  # Display repository name only once
+  log_repo() {
+    [ "x$lastrepo" == "x$repo" ] || {
+      printf "\nREPO: ${repo}\n"
+      lastrepo="$repo"
+    }
+  }
+  
+  # Log a message for a repository
+  log_msg() {
+    log_repo
+    printf "  $1\n"
+  }
+  
+  # fast-forward reference $1 to $syncrepo/$1
+  fast_forward_ref() {
+    log_msg "fast-forwarding ref $1"
+    current_ref=$(cat .git/HEAD)
+    if [ "x$current_ref" = "xref: refs/heads/$1" ]
     then
-      echo REPO: $repo
-      cd ~/$repo
-      git fetch usb
+      # Check for dirty index
+      files=$(git diff-index --name-only HEAD --)
+      git merge refs/remotes/$syncrepo/$1
+    else
+      git branch -f $1 refs/remotes/$syncrepo/$1
     fi
-  done
-#+end_src
-
-Here is the =usb-git-pull= script
-#+begin_src sh
-  #!/bin/sh
-  if find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
-        if test -d ~/${repo/.git}
+  }
+  
+  # Push reference $1 to $syncrepo
+  push_ref() {
+    log_msg "Pushing ref $1"
+    if ! git push --tags $syncrepo $1
+    then
+      exit 1
+    fi
+  }
+  
+  # Check if a ref can be moved
+  #   - fast-forwards if behind the sync repo and is fast-forwardable
+  #   - Does nothing if ref is up to date
+  #   - Pushes ref to $syncrepo if ref is ahead of syncrepo and fastforwardable
+  #   - Fails if ref and $syncrop/ref have diverged
+  check_ref() {
+    revlist1=$(git rev-list refs/remotes/$syncrepo/$1..$1)
+    revlist2=$(git rev-list $1..refs/remotes/$syncrepo/$1)
+    if [ "x$revlist1" = "x" -a "x$revlist2" = "x" ]
+    then
+      # Ref $1 is up to date.
+      :
+    elif [ "x$revlist1" = "x" ]
+    then
+      # Ref $1 is behind $syncrepo/$1 and can be fast-forwarded.
+      fast_forward_ref $1 || exit 1
+    elif [ "x$revlist2" = "x" ]
+    then
+      # Ref $1 is ahead of $syncrepo/$1 and can be pushed.
+      push_ref $1 || exit 1
+    else
+      log_msg "Ref $1 and $syncrepo/$1 have diverged."
+      exit 1
+    fi
+  }
+  
+  # Check all local refs with matching refs in the $syncrepo
+  check_refs () {
+    git for-each-ref refs/heads/* | while read sha1 commit ref
+    do
+      ref=${ref/refs\/heads\//}
+      git for-each-ref refs/remotes/$syncrepo/$ref | while read sha2 commit ref2
+      do
+        if [ "x$sha2" != "x" -a "x$sha2" != "x" ]
         then
-          echo REPO: $repo
-          cd ~/$repo 
-          if ! git pull usb
-          then
-            exit 1
-          fi
+          check_ref $ref || exit 1
         fi
       done
-  then
-      echo Unmounting USB stick...
-      umount /usb
-      echo All done.
-  else
-      echo Fix and redo.
-  fi
-#+end_src
-
-Here is the =usb-git-push= script
-#+begin_src sh
-  #!/bin/sh
-  if find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do
-        if test -d ~/${repo/.git}
-        then
-          echo REPO: $repo
-          cd ~/$repo
-          if ! git push usb
-          then
-            exit 1
-          fi
-        fi
-      done
-  then
-      echo Unmounting USB stick...
-      umount /usb
-      echo All done.
-  else
-      echo Fix and redo.
-  fi
-#+end_src
-
-Here is the =usb-git-missing= script
-#+begin_src sh
-  #!/bin/sh
-  find /usb -type d -name '*.git' | sed 's@^/usb/@@; s/.git$//' | while read repo; do 
-    if ! test -d ~/${repo/.git}
+    done
+  }
+  
+  # For all repositories under $reporoot
+  #   Check all refs matching $syncrepo and fast-forward, or push as necessary
+  #   to synchronize the ref with $syncrepo
+  #   Bail out if ref is not fastforwardable so user can fix and rerun
+  time {
+    retval=0
+    if find $reporoot -type d -name '*.git' | { 
+        while read repo
+        do
+          repo=${repo/\/.git/}
+          cd ${repo}
+          upd=$(git remote update $syncrepo 2>&1 || retval=1)
+          [ "x$upd" = "xFetching $syncrepo" ] || {
+            log_repo
+            printf "$upd\n"
+          }
+          check_refs || retval=1
+        done
+        exit $retval
+      }
     then
-      echo REPO: $repo
+      printf "\nAll done.\n"
+    else
+      printf "\nFix and redo.\n"
     fi
-  done
+  }
+  
+  exit $retval
 #+end_src
+
