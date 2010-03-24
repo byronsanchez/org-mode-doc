@@ -3094,6 +3094,9 @@ produced by ditaa during export)
    I have every version of my edits in a local =git= repository.
 
 ** Git Repository synchronization
+   :PROPERTIES:
+   :CUSTOM_ID: git-sync
+   :END:
    I acquired a Eee PC 1000 HE which now serves as my main
    road-warrior laptop replacing my 6 year old Toshiba Tecra S1.
 
