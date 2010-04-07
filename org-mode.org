@@ -166,7 +166,7 @@ speed up creation of standard text blocks in most editing modes.
    file I just visit it and hit =C-c ]= and all of the tasks in that
    file are instantly removed from my agenda views until I add them
    back again.
-** Org file structure
+** Org File Structure
    Most of my org files are set up with level 1 headings as main
    categories only.  Tasks normally start as level 2.
 
@@ -318,7 +318,7 @@ speed up creation of standard text blocks in most editing modes.
   I've set up a dummy =#+SEQ_TODO: FIXME FIXED= entry at the top of
   this file just to leave my =TODO= keyword untouched in this
   document.
-** ToDo keywords
+** TODO keywords
 Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp 
@@ -737,12 +737,9 @@ This has several advantages over keeping an explicit project task:
      - repeat until the agenda timeclock report has all of the time in project files
      
 ** What do I work on next?
-   Use the agenda view for =STARTED= tasks to find stuff in progress
-   and things to clock.  I clock everything - some tasks are always in
-   a =STARTED= state (Like Organization, Email News and IRC, etc)
-
-   I use these tasks for clocking time while doing these activities
-   and my list of =STARTED= tasks is normally less than 20 items long.
+   Use the agenda view for =STARTED= and =NEXT= tasks to find stuff in
+   progress and things to clock.  My list of =STARTED= tasks is
+   normally less than 20 items long.
 
    When I look for a new task to work on I generally hit =F12 a= to
    get today's agenda and follow this order:
@@ -762,18 +759,18 @@ This has several advantages over keeping an explicit project task:
     agenda view for =ONGOING= tasks that I would pull up to easily find
     the thing I want to clock.
 
-    Since then I've moved away from using the =ONGOING= todo keyword
-    and just use =STARTED= the same way.  If a task is clocked-in it
-    automatically moves to the =STARTED= todo state and shows up on the
-    list without having to think about it.  Having an agenda view that
+    Since then I've moved away from using the =ONGOING= todo keyword.
+    If a task is clocked-in it automatically moves to the =STARTED=
+    state from =TODO= state and shows up on the =STARTED= task list
+    without having to think about it.  Having an agenda view that
     shows =STARTED= tasks makes it easy to pick the thing to clock -
     and I don't have to remember if I need to look in the =ONGOING=
     list or the =STARTED= list when looking for the task to clock-in.
     The =STARTED= list is basically 'what is current' - stuff I worked
-    on recently and need to continue working on.  I want to find the
-    thing to work on as fast as I can and actually do work on it - not
-    spend time hunting through my org files for the task that needs to
-    be clocked-in.
+    on recently and need to finish.  I want to find the thing to work
+    on as fast as I can and actually do work on it - not spend time
+    hunting through my org files for the task that needs to be
+    clocked-in.
 
     It is just easier to have it all in one short list.  My =STARTED=
     list has less than 20 entries so it's pretty easy to find what I
@@ -806,7 +803,7 @@ This has several advantages over keeping an explicit project task:
 
    I read email and newgroups in Gnus so I don't separate clocked time
    for quickly looking at things.  If an article has a useful piece of
-   information I want to remember I create a note for it with =F12 n=
+   information I want to remember I create a note for it with =C-M-r n=
    and enter the topic and file it.  This takes practically no time at
    all and I know the note is safely filed for later.
 ** Filtering
@@ -1181,7 +1178,7 @@ This has several advantages over keeping an explicit project task:
    times only by default.  (To see all task state changes you can issue
    a prefix to this command (=C-u l= in the agenda)).
 
-   To check the last month's clock data I use =F12 a m left-arrow l=
+   To check the last month's clock data I use =F12 a v m b l=
    which shows a full month in the agenda, moves to the previous
    month, and shows the clocked times only.
 
@@ -1220,10 +1217,14 @@ This has several advantages over keeping an explicit project task:
 
    I used to have a monthly clock report dynamic block in each project
    org file and manually updated them at the end of my billing cycle.
-   I moved to using agenda clock reports shortly after that feature
-   was added since I find this much more convenient.  The data isn't
-   normally for consumption by anyone else so the format of the agenda
-   clock report format is great for my use-case.
+   I used this as the basis for billing my clients for time spent on
+   their projects.  I found updating the dynamic blocks fairly tedious
+   when you have more than a couple of files for the month.
+
+   I have since moved to using agenda clock reports shortly after that
+   feature was added.  I find this much more convenient.  The data
+   isn't normally for consumption by anyone else so the format of the
+   agenda clock report format is great for my use-case.
 
 ** Task Estimates and column view
    :PROPERTIES:
@@ -1475,12 +1476,12 @@ This has several advantages over keeping an explicit project task:
   refile the note anywhere.  As long as the note is in a project file
   that contributes to my agenda (ie. in org-agenda-files) then I can
   find the note back easily with my notes agenda view by hitting the
-  key combination =F12 n=.  I'm free to limit the agenda view of notes
+  key combination =F12 N=.  I'm free to limit the agenda view of notes
   using standard agenda tag filtering.
 
-  technical details without the need to actually remember anything -
   Short notes with a meaningful headline are a great way to remember
-  other than how to find them back when you need them using =F12 n=.
+  technical details without the need to actually remember anything -
+  other than how to find them back when you need them using =F12 N=.
 
   Notes that are project related and not generally useful can be
   archived with the project and removed from the agenda when the
@@ -1532,7 +1533,7 @@ This has several advantages over keeping an explicit project task:
    :         - Move NEXT tag to subtasks or remove as required
    :     - [ ] Make plan for the week (out of NEXT tasks)
    :       - schedule important items onto the agenda
-   :       - [ ] Review weekly plan                              F12 a w
+   :       - [ ] Review weekly plan                              F12 a v w
    :
    :     - start work
    :       - daily agenda first - knock off items
@@ -1560,7 +1561,7 @@ This has several advantages over keeping an explicit project task:
 
    Projects are 'stuck' if they have no =NEXT= task defined.  I use
    tags to identify =NEXT= tasks (so the task todo state keyword is
-   one of =TODO= or =STARTING=).  Clocking in a task automatically adds
+   one of =TODO= or =STARTED=).  Clocking in a task automatically adds
    =NEXT= keyword.
 
    Org-mode stuck projects lists projects that have no next task defined.
@@ -2287,6 +2288,9 @@ Here are the =.emacs= settings:
 #+end_src
 
 ** Checklist handling
+   :PROPERTIES:
+   :CUSTOM_ID: ChecklistHandling
+   :END:
    Checklists are great for repeated tasks with lots of things that need to be done.
    For a long time I was manually resetting the check boxes to unchecked when marking
    the repeated task =DONE= but no more!  There's a contributed =org-checklist= that
