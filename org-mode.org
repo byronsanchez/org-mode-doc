@@ -1198,7 +1198,7 @@ This has several advantages over keeping an explicit project task:
 
    To get a report of time spent on tasks for =XYZ.org= you simply
    visit the =XYZ.org= file and run an agenda clock report for the
-   last month with =F12 1 a m left-arrow R=.  This limits the agenda
+   last month with =F12 < a v m b R=.  This limits the agenda
    to this one file, shows the agenda for a full month, moves to last
    month, and generates a clock report.  Just scroll down to the end
    of the agenda to see the report.
@@ -2165,7 +2165,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     to this file only.  This lock stays in effect until you remove it
     with =C-c C-x >=.
 
-    Another way is to invoke the agenda with =F12 1 a= while visiting
+    Another way is to invoke the agenda with =F12 < a= while visiting
     an org-mode file.  This limits the agenda view to just this file.
     I occassionally use this to view a file not in my
     =org-agenda-files= in the agenda.
