@@ -224,6 +224,9 @@ speed up creation of standard text blocks in most editing modes.
    same structure.
 
 ** Key bindings
+   :PROPERTIES:
+   :CUSTOM_ID: KeyBindings
+   :END:
    I live in the agenda.  To make getting to the agenda faster I
    mapped =F12= to the sequence =C-c a= since I'm using it hundreds of
    times a day.
@@ -910,6 +913,9 @@ This has several advantages over keeping an explicit project task:
   Without clocking data it's hard to tell what you did after the fact.
 
 ** Clock Setup
+   :PROPERTIES:
+   :CUSTOM_ID: ClockSetup
+   :END:
    I like to keep control of the clock separate from task state
    changes.  If I mark a clocked task =DONE= I want the clock to keep
    running on that task until I've finished all of the work on it.  I
@@ -2348,6 +2354,9 @@ Here are the =.emacs= settings:
    pushed to the remote repository.
 
 ** Handling blocked tasks
+   :PROPERTIES:
+   :CUSTOM_ID: HandlingBlockedTasks
+   :END:
    Blocked tasks are tasks that have subtasks which are not in a done
    todo state.  Blocked tasks show up in a grayed font by default in
    the agenda.
