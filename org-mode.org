@@ -586,7 +586,7 @@ This has several advantages over keeping an explicit project task:
 #+begin_src org
   #+FILETAGS: REFILE
 #+end_src
-** Remember Tasks is all about begin FAST
+** Remember Tasks is all about being FAST
    Okay I'm in the middle of something and oh yeah - I have to
    remember to do that.  I don't stop what I'm doing.  I'm probably
    clocking a project I'm working on and I don't want to lose my focus
@@ -603,7 +603,7 @@ This has several advantages over keeping an explicit project task:
    :
    : * TODO 
    :   [2009-04-19 Sun]
-   :   [[file:~/git/doc.norang.ca/org-mode.org::*Remember%20Tasks%20is%20all%20about%20begin%20FAST][file:~/git/doc.norang.ca/org-mode.org::*Remember Tasks is all about begin FAST]]
+   :   [[file:~/git/doc.norang.ca/org-mode.org::*Remember%20Tasks%20is%20all%20about%20being%20FAST][file:~/git/doc.norang.ca/org-mode.org::*Remember Tasks is all about being FAST]]
 
    Enter the details of the TODO item and =C-c C-c= to file it away in refile.org and go right back
    to what I'm really working on secure in the knowledge that that item isn't going to get lost and 
@@ -1151,7 +1151,7 @@ This has several advantages over keeping an explicit project task:
    Billing for clocked time basically boils down to the following
    steps:
 
-   1. Verify that that clock data in complete and correct
+   1. Verify that the clock data is complete and correct
    2. Use clock reports to summarize time spent
    3. Create an invoice based on the clock data
 
@@ -1161,7 +1161,7 @@ This has several advantages over keeping an explicit project task:
    4. Archive complete tasks so they are out of the way.
 
       See [[*Archiving]] for more details.
-*** Verify that clock data in complete and correct
+*** Verify that the clock data is complete and correct
    Since I change tasks often (sometimes more than once in a minute) I use the following setting
    to remove clock entries with a zero duration.
 #+begin_src emacs-lisp
