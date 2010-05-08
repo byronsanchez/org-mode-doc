@@ -272,7 +272,7 @@ speed up creation of standard text blocks in most editing modes.
   ;; Custom Key Bindings
   (global-set-key (kbd "<f12>") 'org-agenda)
   (global-set-key (kbd "<f5>") 'bh/org-todo)
-  (global-set-key (kbd "<S-f5>") 'widen)
+  (global-set-key (kbd "<S-f5>") 'bh/widen)
   (global-set-key (kbd "<f7>") 'set-truncate-lines)
   (global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
   (global-set-key (kbd "<f9> b") 'bbdb)
@@ -2172,16 +2172,22 @@ org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/blo
    :END:
    There is more than one way to do this.  Use what works for you.
 *** Narrowing to a subtree with =bh/org-todo=
-=f5= is bound the function =bh/org-todo= which is defined as follows:
+=f5= and =S-f5= are bound the functions for narrowing and widening the emacs buffer as follows:
 
 #+begin_src emacs-lisp
-
   (global-set-key (kbd "<f5>") 'bh/org-todo)
-
+  
   (defun bh/org-todo ()
     (interactive)
     (org-narrow-to-subtree)
     (org-show-todo-tree nil))
+  
+  (global-set-key (kbd "<S-f5>") 'bh/widen)
+  
+  (defun bh/widen ()
+    (interactive)
+    (widen)
+    (org-reveal))
 #+end_src
 
 This makes it easy to hide all of the other details in your org-file
