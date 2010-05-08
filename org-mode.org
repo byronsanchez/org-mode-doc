@@ -2193,17 +2193,24 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 
 *** Remove tasks with dates from the global todo lists
     Tasks with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show
-    up in the agenda when appropriate.  Use the following settings to
-    remove these tasks from the global todo lists.  The idea here is
-    the agenda has date-related items and the global todo lists have
-    everything else.  Keeping tasks only one list only prevents having
+    up in the agenda when appropriate.  I use the following settings
+    to remove these tasks from the global todo lists when they are too
+    far in the future to be interesting now.  The idea here is the
+    agenda has date-related items and the global todo lists have
+    everything else.  Keeping tasks on one list only prevents having
     to review tasks more than once when browsing the lists.
 
     Tasks with dates are scheduled into the future sometime and you
     don't need to deal with them until the date approaches.
 #+begin_src emacs-lisp
   ;; Keep tasks with dates off the global todo lists
-  (setq org-agenda-todo-ignore-with-date t)
+  (setq org-agenda-todo-ignore-with-date nil)
+
+  ;; Allow deadlines which are due soon to appear on the global todo lists
+  (setq org-agenda-todo-ignore-deadlines (quote far))
+
+  ;; Keep tasks scheduled in the future off the global todo lists
+  (setq org-agenda-todo-ignore-scheduled (quote future))
 
   ;; Remove completed deadline tasks from the agenda view
   (setq org-agenda-skip-deadline-if-done t)
