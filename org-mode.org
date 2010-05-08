@@ -438,7 +438,7 @@ My =NEXT= task list now only shows project related tasks and keeps me focused on
 more important work.
 
 I use a =project= tag for marking projects.  This tag is excluded from inheritance.
-#+begin_src elisp
+#+begin_src emacs-lisp
   (setq org-tags-exclude-from-inheritance (quote ("crypt" "project")))
 #+end_src
 
@@ -593,7 +593,7 @@ clocking lines with 0:00 length I end up with a clock drawer like this:
 I have the following setup to remove these empty =CLOCK= drawers if
 they occur.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   ;; Remove empty CLOCK drawers on clock out
   (defun bh/remove-empty-drawer-on-clock-out ()
     (interactive)
@@ -1558,7 +1558,7 @@ they occur.
    I keep a list like this one to remind me what needs to be done.
 
    To keep the agenda fast I set
-#+begin_src elisp
+#+begin_src emacs-lisp
   (setq org-agenda-ndays 1)
 #+end_src
   so only today's date is shown by default.  I only need the weekly
