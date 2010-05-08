@@ -2901,7 +2901,8 @@ Here are the =.emacs= settings:
                                         ("3" . split-window-horizontally)
                                         ("h" . hide-other)
                                         ("k" . org-kill-note-or-show-branches)
-                                        ("r" . org-reveal))))
+                                        ("r" . org-reveal)
+                                        ("z" . org-add-note))))
 #+end_src
 
    The variable =org-speed-commands-default= sets a lot of useful defaults for speed command keys.
