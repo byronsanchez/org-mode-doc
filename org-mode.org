@@ -572,6 +572,32 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
                                        ("appointment" ?a "* %?\n  %U" "~/git/org/todo.org" "Appointments" nil)
                                        ("org-protocol" ?w "* TODO Review %c%!\n  %U" nil bottom nil))))
 #+end_src
+
+Using the remember mode hooks causes the new remember task to clock in automatically.
+Filing the remember note clocks in the interrupted task again. 
+
+This can leave empty clock drawers in my tasks which aren't really useful.  Since I remove
+clocking lines with 0:00 length I end up with a clock drawer like this:
+
+: * TODO New Remember Note
+:   :CLOCK:
+:   :END:
+:   [2010-05-08 Sat 13:53]
+
+I have the following setup to remove these empty =CLOCK= drawers if
+they occur.
+
+#+begin_src elisp
+  ;; Remove empty CLOCK drawers on clock out
+  (defun bh/remove-empty-drawer-on-clock-out ()
+    (interactive)
+    (save-excursion
+      (beginning-of-line 0)
+      (org-remove-empty-drawer-at "CLOCK" (point))))
+  
+  (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
+#+end_src
+
 ** Separate file for Remember Tasks
    I have a single org file which is the target for my remember templates.
 
@@ -608,6 +634,11 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
    Enter the details of the TODO item and =C-c C-c= to file it away in refile.org and go right back
    to what I'm really working on secure in the knowledge that that item isn't going to get lost and 
    I don't have to think about it anymore at all now.
+
+   The amount of time I spend entering the remember note is clocked.  I use
+   remember mode hooks to clock in the remember task and then switch back
+   to the interrupted task when I file the remember note.
+   This is great for interruptions and telephone calls too.
 * Refiling Tasks
   :PROPERTIES:
   :CUSTOM_ID: Refiling
@@ -1027,6 +1058,12 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
     the clock and makes this the default clock task.
 
     You can quickly clock in the default task with =C-u C-c C-x C-i d=
+
+    I've stopped using the default task for clocking.  I now use two
+    key bindings to clock in specific tasks by id.  I use this to clock
+    in my 'organization' and 'read mail and news' tasks without having
+    to spend any time finding those tasks.  I just hit 'f9 o' or 'f9 m'
+    and I'm done.  This also works in any emacs buffer.
 
 *** Using the clock history to clock in old tasks
     You can use the clock history to restart clocks on old tasks you've clocked or to jump
