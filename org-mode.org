@@ -497,8 +497,7 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
     If I clock in a task with a keyword of =TODO= it changes to
     =STARTED= otherwise the task is clocked in but the state is left
     alone.  This allows me to clock in tasks with no keyword (things
-    like =* Organization=) and they never show up in my task lists or
-    stuck project list.
+    like =* Organization=) and they never show up in my =STARTED= task lists.
 
 #+begin_src emacs-lisp
   ;; Change task state to STARTED from TODO when clocking in
@@ -731,7 +730,8 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
      - create notes, and tasks for things that need responses with org-remember
    - Check refile tasks and respond to emails
    - Look at my agenda and knock off tasks scheduled for today
-     - Clock it in (=I= in the agenda or on the beginning of a task headline -- this marks it as =STARTED=)
+     - Clock it in (=I= in the agenda or on the beginning of a task headline 
+       - this changes =TODO= state tasks to =STARTED=
      - Work on it until it is =DONE= or it gets interrupted
    - Check today's time log report and refile tasks with clocked time
      - =F12 a R= - any tasks in =refile.org= should be moved to the appropriate file
@@ -1363,7 +1363,7 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
 
   Tasks are grouped together in org-files and a =#+FILETAGS:= entry
   applies a tag to all tasks in the file.  I use this to apply the
-  =@office= tag to projects that are Work related.
+  =@office= tag to projects that are work related.
 
 ** Tags
    Here are my tag definitions with associated keys for filtering in
@@ -1568,10 +1568,9 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
 
    Projects are 'stuck' if they have no =NEXT= task defined.  I use
    tags to identify =NEXT= tasks (so the task todo state keyword is
-   one of =TODO= or =STARTED=).  Clocking in a task automatically adds
-   =NEXT= keyword.
+   one of =TODO= or =STARTED=).
 
-   Org-mode stuck projects lists projects that have no next task defined.
+   Org-mode stuck projects lists projects that have no =NEXT= task defined.
    I normally review these in my weekly review and assign a =NEXT= task
    to all projects to clear the stuck project list.  This helps to keep
    projects moving forwards.
