@@ -2925,22 +2925,22 @@ Here are the =.emacs= settings:
    
 ** Insert inactive timestamps
    I insert inactive timestamps when working on org-mode files.
+   Normally I use this to track when a task was created.
 
-   For remember tasks the timestamp is in the remember template but for regular
-   structure editing I want a clean outline without timestamps normally.
-   I find this easier to work with when brainstorming and generating the outline
-   structure for a project.
+   For remember tasks the timestamp is in the remember template but
+   for regular structure editing I normally want a clean outline
+   without timestamps.  I find this easier to work with when
+   brainstorming and generating the outline structure for a project.
+   For this reason I've turned off the hook I used to use to
+   automatically insert a timestamp when creating headlines.
 
-   I have the following function bound to the key sequence =f9 t= to insert
-   an inactive timestamp in the text on demand.
+   I have the following function bound to the key sequence =f9 t= to
+   insert an inactive timestamp in the text on demand.
 
    #+begin_src emacs-lisp
      (defun bh/insert-inactive-timestamp ()
        (interactive)
-       (save-excursion
-         (insert "\n")
-         (org-cycle)
-         (org-insert-time-stamp nil t t nil nil nil)))
+       (org-insert-time-stamp nil t t nil nil nil))
      
      (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
    #+end_src
