@@ -2848,6 +2848,16 @@ Here are the =.emacs= settings:
   (setq org-habit-graph-column 50)
 #+end_src
 
+   During the day I'll turn off the habit display in the agenda with =K=.
+   This is a persistent setting and since I leave my Emacs running for days at
+   a time my habit display doesn't come back.  To make sure I look at the habits
+   daily I have the following settings to redisplay the habits in the agenda each day.
+   This turns the habit display on again at 6AM each morning.
+
+#+begin_src emacs-lisp
+  (run-at-time "06:00" 86400 '(lambda () (setq org-habit-show-habits t)))
+#+end_src
+
 ** Habits only log DONE state changes
   I tend to keep habits under a level 1 task =* Habits= with a special logging property
   that only logs changes to the =DONE= state.  This allows me to cancel a habit and
