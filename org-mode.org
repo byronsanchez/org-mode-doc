@@ -31,12 +31,7 @@
   document describes mature workflows in my current org-mode setup.  I
   tend to document changes to my workflow 30 days after implementing
   them (assuming they are still around at that point) so that the new
-  workflow has a chance to mature.  History of changes to this document
-  can be found at [[http://git.norang.ca/?p%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
-
-  This document is created using the publishing features of org-mode.
-  The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
-  [[http://doc.norang.ca/org-mode.org][plain text org file]].
+  workflow has a chance to mature.
 
   Some of the customized Emacs settings described in this document are
   set at their default values.  This explicitly shows the setting for
@@ -3347,3 +3342,12 @@ Here is the =git-sync= script
   exit $retval
 #+end_src
 
+* Change History - What's new
+  This document is created using the publishing features of org-mode.
+  The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
+  [[http://doc.norang.ca/org-mode.org][plain text org file]].
+
+  I try to update this document about once a month.
+
+  The change history for this document can be found at
+  [[http://git.norang.ca/?p%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
