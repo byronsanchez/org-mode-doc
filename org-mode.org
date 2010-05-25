@@ -569,7 +569,7 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
   ;; 3 remember templates for TODO tasks, Notes, and Phone calls
   (setq org-remember-templates (quote (("todo" ?t "* TODO %?\n  %u\n  %a" nil bottom nil)
                                        ("note" ?n "* %?                                        :NOTE:\n  :CLOCK:\n  :END:\n  %U\n  %a" nil bottom nil)
-                                       ("phone" ?p "* PHONE %:name - %:company -                :PHONE:\n  Contact Info: %a\n  %u\n  %?" nil bottom nil)
+                                       ("Phone" 80 "* TODO Phone [[bbdb:%(gjg/bbdb-name)][%(gjg/bbdb-name)]] - %(gjg/bbdb-company)               :PHONE:\n  %U\n  %?" nil bottom nil)
                                        ("appointment" ?a "* %?\n  %U" "~/git/org/todo.org" "Appointments" nil)
                                        ("org-protocol" ?w "* TODO Review %c%!\n  %U" nil bottom nil))))
 #+end_src
@@ -717,12 +717,13 @@ they occur.
    are specific to the project and not generally useful -- so removing
    them from the notes list when the project is archived makes sense.
 ** Refiling Phone Calls
-   Phone calls are handled the same as notes.  I time my calls,
-   creating them with =F12 p= and filing them in =refile.org=.  Later
-   these are refiled to a =* Phone Calls= task or to the project task
-   that this clocked phone call should contribute clocked time to.
-   Some phone calls are billable and we want these tracked in the
-   appropriate category.
+   Phone calls are handled using a few custom functions and a special key binding.
+   I time my calls using the remember mode hooks to clock in and out the
+   remember template while the phone call is in progress.
+
+   Phone call tasks collect in =refile.org= and are later refiled to
+   the appropriate location.  Some phone calls are billable and we
+   want these tracked in the appropriate category.
 * Custom agenda views
   I have 7 custom agenda views defined.  Most of my old custom
   agenda views were rendered obsolete when filtering functionality was
@@ -1543,6 +1544,59 @@ they occur.
   project is filed to the project task under the appropriate work
   org-mode file and eventually gets removed from the agenda when the
   project is complete and archived.
+
+* Handling Phone Calls
+  Phone calls are interruptions and I use remember mode to deal with these.
+  Most of the heavy lifting for phone calls is done by remember mode.
+  I use a special remember template for phone calls but activate it
+  with a custom key binding =f9-p=.  I've removed my phone remember mode
+  template from my regular templates since I always use the =bh/phone-call=
+  function mapped to =f9-p= to invoke the remember template.  The definition
+  of this template is now local to the function.
+
+  =f9 p= prompts for who is calling and looks up the entered name in my
+  =bbdb= database with completion.  The remember template is then
+  filled in with the appropriate contact data and the remember mode starts
+  the clock using the =remember-mode-hook=.
+
+  Here is my set up for phone calls.  I would like to thank Gregory J. Grubbs
+  for the bbdb lookup functions.
+
+  #+begin_src emacs-lisp
+    ; Set f9-p to prompt for who is calling and preload the remember template
+    (global-set-key (kbd "<f9> p") 'bh/phone-call)
+    
+    ;;
+    ;; Phone remember template handling with BBDB lookup
+    ;; modified from the original code by Gregory J. Grubbs
+    ;;
+    (defvar gjg/remember-phone-record nil
+      "Either BBDB record vector, or person's name as a string, or nil")
+    
+    (defun bh/phone-call ()
+      (interactive)
+      (let* ((myname (completing-read "Who is calling? " (bbdb-hashtable) 'bbdb-completion-predicate 'confirm))
+             (my-bbdb-name (if (> (length myname) 0) myname nil)))
+        (setq gjg/remember-phone-record
+              (or (when my-bbdb-name
+                    (first (bbdb-search (bbdb-records) my-bbdb-name nil nil)))
+                  myname))
+        (other-window 1)
+        (let ((org-remember-templates '(("Phone" 80 "* TODO Phone [[bbdb:%(gjg/bbdb-name)][%(gjg/bbdb-name)]] - %(gjg/bbdb-company)               :PHONE:\n  %U\n  %?" nil bottom nil))))
+          (org-remember nil "P"))))
+    
+    (defun gjg/bbdb-name ()
+      "Return full name of saved bbdb record, or empty string - for use in Remember templates"
+      (if (and gjg/remember-phone-record (vectorp gjg/remember-phone-record))
+          (bbdb-record-name gjg/remember-phone-record)
+          (or gjg/remember-phone-record "")))
+    
+    (defun gjg/bbdb-company ()
+      "Return company of saved bbdb record, or empty string - for use in Remember templates"
+      (if (and gjg/remember-phone-record (vectorp gjg/remember-phone-record))
+          (or (bbdb-record-company gjg/remember-phone-record) "")
+        ""))
+  #+end_src
 * GTD stuff
   Most of my day is deadline/schedule driven.
   I work off of the agenda first and then pick items from the todo lists as
