@@ -3112,6 +3112,82 @@ Here are the =.emacs= settings:
    '(org-mode-line-clock ((t (:background "grey75" :foreground "red" :box (:line-width -1 :style released-button)))) t))
 #+end_src
 
+** Meeting Notes
+   I take meeting notes with org-mode.  I record meeting conversations in
+   point-form using org-mode lists.  If action items are decided on in the
+   meeting I'll denote them with a bullet and a TODO: or DONE: flag.
+
+   A meeting is a task and it is complete when the meeting is over.  The body
+   of the task records all of the interesting meeting details.  If TODO items
+   are created in the meeting I make separate TODO tasks from those.
+
+   I use the function =bh/prepare-meeting-notes= to prepare the
+   meeting notes for emailing to the participants (in a fixed-width
+   font like "Courier New").  As soon as the meeting is over the notes are 
+   basically ready for distribution -- there's not need to waste lots of
+   time rewriting the minutes before they go out.  I haven't bothered
+   with fancy HTML output -- the content is more important than the style.
+
+   
+: ** TODO Sample Meeting
+:    - Attendees
+:      - [ ] Joe
+:      - [X] Larry
+:      - [X] Mary
+:      - [X] Fred
+:    - Joe is on vacation this week
+:    - Status Updates
+:      + Larry
+:        - did this
+:        - and that
+:        - TODO: Needs to follow up on this
+:      + Mary
+:        - got a promotion for her recent efforts
+:      + Fred
+:        - completed all his tasks 2 days early
+:        - needs more work
+:        - DONE: everything
+
+: ** TODO Sample Meeting
+:    - Attendees
+:      - [ ] Joe
+:      - [X] Larry
+:      - [X] Mary
+:      - [X] Fred
+:    - Joe is on vacation this week
+:    - Status Updates
+:      + Larry
+:        - did this
+:        - and that
+: >>>>>>>> TODO: Needs to follow up on this
+:      + Mary
+:        - got a promotion for her recent efforts
+:      + Fred
+:        - completed all his tasks 2 days early
+:        - needs more work
+: >>>>>>>> DONE: everything
+
+   Here is the formatting function.  Just highlight the region for the notes
+   and it turns tabs into spaces, and highlights todo items.  The resulting
+   notes are in the kill buffer ready to paste to another application.
+
+#+begin_src emacs-lisp
+  (defun bh/prepare-meeting-notes ()
+    "Prepare meeting notes for email
+     Take selected region and convert tabs to spaces, mark TODOs with leading >>>, and copy to kill ring for pasting"
+    (interactive)
+    (let (prefix)
+      (save-excursion
+        (save-restriction
+          (narrow-to-region (region-beginning) (region-end))
+          (untabify (point-min) (point-max))
+          (goto-char (point-min))
+          (while (re-search-forward "^\\( *-\\\) \\(TODO\\|DONE\\): " (point-max) t)
+            (replace-match (concat (make-string (length (match-string 1)) ?>) " " (match-string 2) ": ")))
+          (goto-char (point-min))
+          (kill-ring-save (point-min) (point-max))))))
+#+end_src
+
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
