@@ -2610,17 +2610,6 @@ Here are the =.emacs= settings:
     This lets you hit C-S-RET in the middle of an entry and the new
     heading is added after the body of the current entry.
 
-    I currently use 
-
-#+begin_src emacs-lisp
-  (setq org-insert-heading-respect-content nil)
-#+end_src
-
-    now since I create blocks of text without structure first and then
-    add headings in the middle to organize the text.  I found jumping
-    to the end (respecting content) was slowing me down since I don't
-    normally have a lot of blank lines in the middle of my text.
-
 *** Notes at the top
     I enter notes for tasks with =C-c C-z= (or just =z= in the
     agenda).  Changing tasks states also sometimes prompt for a note
