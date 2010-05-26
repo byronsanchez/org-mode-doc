@@ -3109,6 +3109,20 @@ Here are the =.emacs= settings:
   (setq org-return-follows-link t)
 #+end_src
 
+** Highlight clock when running overtime
+   The current clocking task is displayed on the modeline.
+   If this has an estimated time and we run over the limit I make this
+   stand out on the modeline by changing the background to red as follows
+
+#+begin_src emacs-lisp
+  (custom-set-faces
+    ;; custom-set-faces was added by Custom.
+    ;; If you edit it by hand, you could mess it up, so be careful.
+    ;; Your init file should contain only one such instance.
+    ;; If there is more than one, they won't work right.
+   '(org-mode-line-clock ((t (:background "grey75" :foreground "red" :box (:line-width -1 :style released-button)))) t))
+#+end_src
+
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
