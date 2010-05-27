@@ -1597,11 +1597,12 @@ they occur.
       (let* ((myname (completing-read "Who is calling? " (bbdb-hashtable) 'bbdb-completion-predicate 'confirm))
              (my-bbdb-name (if (> (length myname) 0) myname nil)))
         (setq gjg/remember-phone-record
-              (or (when my-bbdb-name
-                    (first (bbdb-search (bbdb-records) my-bbdb-name nil nil)))
-                  myname))
+              (if my-bbdb-name
+                  (first (or (bbdb-search (bbdb-records) my-bbdb-name nil nil)
+                             (bbdb-search (bbdb-records) nil my-bbdb-name nil)))
+                myname))
         (other-window 1)
-        (let ((org-remember-templates '(("Phone" 80 "* TODO Phone [[bbdb:%(gjg/bbdb-name)][%(gjg/bbdb-name)]] - %(gjg/bbdb-company)               :PHONE:\n  %U\n  %?" nil bottom nil))))
+        (let ((org-remember-templates '(("Phone" 80 "* TODO Phone %(gjg/bbdb-name) - %(gjg/bbdb-company)               :PHONE:\n  %U\n  %?" nil bottom nil))))
           (org-remember nil "P"))))
     
     (defun gjg/bbdb-name ()
