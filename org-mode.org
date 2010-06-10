@@ -244,8 +244,6 @@ speed up creation of standard text blocks in most editing modes.
 | f9 r    | Boxquote selected region                        | Often      |
 | C-S-f12 | Save buffers and publish current project        | Often      |
 | C-c l   | Store a link for retrieval with C-c C-l         | Often      |
-| f9 m    | Clock in read mail and news task                | Often      |
-| f9 o    | Clock in organization task                      | Often      |
 | f8      | Go to next org file in org-agenda-files         | Sometimes  |
 | f9 t    | Insert inactive timestamp                       | Sometimes  |
 | f9 v    | Toggle visible mode (for showing/editing links) | Sometimes  |
@@ -290,8 +288,6 @@ speed up creation of standard text blocks in most editing modes.
     (interactive)
     (info "~/git/org-mode/doc/org.info"))
   
-  (global-set-key (kbd "<f9> m") 'bh/clock-in-read-mail-and-news-task)
-  (global-set-key (kbd "<f9> o") 'bh/clock-in-organization-task)
   (global-set-key (kbd "<f9> I") 'bh/clock-in)
   (global-set-key (kbd "<f9> O") 'bh/clock-out)
   (global-set-key (kbd "<f9> r") 'boxquote-region)
@@ -1119,32 +1115,14 @@ they occur.
   (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
 #+end_src
 
-   I keep two tasks specifically for clocking the time I spend organizing stuff and
-   reading mail and news groups.  There tasks are defined as follows in 
-   my =todo.org= file
-
-   : ** Organization
-   :    :PROPERTIES:
-   :    :CLOCK_MODELINE_TOTAL: today
-   :    :ID:       437c2cde-fbf0-491f-92ba-51bae487b338
-   :    :END:
-
-   : ** Read Email and News
-   :    :PROPERTIES:
-   :    :CLOCK_MODELINE_TOTAL: today
-   :    :ID:       85c2e69b-6f37-4236-8896-4f7dd86047c1
-   :    :END:
-
-   The =:ID:= entries are created with =M-x org-id-get-create=.
-
-   The following functions allow clocking in tasks by ID so the key
-   sequence =f9-m= clocks in the mail task and =f9-o= clocks in the
-   organization task from any emacs buffer.  =f9-SPC= switches back to
-   the interrupted task.
+  I used to clock in tasks by ID using the following function but with
+  the new punch-in and punch-out I don't need these anymore.  =f9-SPC=
+  calls =bh/clock-in-interrupted-task= which switches the clock back
+  to the interrupted task.  This is most often called automatically by
+  the remember hook when the remember template is closed.
 
 #+begin_src emacs-lisp
-  (require 'org-id)
-
+  (require 'org-id)  
   (defun bh/clock-in-task-by-id (id)
     "Clock in a task by id"
     (save-restriction
@@ -1152,23 +1130,19 @@ they occur.
       (org-with-point-at (org-id-find id 'marker)
         (org-clock-in nil))))
   
-  (defun bh/clock-in-organization-task ()
-    (interactive)
-    (bh/clock-in-task-by-id "437c2cde-fbf0-491f-92ba-51bae487b338"))
-  
-  (defun bh/clock-in-read-mail-and-news-task ()
-    (interactive)
-    (bh/clock-in-task-by-id "85c2e69b-6f37-4236-8896-4f7dd86047c1"))
-  
   (defun bh/clock-in-interrupted-task ()
     "Clock in the interrupted task if there is one"
     (interactive)
-    (if (and (not org-clock-resolving-clocks-due-to-idleness)
-             (marker-buffer org-clock-marker)
-             (marker-buffer org-clock-interrupted-task))
-        (org-with-point-at org-clock-interrupted-task
-          (org-clock-in nil))
-      (org-clock-out)))
+    (let ((clock-in-to-task))
+      (if (org-clock-is-active)
+          (when (marker-buffer org-clock-interrupted-task)
+            (if (equal org-clock-interrupted-task org-clock-hd-marker)
+                (setq clock-in-to-task (cadr org-clock-history))
+              (setq clock-in-to-task org-clock-interrupted-task))))
+      (if clock-in-to-task
+          (org-with-point-at clock-in-to-task
+            (org-clock-in nil))
+        (org-clock-out))))
 #+end_src
 
 ** Clocking in
@@ -1184,7 +1158,9 @@ they occur.
     org-files and doing other planning work that isn't for a specific
     project I'll clock in this task while I do things.  By clocking
     this task in with a double prefix =C-u C-u C-c C-x C-i= it starts
-    the clock and makes this the default clock task.
+    the clock and makes this the default clock task.  The first punch-in
+    of the day (=f9 I=) shows the context agenda view if no default task is
+    selected, otherwise it just clocks in the default task.
 
     You can quickly clock in the default task with =C-u C-c C-x C-i d=
 
