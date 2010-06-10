@@ -439,7 +439,7 @@ The following states track purchase orders.
 #+begin_src ditaa :file po_states.png :cmdline -r -s 0.8
       +----------+       +---------+
       |          |       |         |
-      |   OPEN   +------>+   DONE  |
+      |   OPEN   +------>+  CLOSED |
       | cRED     |       |  cGRE   |
       +----------+       +---------+
 #+end_src
