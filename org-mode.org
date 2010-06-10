@@ -866,7 +866,7 @@ they occur.
     =STARTED= list or todo keyword anymore.  Now I just use a =NEXT=
     list.  If I clock a TODO keyword it changes to =NEXT= if that is
     appropriate automagically on clock in.  A =NEXT= task is something
-    that is available to work on *now*, it was either clocked already
+    that is available to work on /now/, it was either clocked already
     or is the next logical step in some project.
 
     I used to have a special keyword =ONGOING= for things that I do a
@@ -887,8 +887,8 @@ they occur.
     it - not spend time hunting through my org files for the task that
     needs to be clocked-in.
 
-    To drop a task off the =NEXT= simply move it back to the =TODO=
-    state.
+    To drop a task off the =NEXT= list simply move it back to the
+    =TODO= state.
 ** Reading email, newsgroups, and conversations on IRC
    When reading email, newsgroups, and conversations on IRC I just let
    the default task (normally =Organization=) clock the time I spend
