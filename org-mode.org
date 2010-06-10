@@ -254,7 +254,8 @@ speed up creation of standard text blocks in most editing modes.
 | C-x n r | Narrow to region                                | Sometimes  |
 | f9 f    | Boxquote insert a file                          | Sometimes  |
 | f9 i    | Org-mode Info manual                            | Sometimes  |
-| f9 O    | Clock out                                       | Sometimes  |
+| f9 I    | Punch Clock In  (start clocking)                | Sometimes  |
+| f9 O    | Punch Clock Out (stop clocking)                 | Sometimes  |
 | f9 s    | Switch to scratch buffer                        | Sometimes  |
 | M-f9    | Remove unmodified buffer and frame              | Sometimes  |
 | f9 h    | Hide other tasks                                | Rare       |
@@ -291,7 +292,8 @@ speed up creation of standard text blocks in most editing modes.
   
   (global-set-key (kbd "<f9> m") 'bh/clock-in-read-mail-and-news-task)
   (global-set-key (kbd "<f9> o") 'bh/clock-in-organization-task)
-  (global-set-key (kbd "<f9> O") 'org-clock-out)
+  (global-set-key (kbd "<f9> I") 'bh/clock-in)
+  (global-set-key (kbd "<f9> O") 'bh/clock-out)
   (global-set-key (kbd "<f9> r") 'boxquote-region)
   (global-set-key (kbd "<f9> s") 'bh/go-to-scratch)
   
@@ -345,56 +347,58 @@ speed up creation of standard text blocks in most editing modes.
 Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp 
-  (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
-   (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
-   (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
-
+  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+   (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
+   (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
+   (sequence "OPEN(O)" "|" "CLOSED(C)"))))
+  
   (setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
-   ("STARTED" :foreground "blue" :weight bold)
+   ("NEXT" :foreground "blue" :weight bold)
    ("DONE" :foreground "forest green" :weight bold)
-   ("WAITING" :foreground "orange" :weight bold)
-   ("SOMEDAY" :foreground "magenta" :weight bold)
-   ("CANCELLED" :foreground "forest green" :weight bold)
-   ("QUOTE" :foreground "red" :weight bold)
-   ("QUOTED" :foreground "magenta" :weight bold)
+   ("WAITING" :foreground "yellow" :weight bold)
+   ("SOMEDAY" :foreground "goldenrod" :weight bold)
+   ("CANCELLED" :foreground "orangered" :weight bold)
+   ("QUOTE" :foreground "hotpink" :weight bold)
+   ("QUOTED" :foreground "indianred1" :weight bold)
    ("APPROVED" :foreground "forest green" :weight bold)
-   ("EXPIRED" :foreground "forest green" :weight bold)
-   ("REJECTED" :foreground "forest green" :weight bold)
-   ("OPEN" :foreground "blue" :weight bold))))
+   ("EXPIRED" :foreground "olivedrab1" :weight bold)
+   ("REJECTED" :foreground "olivedrab" :weight bold)
+   ("OPEN" :foreground "magenta" :weight bold)
+   ("CLOSED" :foreground "forest green" :weight bold))))
 #+end_src
 *** Normal Task States
-Normal tasks go through the sequence =TODO= -> =STARTED= -> =DONE=.
+Normal tasks go through the sequence =TODO= -> =NEXT= -> =DONE=.
 The second sequence is really just a convenient collection of odd-ball
 states for tasks (=WAITING=, =SOMEDAY=, =CANCELLED=).
 
 The following diagram shows the possible state transitions for a task.
 
 #+begin_src ditaa :file task_states.png :cmdline -r -s 0.8
-      +--------+       +---------+       +--------+
-      |        |       |         |       |        |
-   +--+  TODO  +------>+ STARTED +------>+  DONE  |
-   |  | cRED   |       |  cBLU   |       | cGRE   |
-   |  +--+-+---+       +--+---+--+       +--------+
-   |     ^ ^              ^   |
-   |     | |              |   |
-   |     | :  +------=----+   +------=------+
-   |     : +--|----=-------+                |
-   |     |    |            |                |
-   |     v    v            v                v
-   |  +--+----+-+     +----+----+     +-----+-----+
-   |  |         |     |         |     |           |
-   |  | WAITING |     | SOMEDAY |     | CANCELLED |
-   |  |   cF60  |     |  cC0C   |     |   cGRE    |
-   |  +----+----+     +---+--+--+     +-----+--+--+
-   |       ^              ^  |              ^  ^
-   |       |              |  |              |  |
-   |       +--=-----------+  +-=------------+  |
-   |                                           |
-   +---=---------------------------------------+
-
-
-        -------- Normal state changes
-        ----=--- Optional state changes
+     +--------+       +---------+       +--------+
+     |        |       |         |       |        |
+  +--+  TODO  +------>+  NEXT   +------>+  DONE  |
+  |  | cRED   |       |  cBLU   |       | cGRE   |
+  |  +--+-+---+       +--+---+--+       +--------+
+  |     ^ ^              ^   |
+  |     | |              |   |
+  |     | :  +------=----+   +------=------+
+  |     : +--|----=-------+                |
+  |     |    |            |                |
+  |     v    v            v                v
+  |  +--+----+-+     +----+----+     +-----+-----+
+  |  |         |     |         |     |           |
+  |  | WAITING |     | SOMEDAY |     | CANCELLED |
+  |  |   cF60  |     |  cC0C   |     |   cGRE    |
+  |  +----+----+     +---+--+--+     +-----+--+--+
+  |       ^              ^  |              ^  ^
+  |       |              |  |              |  |
+  |       +--=-----------+  +-=------------+  |
+  |                                           |
+  +---=---------------------------------------+
+  
+  
+       -------- Normal state changes
+       ----=--- Optional state changes
 #+end_src
 
 #+results:
@@ -441,20 +445,17 @@ The following states track purchase orders.
 #+end_src
 
 *** Project Task States
-I used to use every level 2 task as a project but that makes way too many
-projects.  Not all task subtrees are really important enough to be 
-considered a project.  Now I mark important subtrees as projects.  
-Projects tend to get more of my attention than the miscellaneous leftover
-tasks I happen to be carrying around on my todo lists.
+I use a lazy project definition.  I don't like to bother with manually
+stating 'this is a project' and 'that is not a project'.  For me a project
+definition is really simple.  If a task has subtasks with a todo keyword
+then it's a project.  That's it.  I generally define tasks at level 2 so most
+of my 'projects' live at heading level 2 under some level 1 category task.
+The only exception to this is refile tasks which live at level 1 since there
+is no heading category task at level 1 in refile.org.
 
 I don't want to see hundreds of tasks when I look for the next task to work on.
 My =NEXT= task list now only shows project related tasks and keeps me focused on 
 more important work.
-
-I use a =project= tag for marking projects.  This tag is excluded from inheritance.
-#+begin_src emacs-lisp
-  (setq org-tags-exclude-from-inheritance (quote ("crypt" "project")))
-#+end_src
 
 ** Fast Todo Selection
    Fast todo selection allows changing from any task todo state to any
@@ -488,47 +489,68 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
    The triggers break down to the following rules:
 
    - Moving a task to =CANCELLED= adds a =CANCELLED= tag
-   - Moving a task to =WAITING= adds a =WAITING= tag and removes any =NEXT= tag
+   - Moving a task to =WAITING= adds a =WAITING= tag
    - Moving a task to =SOMEDAY= adds a =WAITING= tag
-   - Moving a task to a done state removes =NEXT= and =WAITING= tags
-   - Moving a task to =TODO= removes =WAITING=, =CANCELLED=, and =NEXT= tags
-   - Moving a task to =DONE= removes =WAITING=, =CANCELLED=, and =NEXT= tags
+   - Moving a task to a done state removes a =WAITING= tag
+   - Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
+   - Moving a task to =NEXT= removes a =WAITING= tag
+   - Moving a task to =DONE= removes =WAITING= and =CANCELLED= tags
 
    The tags are used to filter tasks in the agenda views conveniently.
 
 #+begin_src emacs-lisp 
   (setq org-todo-state-tags-triggers
-        (quote (("CANCELLED" ("CANCELLED" . t))
-                ("WAITING" ("WAITING" . t) ("NEXT"))
-                ("SOMEDAY" ("WAITING" . t))
-                (done ("NEXT") ("WAITING"))
-                ("TODO" ("WAITING") ("CANCELLED") ("NEXT"))
-                ("STARTED" ("WAITING"))
-                ("DONE" ("WAITING") ("CANCELLED") ("NEXT")))))
+        (quote (("CANCELLED"
+                 ("CANCELLED" . t))
+                ("WAITING"
+                 ("WAITING" . t))
+                ("SOMEDAY"
+                 ("WAITING" . t))
+                (done
+                 ("WAITING"))
+                ("TODO"
+                 ("WAITING")
+                 ("CANCELLED"))
+                ("NEXT"
+                 ("WAITING"))
+                ("DONE"
+                 ("WAITING")
+                 ("CANCELLED")))))
 #+end_src
 
-*** Using =STARTED= for clocked tasks
-    =TODO= state tasks automatically change to =STARTED= whenever they
-    are clocked in.  There are a few exceptions to this case
-        - I don't want Remember tasks in a STARTED state immediately
+*** Using =NEXT= for clocked tasks
+    =TODO= state tasks automatically change to =NEXT= whenever they
+    are clocked.  There are a few exceptions to this case
+        - I don't want Remember tasks in a =NEXT= state immediately
           since I clock the time it takes to record remember tasks.
         - I want to clock in some tasks without a keyword
+        - I want to clock parent project tasks with incomplete subtasks
 
     If I clock in a task with a keyword of =TODO= it changes to
-    =STARTED= otherwise the task is clocked in but the state is left
+    =NEXT= otherwise the task is clocked in but the state is left
     alone.  This allows me to clock in tasks with no keyword (things
-    like =* Organization=) and they never show up in my =STARTED= task lists.
+    like =* Organization=) and they never show up in my =NEXT= task lists.
 
 #+begin_src emacs-lisp
-  ;; Change task state to STARTED from TODO when clocking in
-  (defun bh/clock-in-to-started (kw)
-    "Switch task from TODO to STARTED when clocking in"
+  ;; Change task state to NEXT from TODO when clocking in
+  (defun bh/clock-in-to-next (kw)
+    "Switch task from TODO to NEXT when clocking in.
+  Skips remember tasks and tasks with subtasks"
     (if (and (string-equal kw "TODO")
              (not (string-equal (buffer-name) "*Remember*")))
-        "STARTED"
-      nil))
+        (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+              (has-subtask nil))
+          (save-excursion
+            (forward-line 1)
+            (while (and (not has-subtask)
+                        (< (point) subtree-end)
+                        (re-search-forward "^\*+ " subtree-end t))
+              (when (member (org-get-todo-state) org-not-done-keywords)
+                (setq has-subtask t))))
+          (when (not has-subtask)
+            "NEXT"))))
   
-  (setq org-clock-in-switch-to-state (quote bh/clock-in-to-started))
+  (setq org-clock-in-switch-to-state (quote bh/clock-in-to-next))
 #+end_src
 
 * Adding New Tasks Quickly with Remember
@@ -586,9 +608,8 @@ I use a =project= tag for marking projects.  This tag is excluded from inheritan
   (setq org-remember-default-headline "Tasks")
   
   ;; 3 remember templates for TODO tasks, Notes, and Phone calls
-  (setq org-remember-templates (quote (("todo" ?t "* TODO %?\n  %u\n  %a" nil bottom nil)
-                                       ("note" ?n "* %?                                        :NOTE:\n  :CLOCK:\n  :END:\n  %U\n  %a" nil bottom nil)
-                                       ("Phone" 80 "* TODO Phone [[bbdb:%(gjg/bbdb-name)][%(gjg/bbdb-name)]] - %(gjg/bbdb-company)               :PHONE:\n  %U\n  %?" nil bottom nil)
+  (setq org-remember-templates (quote (("todo" ?t "* TODO %?\n  %U\n  %a" nil bottom nil)
+                                       ("note" ?n "* %?                                                                            :NOTE:\n  %U\n  %a\n  :CLOCK:\n  :END:" nil bottom nil)
                                        ("appointment" ?a "* %?\n  %U" "~/git/org/todo.org" "Appointments" nil)
                                        ("org-protocol" ?w "* TODO Review %c%!\n  %U" nil bottom nil))))
 #+end_src
@@ -744,41 +765,65 @@ they occur.
    the appropriate location.  Some phone calls are billable and we
    want these tracked in the appropriate category.
 * Custom agenda views
-  I have 7 custom agenda views defined.  Most of my old custom
+  I have 10 custom agenda views defined.  Most of my old custom
   agenda views were rendered obsolete when filtering functionality was
   added to the agenda in newer versions of =org-mode=.
 
   Custom agenda views are used for:
-  1. Finding =STARTED= tasks
-  2. Finding tasks waiting on something
-  3. Finding tasks to be refiled
-  4. Finding notes
-  5. Finding =NEXT= tasks to work on
-  6. Finding projects
+  1. Finding tasks waiting on something
+  2. Finding tasks to be refiled
+  3. Finding notes
+  4. Finding =NEXT= tasks to work on
+  5. Reviewing projects
+  6. Reviewing other non-project tasks
   7. Findings tasks to be archived
+  8. Viewing habits
+  9. Finding stuck projects
+  10. Setting the default clocking task for punching in
 
 ** Setup
 #+begin_src emacs-lisp
   (setq org-agenda-custom-commands
-        (quote (("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-scheduled nil)
-                                                     (org-agenda-todo-ignore-deadlines nil)
-                                                     (org-agenda-todo-ignore-with-date nil)))
-                ("w" "Tasks waiting on something" tags "WAITING/!" ((org-use-tag-inheritance nil)
-                                                                    (org-agenda-todo-ignore-with-date nil)
-                                                                    (org-agenda-todo-ignore-deadlines nil)
-                                                                    (org-agenda-todo-ignore-scheduled nil)))
-                ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE" ((org-agenda-todo-ignore-with-date nil)
-                                                                         (org-agenda-todo-ignore-deadlines nil)
-                                                                         (org-agenda-todo-ignore-scheduled nil)))
-                ("N" "Notes" tags "NOTE" nil)
-                ("n" "Next" tags "NEXT-WAITING-CANCELLED/!" nil)
-                ("p" "Projects" tags-todo "project-WAITING-CANCELLED/!-DONE" nil)
-                ("A" "Tasks to be Archived" tags "LEVEL=2/DONE|CANCELLED" nil)
-                ("h" "Habits" tags "STYLE=\"habit\"" ((org-agenda-todo-ignore-with-date nil) (org-agenda-todo-ignore-scheduled nil) (org-agenda-todo-ignore-deadlines nil))))))
+        (quote (("w" "Tasks waiting on something" tags "WAITING/!"
+                 ((org-use-tag-inheritance nil)
+                  (org-agenda-todo-ignore-scheduled nil)
+                  (org-agenda-todo-ignore-deadlines nil)
+                  (org-agenda-todo-ignore-with-date nil)
+                  (org-agenda-overriding-header "Waiting Tasks")))
+                ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE"
+                 ((org-agenda-todo-ignore-with-date nil)
+                  (org-agenda-todo-ignore-deadlines nil)
+                  (org-agenda-todo-ignore-scheduled nil)
+                  (org-agenda-overriding-header "Tasks to Refile")))
+                ("N" "Notes" tags "NOTE"
+                 ((org-agenda-overriding-header "Notes")))
+                ("n" "Next" tags-todo "-WAITING-CANCELLED/!NEXT"
+                 ((org-agenda-overriding-header "Next Tasks")))
+                ("p" "Projects" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED"
+                 ((org-agenda-skip-function 'bh/skip-non-projects)
+                  (org-agenda-overriding-header "Projects")))
+                ("o" "Other (Non-Project) tasks" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED"
+                 ((org-agenda-skip-function 'bh/skip-projects)
+                  (org-agenda-overriding-header "Other Non-Project Tasks")))
+                ("A" "Tasks to be Archived" tags-todo "LEVEL=2-REFILE/!DONE|CANCELLED"
+                 ((org-agenda-overriding-header "Tasks to Archive")))
+                ("h" "Habits" tags "STYLE=\"habit\""
+                 ((org-agenda-todo-ignore-with-date nil)
+                  (org-agenda-todo-ignore-scheduled nil)
+                  (org-agenda-todo-ignore-deadlines nil)
+                  (org-agenda-overriding-header "Habits")))
+                ("#" "Stuck Projects" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED"
+                 ((org-agenda-skip-function 'bh/skip-non-stuck-projects)
+                  (org-agenda-overriding-header "Stuck Projects")))
+                ("c" "Select default clocking task" tags "LEVEL=2-REFILE"
+                 ((org-agenda-skip-function
+                   '(org-agenda-skip-subtree-if 'notregexp "^\\*\\* Organization"))
+                  (org-agenda-overriding-header "Set default clocking task with C-u C-u I"))))
 #+end_src
 
    My day goes generally like this:
 
+   - Punch in (start the clock)
    - Look at my agenda =F12 a=
      - make a note of anything important to deal with today
    - Read email and news
@@ -786,19 +831,23 @@ they occur.
    - Check refile tasks and respond to emails
    - Look at my agenda and knock off tasks scheduled for today
      - Clock it in (=I= in the agenda or on the beginning of a task headline 
-       - this changes =TODO= state tasks to =STARTED=
+       - this changes =TODO= state tasks to =NEXT= when there are no unfinished subtasks
      - Work on it until it is =DONE= or it gets interrupted
+   - work on tasks
+   - Punch out and go for lunch
+   - Punch in and continue work for the afternoon
+   - work on tasks
    - Check today's time log report and refile tasks with clocked time
      - =F12 a R= - any tasks in =refile.org= should be moved to the appropriate file
      - =F12 r= to get to refile tasks
      - Tag files to be filed with =m= collecting all tasks for the same target
      - Bulk refile the tasks to the target location with =B r=
      - repeat until the agenda timeclock report has all of the time in project files
-     
+   - Punch out (stop the clock)
+
 ** What do I work on next?
-   Use the agenda view for =STARTED= and =NEXT= tasks to find stuff in
-   progress and things to clock.  My list of =STARTED= tasks is
-   normally less than 20 items long.
+   Use the agenda view for =NEXT= tasks to find stuff in progress and
+   things to clock.
 
    When I look for a new task to work on I generally hit =F12 a= to
    get today's agenda and follow this order:
@@ -808,53 +857,49 @@ they occur.
      - deadline in the past (it's already late)
      - deadline that is coming up soon
      - a scheduled task for today (or in the past)
-   - pick a STARTED task (it's unfinished)
+   - pick a NEXT task
    - If you run out of items to work on look for NEXT task in the current context
      F12 n / RET
 
-*** Why keep it all on the =STARTED= list?
+*** Why keep it all on the =NEXT= list?
+    I've moved to a more GTD way of doing things.  I don't have a
+    =STARTED= list or todo keyword anymore.  Now I just use a =NEXT=
+    list.  If I clock a TODO keyword it changes to =NEXT= if that is
+    appropriate automagically on clock in.  A =NEXT= task is something
+    that is available to work on *now*, it was either clocked already
+    or is the next logical step in some project.
+
     I used to have a special keyword =ONGOING= for things that I do a
     lot and want to clock but never really start/end.  I had a special
     agenda view for =ONGOING= tasks that I would pull up to easily find
     the thing I want to clock.
 
     Since then I've moved away from using the =ONGOING= todo keyword.
-    If a task is clocked-in it automatically moves to the =STARTED=
-    state from =TODO= state and shows up on the =STARTED= task list
-    without having to think about it.  Having an agenda view that
-    shows =STARTED= tasks makes it easy to pick the thing to clock -
-    and I don't have to remember if I need to look in the =ONGOING=
-    list or the =STARTED= list when looking for the task to clock-in.
-    The =STARTED= list is basically 'what is current' - stuff I worked
-    on recently and need to finish.  I want to find the thing to work
-    on as fast as I can and actually do work on it - not spend time
-    hunting through my org files for the task that needs to be
-    clocked-in.
+    If a task is clocked-in it automatically moves to the =NEXT= state
+    from =TODO= state and shows up on the =NEXT= task list without
+    having to think about it.  Having an agenda view that shows =NEXT=
+    tasks makes it easy to pick the thing to clock - and I don't have
+    to remember if I need to look in the =ONGOING= list or the =NEXT=
+    list when looking for the task to clock-in.  The =NEXT= list is
+    basically 'what is current' - stuff I worked on recently and need
+    to finish and any task that moves a project forward.  I want to
+    find the thing to work on as fast as I can and actually do work on
+    it - not spend time hunting through my org files for the task that
+    needs to be clocked-in.
 
-    It is just easier to have it all in one short list.  My =STARTED=
-    list has less than 20 entries so it's pretty easy to find what I
-    want.  The whole point of the =STARTED= list is to make it quick
-    and easy to find the task to clock-in.
-
-    I only have 2 tasks that are permanently in a =STARTED= state.  These are:
-
-      - Organization
-      - Email, News, and IRC
-
-    Everything else will eventually move to a =DONE= state and fall off
-    the list.  To drop a task off the =STARTED= simply move it back to
-    the =TODO= state.
+    To drop a task off the =NEXT= simply move it back to the =TODO=
+    state.
 ** Reading email, newsgroups, and conversations on IRC
-   To read email I do =F12 s C-s email RET I= which goes to the agenda
-   view for started tasks, searches for 'email' and clocks it in.
-   Then I go to Gnus and read everything in my inboxes.  If there are
-   emails that require a response I use org-remember to create a new
-   task with a heading of 'Respond to <user>' for each one.  This
-   automatically links to the email in the task and makes it easy to
-   find later.  Some emails are quick to respond to and some take
-   research and a significant amount of time to complete.  I clock
-   each one in it's own task just in case I need that clocked time
-   later.
+   When reading email, newsgroups, and conversations on IRC I just let
+   the default task (normally =Organization=) clock the time I spend
+   on these tasks.  To read email I go to Gnus and read everything in
+   my inboxes.  If there are emails that require a response I use
+   org-remember to create a new task with a heading of 'Respond to
+   <user>' for each one.  This automatically links to the email in the
+   task and makes it easy to find later.  Some emails are quick to
+   respond to and some take research and a significant amount of time
+   to complete.  I clock each one in it's own task just in case I need
+   that clocked time later.
 
    Next, I go to my newly created tasks to be refiled with =F12 r= and
    clock in an email task and deal with it.  Repeat this until all of
@@ -864,7 +909,8 @@ they occur.
    for quickly looking at things.  If an article has a useful piece of
    information I want to remember I create a note for it with =C-M-r n=
    and enter the topic and file it.  This takes practically no time at
-   all and I know the note is safely filed for later.
+   all and I know the note is safely filed for later.  The time I spend
+   in the remember buffer is clocked with that remember note.
 ** Filtering
 
    So many tasks, so little time.  I have hundreds of tasks at any
@@ -932,15 +978,6 @@ they occur.
   supposed to be working on now from the list of returned results.
 
   This helps to keep my agenda clutter-free.
-** Keeping the =STARTED= task list under control
-   Some tasks are periodic.  Things I need to do weekly.
-   Since I clock these tasks in they change to a =STARTED= state.
-   Cyclic or repeated tasks automatically reschedule to the future and reset
-   the task state back to =TODO= when they are marked =DONE=.  This removes it
-   from the =STARTED= agenda view and helps keep the list short.  Tasks that 
-   I've worked on but won't finish anytime soon can be removed from the =STARTED=
-   agenda view simply by moving the task state keyword back to =TODO=.
-
 * Time Clocking
   :PROPERTIES:
   :CUSTOM_ID: Clocking
@@ -968,17 +1005,54 @@ they occur.
 
   Without clocking data it's hard to tell what you did after the fact.
 
+  I now use the concept of punching in and punching out at the start
+  and end of my work day.  This defines a default task to clock time
+  on whenever the clock would normally stop.  I found that with the default
+  org-mode setup I would lose clocked minutes during the day,  a minute here,
+  a minute there, and that all adds up.  This is especially true if you
+  write notes when moving to a DONE state - in this case the clock normally
+  stops before you have composed the note.
+
+  My clocking setup basically works like this:
+
+  - Punch in (start the clock)
+    - This identifies a task that is the default task to clock in
+      whenever the clock normally stops
+  - Clock in tasks normally, and let moving to a DONE state clock out
+    - clocking out automatically clocks time on the default task
+  - Continue clocking whatever tasks you work on
+  - Punch out (stop the clock)
+
+  I'm free to change the default task multiple times during the day.  If I'm 
+  working on =Project X= then I can make the top-level =Project X= task the default
+  and all clocked time goes on that project until I either punch out or change
+  to some other default task.
+
+  I now have a default =Organization= task that I use for every major
+  context I clock time in.  If I am working on norang.ca tasks, then I
+  set the norang.org =Organization= task as the default task.  If I'm
+  working for client ABC then I set the =Organization= task in ABC.org
+  as the default task etc.  This allows me to block time on my
+  calendar and work on a single context for some time frame of my day,
+  then totally switch to another context simply by changing my default
+  clocking task.  Or course if I get interrupted in the middle of the
+  day clocking in a task puts time on that task regardless of the
+  context I'm supposed to be working in.
+
+  This works really well for me.
+
 ** Clock Setup
    :PROPERTIES:
    :CUSTOM_ID: ClockSetup
    :END:
-   I like to keep control of the clock separate from task state
-   changes.  If I mark a clocked task =DONE= I want the clock to keep
-   running on that task until I've finished all of the work on it.  I
-   tend to mark tasks =DONE= just before I'm really finished with
-   them.  This allows me to enter a note with the =DONE= state that
-   may take a few minutes to compose and the time spent doing this
-   counts towards clocking on that task.
+   
+   To get started we need to set the default clocking task which we use to
+   clock in whenever the clock would normally stop.  I use a special custom
+   agenda view for this and I think of it as selecting the context for what 
+   I'm going to work on for the next few hours. 
+
+   =F12 c= shows me the tasks I can normally set as the default clocking task.
+   I'm free to set any task as the default but these are the ones I normally use.
 
    Keeping the clock running when moving a subtask to a =DONE= state
    means clocking continues to apply to the parent task.  I can pick
@@ -999,20 +1073,50 @@ they occur.
   (setq org-clock-history-length 28)
   ;; Resume clocking task on clock-in if the clock is open
   (setq org-clock-in-resume t)
-  ;; Change task state to STARTED when clocking in
-  (setq org-clock-in-switch-to-state "STARTED")
+  ;; Change task state to NEXT when clocking in
+  (setq org-clock-in-switch-to-state (quote bh/clock-in-to-next))
   ;; Separate drawers for clocking and logs
   (setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK")))
   ;; Save clock data in the CLOCK drawer and state changes and notes in the LOGBOOK drawer
   (setq org-clock-into-drawer "CLOCK")
   ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
   (setq org-clock-out-remove-zero-time-clocks t)
-  ;; Don't clock out when moving task to a done state
-  (setq org-clock-out-when-done nil)
+  ;; Clock out when moving task to a done state
+  (setq org-clock-out-when-done t)
   ;; Save the running clock and all clock history when exiting Emacs, load it on startup
   (setq org-clock-persist (quote history))
-  ;; Disable auto clock resolution
-  (setq org-clock-auto-clock-resolution nil)
+  ;; Enable auto clock resolution for finding open clocks
+  (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+  ;; Include current clocking task in clock reports
+  (setq org-clock-report-include-clocking-task t)
+  
+  (setq bh/keep-clock-running nil)
+  
+  (defun bh/clock-in ()
+    (interactive)
+    (setq bh/keep-clock-running t)
+    (if (marker-buffer org-clock-default-task)
+        (unless (org-clock-is-active)
+          (bh/clock-in-default-task))
+      (unless (marker-buffer org-clock-default-task)
+        (org-agenda nil "c"))))
+  
+  (defun bh/clock-out ()
+    (interactive)
+    (setq bh/keep-clock-running nil)
+    (when (org-clock-is-active)
+      (org-clock-out)))
+  
+  (defun bh/clock-in-default-task ()
+    (save-excursion
+      (org-with-point-at org-clock-default-task
+        (org-clock-in))))
+  
+  (defun bh/clock-out-maybe ()
+    (when (and bh/keep-clock-running (not org-clock-clocking-in) (marker-buffer org-clock-default-task))
+      (bh/clock-in-default-task)))
+  
+  (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
 #+end_src
 
    I keep two tasks specifically for clocking the time I spend organizing stuff and
@@ -1039,9 +1143,10 @@ they occur.
    the interrupted task.
 
 #+begin_src emacs-lisp
+  (require 'org-id)
+
   (defun bh/clock-in-task-by-id (id)
     "Clock in a task by id"
-    (require 'org-id)
     (save-restriction
       (widen)
       (org-with-point-at (org-id-find id 'marker)
@@ -1069,7 +1174,7 @@ they occur.
 ** Clocking in
   When I start or continue working on a task I clock it in with =C-c
   C-x C-i= (or just =I= in the agenda or speed key setting).  This
-  changes the task state from =TODO= to =STARTED= and starts the clock
+  changes the task state from =TODO= to =NEXT= and starts the clock
   for this task.
 
 *** Setting a default clock task
@@ -1083,12 +1188,13 @@ they occur.
 
     You can quickly clock in the default task with =C-u C-c C-x C-i d=
 
-    I've stopped using the default task for clocking.  I now use two
-    key bindings to clock in specific tasks by id.  I use this to clock
-    in my 'organization' and 'read mail and news' tasks without having
-    to spend any time finding those tasks.  I just hit 'f9 o' or 'f9 m'
-    and I'm done.  This also works in any emacs buffer.
+    I now set the default clocking task when I punch in and clocking out
+    of any task will clock in this default task until I punch out using
+    the clocking hooks I have set up.
 
+    The only thing I need to remember is to set a new default clock task
+    when I switch contexts (stop working for client A and start working
+    for client B).
 *** Using the clock history to clock in old tasks
     You can use the clock history to restart clocks on old tasks you've clocked or to jump
     directly to a task you have clocked previously.  I use this mainly to clock in whatever
@@ -1113,14 +1219,14 @@ they occur.
 *Clock history selection buffer for C-u C-c C-x C-i*
 #+begin_example
   Default Task
-  [d] norang          STARTED Organization                  <-- Task B
+  [d] norang          Organization                          <-- Task B
   The task interrupted by starting the last one
-  [i] norang          STARTED Organization                  <-- Task B
+  [i] norang          Organization                          <-- Task B
   Current Clocking Task
-  [c] org             STARTED Document my use of org-mode   <-- Task A
+  [c] org             NEXT Document my use of org-mode      <-- Task A
   Recent Tasks
-  [1] org             STARTED Document my use of org-mode   <-- Task A
-  [2] norang          STARTED Organization                  <-- Task B
+  [1] org             NEXT Document my use of org-mode      <-- Task A
+  [2] norang          Organization                          <-- Task B
   ...
   [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
 #+end_example
@@ -1155,9 +1261,9 @@ they occur.
      Go back to something I was clocking that is not finished
    - Pick something off today's agenda
      =SCHEDULED= or =DEADLINE= items that need to be done soon
-   - Pick something off the =STARTED= tasks agenda view
+   - Pick something off the =NEXT= tasks agenda view
      Work on some unfinished task to move to completion
-
+   - Pick something off the other (non-project) task list 
    - Use an agenda view with filtering to pick something to work on
 ** Editing clock entries
    Sometimes it is necessary to edit clock entries so they reflect
@@ -1401,17 +1507,17 @@ they occur.
   Tasks can have any number of arbitrary tags.  Tags are used for:
 
   - filtering todo lists and agenda views
-  - providing context to some tasks
+  - providing context for tasks
   - tagging notes
   - tagging phone calls
   - tagging tasks to be refiled
-  - tagging NEXT actions for project tasks
   - tagging tasks in a WAITING state because a parent task is WAITING
+  - tagging cancelled tasks because a parent task is CANCELLED
   - preventing export of some subtrees when publishing
 
-  Tags are mostly used for filtering in the agenda.  This means you
-  can find tasks with a specific tag easily across your large number
-  of org-mode files.
+  I use tags mostly for filtering in the agenda.  This means you can
+  find tasks with a specific tag easily across your large number of
+  org-mode files.
 
   Some tags are mutually exclusive.  These are defined in a group so
   that only one of the tags can be applied to a task at a time
@@ -1423,8 +1529,10 @@ they occur.
   to only =@office= tasks when I'm at the office.)
 
   Tasks are grouped together in org-files and a =#+FILETAGS:= entry
-  applies a tag to all tasks in the file.  I use this to apply the
-  =@office= tag to projects that are work related.
+  applies a tag to all tasks in the file.  I use this to apply a
+  tag to all tasks in the file.  My norang.org file creates a NORANG 
+  file tag so I can filter tasks in the agenda in the norang.org file
+  easily.
 
 ** Tags
    Here are my tag definitions with associated keys for filtering in
@@ -1459,7 +1567,6 @@ they occur.
                               (:endgroup)
                               ("PHONE" . ?P)
                               ("QUOTE" . ?q)
-                              ("NEXT" . ?n)
                               ("WAITING" . ?w)
                               ("FARM" . ?F)
                               ("HOME" . ?H)
@@ -1467,9 +1574,9 @@ they occur.
                               ("NORANG" . ?N)
                               ("crypt" . ?c)
                               ("MARK" . ?M)
-                              ("project" . ?p)
+                              ("MARK" . ?n)
                               ("CANCELLED" . ?C))))
-    
+  
   ; Allow setting single tags without the menu
   (setq org-fast-tag-selection-single-key (quote expert))
     
@@ -1638,7 +1745,7 @@ they occur.
    handy.  This pops up as a reminder on Monday's.  This week I'm
    doing my weekly review on Tuesday since Monday was a holiday.
 
-   : ** STARTED Weekly Review [0/5]
+   : ** NEXT Weekly Review [0/5]
    :    SCHEDULED: <2009-05-18 Mon ++1w> 
    :    :LOGBOOK:...
    :    :PROPERTIES:...
@@ -1679,25 +1786,64 @@ they occur.
 
    This works for me.  You're mileage may vary ;)
 ** Project definition and finding stuck projects
-   Projects are marked with a =project= tag.
+   I'm using a new lazy project definition to mark tasks as projects.
+   This requires zero effort from me.  Any task with a subtask using
+   a todo keyword is a project.  Period.
 
-   Projects are 'stuck' if they have no =NEXT= task defined.  I use
-   tags to identify =NEXT= tasks (so the task todo state keyword is
-   one of =TODO= or =STARTED=).
+   Projects are 'stuck' if they have no subtask with a =NEXT= todo
+   keyword task defined.
 
    Org-mode stuck projects lists projects that have no =NEXT= task defined.
    I normally review these in my weekly review and assign a =NEXT= task
    to all projects to clear the stuck project list.  This helps to keep
-   projects moving forwards.
+   projects moving forward.
 
-#+begin_src emacs-lisp
-  (setq org-stuck-projects (quote ("project/!-DONE-CANCELLED" nil ("NEXT") "")))
-#+end_src
-
-   Todo state triggers (see [[*ToDo%20state%20triggers][*ToDo state triggers]]) automatically remove
-   =NEXT= tags when tasks change to specific states.
+   I use a custom agenda view that overrides the default
+   =org-stuck-projects= definition to find stuck projects.
 
    The stuck project view is available with =F12 #=.
+
+   I have the following helper functions defined for projects.  These are used
+   by agenda views.
+#+begin_src emacs-lisp
+  (defun bh/is-project-p ()
+    "Any task with a todo keyword subtask"
+    (let ((has-subtask)
+          (subtree-end (save-excursion (org-end-of-subtree t))))
+      (save-excursion
+        (forward-line 1)
+        (while (and (not has-subtask)
+                    (< (point) subtree-end)
+                    (re-search-forward "^\*+ " subtree-end t))
+          (when (member (org-get-todo-state) org-todo-keywords-1)
+            (setq has-subtask t))))
+      has-subtask))
+  
+  (defun bh/skip-non-stuck-projects ()
+    "Skip trees that are not stuck projects"
+    (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+           (has-next (save-excursion
+                       (forward-line 1)
+                       (and (< (point) subtree-end)
+                            (re-search-forward "^\\*+ NEXT " subtree-end t)))))
+      (if (and (bh/is-project-p) (not has-next))
+          nil ; a stuck project, has subtasks but no next task
+        subtree-end)))
+  
+  (defun bh/skip-non-projects ()
+    "Skip trees that are not projects"
+    (let* ((subtree-end (save-excursion (org-end-of-subtree t))))
+      (if (bh/is-project-p)
+          nil
+        subtree-end)))
+  
+  (defun bh/skip-projects ()
+    "Skip trees that are projects"
+    (let* ((subtree-end (save-excursion (org-end-of-subtree t))))
+      (if (bh/is-project-p)
+          subtree-end
+        nil)))
+#+end_src
 
 * Archiving
 ** Archiving Subtrees
@@ -2811,17 +2957,16 @@ Here are the =.emacs= settings:
    With =org-todo-keywords= set as 
 
 #+begin_src emacs-lisp
-  (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
-   (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
-   (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))))
+  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+   (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
+   (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
+   (sequence "OPEN(O)" "|" "CLOSED(C)"))))
 #+end_src
 
    This adds a log entry whenever a task moves to any of the following states:
-   - to =STARTED= status
    - to or out of =DONE= status
    - to =WAITING= status (with a note) or out of =WAITING= status
    - to =SOMEDAY= status
-   - to =OPEN= status (with a note)
    - to =CANCELLED= status (with a note) or out of =CANCELLED= status
    - to =QUOTE= status
    - to =QUOTED= status
@@ -2846,7 +2991,7 @@ Here are the =.emacs= settings:
 
    To this end I have a task
 
-   : ** STARTED Document my use of org-mode
+   : ** NEXT Document my use of org-mode
    :    :LOGBOOK:...
    :    :PROPERTIES:
    :    :CLOCK_MODELINE_TOTAL: today
@@ -2993,7 +3138,7 @@ Here are the =.emacs= settings:
   (require 'org-crypt)
   ; Encrypt all entries before saving
   (org-crypt-use-before-save-magic)
-  (setq org-tags-exclude-from-inheritance (quote ("crypt" "project")))
+  (setq org-tags-exclude-from-inheritance (quote ("crypt"))
   ; GPG key to use for encryption
   (setq org-crypt-key "F0B66B40")
 #+end_src
@@ -3034,6 +3179,7 @@ Here are the =.emacs= settings:
                                         ("h" . hide-other)
                                         ("k" . org-kill-note-or-show-branches)
                                         ("r" . org-reveal)
+                                        ("s" . org-save-all-org-buffers)
                                         ("z" . org-add-note))))
 #+end_src
 
@@ -3199,6 +3345,15 @@ Here are the =.emacs= settings:
 
 #+begin_src emacs-lisp
   (setq org-remove-highlights-with-change nil)
+#+end_src
+
+** Getting up to date org-mode info documentation
+   I keep use the org-mode info documentation from the git repository
+   so I set up emacs to find the info files from git before the
+   regular (out of date) system versions.
+
+#+begin_src emacs-lisp
+  (add-to-list 'Info-default-directory-list "~/git/org-mode/doc")
 #+end_src
 
 * Things I Don't Use
