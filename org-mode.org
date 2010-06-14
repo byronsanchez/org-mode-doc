@@ -814,7 +814,7 @@ they occur.
                 ("c" "Select default clocking task" tags "LEVEL=2-REFILE"
                  ((org-agenda-skip-function
                    '(org-agenda-skip-subtree-if 'notregexp "^\\*\\* Organization"))
-                  (org-agenda-overriding-header "Set default clocking task with C-u C-u I"))))
+                  (org-agenda-overriding-header "Set default clocking task with C-u C-u I"))))))
 #+end_src
 
    My day goes generally like this:
@@ -1850,7 +1850,7 @@ they occur.
    are not marked DONE.
 
 #+begin_src emacs-lisp
-(setq org-archive-mark-done nil)
+  (setq org-archive-mark-done nil)
 #+end_src
 
 ** Archive Tag - Hiding Information
@@ -2294,16 +2294,16 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
     (interactive)
     (setq appt-time-msg-list nil)
     (org-agenda-to-appt))
-
+  
   ; Rebuild the reminders everytime the agenda is displayed
   (add-hook 'org-finalize-agenda-hook 'bh/org-agenda-to-appt)
-
+  
   ; This is at the end of my .emacs - so appointments are set up when Emacs starts
   (bh/org-agenda-to-appt)
-
+  
   ; Activate appointments so we get notifications
   (appt-activate t)
-
+  
   ; If we leave Emacs running overnight - reset the appointments one minute after midnight
   (run-at-time "24:01" nil 'bh/org-agenda-to-appt)
 #+end_src
@@ -2332,11 +2332,11 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
 
 #+begin_src emacs-lisp
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins"))
-
+  
   (require 'yasnippet)
   (yas/initialize)
   (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
-
+  
   ;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
   (add-hook 'org-mode-hook
             (lambda ()
@@ -2460,19 +2460,19 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 #+begin_src emacs-lisp
   ;; Keep tasks with dates off the global todo lists
   (setq org-agenda-todo-ignore-with-date nil)
-
+  
   ;; Allow deadlines which are due soon to appear on the global todo lists
   (setq org-agenda-todo-ignore-deadlines (quote far))
-
+  
   ;; Keep tasks scheduled in the future off the global todo lists
   (setq org-agenda-todo-ignore-scheduled (quote future))
-
+  
   ;; Remove completed deadline tasks from the agenda view
   (setq org-agenda-skip-deadline-if-done t)
-
+  
   ;; Remove completed scheduled tasks from the agenda view
   (setq org-agenda-skip-scheduled-if-done t)
-
+  
   ;; Remove completed items from search results
   (setq org-agenda-skip-timestamp-if-done t)
 #+end_src
@@ -2531,28 +2531,26 @@ Here are the =.emacs= settings:
 #+begin_src emacs-lisp
   ;; Show all future entries for repeating tasks
   (setq org-agenda-repeating-timestamp-show-all t)
-
+  
   ;; Show all agenda dates - even if they are empty
   (setq org-agenda-show-all-dates t)
-
+  
   ;; Sorting order for tasks on the agenda
   (setq org-agenda-sorting-strategy
         (quote ((agenda habit-down time-up priority-down effort-up category-up)
                 (todo priority-down)
                 (tags priority-down))))
-
+  
   ;; Start the weekly agenda today
   (setq org-agenda-start-on-weekday nil)
-
+  
   ;; Disable display of the time grid
   (setq org-agenda-time-grid
         (quote (nil "----------------"
                     (800 1000 1200 1400 1600 1800 2000))))
-
+  
   ;; Display tags farther right
   (setq org-agenda-tags-column -102)
-
-  
 #+end_src
 
 ** Checklist handling
@@ -3093,7 +3091,7 @@ Here are the =.emacs= settings:
    This is perfect for synchronizing my org-mode files between systems.
 
 #+begin_src emacs-lisp
-(setq global-auto-revert-mode t)
+  (setq global-auto-revert-mode t)
 #+end_src
 
 ** Handling Encryption
@@ -3114,7 +3112,7 @@ Here are the =.emacs= settings:
   (require 'org-crypt)
   ; Encrypt all entries before saving
   (org-crypt-use-before-save-magic)
-  (setq org-tags-exclude-from-inheritance (quote ("crypt"))
+  (setq org-tags-exclude-from-inheritance (quote ("crypt")))
   ; GPG key to use for encryption
   (setq org-crypt-key "F0B66B40")
 #+end_src
@@ -3172,7 +3170,7 @@ Here are the =.emacs= settings:
    My org-mode setup for org-protocol is really simple.  It enables org-protocol and creates a 
    single org-protocol remember template as described in [[id:9507648b-dbfc-4ba1-96c2-36e8ba15cbd0][Remember Templates]].
 #+begin_src emacs-lisp
-    (require 'org-protocol)
+  (require 'org-protocol)
 #+end_src
    The bulk of the setup is in the Firefox application so that C-M-r on a page in Firefox will 
    trigger the org-protocol remember template with details of the page I'm currently viewing
@@ -3181,7 +3179,7 @@ Here are the =.emacs= settings:
    I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
 ** Add final newline when saving files
    #+begin_src emacs-lisp
-        (setq require-final-newline t)
+     (setq require-final-newline t)
    #+end_src
    
 ** Insert inactive timestamps
@@ -3344,7 +3342,7 @@ Here are the =.emacs= settings:
 
    I disable the priority setting keys in org-mode using
 #+begin_src emacs-lisp
-(setq org-enable-priority-commands nil)
+  (setq org-enable-priority-commands nil)
 #+end_src
 
 ** Archive Sibling
@@ -3363,11 +3361,11 @@ Here are the =.emacs= settings:
    which I find a lot nicer.
 
 #+begin_src emacs-lisp
-   (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>")
-                                    ("/" italic "<i>" "</i>")
-                                    ("_" underline "<span style=\"text-decoration:underline;\">" "</span>")
-                                    ("=" org-code "<code>" "</code>" verbatim)
-                                    ("~" org-verbatim "<code>" "</code>" verbatim))))
+  (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>")
+                                   ("/" italic "<i>" "</i>")
+                                   ("_" underline "<span style=\"text-decoration:underline;\">" "</span>")
+                                   ("=" org-code "<code>" "</code>" verbatim)
+                                   ("~" org-verbatim "<code>" "</code>" verbatim))))
 #+end_src
 
 * Using Git for Automatic History, Backups, and Synchronization
