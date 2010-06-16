@@ -801,7 +801,7 @@ they occur.
                 ("o" "Other (Non-Project) tasks" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED"
                  ((org-agenda-skip-function 'bh/skip-projects)
                   (org-agenda-overriding-header "Other Non-Project Tasks")))
-                ("A" "Tasks to be Archived" tags-todo "LEVEL=2-REFILE/!DONE|CANCELLED"
+                ("A" "Tasks to be Archived" tags "LEVEL=2-REFILE/DONE|CANCELLED"
                  ((org-agenda-overriding-header "Tasks to Archive")))
                 ("h" "Habits" tags "STYLE=\"habit\""
                  ((org-agenda-todo-ignore-with-date nil)
