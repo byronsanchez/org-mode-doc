@@ -1550,7 +1550,7 @@ they occur.
                               ("NORANG" . ?N)
                               ("crypt" . ?c)
                               ("MARK" . ?M)
-                              ("MARK" . ?n)
+                              ("NOTE" . ?n)
                               ("CANCELLED" . ?C))))
   
   ; Allow setting single tags without the menu
