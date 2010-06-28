@@ -440,6 +440,9 @@ The following states track purchase orders.
       +----------+       +---------+
 #+end_src
 
+#+results:
+[[file:po_states.png]]
+
 *** Project Task States
 I use a lazy project definition.  I don't like to bother with manually
 stating 'this is a project' and 'that is not a project'.  For me a project
@@ -3322,7 +3325,10 @@ Here are the =.emacs= settings:
 #+end_src
 
 ** Getting up to date org-mode info documentation
-   I keep use the org-mode info documentation from the git repository
+   :PROPERTIES:
+   :CUSTOM_ID: InfoDocumentation
+   :END:
+   I use the org-mode info documentation from the git repository
    so I set up emacs to find the info files from git before the
    regular (out of date) system versions.
 
