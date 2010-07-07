@@ -2907,21 +2907,15 @@ Here are the =.emacs= settings:
    opening the link.
 
 #+begin_src emacs-lisp
-  (setq org-link-frame-setup (quote ((vm . vm-visit-folder-other-frame)
-                                     (gnus . gnus-other-frame)
-                                     (file . find-file-other-frame))))
+  (setq org-link-frame-setup ((vm . vm-visit-folder)
+                              (gnus . org-gnus-no-new-news)
+                              (file . find-file-other-window)))
 #+end_src
 
-   I like to keep separate frames open for Emacs - one for org and one for
-   Gnus.  When I open a link to an email org loads the message in the
-   other gnus frame.  I find this much better than replacing the task
-   data I'm currently looking at.
-
-   Similarly opening a file displays the file in a new frame.
-
-   I use xmonad as my window manager and works great for me.
-   Your mileage may vary :)
-
+   I like to keep links in the same window so that I don't end up 
+   with a ton of frames in my window manager.  I normally work
+   in a full-screen window and having links open in the same window
+   just works better for me.
 ** Logging stuff
    Most of my logging is controlled by the global =org-todo-keywords=
 
