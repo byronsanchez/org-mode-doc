@@ -2950,6 +2950,9 @@ Here are the =.emacs= settings:
    is waiting is near the top of the LOGBOOK and unfolding the LOGBOOK
    drawer provides that information.
 ** Limiting time spent on tasks
+   :PROPERTIES:
+   :CUSTOM_ID: LimitingTimeSpentOnTasks
+   :END:
    Org-mode has this great new feature for signalling alarms when the
    estimated time for a task is reached.  I use this to limit the
    amount of time I spend on a task during the day.  
