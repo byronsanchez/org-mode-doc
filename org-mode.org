@@ -3349,6 +3349,28 @@ Here are the =.emacs= settings:
      (setq org-read-date-prefer-future nil)
    #+end_src
    
+** Automatically change list bullets
+   I take point-form notes during meetings.  Having the same
+   list bullet for every list level makes it hard to read
+   the details when lists are indented more than 3 levels.
+
+   Org-mode has a way to automatically change the list bullets
+   when you change list levels.
+
+   | Current List Bullet | Next indented list bullet |
+   |---------------------+---------------------------|
+   | +                   | -                         |
+   | *                   | -                         |
+   | 1.                  | -                         |
+   | 1)                  | -                         | 
+
+   #+begin_src emacs-lisp
+     (setq org-list-demote-modify-bullet (quote (("+" . "-")
+                                                 ("*" . "-")
+                                                 ("1." . "-")
+                                                 ("1)" . "-"))))
+   #+end_src
+   
 * Things I Don't Use
   This is a partial list of things I know about but do not use.
   =org-mode= is huge with tons of features.  There are features out there
