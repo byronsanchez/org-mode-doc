@@ -367,8 +367,6 @@ Here are my =TODO= state keywords and colour settings:
 
 *** Normal Task States
 Normal tasks go through the sequence =TODO= -> =NEXT= -> =DONE=.
-The second sequence is really just a convenient collection of odd-ball
-states for tasks (=WAITING=, =SOMEDAY=, =CANCELLED=).
 
 The following diagram shows the possible state transitions for a task.
 
@@ -2931,10 +2929,10 @@ Here are the =.emacs= settings:
    With =org-todo-keywords= set as 
 
 #+begin_src emacs-lisp
-  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-   (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
-   (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
-   (sequence "OPEN(O)" "|" "CLOSED(C)"))))
+  (setq org-todo-keywords
+        (quote ((sequence "TODO(t)" "NEXT(n)" "WAITING(w@/!)" "SOMEDAY(s!)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
+                (sequence "QUOTE(Q!)" "QUOTED(D!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
+                (sequence "OPEN(O)" "|" "CLOSED(C)"))))
 #+end_src
 
    This adds a log entry whenever a task moves to any of the following states:
