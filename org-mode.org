@@ -3803,9 +3803,6 @@ Here is the =git-sync= script
 (org-version)
 #+end_src
 
-#+results:
-| Org-mode version 6.36trans (release_6.36.630.gbca27) |
-
   The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
   [[http://doc.norang.ca/org-mode.org][plain text org file]].
 
