@@ -701,7 +701,7 @@ they occur.
 
    In my setup I let any file in =org-agenda-files= and the current file contribute to the list of valid refile targets.
    I don't refile to tasks more then 5 levels deep just to limit the number of displayed targets.
-   I also use ido to help find targets quickly.
+   I also use ido mode to help find targets quickly.
 
    Here is my refile configuration:
 #+begin_src emacs-lisp
@@ -719,6 +719,11 @@ they occur.
   
   ; Allow refile to create parent tasks with confirmation
   (setq org-refile-allow-creating-parent-nodes (quote confirm))
+  
+  ; Use IDO only for buffers
+  ; set ido-mode to buffer and ido-everywhere to t via the customize interface
+  ; '(ido-mode (quote both) nil (ido))
+  ; '(ido-everywhere t)
 #+end_src
 
    To refile a task to my =norang.org= file under =System Maintenance=
