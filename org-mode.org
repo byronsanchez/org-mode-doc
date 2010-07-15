@@ -3799,7 +3799,7 @@ Here is the =git-sync= script
 
 * Change History - What's new
   This document is created using the publishing features of
-#+begin_src emacs-lisp :results table :exports results
+#+begin_src emacs-lisp :results raw :exports results
 (org-version)
 #+end_src
 
