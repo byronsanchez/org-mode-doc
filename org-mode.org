@@ -342,26 +342,29 @@ speed up creation of standard text blocks in most editing modes.
 ** TODO keywords
 Here are my =TODO= state keywords and colour settings:
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp
   (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
    (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
    (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
    (sequence "OPEN(O)" "|" "CLOSED(C)"))))
   
-  (setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
-   ("NEXT" :foreground "blue" :weight bold)
-   ("DONE" :foreground "forest green" :weight bold)
-   ("WAITING" :foreground "yellow" :weight bold)
-   ("SOMEDAY" :foreground "goldenrod" :weight bold)
-   ("CANCELLED" :foreground "orangered" :weight bold)
-   ("QUOTE" :foreground "hotpink" :weight bold)
-   ("QUOTED" :foreground "indianred1" :weight bold)
-   ("APPROVED" :foreground "forest green" :weight bold)
-   ("EXPIRED" :foreground "olivedrab1" :weight bold)
-   ("REJECTED" :foreground "olivedrab" :weight bold)
-   ("OPEN" :foreground "magenta" :weight bold)
-   ("CLOSED" :foreground "forest green" :weight bold))))
+  (setq org-todo-keyword-faces
+        (quote (("TODO"      :foreground "red"          :weight bold)
+                ("NEXT"      :foreground "blue"         :weight bold)
+                ("DONE"      :foreground "forest green" :weight bold)
+                ("WAITING"   :foreground "yellow"       :weight bold)
+                ("SOMEDAY"   :foreground "goldenrod"    :weight bold)
+                ("CANCELLED" :foreground "orangered"    :weight bold)
+                ("QUOTE"     :foreground "hotpink"      :weight bold)
+                ("QUOTED"    :foreground "indianred1"   :weight bold)
+                ("APPROVED"  :foreground "forest green" :weight bold)
+                ("EXPIRED"   :foreground "olivedrab1"   :weight bold)
+                ("REJECTED"  :foreground "olivedrab"    :weight bold)
+                ("OPEN"      :foreground "magenta"      :weight bold)
+                ("CLOSED"    :foreground "forest green" :weight bold))))
 #+end_src
+
+
 *** Normal Task States
 Normal tasks go through the sequence =TODO= -> =NEXT= -> =DONE=.
 The second sequence is really just a convenient collection of odd-ball
