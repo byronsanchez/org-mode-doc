@@ -162,6 +162,9 @@ speed up creation of standard text blocks in most editing modes.
    file are instantly removed from my agenda views until I add them
    back again.
 ** Org File Structure
+   :PROPERTIES:
+   :CUSTOM_ID: OrgFileStructure
+   :END:
    Most of my org files are set up with level 1 headings as main
    categories only.  Tasks normally start as level 2.
 
@@ -1843,18 +1846,27 @@ they occur.
    forever-growing file.  My archive files are huge but so far I
    haven't found a need to split them by year (or decade) :)
 
-   All of my tasks to archive start at level 2 so I use an agenda
-   custom command to list all tasks that are ready to archive.  =F12
-   A= shows all tasks ready to archive and I can just run a simple
-   macro to archive each one in turn.  My normal sequence is =F12 A
-   C-n C-n= to get to the first task to archive followed by a keyboard
-   macro to archive and display the next task =C-x ( a y SPC C-x )=.
-   Then I just execute the macro repeatedly with =C-x e e e e=,
-   ... for each subtree to archive.
+   All of my tasks to archive start at level 2.  I use an agenda
+   custom command =F12 A= to list candidate tasks for archiving.  My
+   normal sequence is =F12 A= followed by repeated =n SPC= in the
+   agenda to display the task candidate for archiving.  If I closed it
+   over a month ago I archive it.  If it was closed this month or last
+   month I skip it with =n SPC=.  I do this repeatedly for all tasks
+   in the list and then I'm done archiving until next month.
+
+   Archiving is easy.  When I find a candidate I can archive I just do
+   =a y SPC= to archive the current task and display the next
+   candidate task.  Then I'm back to =n SPC= if I'm skipping this next
+   candidate task or =a y SPC= to archive it.  Rinse and repeat.
 
    I used to archive by visiting one file at a time and doing a tags
    match for LEVEL=2 -- using the agenda does all of my files in
    org-agenda-files much more efficiently.
+
+** Archive Setup
+   Each of my level 1 tasks has a property which specifies where 
+   level 2 tasks under that heading should be archived.  This is done
+   with the =ARCHIVE= property as specified in the [[#OrgFileStructure][Org File Structure]].
 
    The following setting ensures that task states are untouched when
    they are archived.  This makes it possible to archive tasks that
@@ -1872,11 +1884,15 @@ they occur.
    data related to the task) but normally I don't need that
    information displayed.
 ** When to Archive
-   Archiving monthly works well for me.  I normally invoice clients on
-   the first of the month and after using the time clock information
-   for the previous month I archive any =DONE= tasks and projects.
+   Archiving monthly works well for me.  I keep completed tasks around
+   for a month or two before archiving them.  This keeps clocking
+   information for the last 30 to 60 days out of the archives.  This
+   keeps my files that contribute to the agenda fairly current (this
+   month, and last month, and anything that is unfinished).  I only
+   rarely visit tasks in the archive when I need to pull up ancient
+   history for something.
 
-   This keeps my main working files clutter-free.  If I ever need the
+   Archiving keeps my main working files clutter-free.  If I ever need the
    detail for the archived tasks they are available in the appropriate
    archive file.
 * Publishing
