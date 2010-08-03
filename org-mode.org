@@ -1941,30 +1941,28 @@ they occur.
 #+begin_src emacs-lisp
   (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
   
-  (require 'org-babel-init)
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
   
-  (require 'org-babel-dot)
-  (require 'org-babel-ditaa)
-  
-  (org-babel-load-library-of-babel)
+  (setq org-babel-load-languages (quote ((emacs-lisp . t)
+                                         (dot . t)
+                                         (ditaa . t)
+                                         (R . t)
+                                         (python . t)
+                                         (ruby . t)
+                                         (gnuplot . t)
+                                         (clojure . t)
+                                         (sh . t))))
+
+ ; Do not prompt to confirm evaluation
+ ; This may be dangerous - make sure you understand the consequences
+ ; of setting this -- see the docstring for details
+ (setq org-confirm-babel-evaluate nil)
 #+end_src
 
   Now you just create a =begin-src= block for the appropriate tool,
-  edit the text, and build the pictures with =C-c C-c=.  You can
-  view the result directly in Emacs with =C-c C-o= anywhere in the 
-  block.
-
-  This displays the results in a new frame.  I have =M-f9= mapped to close the 
-  new frame quickly after previewing the results.
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "M-<f9>") (lambda ()
-                                   (interactive)
-                                   (unless (buffer-modified-p)
-                                     (kill-buffer (current-buffer)))
-                                   (delete-frame)))
-#+end_src
-
+  edit the text, and build the pictures with =C-c C-c=.  After
+  evaluating the block results are displayed.  You can toggle display
+  of inline images with =C-c C-x C-v=
 
 ** Playing with ditaa
    :PROPERTIES:
