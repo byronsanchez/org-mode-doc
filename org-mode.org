@@ -3280,12 +3280,7 @@ Here are the =.emacs= settings:
    The variable =org-speed-commands-default= sets a lot of useful defaults for speed command keys.
    The default keys I use the most are =I= and =O= for clocking in and out and =t= to change
    todo state.
-** Org Protocol							   :noexport:
-   ** NOTE **
-   This has not yet been tested with the new capture changes so I'm
-   not sure this really works yet.
-   ** NOTE **
-
+** Org Protocol
    [[http://orgmode.org/worg/org-contrib/org-protocol.php][Org protocol]] is a great way to create capture notes in org-mode from other applications.
    I use this to create tasks to review interesting web pages I visit in Firefox.
 
