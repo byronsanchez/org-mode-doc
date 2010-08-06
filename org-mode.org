@@ -18,7 +18,7 @@
   that operates on plain text files.  Org-mode is part of Emacs.
 
   This document assumes you've had some exposure to org-mode already so
-  concepts like the agenda, remember mode, etc.  won't be completely
+  concepts like the agenda, capture mode, etc.  won't be completely
   foreign to you.  More information about org-mode can be found in the
   [[http://orgmode.org/index.html#sec-4.1][Org-Mode Manual]] and on the [[http://orgmode.org/worg/][Worg Site]].
 
@@ -107,11 +107,11 @@ speed up creation of standard text blocks in most editing modes.
    | git.org      | Git related tasks                          |
    | bzflag.org   | BZFlag related tasks                       | 
 
-   The following org-file collects remember notes and tasks:
+   The following org-file collects org capture notes and tasks:
 
    | Filename   | Description            |
    |------------+------------------------|
-   | refile.org | Remember task bucket   |
+   | refile.org | Capture task bucket |
 
    The following work-related org-files keep my business notes (using
    fictitious client names)
@@ -238,7 +238,7 @@ speed up creation of standard text blocks in most editing modes.
 | C-c b   | Switch to org file                              | Very Often |
 | C-F11   | Clock in a task (show menu with prefix)         | Very Often |
 | f9 g    | Gnus - I live in gnus                           | Often      |
-| C-M-r   | Create a remember task                          | Often      |
+| C-M-r   | Capture a task                                  | Often      |
 | F11     | Goto currently clocked item                     | Often      |
 | f5      | Show todo items for this subtree                | Often      |
 | S-f5    | Widen                                           | Often      |
@@ -319,7 +319,7 @@ speed up creation of standard text blocks in most editing modes.
   (global-set-key (kbd "C-<f11>") 'org-clock-in)
   (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
   (global-set-key (kbd "M-<f11>") 'org-resolve-clocks)
-  (global-set-key (kbd "C-M-r") 'org-remember)
+  (global-set-key (kbd "C-M-r") 'org-capture)
   (global-set-key (kbd "M-<f9>") (lambda ()
                                    (interactive)
                                    (unless (buffer-modified-p)
@@ -526,8 +526,8 @@ more important work.
 *** Using =NEXT= for clocked tasks
     =TODO= state tasks automatically change to =NEXT= whenever they
     are clocked.  There are a few exceptions to this case
-        - I don't want Remember tasks in a =NEXT= state immediately
-          since I clock the time it takes to record remember tasks.
+        - I don't want Capture tasks in a =NEXT= state immediately
+          since I clock the time it takes to record capture tasks.
         - I want to clock in some tasks without a keyword
         - I want to clock parent project tasks with incomplete subtasks
 
@@ -537,12 +537,11 @@ more important work.
     like =* Organization=) and they never show up in my =NEXT= task lists.
 
 #+begin_src emacs-lisp
-  ;; Change task state to NEXT from TODO when clocking in
   (defun bh/clock-in-to-next (kw)
     "Switch task from TODO to NEXT when clocking in.
-  Skips remember tasks and tasks with subtasks"
+  Skips capture tasks and tasks with subtasks"
     (if (and (string-equal kw "TODO")
-             (not (string-equal (buffer-name) "*Remember*")))
+             (not (and (boundp 'org-capture-mode) org-capture-mode)))
         (let ((subtree-end (save-excursion (org-end-of-subtree t)))
               (has-subtask nil))
           (save-excursion
@@ -554,27 +553,27 @@ more important work.
                 (setq has-subtask t))))
           (when (not has-subtask)
             "NEXT"))))
-  
-  (setq org-clock-in-switch-to-state (quote bh/clock-in-to-next))
 #+end_src
 
-* Adding New Tasks Quickly with Remember
+* Adding New Tasks Quickly with Org Capture
   :PROPERTIES:
   :CUSTOM_ID: Remember
   :END:
-  To add new tasks efficiently I use a minimal number of remember
-  templates.  I used to have lots of remember templates, one for each
-  org-file.  I'd start org-remember with C-M-r and then pick a
+  Org Capture mode replaces remember mode for capturing tasks and notes.
+
+  To add new tasks efficiently I use a minimal number of capture
+  templates.  I used to have lots of capture templates, one for each
+  org-file.  I'd start org-capture with C-M-r and then pick a
   template that filed the task under =* Tasks= in the appropriate
   file.
 
-  I found I still needed to refile these remember tasks again to the
+  I found I still needed to refile these capture tasks again to the
   correct location within the org-file so all of these different
-  remember templates weren't really helping at all.  Since then I've
-  changed my workflow to use a minimal number of remember templates --
+  capture templates weren't really helping at all.  Since then I've
+  changed my workflow to use a minimal number of capture templates --
   I create the new task quickly and refile it once.  This also saves
-  me from maintaining my org-remember templates when I add a new org file.
-** Remember Templates
+  me from maintaining my org-capture templates when I add a new org file.
+** Capture Templates
    :PROPERTIES:
    :ID:       9507648b-dbfc-4ba1-96c2-36e8ba15cbd0
    :END:
@@ -585,47 +584,42 @@ more important work.
    - A new task
    - A new note
 
-   and pick the appropriate remember task.
+   and pick the appropriate capture task.
 
-   Here is my setup for org-remember
+   Here is my setup for org-capture
 
 #+begin_src emacs-lisp
   (setq org-default-notes-file "~/git/org/refile.org")
   
-  ;;;  Load Org Remember Stuff
-  (require 'remember)
-  (org-remember-insinuate)
+  ;; I use C-M-r to start capture mode
+  (global-set-key (kbd "C-M-r") 'org-capture)
   
-  ;; Start clock in a remember buffer and switch back to previous clocking task on save
-  (add-hook 'remember-mode-hook 'org-clock-in 'append)
-  (add-hook 'org-remember-before-finalize-hook 'bh/clock-in-interrupted-task)
-  
-  ;; I use C-M-r to start org-remember
-  (global-set-key (kbd "C-M-r") 'org-remember)
-  
-  ;; Keep clocks running
-  (setq org-remember-clock-out-on-exit nil)
-  
-  ;; C-c C-c stores the note immediately
-  (setq org-remember-store-without-prompt t)
-  
-  ;; I don't use this -- but set it in case I forget to specify a location in a future template
-  (setq org-remember-default-headline "Tasks")
-  
-  ;; 3 remember templates for TODO tasks, Notes, and Phone calls
-  (setq org-remember-templates (quote (("todo" ?t "* TODO %?\n  %U\n  %a" nil bottom nil)
-                                       ("note" ?n "* %?                                                                            :NOTE:\n  %U\n  %a\n  :CLOCK:\n  :END:" nil bottom nil)
-                                       ("appointment" ?a "* %?\n  %U" "~/git/org/todo.org" "Appointments" nil)
-                                       ("org-protocol" ?w "* TODO Review %c%!\n  %U" nil bottom nil))))
+  ;; 3 capture templates for TODO tasks, Notes, and org-protocol (untested)
+  (setq org-capture-templates (quote (("t" "todo" entry (file "~/git/org/refile.org") "* TODO %?
+    %U
+    %a" :clock-in t :clock-resume t)
+                                      ("n" "note" entry (file "~/git/org/refile.org") "* %?                                                                            :NOTE:
+    %U
+    %a
+    :CLOCK:
+    :END:" :clock-in t :clock-resume t)
+                                      ("w" "org-protocol" entry (file "~/git/org/refile.org") "* TODO Review %c
+    %U" :immediate-finish t :clock-in t :clock-resume t))))
 #+end_src
 
-Using the remember mode hooks causes the new remember task to clock in automatically.
-Filing the remember note clocks in the interrupted task again. 
+Capture mode now handles automatically clocking in and out of a
+capture task.  This all works out of the box now without special hooks.
+When I start a capture mode task the task is clocked in as specified
+by =:clock-in t= and when the task is filed with =C-c C-c= the clock 
+resumes on the original clocking task.
 
-This can leave empty clock drawers in my tasks which aren't really useful.  Since I remove
-clocking lines with 0:00 length I end up with a clock drawer like this:
+The quick clocking in and out of capture mode tasks (often it takes
+less than a minute to capture some new task details) this can leave
+empty clock drawers in my tasks which aren't really useful.  Since I
+remove clocking lines with 0:00 length I end up with a clock drawer
+like this:
 
-: * TODO New Remember Note
+: * TODO New Capture Task
 :   :CLOCK:
 :   :END:
 :   [2010-05-08 Sat 13:53]
@@ -644,59 +638,52 @@ they occur.
   (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 #+end_src
 
-** Separate file for Remember Tasks
-   I have a single org file which is the target for my remember templates.
+** Separate file for Capture Tasks
+   I have a single org file which is the target for my capture templates.
 
-   I store notes, tasks, phone calls, and org-protocol tasks in =refile.org=.  I used to use
-   multiple files but found that didn't really have any advantage over
-   a single file.
+   I store notes, tasks, phone calls, and org-protocol tasks in
+   =refile.org=.  I used to use multiple files but found that didn't
+   really have any advantage over a single file.
 
    Normally this file is empty except for a single line at the top
-   which creates a REFILE tag for anything in the file.
+   which creates a =REFILE= tag for anything in the file.
 
    The file has a single permanent line at the top like this
 #+begin_src org
   #+FILETAGS: REFILE
 #+end_src
-** Remember Tasks is all about being FAST
+** Capture Tasks is all about being FAST
    Okay I'm in the middle of something and oh yeah - I have to
    remember to do that.  I don't stop what I'm doing.  I'm probably
    clocking a project I'm working on and I don't want to lose my focus
    on that but I can't afford to forget this little thing that just
    came up.
 
-   So what do I do?  Hit =C-M-r= to start remember mode and select =t= since it's a new task and I get a buffer like this
-   : ##     C-c C-c  "~/git/org/refile.org" -> "* bottom"
-   : ## C-u C-c C-c  like C-c C-c, and immediately visit note at target location
-   : ## C-0 C-c C-c  "???" -> "* ???"
-   : ## C-1 C-c C-c  to select file and header location interactively.
-   : ## C-2 C-c C-c  as child of the currently clocked item
-   : ## To switch templates, use `C-M-r'.  To abort use `C-c C-k'.
-   :
-   : * TODO 
-   :   [2009-04-19 Sun]
-   :   [[file:~/git/doc.norang.ca/org-mode.org::*Remember%20Tasks%20is%20all%20about%20being%20FAST][file:~/git/doc.norang.ca/org-mode.org::*Remember Tasks is all about being FAST]]
+   So what do I do?  Hit =C-M-r= to start capture mode and select =t= since it's a new task and I get a buffer like this
+   : ** TODO 
+   :    [2010-08-05 Thu 21:06]
+   :    [[file:~/git/org-mode-doc/org-mode.org::*Capture%20Tasks%20is%20all%20about%20being%20FAST][Capture Tasks is all about being FAST]]
 
    Enter the details of the TODO item and =C-c C-c= to file it away in refile.org and go right back
    to what I'm really working on secure in the knowledge that that item isn't going to get lost and 
    I don't have to think about it anymore at all now.
 
-   The amount of time I spend entering the remember note is clocked.  I use
-   remember mode hooks to clock in the remember task and then switch back
-   to the interrupted task when I file the remember note.
-   This is great for interruptions and telephone calls too.
+   The amount of time I spend entering the captured note is clocked.
+   The capture templates are set to automatically clock in and out of
+   the capture task.  This is great for interruptions and telephone
+   calls too.
 * Refiling Tasks
   :PROPERTIES:
   :CUSTOM_ID: Refiling
   :END:
   Refiling tasks is easy.  After collecting a bunch of new tasks in my
-  refile.org file using remember mode I need to move these to the
+  refile.org file using capture mode I need to move these to the
   correct org file and topic.  All of my active org-files are in my
   =org-agenda-files= variable and contribute to the agenda.
 
-  I collect remember tasks in refile.org for up to a week.  I do my
+  I collect capture tasks in refile.org for up to a week.  I do my
   weekly review every Monday and one of the tasks for that is to
-  refile all remember tasks.  Often I end up refiling tasks the same
+  refile all capture tasks.  Often I end up refiling tasks the same
   day I create them because they show up in my daily clock report
   summary and are obviously in the wrong place.
 ** Refile Setup
@@ -733,7 +720,7 @@ they occur.
    I just put the cursor on the task and hit =C-c C-w= and enter =nor
    TAB sys TAB RET= and it's done.  I always know what file it's going
    into but if I don't remember the exact task name I can just hit TAB
-   twice and all remember targets that match show up in a list.  Just
+   twice and all refile targets that match show up in a list.  Just
    scroll through the list and pick the right refile target.  This
    works great!
 ** Refiling Tasks
@@ -741,26 +728,27 @@ they occur.
    which shows tasks with the =REFILE= tag.  This view shows all tasks
    (even ones marked in a =done= state).
 
-   All of my remember target files have this tag in the FILETAGS
+   My single capture target file has this tag in the FILETAGS
    header so every task in the file can be found using this view.
 
    I visit each file with =REFILE= tasks to refile.  If there are a
-   few files going to the same place (3 or less) I refile the first
+   few tasks going to the same place (3 or less) I refile the first
    one, then move to the second one and use =C-c C-w up-arrow RET= to
    refile to the same location again.  If more than 3 tasks are going
    to the same place I try to do those last - since refiling
-   everything else away helps to group those together.  Then I select
-   the group of tasks and refile them in a single operation.
+   everything else away helps to group those together.  Then I mark
+   those tasks in =m= and bulk refile them to the same target with =B
+   r= in the agenda view.
 
    Refiling all of my tasks tends to take less than a minute so I may
    do this a couple of times a day.
 ** Refiling Notes
    I keep a =* Notes= headline in most of my org-mode files.  Notes
-   have a =NOTE= tag which is created by the remember template for
+   have a =NOTE= tag which is created by the capture template for
    notes.  This allows finding notes across multiple files easily
    using the agenda search functions.
 
-   Notes created by remember tasks go first to =refile.org= and are
+   Notes created by capture tasks go first to =refile.org= and are
    later refiled to the appropriate project file.  Some notes that are
    project related get filed to the appropriate project instead of
    under the catchall =* NOTES= task.  Generally these types of notes
@@ -768,8 +756,8 @@ they occur.
    them from the notes list when the project is archived makes sense.
 ** Refiling Phone Calls
    Phone calls are handled using a few custom functions and a special key binding.
-   I time my calls using the remember mode hooks to clock in and out the
-   remember template while the phone call is in progress.
+   I time my calls using the capture mode template settings to clock in and out the
+   capture task while the phone call is in progress.
 
    Phone call tasks collect in =refile.org= and are later refiled to
    the appropriate location.  Some phone calls are billable and we
@@ -837,7 +825,7 @@ they occur.
    - Look at my agenda =F12 a=
      - make a note of anything important to deal with today
    - Read email and news
-     - create notes, and tasks for things that need responses with org-remember
+     - create notes, and tasks for things that need responses with org-capture
    - Check refile tasks and respond to emails
    - Look at my agenda and knock off tasks scheduled for today
      - Clock it in (=I= in the agenda or on the beginning of a task headline 
@@ -904,7 +892,7 @@ they occur.
    the default task (normally =Organization=) clock the time I spend
    on these tasks.  To read email I go to Gnus and read everything in
    my inboxes.  If there are emails that require a response I use
-   org-remember to create a new task with a heading of 'Respond to
+   org-capture to create a new task with a heading of 'Respond to
    <user>' for each one.  This automatically links to the email in the
    task and makes it easy to find later.  Some emails are quick to
    respond to and some take research and a significant amount of time
@@ -917,10 +905,11 @@ they occur.
 
    I read email and newgroups in Gnus so I don't separate clocked time
    for quickly looking at things.  If an article has a useful piece of
-   information I want to remember I create a note for it with =C-M-r n=
-   and enter the topic and file it.  This takes practically no time at
-   all and I know the note is safely filed for later.  The time I spend
-   in the remember buffer is clocked with that remember note.
+   information I want to remember I create a note for it with =C-M-r
+   n= and enter the topic and file it.  This takes practically no time
+   at all and I know the note is safely filed for later retrieval.
+   The time I spend in the capture buffer is clocked with that
+   capture note.
 ** Filtering
 
    So many tasks, so little time.  I have hundreds of tasks at any
@@ -1131,9 +1120,8 @@ they occur.
 
   I used to clock in tasks by ID using the following function but with
   the new punch-in and punch-out I don't need these anymore.  =f9-SPC=
-  calls =bh/clock-in-interrupted-task= which switches the clock back
-  to the interrupted task.  This is most often called automatically by
-  the remember hook when the remember template is closed.
+  calls =bh/clock-in-last-task= which switches the clock back to the
+  previously clocked task.
 
 #+begin_src emacs-lisp
   (require 'org-id)  
@@ -1144,19 +1132,14 @@ they occur.
       (org-with-point-at (org-id-find id 'marker)
         (org-clock-in nil))))
   
-  (defun bh/clock-in-interrupted-task ()
+  (defun bh/clock-in-last-task ()
     "Clock in the interrupted task if there is one"
     (interactive)
-    (let ((clock-in-to-task))
-      (if (org-clock-is-active)
-          (when (marker-buffer org-clock-interrupted-task)
-            (if (equal org-clock-interrupted-task org-clock-hd-marker)
-                (setq clock-in-to-task (cadr org-clock-history))
-              (setq clock-in-to-task org-clock-interrupted-task))))
-      (if clock-in-to-task
-          (org-with-point-at clock-in-to-task
-            (org-clock-in nil))
-        (org-clock-out))))
+    (let ((clock-in-to-task (if (org-clock-is-active)
+                                (setq clock-in-to-task (cadr org-clock-history))
+                              (setq clock-in-to-task (car org-clock-history)))))
+      (org-with-point-at clock-in-to-task
+        (org-clock-in nil))))
 #+end_src
 
 ** Clocking in
@@ -1226,17 +1209,19 @@ they occur.
    and you need some place to record whatever time you spend on that
    interruption.
 
-   To deal with this we create a new remember task to record the thing
+   To deal with this we create a new capture task to record the thing
    we are about to do.  The workflow goes something like this:
 
    - You are clocking some task and an interruption occurs
-   - Create a quick remember task =C-M-r=
+   - Create a quick capture task =C-M-r=
    - Type the heading 
    - clock it in =C-c C-x C-i=
    - file it =C-c C-c=
+   - switch the clock back to it =F9 SPC=
    - Go do it
-   - mark it =DONE=
-   - clock something else in (return to the interrupted task with =C-u C-c C-x C-i i=)
+   - mark it =DONE= which stops the clock (or switches to the context
+     default clocking task you punched in earlier)
+   - clock something else in
    - refile the newly created and clocked task later
 
    This means you can ignore the details like where this task really
@@ -1631,7 +1616,7 @@ they occur.
 
   Often I'll find some cool feature or thing I want to remember while
   reading the org-mode and git mailing lists in Gnus.  To create a
-  note I use my note remember template =C-M-r n=, type a heading for
+  note I use my note capture template =C-M-r n=, type a heading for
   the note and =C-c C-c= to save it.  The only other thing to do is to
   refile it (later) to the appropriate project file.
 
@@ -1639,7 +1624,7 @@ they occur.
   appropriate project file and task.  If there is no specific task it
   belongs to it goes to the catchall =* Notes= task.  I generally have
   a catchall notes task in every project file.  Notes are created with
-  a =NOTE= tag already applied by the remember template so I'm free to
+  a =NOTE= tag already applied by the capture template so I'm free to
   refile the note anywhere.  As long as the note is in a project file
   that contributes to my agenda (ie. in org-agenda-files) then I can
   find the note back easily with my notes agenda view by hitting the
@@ -1662,57 +1647,59 @@ they occur.
   project is complete and archived.
 
 * Handling Phone Calls
-  Phone calls are interruptions and I use remember mode to deal with these.
-  Most of the heavy lifting for phone calls is done by remember mode.
-  I use a special remember template for phone calls but activate it
-  with a custom key binding =f9-p=.  I've removed my phone remember mode
+  Phone calls are interruptions and I use capture mode to deal with these.
+  Most of the heavy lifting for phone calls is done by capture mode.
+  I use a special capture template for phone calls but activate it
+  with a custom key binding =f9-p=.  I've removed my phone capture mode
   template from my regular templates since I always use the =bh/phone-call=
-  function mapped to =f9-p= to invoke the remember template.  The definition
+  function mapped to =f9-p= to invoke the capture template.  The definition
   of this template is now local to the function.
 
   =f9 p= prompts for who is calling and looks up the entered name in my
-  =bbdb= database with completion.  The remember template is then
-  filled in with the appropriate contact data and the remember mode starts
-  the clock using the =remember-mode-hook=.
+  =bbdb= database with completion.  The capture template is then
+  filled in with the appropriate contact data and capture mode starts
+  the clock using the =:clock-in t= setting in the template.
 
   Here is my set up for phone calls.  I would like to thank Gregory J. Grubbs
   for the bbdb lookup functions.
 
   #+begin_src emacs-lisp
-    ; Set f9-p to prompt for who is calling and preload the remember template
+    ; Set f9-p to prompt for who is calling and preload the capture template
     (global-set-key (kbd "<f9> p") 'bh/phone-call)
     
     ;;
-    ;; Phone remember template handling with BBDB lookup
+    ;; Phone capture template handling with BBDB lookup
     ;; modified from the original code by Gregory J. Grubbs
     ;;
-    (defvar gjg/remember-phone-record nil
+    (defvar gjg/capture-phone-record nil
       "Either BBDB record vector, or person's name as a string, or nil")
     
     (defun bh/phone-call ()
       (interactive)
       (let* ((myname (completing-read "Who is calling? " (bbdb-hashtable) 'bbdb-completion-predicate 'confirm))
              (my-bbdb-name (if (> (length myname) 0) myname nil)))
-        (setq gjg/remember-phone-record
+        (setq gjg/capture-phone-record
               (if my-bbdb-name
                   (first (or (bbdb-search (bbdb-records) my-bbdb-name nil nil)
                              (bbdb-search (bbdb-records) nil my-bbdb-name nil)))
                 myname))
         (other-window 1)
-        (let ((org-remember-templates '(("Phone" 80 "* TODO Phone %(gjg/bbdb-name) - %(gjg/bbdb-company)               :PHONE:\n  %U\n  %?" nil bottom nil))))
-          (org-remember nil "P"))))
+        (let ((org-capture-templates '(("P" "Phone" entry (file "~/git/org/refile.org") "* TODO Phone %(gjg/bbdb-name) - %(gjg/bbdb-company)               :PHONE:\n  %U\n  %?" :clock-in t :clock-resume t))))
+          (org-capture))))
     
     (defun gjg/bbdb-name ()
-      "Return full name of saved bbdb record, or empty string - for use in Remember templates"
-      (if (and gjg/remember-phone-record (vectorp gjg/remember-phone-record))
-          (bbdb-record-name gjg/remember-phone-record)
-          (or gjg/remember-phone-record "")))
+      "Return full name of saved bbdb record, or empty string - for use in Capture templates"
+      (if (and gjg/capture-phone-record (vectorp gjg/capture-phone-record))
+          (concat "[[bbdb:"
+                  (bbdb-record-name gjg/capture-phone-record) "]["
+                  (bbdb-record-name gjg/capture-phone-record) "]]")
+        "NAME"))
     
     (defun gjg/bbdb-company ()
-      "Return company of saved bbdb record, or empty string - for use in Remember templates"
-      (if (and gjg/remember-phone-record (vectorp gjg/remember-phone-record))
-          (or (bbdb-record-company gjg/remember-phone-record) "")
-        ""))
+      "Return company of saved bbdb record, or empty string - for use in Capture templates"
+      (if (and gjg/capture-phone-record (vectorp gjg/capture-phone-record))
+          (or (bbdb-record-company gjg/capture-phone-record) "")
+        "COMPANY"))
   #+end_src
 * GTD stuff
   Most of my day is deadline/schedule driven.
@@ -3293,20 +3280,24 @@ Here are the =.emacs= settings:
    The variable =org-speed-commands-default= sets a lot of useful defaults for speed command keys.
    The default keys I use the most are =I= and =O= for clocking in and out and =t= to change
    todo state.
-** Org Protocol 
-   [2009-11-07 Sat 23:24]
-   [[http://orgmode.org/worg/org-contrib/org-protocol.php][Org protocol]] is a great way to create remember notes in org-mode from other applications.
+** Org Protocol							   :noexport:
+   ** NOTE **
+   This has not yet been tested with the new capture changes so I'm
+   not sure this really works yet.
+   ** NOTE **
+
+   [[http://orgmode.org/worg/org-contrib/org-protocol.php][Org protocol]] is a great way to create capture notes in org-mode from other applications.
    I use this to create tasks to review interesting web pages I visit in Firefox.
 
-   I have a special remember template set up for org-protocol to use (set up with the =w= key).
+   I have a special capture template set up for org-protocol to use (set up with the =w= key).
 
    My org-mode setup for org-protocol is really simple.  It enables org-protocol and creates a 
-   single org-protocol remember template as described in [[id:9507648b-dbfc-4ba1-96c2-36e8ba15cbd0][Remember Templates]].
+   single org-protocol capture template as described in [[id:9507648b-dbfc-4ba1-96c2-36e8ba15cbd0][Capture Templates]].
 #+begin_src emacs-lisp
   (require 'org-protocol)
 #+end_src
    The bulk of the setup is in the Firefox application so that C-M-r on a page in Firefox will 
-   trigger the org-protocol remember template with details of the page I'm currently viewing
+   trigger the org-protocol capture template with details of the page I'm currently viewing
    in firefox.
 
    I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
@@ -3319,7 +3310,7 @@ Here are the =.emacs= settings:
    I insert inactive timestamps when working on org-mode files.
    Normally I use this to track when a task was created.
 
-   For remember tasks the timestamp is in the remember template but
+   For capture tasks the timestamp is in the capture template but
    for regular structure editing I normally want a clean outline
    without timestamps.  I find this easier to work with when
    brainstorming and generating the outline structure for a project.
