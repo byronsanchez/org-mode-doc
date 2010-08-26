@@ -557,7 +557,7 @@ more important work.
 
 * Adding New Tasks Quickly with Org Capture
   :PROPERTIES:
-  :CUSTOM_ID: Remember
+  :CUSTOM_ID: Capture
   :END:
   Org Capture mode replaces remember mode for capturing tasks and notes.
 
