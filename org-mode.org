@@ -48,7 +48,7 @@ The following setup in my .emacs enables org-mode for most buffers.
 =org-mode= is the default mode for =.org=, =.org_archive=, and =.txt=
 files.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;;;
   ;;; Org Mode
   ;;;
@@ -65,7 +65,7 @@ files.
 =orgstruct++-mode= is enabled in =Gnus= message buffers to aid in
 creating structured email messages.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq message-mode-hook
         (quote (orgstruct++-mode
                 (lambda nil (setq fill-column 72) (flyspell-mode 1))
@@ -77,7 +77,7 @@ creating structured email messages.
 creating documents with spelling errors.  =yasnippets= are enabled to
 speed up creation of standard text blocks in most editing modes.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
   (add-hook 'org-mode-hook
             (lambda ()
@@ -266,7 +266,7 @@ speed up creation of standard text blocks in most editing modes.
 | M-f11   | Resolve open clocks                             | Rare       |
    
    Here is the keybinding setup in lisp:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Custom Key Bindings
   (global-set-key (kbd "<f12>") 'org-agenda)
   (global-set-key (kbd "<f5>") 'bh/org-todo)
@@ -347,7 +347,7 @@ speed up creation of standard text blocks in most editing modes.
 ** TODO keywords
 Here are my =TODO= state keywords and colour settings:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
    (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
    (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
@@ -467,7 +467,7 @@ more important work.
    other state directly by selecting the appropriate key from the fast
    todo selection key menu.  This is a great feature!
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp :tangle yes 
   (setq org-use-fast-todo-selection t)
 #+end_src lisp
 
@@ -477,7 +477,7 @@ more important work.
     where =KEY= is the appropriate fast todo state selection key as defined in =org-todo-keywords=.
 
     The setting
-    #+begin_src emacs-lisp
+    #+begin_src emacs-lisp :tangle yes
       (setq org-treat-S-cursor-todo-selection-as-state-change nil)
     #+end_src
     allows changing todo states with S-left and S-right skipping all of the normal processing
@@ -503,7 +503,7 @@ more important work.
 
    The tags are used to filter tasks in the agenda views conveniently.
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp :tangle yes 
   (setq org-todo-state-tags-triggers
         (quote (("CANCELLED"
                  ("CANCELLED" . t))
@@ -536,7 +536,7 @@ more important work.
     alone.  This allows me to clock in tasks with no keyword (things
     like =* Organization=) and they never show up in my =NEXT= task lists.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (defun bh/clock-in-to-next (kw)
     "Switch task from TODO to NEXT when clocking in.
   Skips capture tasks and tasks with subtasks"
@@ -588,7 +588,7 @@ more important work.
 
    Here is my setup for org-capture
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-default-notes-file "~/git/org/refile.org")
   
   ;; I use C-M-r to start capture mode
@@ -627,7 +627,7 @@ like this:
 I have the following setup to remove these empty =CLOCK= drawers if
 they occur.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Remove empty CLOCK drawers on clock out
   (defun bh/remove-empty-drawer-on-clock-out ()
     (interactive)
@@ -694,7 +694,7 @@ they occur.
    I also use ido mode to help find targets quickly.
 
    Here is my refile configuration:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ; Use IDO for target completion
   (setq org-completion-use-ido t)
   
@@ -780,7 +780,7 @@ they occur.
   10. Setting the default clocking task for punching in
 
 ** Setup
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-agenda-custom-commands
         (quote (("w" "Tasks waiting on something" tags "WAITING/!"
                  ((org-use-tag-inheritance nil)
@@ -945,7 +945,7 @@ they occur.
     on what the computer determines my current context to be at the
     time I run the =/ RET= filter command.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (defun bh/weekday-p ()
     (let ((wday (nth 6 (decode-time))))
       (and (< wday 6) (> wday 0))))
@@ -1063,7 +1063,7 @@ they occur.
 
    I have the following org-mode settings for clocking:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;;
   ;; Resume clocking tasks when emacs is restarted
   (org-clock-persistence-insinuate)
@@ -1123,7 +1123,7 @@ they occur.
   calls =bh/clock-in-last-task= which switches the clock back to the
   previously clocked task.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (require 'org-id)  
   (defun bh/clock-in-task-by-id (id)
     "Clock in a task by id"
@@ -1270,7 +1270,7 @@ they occur.
 
    The following setting makes time editing round to 15 minute
    increments:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-time-stamp-rounding-minutes (quote (1 15)))
 #+end_src lisp
 
@@ -1307,7 +1307,7 @@ they occur.
 *** Verify that the clock data is complete and correct
    Since I change tasks often (sometimes more than once in a minute) I use the following setting
    to remove clock entries with a zero duration.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
   (setq org-clock-out-remove-zero-time-clocks t)
 #+end_src
@@ -1338,7 +1338,7 @@ they occur.
 
    Use the following setup to get log mode in the agenda to only show
    clocked times:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Agenda log mode items to display (clock time only by default)
   (setq org-agenda-log-mode-items (quote (clock)))
 #+end_src
@@ -1359,7 +1359,7 @@ they occur.
    My agenda org clock report settings show 2 levels of detail and do
    not show links so that they are easier to cut and paste into other
    applications.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Agenda clock report parameters (no links, 2 levels deep)
   (setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
 #+end_src
@@ -1390,7 +1390,7 @@ they occur.
    I use =properties= and =column view= to do project estimates.
 
    I set up column view globally with the following headlines
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ; Set default column view headings: Task Effort Clock_Summary
   (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
 #+end_src
@@ -1415,7 +1415,7 @@ they occur.
 
    These are stored for easy use in =column mode= in the global property
    =Effort_ALL=.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ; global Effort estimate values
   (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00"))))
 #+end_src
@@ -1532,7 +1532,7 @@ they occur.
    tag but I can do that at home on my lunch break.  I don't
    physically have to be at the farm to make the call.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ; Tags with fast selection keys
   (setq org-tag-alist (quote ((:startgroup)
                               ("@errand" . ?e)
@@ -1663,7 +1663,7 @@ they occur.
   Here is my set up for phone calls.  I would like to thank Gregory J. Grubbs
   for the bbdb lookup functions.
 
-  #+begin_src emacs-lisp
+  #+begin_src emacs-lisp :tangle yes
     ; Set f9-p to prompt for who is calling and preload the capture template
     (global-set-key (kbd "<f9> p") 'bh/phone-call)
     
@@ -1711,7 +1711,7 @@ they occur.
    I keep a list like this one to remind me what needs to be done.
 
    To keep the agenda fast I set
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-agenda-ndays 1)
 #+end_src
   so only today's date is shown by default.  I only need the weekly
@@ -1782,7 +1782,7 @@ they occur.
 
    I have the following helper functions defined for projects.  These are used
    by agenda views.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (defun bh/is-project-p ()
     "Any task with a todo keyword subtask"
     (let ((has-subtask)
@@ -1859,7 +1859,7 @@ they occur.
    they are archived.  This makes it possible to archive tasks that
    are not marked DONE.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-archive-mark-done nil)
 #+end_src
 
@@ -1925,7 +1925,7 @@ they occur.
   The setup is really easy.  =ditaa= is provided with the org-mode source. 
   You'll have to install the =graphviz= package for your system.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
   
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
@@ -2300,7 +2300,7 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
   automatically updated the next time I look at the agenda.
   
 ** Reminder Setup
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ; Erase all reminders and rebuilt reminders for today from the agenda
   (defun bh/org-agenda-to-appt ()
     (interactive)
@@ -2342,7 +2342,7 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
    software in my =~/.emacs.d/plugins= directory, renamed
    =yasnippet0.5.10= to =yasnippet= and added the following setup in my =.emacs=:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins"))
   
   (require 'yasnippet)
@@ -2398,7 +2398,7 @@ org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/blo
 *** Narrowing to a subtree with =bh/org-todo=
 =f5= and =S-f5= are bound the functions for narrowing and widening the emacs buffer as follows:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (global-set-key (kbd "<f5>") 'bh/org-todo)
   
   (defun bh/org-todo ()
@@ -2453,7 +2453,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     affected by commands issued in the agenda.  No more acting on the
     wrong task by mistake!
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Always hilight the current agenda line
   (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
 #+end_src
@@ -2469,7 +2469,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 
     Tasks with dates are scheduled into the future sometime and you
     don't need to deal with them until the date approaches.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Keep tasks with dates off the global todo lists
   (setq org-agenda-todo-ignore-with-date nil)
   
@@ -2494,7 +2494,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     holidays on my agenda.  This helps with planning for those days
     when you're not supposed to be working.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-agenda-include-diary nil)
   (setq org-agenda-diary-file "~/git/org/diary.org")
 #+end_src
@@ -2526,7 +2526,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     I don't need this often but it sure is handy on the occasions that
     I do need it.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Include agenda archive files when searching for things
   (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
 #+end_src
@@ -2555,7 +2555,7 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
     The lisp for this isn't particularly pretty but it works.
 
 Here are the =.emacs= settings:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Show all future entries for repeating tasks
   (setq org-agenda-repeating-timestamp-show-all t)
   
@@ -2686,7 +2686,7 @@ Here are the =.emacs= settings:
    can uncheck the boxes automagically when the task is marked done.
 
    Add the following to your =.emacs=
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (load "~/git/org-mode/contrib/lisp/org-checklist")
 #+end_src
 
@@ -2746,7 +2746,7 @@ Here are the =.emacs= settings:
 
    To enable task blocking set the following variable:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-enforce-todo-dependencies t)
 #+end_src
 
@@ -2802,7 +2802,7 @@ Here are the =.emacs= settings:
 
     To make org show leading stars use
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp :tangle yes 
   (setq org-hide-leading-stars nil)
 #+end_src emacs-lisp
 *** Show headings at odd levels only or odd-even levels
@@ -2813,7 +2813,7 @@ Here are the =.emacs= settings:
     leading whitespace on tasks.  I didn't find that lining up the
     headlines and tasks in odd-levels-only to be all that helpful.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-odd-levels-only nil)
 #+end_src
 *** Handling blank lines
@@ -2825,7 +2825,7 @@ Here are the =.emacs= settings:
     The following setting hides all blank lines inside folded contents
     of a tasks:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-cycle-separator-lines 0)
 #+end_src
 
@@ -2838,7 +2838,7 @@ Here are the =.emacs= settings:
     The following setting prevents creating blank lines before list items
     and headings:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-blank-before-new-entry (quote ((heading)
                                            (plain-list-item))))
 #+end_src
@@ -2846,7 +2846,7 @@ Here are the =.emacs= settings:
     To create new headings in a project file it is really convenient to use
     C-S-RET.  This inserts a new headline.  With the following setting
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-insert-heading-respect-content t)
 #+end_src
 
@@ -2860,7 +2860,7 @@ Here are the =.emacs= settings:
     (e.g. moving to =WAITING= prompts for a note and I enter a reason
     for why it is waiting).  These notes are saved at the top of the
     task so unfolding the task shows the note first.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-reverse-note-order nil)
 #+end_src
 *** Searching and showing results
@@ -2873,7 +2873,7 @@ Here are the =.emacs= settings:
     entries and also the immediately following sibling task (but not
     all siblings) with the following settings:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-show-following-heading t)
   (setq org-show-hierarchy-above t)
   (setq org-show-siblings nil)
@@ -2892,7 +2892,7 @@ Here are the =.emacs= settings:
     pasting to.  See the docstring (=C-h v org-yank-adjust-subtrees=)
     for more details on each variable and what it does.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-special-ctrl-a/e t)
   (setq org-special-ctrl-k t)
   (setq org-yank-adjusted-subtrees t)
@@ -2911,7 +2911,7 @@ Here are the =.emacs= settings:
    I set up org-mode to generate unique attachment IDs with
    =org-id-method= as follows:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-id-method (quote uuidgen))
 #+end_src
 
@@ -2956,7 +2956,7 @@ Here are the =.emacs= settings:
 
    The following setting accomplishes this:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-deadline-warning-days 30)
 #+end_src
 
@@ -2992,7 +2992,7 @@ Here are the =.emacs= settings:
    Org-mode can export tables as TAB or comma delimited formats.  I
    set the default format to CSV with:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-table-export-default-format "orgtbl-to-csv")
 #+end_src lisp
 
@@ -3026,7 +3026,7 @@ Here are the =.emacs= settings:
    my org files.  The following setting control how org-mode handles
    opening the link.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-link-frame-setup ((vm . vm-visit-folder)
                               (gnus . org-gnus-no-new-news)
                               (file . find-file-other-window)))
@@ -3040,14 +3040,14 @@ Here are the =.emacs= settings:
    Most of my logging is controlled by the global =org-todo-keywords=
 
    My logging settings are set as follows:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-log-done (quote time))
   (setq org-log-into-drawer t)
 #+end_src
 
    With =org-todo-keywords= set as 
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "NEXT(n)" "WAITING(w@/!)" "SOMEDAY(s!)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
                 (sequence "QUOTE(Q!)" "QUOTED(D!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
@@ -3103,7 +3103,7 @@ Here are the =.emacs= settings:
    I set up an alarm so the Star Trek red alert klaxon goes off when
    the total estimated time is hit.  (Yes I'm a Trekkie :) )
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-clock-sound "/usr/local/lib/alert1.wav")
 #+end_src
 
@@ -3163,7 +3163,7 @@ Here are the =.emacs= settings:
 
    These are my settings for habit tracking.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ; Enable habit tracking (and a bunch of other modules)
   (setq org-modules (quote (org-bbdb org-bibtex org-crypt org-gnus org-id org-info org-jsinfo org-habit org-inlinetask org-irc org-mew org-mhe org-protocol org-rmail org-vm org-wl org-w3m)))
   ; global STYLE property values for completion
@@ -3178,7 +3178,7 @@ Here are the =.emacs= settings:
    daily I have the following settings to redisplay the habits in the agenda each day.
    This turns the habit display on again at 6AM each morning.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (run-at-time "06:00" 86400 '(lambda () (setq org-habit-show-habits t)))
 #+end_src
 
@@ -3210,7 +3210,7 @@ Here are the =.emacs= settings:
 
    This is perfect for synchronizing my org-mode files between systems.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq global-auto-revert-mode t)
 #+end_src
 
@@ -3228,7 +3228,7 @@ Here are the =.emacs= settings:
    save the file.
 
    I use the following setup for encryption:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (require 'org-crypt)
   ; Encrypt all entries before saving
   (org-crypt-use-before-save-magic)
@@ -3264,7 +3264,7 @@ Here are the =.emacs= settings:
 
    I have the following speed commands set up in addition to the defaults.  I don't use priorities so
    I override the default settings for the 1, 2, and 3 keys.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-use-speed-commands t)
   (setq org-speed-commands-user (quote (("0" . delete-window)
                                         ("1" . delete-other-windows)
@@ -3288,7 +3288,7 @@ Here are the =.emacs= settings:
 
    My org-mode setup for org-protocol is really simple.  It enables org-protocol and creates a 
    single org-protocol capture template as described in [[id:9507648b-dbfc-4ba1-96c2-36e8ba15cbd0][Capture Templates]].
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (require 'org-protocol)
 #+end_src
    The bulk of the setup is in the Firefox application so that C-M-r on a page in Firefox will 
@@ -3297,7 +3297,7 @@ Here are the =.emacs= settings:
 
    I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
 ** Add final newline when saving files
-   #+begin_src emacs-lisp
+   #+begin_src emacs-lisp :tangle yes
      (setq require-final-newline t)
    #+end_src
    
@@ -3315,7 +3315,7 @@ Here are the =.emacs= settings:
    I have the following function bound to the key sequence =f9 t= to
    insert an inactive timestamp in the text on demand.
 
-   #+begin_src emacs-lisp
+   #+begin_src emacs-lisp :tangle yes
      (defun bh/insert-inactive-timestamp ()
        (interactive)
        (org-insert-time-stamp nil t t nil nil nil))
@@ -3334,7 +3334,7 @@ Here are the =.emacs= settings:
    opening lines before the link - so retraining my fingers was the
    right move for me.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-return-follows-link t)
 #+end_src
 
@@ -3343,7 +3343,7 @@ Here are the =.emacs= settings:
    If this has an estimated time and we run over the limit I make this
    stand out on the modeline by changing the background to red as follows
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (custom-set-faces
     ;; custom-set-faces was added by Custom.
     ;; If you edit it by hand, you could mess it up, so be careful.
@@ -3411,7 +3411,7 @@ Here are the =.emacs= settings:
    and it turns tabs into spaces, and highlights todo items.  The resulting
    notes are in the kill buffer ready to paste to another application.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (defun bh/prepare-meeting-notes ()
     "Prepare meeting notes for email
      Take selected region and convert tabs to spaces, mark TODOs with leading >>>, and copy to kill ring for pasting"
@@ -3436,7 +3436,7 @@ Here are the =.emacs= settings:
    to reissue the org-occur command to find the other matches
    in my file.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-remove-highlights-with-change nil)
 #+end_src
 
@@ -3448,7 +3448,7 @@ Here are the =.emacs= settings:
    so I set up emacs to find the info files from git before the
    regular (out of date) system versions.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (add-to-list 'Info-default-directory-list "~/git/org-mode/doc")
 #+end_src
 
@@ -3461,7 +3461,7 @@ Here are the =.emacs= settings:
 
    To make org-mode prefer the current year when entering dates I set
    the following variable:
-   #+begin_src emacs-lisp
+   #+begin_src emacs-lisp :tangle yes
      (setq org-read-date-prefer-future nil)
    #+end_src
    
@@ -3480,7 +3480,7 @@ Here are the =.emacs= settings:
    | 1.                  | -                         |
    | 1)                  | -                         | 
 
-   #+begin_src emacs-lisp
+   #+begin_src emacs-lisp :tangle yes
      (setq org-list-demote-modify-bullet (quote (("+" . "-")
                                                  ("*" . "-")
                                                  ("1." . "-")
@@ -3498,7 +3498,7 @@ Here are the =.emacs= settings:
    always go back to using no priorities.
 
    I disable the priority setting keys in org-mode using
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-enable-priority-commands nil)
 #+end_src
 
@@ -3508,7 +3508,7 @@ Here are the =.emacs= settings:
    
 ** Cycling plain lists
     Org mode can fold (cycle) plain lists.  I don't use this feature.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-cycle-include-plain-lists nil)
 #+end_src
 
@@ -3517,7 +3517,7 @@ Here are the =.emacs= settings:
    data from other files into org-mode.  This just removes the strike-through completely
    which I find a lot nicer.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>")
                                    ("/" italic "<i>" "</i>")
                                    ("_" underline "<span style=\"text-decoration:underline;\">" "</span>")
@@ -3543,7 +3543,7 @@ Here are the =.emacs= settings:
 
    My Emacs setup saves all org buffers at 1 minute before the hour using the following code in my =.emacs=
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 #+end_src
 
