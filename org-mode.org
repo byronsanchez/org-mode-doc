@@ -3799,9 +3799,23 @@ Here is the =git-sync= script
 
 * Change History - What's new
   This document is created using the publishing features of
-#+begin_src emacs-lisp :results raw :exports results
+#+begin_src emacs-lisp :results output :exports results
 (org-version)
 #+end_src
+
+#+results:
+: Org-mode version 7.01trans (release_7.01h.356.gcbc81)
+
+  with
+
+#+begin_src emacs-lisp :results output :exports results
+(org-version)
+(emacs-version)
+#+end_src
+
+#+results:
+: GNU Emacs 23.2.1 (i486-pc-linux-gnu, GTK+ Version 2.20.0)
+:  of 2010-08-14 on raven, modified by Debian
 
   The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
   [[http://doc.norang.ca/org-mode.org][plain text org file]].
