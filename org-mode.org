@@ -180,6 +180,7 @@ speed up creation of standard text blocks in most editing modes.
      - Birthdays
      - Anniversaries
      - Holidays
+
    - Finances
    - Health
    - House Maintenance
@@ -230,7 +231,6 @@ speed up creation of standard text blocks in most editing modes.
    times a day.
 
    I have the following custom key bindings set up for my emacs (sorted by frequency).
-#+end_example
 
 | Key     | For                                             | Used       |
 |---------+-------------------------------------------------+------------|
