@@ -369,7 +369,6 @@ Here are my =TODO= state keywords and colour settings:
                 ("CLOSED"    :foreground "forest green" :weight bold))))
 #+end_src
 
-
 *** Normal Task States
 Normal tasks go through the sequence =TODO= -> =NEXT= -> =DONE=.
 
@@ -432,8 +431,8 @@ I also do fixed-price quotation work.  Quotations use the following state transi
 #+end_src
 
 #+results:
-[[file:quote_states.png
-]]
+[[file:quote_states.png]]
+
 *** Purchase Order Task States
 Fixed price jobs normally have a =Purchase Order= associated with it which is used for billing the client.
 The following states track purchase orders.
