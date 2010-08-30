@@ -14,36 +14,36 @@
 #+LINK_UP:   
 #+LINK_HOME: 
 * Overview
-  Org-mode is a fabulous organizational tool built by Carsten Dominik
-  that operates on plain text files.  Org-mode is part of Emacs.
+Org-mode is a fabulous organizational tool built by Carsten Dominik
+that operates on plain text files.  Org-mode is part of Emacs.
 
-  This document assumes you've had some exposure to org-mode already so
-  concepts like the agenda, capture mode, etc.  won't be completely
-  foreign to you.  More information about org-mode can be found in the
-  [[http://orgmode.org/index.html#sec-4.1][Org-Mode Manual]] and on the [[http://orgmode.org/worg/][Worg Site]].
+This document assumes you've had some exposure to org-mode already so
+concepts like the agenda, capture mode, etc.  won't be completely
+foreign to you.  More information about org-mode can be found in the
+[[http://orgmode.org/index.html#sec-4.1][Org-Mode Manual]] and on the [[http://orgmode.org/worg/][Worg Site]].
 
-  I have been using org-mode as my personal information manager for
-  years now.  I started small with just the default =TODO= and =DONE=
-  keywords.  I added small changes to my workflow and over time it
-  evolved into what is described by this document.
+I have been using org-mode as my personal information manager for
+years now.  I started small with just the default =TODO= and =DONE=
+keywords.  I added small changes to my workflow and over time it
+evolved into what is described by this document.
 
-  I still change my workflow and try new things regularly.  This
-  document describes mature workflows in my current org-mode setup.  I
-  tend to document changes to my workflow 30 days after implementing
-  them (assuming they are still around at that point) so that the new
-  workflow has a chance to mature.
+I still change my workflow and try new things regularly.  This
+document describes mature workflows in my current org-mode setup.  I
+tend to document changes to my workflow 30 days after implementing
+them (assuming they are still around at that point) so that the new
+workflow has a chance to mature.
 
-  Some of the customized Emacs settings described in this document are
-  set at their default values.  This explicitly shows the setting for
-  important org-mode variables used in my workflow and to keep my
-  workflow behaviour stable in the event that the default value changes
-  in the future.
+Some of the customized Emacs settings described in this document are
+set at their default values.  This explicitly shows the setting for
+important org-mode variables used in my workflow and to keep my
+workflow behaviour stable in the event that the default value changes
+in the future.
 * Getting Started
-  I use =org-mode= in most of my emacs buffers.
+I use =org-mode= in most of my emacs buffers.
 ** Org-Mode Setup
-   :PROPERTIES:
-   :CUSTOM_ID: Setup
-   :END:
+:PROPERTIES:
+:CUSTOM_ID: Setup
+:END:
 The following setup in my .emacs enables org-mode for most buffers.
 =org-mode= is the default mode for =.org=, =.org_archive=, and =.txt=
 files.
@@ -90,58 +90,58 @@ speed up creation of standard text blocks in most editing modes.
 #+end_src
 
 ** Organizing Your Life Into Org Files
-   Tasks are separated into logical groupings or projects.  
-   Use separate org files for large task groupings.
+Tasks are separated into logical groupings or projects.  
+Use separate org files for large task groupings.
 
-   Here are sample files that I use.
+Here are sample files that I use.
 
-   The following org files collect non-work related tasks:
+The following org files collect non-work related tasks:
 
-   | Filename     | Description                                |
-   |--------------+--------------------------------------------|
-   | todo.org     | Personal tasks and things to keep track of |
-   | gsoc2009.org | Google Summer of Code stuff for 2009       |
-   | farm.org     | Farm related tasks                         |
-   | mark.org     | Tasks related to my son Mark               |
-   | org.org      | Org-mode related tasks                     |
-   | git.org      | Git related tasks                          |
-   | bzflag.org   | BZFlag related tasks                       | 
+| Filename     | Description                                |
+|--------------+--------------------------------------------|
+| todo.org     | Personal tasks and things to keep track of |
+| gsoc2009.org | Google Summer of Code stuff for 2009       |
+| farm.org     | Farm related tasks                         |
+| mark.org     | Tasks related to my son Mark               |
+| org.org      | Org-mode related tasks                     |
+| git.org      | Git related tasks                          |
+| bzflag.org   | BZFlag related tasks                       |
 
-   The following org-file collects org capture notes and tasks:
+The following org-file collects org capture notes and tasks:
 
-   | Filename   | Description            |
-   |------------+------------------------|
-   | refile.org | Capture task bucket |
+| Filename   | Description         |
+|------------+---------------------|
+| refile.org | Capture task bucket |
 
-   The following work-related org-files keep my business notes (using
-   fictitious client names)
+The following work-related org-files keep my business notes (using
+fictitious client names)
 
-   | Filename    | Description                             |
-   |-------------+-----------------------------------------|
-   | norang.org  | Norang tasks and notes                  |
-   | XYZ.org     | XYZ Corp tasks and notes                |
-   | ABC.org     | ABC Ltd tasks                           |
-   | ABC-DEF.org | ABC Ltd tasks for their client DEF Corp |
-   | ABC-KKK.org | ABC Ltd tasks for their client KKK Inc  |
-   | YYY.org     | YYY Inc tasks                           |
+| Filename    | Description                             |
+|-------------+-----------------------------------------|
+| norang.org  | Norang tasks and notes                  |
+| XYZ.org     | XYZ Corp tasks and notes                |
+| ABC.org     | ABC Ltd tasks                           |
+| ABC-DEF.org | ABC Ltd tasks for their client DEF Corp |
+| ABC-KKK.org | ABC Ltd tasks for their client KKK Inc  |
+| YYY.org     | YYY Inc tasks                           |
 
-   Org-mode is great for dealing with multiple clients and client
-   projects.  An org file becomes the collection of projects, notes,
-   etc. for a single client or client-project.
+Org-mode is great for dealing with multiple clients and client
+projects.  An org file becomes the collection of projects, notes,
+etc. for a single client or client-project.
 
-   Clients (ABC Ltd) has multiple customer systems that I work on.
-   Separating the tasks for each client-customer into separate org
-   files helps keep things logically grouped and since clients come
-   and go this allows entire org files to be added or dropped from my
-   agenda to keep only what is important visible in agenda views.
+Clients (ABC Ltd) has multiple customer systems that I work on.
+Separating the tasks for each client-customer into separate org files
+helps keep things logically grouped and since clients come and go this
+allows entire org files to be added or dropped from my agenda to keep
+only what is important visible in agenda views.
 
-   Other org files are used for publishing only and do not contribute to the agenda.
-   See [[Publishing]] for more details.
+Other org files are used for publishing only and do not contribute to the agenda.
+See [[Publishing]] for more details.
 
 ** Agenda Setup
-   Here is my current =org-agenda-files= setup.  It is shown above
-   formatted as a =setq= for clarity but in reality this is saved in
-   my custom.el file.
+Here is my current =org-agenda-files= setup.  It is shown above
+formatted as a =setq= for clarity but in reality this is saved in my
+custom.el file.
 #+begin_src emacs-lisp
   (setq org-agenda-files (quote ("~/git/org/refile.org"
                                  "~/git/org/gsoc2009.org"
@@ -156,81 +156,80 @@ speed up creation of standard text blocks in most editing modes.
                                  "~/git/org/diary.org")))
 #+end_src
 
-   =org-mode= manages the =org-agenda-files= variable.  I just visit
-   an org file and add it to the agenda with =C-c [=.  To remove a
-   file I just visit it and hit =C-c ]= and all of the tasks in that
-   file are instantly removed from my agenda views until I add them
-   back again.
+=org-mode= manages the =org-agenda-files= variable.  I just visit an
+org file and add it to the agenda with =C-c [=.  To remove a file I
+just visit it and hit =C-c ]= and all of the tasks in that file are
+instantly removed from my agenda views until I add them back again.
 ** Org File Structure
-   :PROPERTIES:
-   :CUSTOM_ID: OrgFileStructure
-   :END:
-   Most of my org files are set up with level 1 headings as main
-   categories only.  Tasks normally start as level 2.
+:PROPERTIES:
+:CUSTOM_ID: OrgFileStructure
+:END:
+Most of my org files are set up with level 1 headings as main
+categories only.  Tasks normally start as level 2.
 
-   Here are some examples of my level 1 headings in
+Here are some examples of my level 1 headings in
 
-   =todo.org=:
+=todo.org=:
 
-   - Appointments
-   - Special Dates
+- Appointments
+- Special Dates
 
-     Includes level 2 headings for
+  Includes level 2 headings for
 
-     - Birthdays
-     - Anniversaries
-     - Holidays
+  - Birthdays
+  - Anniversaries
+  - Holidays
 
-   - Finances
-   - Health
-   - House Maintenance
-   - Medical
-   - Miscellaneous
-   - Lawn and Garden
+- Finances
+- Health
+- House Maintenance
+- Medical
+- Miscellaneous
+- Lawn and Garden
 
-   =norang.org=:
+  =norang.org=:
 
-   - System Maintenance
-   - Payroll
-   - Accounting
-   - Finances
-   - Hardware Maintenance
-   - Quotes
-   - Administration
-   - Research
+- System Maintenance
+- Payroll
+- Accounting
+- Finances
+- Hardware Maintenance
+- Quotes
+- Administration
+- Research
 
-   Each of these level 1 tasks normally has a =property drawer=
-   specifying the archive location and category for any tasks in that
-   tree.  Level 1 headings are set up like this:
+Each of these level 1 tasks normally has a =property drawer=
+specifying the archive location and category for any tasks in that
+tree.  Level 1 headings are set up like this:
 
-   : * Appointments
-   :   :PROPERTIES:
-   :   :CATEGORY: Appt
-   :   :ARCHIVE:  %s_archive::* Appointments
-   :   :END:      
-   :   ...
-   : * Miscellaneous
-   :   :PROPERTIES:
-   :   :CATEGORY: todo
-   :   :ARCHIVE: %s_archive::* Miscellaneous
-   :   :END:
+: * Appointments
+:   :PROPERTIES:
+:   :CATEGORY: Appt
+:   :ARCHIVE:  %s_archive::* Appointments
+:   :END:      
+:   ...
+: * Miscellaneous
+:   :PROPERTIES:
+:   :CATEGORY: todo
+:   :ARCHIVE: %s_archive::* Miscellaneous
+:   :END:
 
-   This ensures that any level 2 task that I archive from this heading
-   (I archive by subtree) gets saved in the archive file under the
-   appropriate level 1 heading so I can find it back again if needed.
+This ensures that any level 2 task that I archive from this heading
+(I archive by subtree) gets saved in the archive file under the
+appropriate level 1 heading so I can find it back again if needed.
 
-   This keeps my main org files and my archives with basically the
-   same structure.
+This keeps my main org files and my archives with basically the
+same structure.
 
 ** Key bindings
-   :PROPERTIES:
-   :CUSTOM_ID: KeyBindings
-   :END:
-   I live in the agenda.  To make getting to the agenda faster I
-   mapped =F12= to the sequence =C-c a= since I'm using it hundreds of
-   times a day.
+:PROPERTIES:
+:CUSTOM_ID: KeyBindings
+:END:
+I live in the agenda.  To make getting to the agenda faster I mapped
+=F12= to the sequence =C-c a= since I'm using it hundreds of times a
+day.
 
-   I have the following custom key bindings set up for my emacs (sorted by frequency).
+I have the following custom key bindings set up for my emacs (sorted by frequency).
 
 | Key     | For                                             | Used       |
 |---------+-------------------------------------------------+------------|
@@ -265,7 +264,7 @@ speed up creation of standard text blocks in most editing modes.
 | C-c a   | Enter Agenda (minimal emacs testing)            | Rare       |
 | M-f11   | Resolve open clocks                             | Rare       |
    
-   Here is the keybinding setup in lisp:
+Here is the keybinding setup in lisp:
 #+begin_src emacs-lisp :tangle yes
   ;; Custom Key Bindings
   (global-set-key (kbd "<f12>") 'org-agenda)
@@ -327,23 +326,22 @@ speed up creation of standard text blocks in most editing modes.
                                    (delete-frame)))
 #+end_src
 
-   The main reason I have special key bindings (like =F11=, and =F12=)
-   is so that the keys work in any mode.  If I'm in the Gnus summary
-   buffer then =C-u C-c C-x C-i= doesn't work, but the =C-F11= key
-   combination does and this saves me time since I don't have to visit
-   an org-mode buffer first just to clock in a recent task.
+The main reason I have special key bindings (like =F11=, and =F12=) is
+so that the keys work in any mode.  If I'm in the Gnus summary buffer
+then =C-u C-c C-x C-i= doesn't work, but the =C-F11= key combination
+does and this saves me time since I don't have to visit an org-mode
+buffer first just to clock in a recent task.
 
 * Tasks and States
-  I use one set of TODO keywords for all of my org files.  Org-mode
-  lets you define TODO keywords per file but I find it's easier to
-  have a standard set of TODO keywords globally so I can use the same
-  setup in any org file I'm working with.
+I use one set of TODO keywords for all of my org files.  Org-mode lets
+you define TODO keywords per file but I find it's easier to have a
+standard set of TODO keywords globally so I can use the same setup in
+any org file I'm working with.
 
-  The only exception to this is this document :) since I don't want
-  =org-mode= hiding the =TODO= keyword when it appears in headlines.
-  I've set up a dummy =#+SEQ_TODO: FIXME FIXED= entry at the top of
-  this file just to leave my =TODO= keyword untouched in this
-  document.
+The only exception to this is this document :) since I don't want
+=org-mode= hiding the =TODO= keyword when it appears in headlines.
+I've set up a dummy =#+SEQ_TODO: FIXME FIXED= entry at the top of this
+file just to leave my =TODO= keyword untouched in this document.
 ** TODO keywords
 Here are my =TODO= state keywords and colour settings:
 
@@ -462,45 +460,46 @@ My =NEXT= task list now only shows project related tasks and keeps me focused on
 more important work.
 
 ** Fast Todo Selection
-   Fast todo selection allows changing from any task todo state to any
-   other state directly by selecting the appropriate key from the fast
-   todo selection key menu.  This is a great feature!
+Fast todo selection allows changing from any task todo state to any
+other state directly by selecting the appropriate key from the fast
+todo selection key menu.  This is a great feature!
 
 #+begin_src emacs-lisp :tangle yes 
   (setq org-use-fast-todo-selection t)
-#+end_src lisp
+#+end_src
 
-    Changing a task state is done with 
+Changing a task state is done with 
 : C-c C-t KEY
 
-    where =KEY= is the appropriate fast todo state selection key as defined in =org-todo-keywords=.
+where =KEY= is the appropriate fast todo state selection key as defined in =org-todo-keywords=.
 
-    The setting
-    #+begin_src emacs-lisp :tangle yes
-      (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-    #+end_src
-    allows changing todo states with S-left and S-right skipping all of the normal processing
-    when entering or leaving a todo state.  This cycles through the todo states but skips
-    setting timestamps and entering notes which is very convenient when all you want to do is
-    fix up the status of an entry.
+The setting
+#+begin_src emacs-lisp :tangle yes
+  (setq org-treat-S-cursor-todo-selection-as-state-change nil)
+#+end_src
+allows changing todo states with S-left and S-right skipping all of
+the normal processing when entering or leaving a todo state.  This
+cycles through the todo states but skips setting timestamps and
+entering notes which is very convenient when all you want to do is fix
+up the status of an entry.
 ** ToDo state triggers
-   I have a few triggers that automatically assign tags to tasks based
-   on state changes.  If a task moves to =CANCELLED= state then it
-   gets a =CANCELLED= tag.  Moving a =CANCELLED= task back to =TODO=
-   removes the =CANCELLED= tag.  These are used for filtering tasks in
-   agenda views which I'll talk about later.
+I have a few triggers that automatically assign tags to tasks based on
+state changes.  If a task moves to =CANCELLED= state then it gets a
+=CANCELLED= tag.  Moving a =CANCELLED= task back to =TODO= removes the
+=CANCELLED= tag.  These are used for filtering tasks in agenda views
+which I'll talk about later.
 
-   The triggers break down to the following rules:
+The triggers break down to the following rules:
 
-   - Moving a task to =CANCELLED= adds a =CANCELLED= tag
-   - Moving a task to =WAITING= adds a =WAITING= tag
-   - Moving a task to =SOMEDAY= adds a =WAITING= tag
-   - Moving a task to a done state removes a =WAITING= tag
-   - Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
-   - Moving a task to =NEXT= removes a =WAITING= tag
-   - Moving a task to =DONE= removes =WAITING= and =CANCELLED= tags
+- Moving a task to =CANCELLED= adds a =CANCELLED= tag
+- Moving a task to =WAITING= adds a =WAITING= tag
+- Moving a task to =SOMEDAY= adds a =WAITING= tag
+- Moving a task to a done state removes a =WAITING= tag
+- Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
+- Moving a task to =NEXT= removes a =WAITING= tag
+- Moving a task to =DONE= removes =WAITING= and =CANCELLED= tags
 
-   The tags are used to filter tasks in the agenda views conveniently.
+The tags are used to filter tasks in the agenda views conveniently.
 
 #+begin_src emacs-lisp :tangle yes 
   (setq org-todo-state-tags-triggers
@@ -523,17 +522,17 @@ more important work.
 #+end_src
 
 *** Using =NEXT= for clocked tasks
-    =TODO= state tasks automatically change to =NEXT= whenever they
-    are clocked.  There are a few exceptions to this case
-        - I don't want Capture tasks in a =NEXT= state immediately
-          since I clock the time it takes to record capture tasks.
-        - I want to clock in some tasks without a keyword
-        - I want to clock parent project tasks with incomplete subtasks
+=TODO= state tasks automatically change to =NEXT= whenever they
+are clocked.  There are a few exceptions to this case
+- I don't want Capture tasks in a =NEXT= state immediately
+  since I clock the time it takes to record capture tasks.
+- I want to clock in some tasks without a keyword
+- I want to clock parent project tasks with incomplete subtasks
 
-    If I clock in a task with a keyword of =TODO= it changes to
-    =NEXT= otherwise the task is clocked in but the state is left
-    alone.  This allows me to clock in tasks with no keyword (things
-    like =* Organization=) and they never show up in my =NEXT= task lists.
+If I clock in a task with a keyword of =TODO= it changes to =NEXT=
+otherwise the task is clocked in but the state is left alone.  This
+allows me to clock in tasks with no keyword (things like =*
+Organization=) and they never show up in my =NEXT= task lists.
 
 #+begin_src emacs-lisp :tangle yes
   (defun bh/clock-in-to-next (kw)
@@ -555,37 +554,36 @@ more important work.
 #+end_src
 
 * Adding New Tasks Quickly with Org Capture
-  :PROPERTIES:
-  :CUSTOM_ID: Capture
-  :END:
-  Org Capture mode replaces remember mode for capturing tasks and notes.
+:PROPERTIES:
+:CUSTOM_ID: Capture
+:END:
+Org Capture mode replaces remember mode for capturing tasks and notes.
 
-  To add new tasks efficiently I use a minimal number of capture
-  templates.  I used to have lots of capture templates, one for each
-  org-file.  I'd start org-capture with C-M-r and then pick a
-  template that filed the task under =* Tasks= in the appropriate
-  file.
+To add new tasks efficiently I use a minimal number of capture
+templates.  I used to have lots of capture templates, one for each
+org-file.  I'd start org-capture with C-M-r and then pick a template
+that filed the task under =* Tasks= in the appropriate file.
 
-  I found I still needed to refile these capture tasks again to the
-  correct location within the org-file so all of these different
-  capture templates weren't really helping at all.  Since then I've
-  changed my workflow to use a minimal number of capture templates --
-  I create the new task quickly and refile it once.  This also saves
-  me from maintaining my org-capture templates when I add a new org file.
+I found I still needed to refile these capture tasks again to the
+correct location within the org-file so all of these different capture
+templates weren't really helping at all.  Since then I've changed my
+workflow to use a minimal number of capture templates -- I create the
+new task quickly and refile it once.  This also saves me from
+maintaining my org-capture templates when I add a new org file.
 ** Capture Templates
-   :PROPERTIES:
-   :ID:       9507648b-dbfc-4ba1-96c2-36e8ba15cbd0
-   :END:
-   When a new task needs to be added I categorize it into one of three
-   things:
+:PROPERTIES:
+:ID:       9507648b-dbfc-4ba1-96c2-36e8ba15cbd0
+:END:
+When a new task needs to be added I categorize it into one of three
+things:
 
-   - A phone call
-   - A new task
-   - A new note
+- A phone call
+- A new task
+- A new note
 
-   and pick the appropriate capture task.
+and pick the appropriate capture task.
 
-   Here is my setup for org-capture
+Here is my setup for org-capture
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-default-notes-file "~/git/org/refile.org")
@@ -638,39 +636,39 @@ they occur.
 #+end_src
 
 ** Separate file for Capture Tasks
-   I have a single org file which is the target for my capture templates.
+I have a single org file which is the target for my capture templates.
 
-   I store notes, tasks, phone calls, and org-protocol tasks in
-   =refile.org=.  I used to use multiple files but found that didn't
-   really have any advantage over a single file.
+I store notes, tasks, phone calls, and org-protocol tasks in
+=refile.org=.  I used to use multiple files but found that didn't
+really have any advantage over a single file.
 
-   Normally this file is empty except for a single line at the top
-   which creates a =REFILE= tag for anything in the file.
+Normally this file is empty except for a single line at the top which
+creates a =REFILE= tag for anything in the file.
 
-   The file has a single permanent line at the top like this
+The file has a single permanent line at the top like this
 #+begin_src org
   #+FILETAGS: REFILE
 #+end_src
 ** Capture Tasks is all about being FAST
-   Okay I'm in the middle of something and oh yeah - I have to
-   remember to do that.  I don't stop what I'm doing.  I'm probably
-   clocking a project I'm working on and I don't want to lose my focus
-   on that but I can't afford to forget this little thing that just
-   came up.
+Okay I'm in the middle of something and oh yeah - I have to remember
+to do that.  I don't stop what I'm doing.  I'm probably clocking a
+project I'm working on and I don't want to lose my focus on that but I
+can't afford to forget this little thing that just came up.
 
-   So what do I do?  Hit =C-M-r= to start capture mode and select =t= since it's a new task and I get a buffer like this
-   : ** TODO 
-   :    [2010-08-05 Thu 21:06]
-   :    [[file:~/git/org-mode-doc/org-mode.org::*Capture%20Tasks%20is%20all%20about%20being%20FAST][Capture Tasks is all about being FAST]]
+So what do I do?  Hit =C-M-r= to start capture mode and select =t= since it's a new task and I get a buffer like this
+: ** TODO 
+:    [2010-08-05 Thu 21:06]
+:    [[file:~/git/org-mode-doc/org-mode.org::*Capture%20Tasks%20is%20all%20about%20being%20FAST][Capture Tasks is all about being FAST]]
 
-   Enter the details of the TODO item and =C-c C-c= to file it away in refile.org and go right back
-   to what I'm really working on secure in the knowledge that that item isn't going to get lost and 
-   I don't have to think about it anymore at all now.
+Enter the details of the TODO item and =C-c C-c= to file it away in
+refile.org and go right back to what I'm really working on secure in
+the knowledge that that item isn't going to get lost and I don't have
+to think about it anymore at all now.
 
-   The amount of time I spend entering the captured note is clocked.
-   The capture templates are set to automatically clock in and out of
-   the capture task.  This is great for interruptions and telephone
-   calls too.
+The amount of time I spend entering the captured note is clocked.  The
+capture templates are set to automatically clock in and out of the
+capture task.  This is great for interruptions and telephone calls
+too.
 * Refiling Tasks
   :PROPERTIES:
   :CUSTOM_ID: Refiling
@@ -686,13 +684,14 @@ they occur.
   day I create them because they show up in my daily clock report
   summary and are obviously in the wrong place.
 ** Refile Setup
-   To refile tasks in org you need to tell it where you want to refile things.
+To refile tasks in org you need to tell it where you want to refile things.
 
-   In my setup I let any file in =org-agenda-files= and the current file contribute to the list of valid refile targets.
-   I don't refile to tasks more then 5 levels deep just to limit the number of displayed targets.
-   I also use ido mode to help find targets quickly.
+In my setup I let any file in =org-agenda-files= and the current file
+contribute to the list of valid refile targets.  I don't refile to
+tasks more then 5 levels deep just to limit the number of displayed
+targets.  I also use ido mode to help find targets quickly.
 
-   Here is my refile configuration:
+Here is my refile configuration:
 #+begin_src emacs-lisp :tangle yes
   ; Use IDO for target completion
   (setq org-completion-use-ido t)
@@ -715,68 +714,66 @@ they occur.
   ; '(ido-everywhere t)
 #+end_src
 
-   To refile a task to my =norang.org= file under =System Maintenance=
-   I just put the cursor on the task and hit =C-c C-w= and enter =nor
-   TAB sys TAB RET= and it's done.  I always know what file it's going
-   into but if I don't remember the exact task name I can just hit TAB
-   twice and all refile targets that match show up in a list.  Just
-   scroll through the list and pick the right refile target.  This
-   works great!
+To refile a task to my =norang.org= file under =System Maintenance= I
+just put the cursor on the task and hit =C-c C-w= and enter =nor TAB
+sys TAB RET= and it's done.  I always know what file it's going into
+but if I don't remember the exact task name I can just hit TAB twice
+and all refile targets that match show up in a list.  Just scroll
+through the list and pick the right refile target.  This works great!
 ** Refiling Tasks
-   To find tasks to refile I run my agenda view (=F12 r= = =C-c a r=)
-   which shows tasks with the =REFILE= tag.  This view shows all tasks
-   (even ones marked in a =done= state).
+To find tasks to refile I run my agenda view (=F12 r= = =C-c a r=)
+which shows tasks with the =REFILE= tag.  This view shows all tasks
+(even ones marked in a =done= state).
 
-   My single capture target file has this tag in the FILETAGS
-   header so every task in the file can be found using this view.
+My single capture target file has this tag in the FILETAGS header so
+every task in the file can be found using this view.
 
-   I visit each file with =REFILE= tasks to refile.  If there are a
-   few tasks going to the same place (3 or less) I refile the first
-   one, then move to the second one and use =C-c C-w up-arrow RET= to
-   refile to the same location again.  If more than 3 tasks are going
-   to the same place I try to do those last - since refiling
-   everything else away helps to group those together.  Then I mark
-   those tasks in =m= and bulk refile them to the same target with =B
-   r= in the agenda view.
+I visit each file with =REFILE= tasks to refile.  If there are a few
+tasks going to the same place (3 or less) I refile the first one, then
+move to the second one and use =C-c C-w up-arrow RET= to refile to the
+same location again.  If more than 3 tasks are going to the same place
+I try to do those last - since refiling everything else away helps to
+group those together.  Then I mark those tasks in =m= and bulk refile
+them to the same target with =B r= in the agenda view.
 
-   Refiling all of my tasks tends to take less than a minute so I may
-   do this a couple of times a day.
+Refiling all of my tasks tends to take less than a minute so I may do
+this a couple of times a day.
 ** Refiling Notes
-   I keep a =* Notes= headline in most of my org-mode files.  Notes
-   have a =NOTE= tag which is created by the capture template for
-   notes.  This allows finding notes across multiple files easily
-   using the agenda search functions.
+I keep a =* Notes= headline in most of my org-mode files.  Notes have
+a =NOTE= tag which is created by the capture template for notes.  This
+allows finding notes across multiple files easily using the agenda
+search functions.
 
-   Notes created by capture tasks go first to =refile.org= and are
-   later refiled to the appropriate project file.  Some notes that are
-   project related get filed to the appropriate project instead of
-   under the catchall =* NOTES= task.  Generally these types of notes
-   are specific to the project and not generally useful -- so removing
-   them from the notes list when the project is archived makes sense.
+Notes created by capture tasks go first to =refile.org= and are later
+refiled to the appropriate project file.  Some notes that are project
+related get filed to the appropriate project instead of under the
+catchall =* NOTES= task.  Generally these types of notes are specific
+to the project and not generally useful -- so removing them from the
+notes list when the project is archived makes sense.
 ** Refiling Phone Calls
-   Phone calls are handled using a few custom functions and a special key binding.
-   I time my calls using the capture mode template settings to clock in and out the
-   capture task while the phone call is in progress.
+Phone calls are handled using a few custom functions and a special key
+binding.  I time my calls using the capture mode template settings to
+clock in and out the capture task while the phone call is in progress.
 
-   Phone call tasks collect in =refile.org= and are later refiled to
-   the appropriate location.  Some phone calls are billable and we
-   want these tracked in the appropriate category.
+Phone call tasks collect in =refile.org= and are later refiled to the
+appropriate location.  Some phone calls are billable and we want these
+tracked in the appropriate category.
 * Custom agenda views
-  I have 10 custom agenda views defined.  Most of my old custom
-  agenda views were rendered obsolete when filtering functionality was
-  added to the agenda in newer versions of =org-mode=.
+I have 10 custom agenda views defined.  Most of my old custom agenda
+views were rendered obsolete when filtering functionality was added to
+the agenda in newer versions of =org-mode=.
 
-  Custom agenda views are used for:
-  1. Finding tasks waiting on something
-  2. Finding tasks to be refiled
-  3. Finding notes
-  4. Finding =NEXT= tasks to work on
-  5. Reviewing projects
-  6. Reviewing other non-project tasks
-  7. Findings tasks to be archived
-  8. Viewing habits
-  9. Finding stuck projects
-  10. Setting the default clocking task for punching in
+Custom agenda views are used for:
+1. Finding tasks waiting on something
+2. Finding tasks to be refiled
+3. Finding notes
+4. Finding =NEXT= tasks to work on
+5. Reviewing projects
+6. Reviewing other non-project tasks
+7. Findings tasks to be archived
+8. Viewing habits
+9. Finding stuck projects
+10. Setting the default clocking task for punching in
 
 ** Setup
 #+begin_src emacs-lisp :tangle yes
@@ -818,131 +815,129 @@ they occur.
                   (org-agenda-overriding-header "Set default clocking task with C-u C-u I"))))))
 #+end_src
 
-   My day goes generally like this:
+My day goes generally like this:
 
-   - Punch in (start the clock)
-   - Look at my agenda =F12 a=
-     - make a note of anything important to deal with today
-   - Read email and news
-     - create notes, and tasks for things that need responses with org-capture
-   - Check refile tasks and respond to emails
-   - Look at my agenda and knock off tasks scheduled for today
-     - Clock it in (=I= in the agenda or on the beginning of a task headline 
-       - this changes =TODO= state tasks to =NEXT= when there are no unfinished subtasks
-     - Work on it until it is =DONE= or it gets interrupted
-   - work on tasks
-   - Punch out and go for lunch
-   - Punch in and continue work for the afternoon
-   - work on tasks
-   - Check today's time log report and refile tasks with clocked time
-     - =F12 a R= - any tasks in =refile.org= should be moved to the appropriate file
-     - =F12 r= to get to refile tasks
-     - Tag files to be filed with =m= collecting all tasks for the same target
-     - Bulk refile the tasks to the target location with =B r=
-     - repeat until the agenda timeclock report has all of the time in project files
-   - Punch out (stop the clock)
+- Punch in (start the clock)
+- Look at my agenda =F12 a=
+  - make a note of anything important to deal with today
+- Read email and news
+  - create notes, and tasks for things that need responses with org-capture
+- Check refile tasks and respond to emails
+- Look at my agenda and knock off tasks scheduled for today
+  - Clock it in (=I= in the agenda or on the beginning of a task headline 
+    - this changes =TODO= state tasks to =NEXT= when there are no unfinished subtasks
+  - Work on it until it is =DONE= or it gets interrupted
+- work on tasks
+- Punch out and go for lunch
+- Punch in and continue work for the afternoon
+- work on tasks
+- Check today's time log report and refile tasks with clocked time
+  - =F12 a R= - any tasks in =refile.org= should be moved to the appropriate file
+  - =F12 r= to get to refile tasks
+  - Tag files to be filed with =m= collecting all tasks for the same target
+  - Bulk refile the tasks to the target location with =B r=
+  - repeat until the agenda timeclock report has all of the time in project files
+- Punch out (stop the clock)
 
 ** What do I work on next?
-   Use the agenda view for =NEXT= tasks to find stuff in progress and
-   things to clock.
+Use the agenda view for =NEXT= tasks to find stuff in progress and
+things to clock.
 
-   When I look for a new task to work on I generally hit =F12 a= to
-   get today's agenda and follow this order:
+When I look for a new task to work on I generally hit =F12 a= to get
+today's agenda and follow this order:
 
-   - Pick something off today's agenda
-     - deadline for today (do this first - it's not late yet)
-     - deadline in the past (it's already late)
-     - deadline that is coming up soon
-     - a scheduled task for today (or in the past)
-   - pick a NEXT task
-   - If you run out of items to work on look for NEXT task in the current context
-     F12 n / RET
+- Pick something off today's agenda
+  - deadline for today (do this first - it's not late yet)
+  - deadline in the past (it's already late)
+  - deadline that is coming up soon
+  - a scheduled task for today (or in the past)
+- pick a NEXT task
+- If you run out of items to work on look for NEXT task in the current context
+  F12 n / RET
 
 *** Why keep it all on the =NEXT= list?
-    I've moved to a more GTD way of doing things.  I don't have a
-    =STARTED= list or todo keyword anymore.  Now I just use a =NEXT=
-    list.  If I clock a TODO keyword it changes to =NEXT= if that is
-    appropriate automagically on clock in.  A =NEXT= task is something
-    that is available to work on /now/, it was either clocked already
-    or is the next logical step in some project.
+I've moved to a more GTD way of doing things.  I don't have a
+=STARTED= list or todo keyword anymore.  Now I just use a =NEXT= list.
+If I clock a TODO keyword it changes to =NEXT= if that is appropriate
+automagically on clock in.  A =NEXT= task is something that is
+available to work on /now/, it was either clocked already or is the
+next logical step in some project.
 
-    I used to have a special keyword =ONGOING= for things that I do a
-    lot and want to clock but never really start/end.  I had a special
-    agenda view for =ONGOING= tasks that I would pull up to easily find
-    the thing I want to clock.
+I used to have a special keyword =ONGOING= for things that I do a lot
+and want to clock but never really start/end.  I had a special agenda
+view for =ONGOING= tasks that I would pull up to easily find the thing
+I want to clock.
 
-    Since then I've moved away from using the =ONGOING= todo keyword.
-    If a task is clocked-in it automatically moves to the =NEXT= state
-    from =TODO= state and shows up on the =NEXT= task list without
-    having to think about it.  Having an agenda view that shows =NEXT=
-    tasks makes it easy to pick the thing to clock - and I don't have
-    to remember if I need to look in the =ONGOING= list or the =NEXT=
-    list when looking for the task to clock-in.  The =NEXT= list is
-    basically 'what is current' - stuff I worked on recently and need
-    to finish and any task that moves a project forward.  I want to
-    find the thing to work on as fast as I can and actually do work on
-    it - not spend time hunting through my org files for the task that
-    needs to be clocked-in.
+Since then I've moved away from using the =ONGOING= todo keyword.  If
+a task is clocked-in it automatically moves to the =NEXT= state from
+=TODO= state and shows up on the =NEXT= task list without having to
+think about it.  Having an agenda view that shows =NEXT= tasks makes
+it easy to pick the thing to clock - and I don't have to remember if I
+need to look in the =ONGOING= list or the =NEXT= list when looking for
+the task to clock-in.  The =NEXT= list is basically 'what is
+current' - stuff I worked on recently and need to finish and any task
+that moves a project forward.  I want to find the thing to work on as
+fast as I can and actually do work on it - not spend time hunting
+through my org files for the task that needs to be clocked-in.
 
-    To drop a task off the =NEXT= list simply move it back to the
-    =TODO= state.
+To drop a task off the =NEXT= list simply move it back to the =TODO=
+state.
 ** Reading email, newsgroups, and conversations on IRC
-   When reading email, newsgroups, and conversations on IRC I just let
-   the default task (normally =Organization=) clock the time I spend
-   on these tasks.  To read email I go to Gnus and read everything in
-   my inboxes.  If there are emails that require a response I use
-   org-capture to create a new task with a heading of 'Respond to
-   <user>' for each one.  This automatically links to the email in the
-   task and makes it easy to find later.  Some emails are quick to
-   respond to and some take research and a significant amount of time
-   to complete.  I clock each one in it's own task just in case I need
-   that clocked time later.
+When reading email, newsgroups, and conversations on IRC I just let
+the default task (normally =Organization=) clock the time I spend on
+these tasks.  To read email I go to Gnus and read everything in my
+inboxes.  If there are emails that require a response I use
+org-capture to create a new task with a heading of 'Respond to <user>'
+for each one.  This automatically links to the email in the task and
+makes it easy to find later.  Some emails are quick to respond to and
+some take research and a significant amount of time to complete.  I
+clock each one in it's own task just in case I need that clocked time
+later.
 
-   Next, I go to my newly created tasks to be refiled with =F12 r= and
-   clock in an email task and deal with it.  Repeat this until all of
-   the 'Respond to <user>' tasks are marked =DONE=.
+Next, I go to my newly created tasks to be refiled with =F12 r= and
+clock in an email task and deal with it.  Repeat this until all of
+the 'Respond to <user>' tasks are marked =DONE=.
 
-   I read email and newgroups in Gnus so I don't separate clocked time
-   for quickly looking at things.  If an article has a useful piece of
-   information I want to remember I create a note for it with =C-M-r
-   n= and enter the topic and file it.  This takes practically no time
-   at all and I know the note is safely filed for later retrieval.
-   The time I spend in the capture buffer is clocked with that
-   capture note.
+I read email and newgroups in Gnus so I don't separate clocked time
+for quickly looking at things.  If an article has a useful piece of
+information I want to remember I create a note for it with =C-M-r n=
+and enter the topic and file it.  This takes practically no time at
+all and I know the note is safely filed for later retrieval.  The time
+I spend in the capture buffer is clocked with that capture note.
 ** Filtering
 
-   So many tasks, so little time.  I have hundreds of tasks at any
-   given time (373 right now).  There is so much stuff to look at it
-   can be daunting.  This is where agenda filtering saves the day.
+So many tasks, so little time.  I have hundreds of tasks at any given
+time (373 right now).  There is so much stuff to look at it can be
+daunting.  This is where agenda filtering saves the day.
 
-   It's 11:53AM and I'm in work mode just before lunch.  I don't want
-   to see tasks that are not work related right now.  I also don't
-   want to work on a big project just before lunch... so I need to
-   find small tasks that I can knock off the list.
+It's 11:53AM and I'm in work mode just before lunch.  I don't want to
+see tasks that are not work related right now.  I also don't want to
+work on a big project just before lunch... so I need to find small
+tasks that I can knock off the list.
 
-   How do we do this?  Get a list of NEXT tasks with =F12 n= and then
-   narrow it down with filtering.  To find tasks to work on I remove
-   tasks I'm not supposed to be working on now with =/ RET=.  Then
-   limit to tasks with estimates of 10 minutes or less with =/ + 1=
-   and I can pick something that fits the minutes I have left before I
-   take off for lunch.
+How do we do this?  Get a list of NEXT tasks with =F12 n= and then
+narrow it down with filtering.  To find tasks to work on I remove
+tasks I'm not supposed to be working on now with =/ RET=.  Then limit
+to tasks with estimates of 10 minutes or less with =/ + 1= and I can
+pick something that fits the minutes I have left before I take off for
+lunch.
 
 *** Automatically removing context based tasks with / RET
-    =/ RET= in the agenda is really useful.  This awesome feature was
-    added to org-mode by John Wiegley.  It removes tasks automatically
-    by filtering based on a user-provided function.
+=/ RET= in the agenda is really useful.  This awesome feature was
+added to org-mode by John Wiegley.  It removes tasks automatically by
+filtering based on a user-provided function.
 
-    I work from home and set up my day as follows:
+I work from home and set up my day as follows:
 
-      - On weekdays 8am-12am, 1pm-5pm I'm working (@office)
-      - My son (Mark) is available on weekdays before school 8am-9am
-        and after school to bedtime 4pm-8pm (MARK), and weekends
-        10am-8pm
-      - Home tasks are done outside working hours (@home)
+- On weekdays 8am-12am, 1pm-5pm I'm working (@office)
+- My son (Mark) is available on weekdays before school 8am-9am
+  and after school to bedtime 4pm-8pm (MARK), and weekends
+  10am-8pm
+- Home tasks are done outside working hours (@home)
 
-    I have the following setup to allow =/ RET= to filter tasks based
-    on what the computer determines my current context to be at the
-    time I run the =/ RET= filter command.
+I have the following setup to allow =/ RET= to filter tasks based on
+what the computer determines my current context to be at the time I
+run the =/ RET= filter command.
 
 #+begin_src emacs-lisp :tangle yes
   (defun bh/weekday-p ()
@@ -972,95 +967,96 @@ they occur.
   (setq org-agenda-auto-exclude-function 'bh/org-auto-exclude-function)
 #+end_src
 
-  This lets me filter tasks with just =/ RET= on the agenda which removes tasks I'm not
-  supposed to be working on now from the list of returned results.
+This lets me filter tasks with just =/ RET= on the agenda which removes tasks I'm not
+supposed to be working on now from the list of returned results.
 
-  This helps to keep my agenda clutter-free.
+This helps to keep my agenda clutter-free.
 * Time Clocking
-  :PROPERTIES:
-  :CUSTOM_ID: Clocking
-  :END:
-  Okay, I admit it.  I'm a clocking fanatic.
+:PROPERTIES:
+:CUSTOM_ID: Clocking
+:END:
+Okay, I admit it.  I'm a clocking fanatic.
 
-  I clock everything (well almost everything).  Org-mode makes this
-  really easy.  I'd rather clock too much stuff than not enough so I
-  find it's easier to get in the habit of clocking everything.
+I clock everything (well almost everything).  Org-mode makes this
+really easy.  I'd rather clock too much stuff than not enough so I
+find it's easier to get in the habit of clocking everything.
 
-  As an example of what I mean my clock data for April 20, 2009 shows
-  14 hours 19 minutes of clocked time (which included 3 hours and 17
-  minutes of painting my basement.)  My clocked day started at 6:57AM
-  and ended at 23:11PM.  I have only a few holes in my clocked day
-  (where I wasn't clocking anything):
+As an example of what I mean my clock data for April 20, 2009 shows 14
+hours 19 minutes of clocked time (which included 3 hours and 17
+minutes of painting my basement.)  My clocked day started at 6:57AM
+and ended at 23:11PM.  I have only a few holes in my clocked day
+(where I wasn't clocking anything):
  
-  | Missing Clock Data |
-  |--------------------|
-  |        16:14-16:53 |
-  |        16:55-17:19 |
-  |        18:00-18:52 |
+| Missing Clock Data |
+|--------------------|
+|        16:14-16:53 |
+|        16:55-17:19 |
+|        18:00-18:52 |
 
-  This makes it possible to look back at the day and see where I'm
-  spending too much time, or not enough time on specific projects.
+This makes it possible to look back at the day and see where I'm
+spending too much time, or not enough time on specific projects.
 
-  Without clocking data it's hard to tell what you did after the fact.
+Without clocking data it's hard to tell what you did after the fact.
 
-  I now use the concept of punching in and punching out at the start
-  and end of my work day.  This defines a default task to clock time
-  on whenever the clock would normally stop.  I found that with the default
-  org-mode setup I would lose clocked minutes during the day,  a minute here,
-  a minute there, and that all adds up.  This is especially true if you
-  write notes when moving to a DONE state - in this case the clock normally
-  stops before you have composed the note.
+I now use the concept of punching in and punching out at the start and
+end of my work day.  This defines a default task to clock time on
+whenever the clock would normally stop.  I found that with the default
+org-mode setup I would lose clocked minutes during the day, a minute
+here, a minute there, and that all adds up.  This is especially true
+if you write notes when moving to a DONE state - in this case the
+clock normally stops before you have composed the note.
 
-  My clocking setup basically works like this:
+My clocking setup basically works like this:
 
-  - Punch in (start the clock)
-    - This identifies a task that is the default task to clock in
-      whenever the clock normally stops
-  - Clock in tasks normally, and let moving to a DONE state clock out
-    - clocking out automatically clocks time on the default task
-  - Continue clocking whatever tasks you work on
-  - Punch out (stop the clock)
+- Punch in (start the clock)
+  - This identifies a task that is the default task to clock in
+    whenever the clock normally stops
+- Clock in tasks normally, and let moving to a DONE state clock out
+  - clocking out automatically clocks time on the default task
+- Continue clocking whatever tasks you work on
+- Punch out (stop the clock)
 
-  I'm free to change the default task multiple times during the day.  If I'm 
-  working on =Project X= then I can make the top-level =Project X= task the default
-  and all clocked time goes on that project until I either punch out or change
-  to some other default task.
+I'm free to change the default task multiple times during the day.  If
+I'm working on =Project X= then I can make the top-level =Project X=
+task the default and all clocked time goes on that project until I
+either punch out or change to some other default task.
 
-  I now have a default =Organization= task that I use for every major
-  context I clock time in.  If I am working on norang.ca tasks, then I
-  set the norang.org =Organization= task as the default task.  If I'm
-  working for client ABC then I set the =Organization= task in ABC.org
-  as the default task etc.  This allows me to block time on my
-  calendar and work on a single context for some time frame of my day,
-  then totally switch to another context simply by changing my default
-  clocking task.  Or course if I get interrupted in the middle of the
-  day clocking in a task puts time on that task regardless of the
-  context I'm supposed to be working in.
+I now have a default =Organization= task that I use for every major
+context I clock time in.  If I am working on norang.ca tasks, then I
+set the norang.org =Organization= task as the default task.  If I'm
+working for client ABC then I set the =Organization= task in ABC.org
+as the default task etc.  This allows me to block time on my calendar
+and work on a single context for some time frame of my day, then
+totally switch to another context simply by changing my default
+clocking task.  Or course if I get interrupted in the middle of the
+day clocking in a task puts time on that task regardless of the
+context I'm supposed to be working in.
 
-  This works really well for me.
+This works really well for me.
 
 ** Clock Setup
-   :PROPERTIES:
-   :CUSTOM_ID: ClockSetup
-   :END:
-   
-   To get started we need to set the default clocking task which we use to
-   clock in whenever the clock would normally stop.  I use a special custom
-   agenda view for this and I think of it as selecting the context for what 
-   I'm going to work on for the next few hours. 
+:PROPERTIES:
+:CUSTOM_ID: ClockSetup
+ :END:
 
-   =F12 c= shows me the tasks I can normally set as the default clocking task.
-   I'm free to set any task as the default but these are the ones I normally use.
+To get started we need to set the default clocking task which we use
+to clock in whenever the clock would normally stop.  I use a special
+custom agenda view for this and I think of it as selecting the context
+for what I'm going to work on for the next few hours.
 
-   Keeping the clock running when moving a subtask to a =DONE= state
-   means clocking continues to apply to the parent task.  I can pick
-   the next task from the parent and clock that in without losing a
-   minute or two while I'm deciding what to work on next.
+=F12 c= shows me the tasks I can normally set as the default clocking
+task.  I'm free to set any task as the default but these are the ones
+I normally use.
 
-   I keep clock times in a =:CLOCK:= drawer and state changes in a
-   =:LOGBOOK:= drawer.
+Keeping the clock running when moving a subtask to a =DONE= state
+means clocking continues to apply to the parent task.  I can pick the
+next task from the parent and clock that in without losing a minute or
+two while I'm deciding what to work on next.
 
-   I have the following org-mode settings for clocking:
+I keep clock times in a =:CLOCK:= drawer and state changes in a
+=:LOGBOOK:= drawer.
+
+I have the following org-mode settings for clocking:
 
 #+begin_src emacs-lisp :tangle yes
   ;;
@@ -1117,10 +1113,10 @@ they occur.
   (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
 #+end_src
 
-  I used to clock in tasks by ID using the following function but with
-  the new punch-in and punch-out I don't need these anymore.  =f9-SPC=
-  calls =bh/clock-in-last-task= which switches the clock back to the
-  previously clocked task.
+I used to clock in tasks by ID using the following function but with
+the new punch-in and punch-out I don't need these anymore.  =f9-SPC=
+calls =bh/clock-in-last-task= which switches the clock back to the
+previously clocked task.
 
 #+begin_src emacs-lisp :tangle yes
   (require 'org-id)  
@@ -1142,51 +1138,51 @@ they occur.
 #+end_src
 
 ** Clocking in
-  When I start or continue working on a task I clock it in with =C-c
-  C-x C-i= (or just =I= in the agenda or speed key setting).  This
-  changes the task state from =TODO= to =NEXT= and starts the clock
-  for this task.
+When I start or continue working on a task I clock it in with =C-c C-x
+C-i= (or just =I= in the agenda or speed key setting).  This changes
+the task state from =TODO= to =NEXT= and starts the clock for this
+task.
 
 *** Setting a default clock task
 
-    I have a default =* Organization= task in my norang.org file that
-    I tend to put miscellaneous clock time on.  While reorganizing my
-    org-files and doing other planning work that isn't for a specific
-    project I'll clock in this task while I do things.  By clocking
-    this task in with a double prefix =C-u C-u C-c C-x C-i= it starts
-    the clock and makes this the default clock task.  The first punch-in
-    of the day (=f9 I=) shows the context agenda view if no default task is
-    selected, otherwise it just clocks in the default task.
+I have a default =* Organization= task in my norang.org file that I
+tend to put miscellaneous clock time on.  While reorganizing my
+org-files and doing other planning work that isn't for a specific
+project I'll clock in this task while I do things.  By clocking this
+task in with a double prefix =C-u C-u C-c C-x C-i= it starts the clock
+and makes this the default clock task.  The first punch-in of the day
+(=f9 I=) shows the context agenda view if no default task is selected,
+otherwise it just clocks in the default task.
 
-    You can quickly clock in the default task with =C-u C-c C-x C-i d=
+You can quickly clock in the default task with =C-u C-c C-x C-i d=
 
-    I now set the default clocking task when I punch in and clocking out
-    of any task will clock in this default task until I punch out using
-    the clocking hooks I have set up.
+I now set the default clocking task when I punch in and clocking out
+of any task will clock in this default task until I punch out using
+the clocking hooks I have set up.
 
-    The only thing I need to remember is to set a new default clock task
-    when I switch contexts (stop working for client A and start working
-    for client B).
+The only thing I need to remember is to set a new default clock task
+when I switch contexts (stop working for client A and start working
+for client B).
 *** Using the clock history to clock in old tasks
-    You can use the clock history to restart clocks on old tasks you've clocked or to jump
-    directly to a task you have clocked previously.  I use this mainly to clock in whatever
-    got interrupted by something.
+You can use the clock history to restart clocks on old tasks you've
+clocked or to jump directly to a task you have clocked previously.  I
+use this mainly to clock in whatever got interrupted by something.
 
-    Consider the following scenario:
+Consider the following scenario:
 
-      - You are working on and clocking =Task A= (Organization)
-      - You get interrupted and switch to =Task B= (Document my use of org-mode)
-      - You complete =Task B= (Document my use of org-mode)
-      - Now you want to go back to =Task A= (Organization) again to continue
+- You are working on and clocking =Task A= (Organization)
+- You get interrupted and switch to =Task B= (Document my use of org-mode)
+- You complete =Task B= (Document my use of org-mode)
+- Now you want to go back to =Task A= (Organization) again to continue
 
-    This is easy to deal with.  
+This is easy to deal with.  
     
-    1. Clock in =Task A=, work on it
-    2. Go to =Task B= (or create a new task) and clock it in
-    3. When you are finished with =Task B= hit =C-u C-c C-x C-i i=
+1. Clock in =Task A=, work on it
+2. Go to =Task B= (or create a new task) and clock it in
+3. When you are finished with =Task B= hit =C-u C-c C-x C-i i=
 
-    This displays a clock history selection window like the following
-    and selects the interrupted =[i]= entry.
+This displays a clock history selection window like the following and
+selects the interrupted =[i]= entry.
 
 *Clock history selection buffer for C-u C-c C-x C-i*
 #+begin_example
@@ -1203,244 +1199,241 @@ they occur.
   [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
 #+end_example
 ** Clock Everything - Create New Tasks
-   In order to clock everything you need a task for everything.
-   That's fine for planned projects but interruptions inevitably occur
-   and you need some place to record whatever time you spend on that
-   interruption.
+In order to clock everything you need a task for everything.  That's
+fine for planned projects but interruptions inevitably occur and you
+need some place to record whatever time you spend on that
+interruption.
 
-   To deal with this we create a new capture task to record the thing
-   we are about to do.  The workflow goes something like this:
+To deal with this we create a new capture task to record the thing we
+are about to do.  The workflow goes something like this:
 
-   - You are clocking some task and an interruption occurs
-   - Create a quick capture task =C-M-r=
-   - Type the heading 
-   - clock it in =C-c C-x C-i=
-   - file it =C-c C-c=
-   - switch the clock back to it =F9 SPC=
-   - Go do it
-   - mark it =DONE= which stops the clock (or switches to the context
-     default clocking task you punched in earlier)
-   - clock something else in
-   - refile the newly created and clocked task later
+- You are clocking some task and an interruption occurs
+- Create a quick capture task =C-M-r=
+- Type the heading 
+- clock it in =C-c C-x C-i=
+- file it =C-c C-c=
+- switch the clock back to it =F9 SPC=
+- Go do it
+- mark it =DONE= which stops the clock (or switches to the context
+  default clocking task you punched in earlier)
+- clock something else in
+- refile the newly created and clocked task later
 
-   This means you can ignore the details like where this task really
-   belongs in your org file layout and just get on with completing the
-   thing.  Refiling a bunch of tasks later in a group when it is
-   convenient to refile the tasks saves time in the long run.
+This means you can ignore the details like where this task really
+belongs in your org file layout and just get on with completing the
+thing.  Refiling a bunch of tasks later in a group when it is
+convenient to refile the tasks saves time in the long run.
 ** Finding tasks to clock in
-   To find a task to work on I use one of the following options
-   (generally listed most frequently used first)
+To find a task to work on I use one of the following options
+(generally listed most frequently used first)
 
-   - Use the clock history C-u C-c C-x C-i
-     Go back to something I was clocking that is not finished
-   - Pick something off today's agenda
-     =SCHEDULED= or =DEADLINE= items that need to be done soon
-   - Pick something off the =NEXT= tasks agenda view
-     Work on some unfinished task to move to completion
-   - Pick something off the other (non-project) task list 
-   - Use an agenda view with filtering to pick something to work on
+- Use the clock history C-u C-c C-x C-i
+  Go back to something I was clocking that is not finished
+- Pick something off today's agenda
+  =SCHEDULED= or =DEADLINE= items that need to be done soon
+- Pick something off the =NEXT= tasks agenda view
+  Work on some unfinished task to move to completion
+- Pick something off the other (non-project) task list 
+- Use an agenda view with filtering to pick something to work on
 ** Editing clock entries
-   Sometimes it is necessary to edit clock entries so they reflect
-   reality.  I find I do this for maybe 2-3 entries in a week.
+Sometimes it is necessary to edit clock entries so they reflect
+reality.  I find I do this for maybe 2-3 entries in a week.
 
-   Occassionally I cannot clock in a task on time because I'm away
-   from my computer.  In this case the previous clocked task is still
-   running and counts time for both tasks which is wrong.
+Occassionally I cannot clock in a task on time because I'm away from
+my computer.  In this case the previous clocked task is still running
+and counts time for both tasks which is wrong.
 
-   I make a note of the time and then when I get back to my computer I
-   clock in the right task and edit the start and end times to correct
-   the clock history.
+I make a note of the time and then when I get back to my computer I
+clock in the right task and edit the start and end times to correct
+the clock history.
 
-   To visit the clock line for an entry quickly use the agenda log
-   mode.  =F12 a l= shows all clock lines for today.  I use this to
-   navigate to the appropriate clock lines quickly.  F11 goes to the
-   current clocked task but the agenda log mode is better for finding
-   and visiting older clock entries.
+To visit the clock line for an entry quickly use the agenda log mode.
+=F12 a l= shows all clock lines for today.  I use this to navigate to
+the appropriate clock lines quickly.  F11 goes to the current clocked
+task but the agenda log mode is better for finding and visiting older
+clock entries.
    
-   Use =F12 a l= to open the agenda in log mode and show only logged
-   clock times.  Move the cursor down to the clock line you need to
-   edit and hit =TAB= and you're there.
+Use =F12 a l= to open the agenda in log mode and show only logged
+clock times.  Move the cursor down to the clock line you need to edit
+and hit =TAB= and you're there.
 
-   To edit a clock entry just put the cursor on the part of the date
-   you want to edit (use the keyboard not the mouse - since the
-   clicking on the timestamp with the mouse goes back to the agenda
-   for that day) and hit the =S-<up arrow>= or =S-<down arrow>= keys
-   to change the time.
+To edit a clock entry just put the cursor on the part of the date you
+want to edit (use the keyboard not the mouse - since the clicking on
+the timestamp with the mouse goes back to the agenda for that day) and
+hit the =S-<up arrow>= or =S-<down arrow>= keys to change the time.
 
-   The following setting makes time editing round to 15 minute
-   increments:
+The following setting makes time editing round to 15 minute
+increments:
 #+begin_src emacs-lisp :tangle yes
   (setq org-time-stamp-rounding-minutes (quote (1 15)))
-#+end_src lisp
+#+end_src
 
-   Editing the time with the shift arrow combination also updates the
-   total for the clock line which is a nice convenience.
+Editing the time with the shift arrow combination also updates the
+total for the clock line which is a nice convenience.
 
-   I always check that I haven't created task overlaps when fixing
-   time clock entries by viewing them with log mode on in the agenda.
+I always check that I haven't created task overlaps when fixing time
+clock entries by viewing them with log mode on in the agenda.
 
-   I want my clock entries to be as accurate as possible but editing
-   to the exact minute (instead of rounding to 15 minutes) takes more
-   time and isn't worth the hassle.  Rounding to 15 minutes gets me
-   close to the time I want quickly and if extra refining is needed I
-   can edit the timestamp directly and update the total with C-c C-y.
+I want my clock entries to be as accurate as possible but editing to
+the exact minute (instead of rounding to 15 minutes) takes more time
+and isn't worth the hassle.  Rounding to 15 minutes gets me close to
+the time I want quickly and if extra refining is needed I can edit the
+timestamp directly and update the total with C-c C-y.
 * Time reporting and tracking
 ** Billing clients based on clocked time
-   At the beginning of the month I invoice my clients for work done
-   last month.  This is where I review my clocking data for 
-   correctness before billing for the clocked time.
+At the beginning of the month I invoice my clients for work done last
+month.  This is where I review my clocking data for correctness before
+billing for the clocked time.
 
-   Billing for clocked time basically boils down to the following
-   steps:
+Billing for clocked time basically boils down to the following steps:
 
-   1. Verify that the clock data is complete and correct
-   2. Use clock reports to summarize time spent
-   3. Create an invoice based on the clock data
+1. Verify that the clock data is complete and correct
+2. Use clock reports to summarize time spent
+3. Create an invoice based on the clock data
 
-      I currently create invoices in an external software package
-      based on the org-mode clock data.
+   I currently create invoices in an external software package
+   based on the org-mode clock data.
 
-   4. Archive complete tasks so they are out of the way.
+4. Archive complete tasks so they are out of the way.
 
-      See [[*Archiving]] for more details.
+   See [[*Archiving]] for more details.
 *** Verify that the clock data is complete and correct
-   Since I change tasks often (sometimes more than once in a minute) I use the following setting
-   to remove clock entries with a zero duration.
+Since I change tasks often (sometimes more than once in a minute) I
+use the following setting to remove clock entries with a zero
+duration.
 #+begin_src emacs-lisp :tangle yes
   ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
   (setq org-clock-out-remove-zero-time-clocks t)
 #+end_src
 
-   This setting just keeps my clocked log entries clean - only
-   keeping clock entries that contribute to the clock report.
+This setting just keeps my clocked log entries clean - only keeping
+clock entries that contribute to the clock report.
 
-   Before invoicing for clocked time it is important to make sure your
-   clocked time data is correct.  If you have a clocked time with an
-   entry that is not closed (ie. it has no end time) then that is a
-   hole in your clocked day and it gets counted as zero (0) for time
-   spent on the task when generating clock reports.  Counting it as
-   zero is almost certainly wrong.
+Before invoicing for clocked time it is important to make sure your
+clocked time data is correct.  If you have a clocked time with an
+entry that is not closed (ie. it has no end time) then that is a hole
+in your clocked day and it gets counted as zero (0) for time spent on
+the task when generating clock reports.  Counting it as zero is almost
+certainly wrong.
 
-   To check for unclosed clock times I use the agenda-view log-mode
-   (=l= in the agenda) with the following setup which shows clocked
-   times only by default.  (To see all task state changes you can issue
-   a prefix to this command (=C-u l= in the agenda)).
+To check for unclosed clock times I use the agenda-view log-mode (=l=
+in the agenda) with the following setup which shows clocked times only
+by default.  (To see all task state changes you can issue a prefix to
+this command (=C-u l= in the agenda)).
 
-   To check the last month's clock data I use =F12 a v m b l=
-   which shows a full month in the agenda, moves to the previous
-   month, and shows the clocked times only.
+To check the last month's clock data I use =F12 a v m b l= which shows
+a full month in the agenda, moves to the previous month, and shows the
+clocked times only.
 
-   The clocked-time only display in the agenda makes it easy to
-   quickly scan down the list to see if an entry is missing an end
-   time.  If an entry is not closed you can manually fix the clock
-   entry based on other clock info around that time.
+The clocked-time only display in the agenda makes it easy to quickly
+scan down the list to see if an entry is missing an end time.  If an
+entry is not closed you can manually fix the clock entry based on
+other clock info around that time.
 
-   Use the following setup to get log mode in the agenda to only show
-   clocked times:
+Use the following setup to get log mode in the agenda to only show
+clocked times:
 #+begin_src emacs-lisp :tangle yes
   ;; Agenda log mode items to display (clock time only by default)
   (setq org-agenda-log-mode-items (quote (clock)))
 #+end_src
 *** Using clock reports to summarize time spent
-   Billable time for clients are kept in separate org files.
+Billable time for clients are kept in separate org files.
 
-   To get a report of time spent on tasks for =XYZ.org= you simply
-   visit the =XYZ.org= file and run an agenda clock report for the
-   last month with =F12 < a v m b R=.  This limits the agenda
-   to this one file, shows the agenda for a full month, moves to last
-   month, and generates a clock report.  Just scroll down to the end
-   of the agenda to see the report.
+To get a report of time spent on tasks for =XYZ.org= you simply visit
+the =XYZ.org= file and run an agenda clock report for the last month
+with =F12 < a v m b R=.  This limits the agenda to this one file,
+shows the agenda for a full month, moves to last month, and generates
+a clock report.  Just scroll down to the end of the agenda to see the
+report.
 
-   I export the agenda to a text file with =C-x C-w XYZ.txt= so I can
-   cut and paste the report and save it as supporting information with
-   the invoice.
+I export the agenda to a text file with =C-x C-w XYZ.txt= so I can cut
+and paste the report and save it as supporting information with the
+invoice.
 
-   My agenda org clock report settings show 2 levels of detail and do
-   not show links so that they are easier to cut and paste into other
-   applications.
+My agenda org clock report settings show 2 levels of detail and do not
+show links so that they are easier to cut and paste into other
+applications.
 #+begin_src emacs-lisp :tangle yes
   ;; Agenda clock report parameters (no links, 2 levels deep)
   (setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
 #+end_src
 
-   I used to have a monthly clock report dynamic block in each project
-   org file and manually updated them at the end of my billing cycle.
-   I used this as the basis for billing my clients for time spent on
-   their projects.  I found updating the dynamic blocks fairly tedious
-   when you have more than a couple of files for the month.
+I used to have a monthly clock report dynamic block in each project
+org file and manually updated them at the end of my billing cycle.  I
+used this as the basis for billing my clients for time spent on their
+projects.  I found updating the dynamic blocks fairly tedious when you
+have more than a couple of files for the month.
 
-   I have since moved to using agenda clock reports shortly after that
-   feature was added.  I find this much more convenient.  The data
-   isn't normally for consumption by anyone else so the format of the
-   agenda clock report format is great for my use-case.
-
+I have since moved to using agenda clock reports shortly after that
+feature was added.  I find this much more convenient.  The data isn't
+normally for consumption by anyone else so the format of the agenda
+clock report format is great for my use-case.
 ** Task Estimates and column view
-   :PROPERTIES:
-   :CUSTOM_ID: TaskEstimates
-   :END:
-   Estimating how long tasks take to complete is a difficult skill to
-   master.  Org-mode makes it easy to practice creating estimates for
-   tasks and then clock the actual time it takes to complete.
+:PROPERTIES:
+:CUSTOM_ID: TaskEstimates
+:END:
+Estimating how long tasks take to complete is a difficult skill to
+master.  Org-mode makes it easy to practice creating estimates for
+tasks and then clock the actual time it takes to complete.
 
-   By repeatedly estimating tasks and reviewing how your estimate
-   relates to the actual time clocked you can tune your estimating
-   skills.
+By repeatedly estimating tasks and reviewing how your estimate relates
+to the actual time clocked you can tune your estimating skills.
 *** Creating a task estimate with column mode
-   I use =properties= and =column view= to do project estimates.
+I use =properties= and =column view= to do project estimates.
 
-   I set up column view globally with the following headlines
+I set up column view globally with the following headlines
 #+begin_src emacs-lisp :tangle yes
   ; Set default column view headings: Task Effort Clock_Summary
   (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
 #+end_src
 
-   This makes column view show estimated task effort and clocked times
-   side-by-side which is great for reviewing your project estimates.
+This makes column view show estimated task effort and clocked times
+side-by-side which is great for reviewing your project estimates.
 
-   A property called =Effort= records the estimated amount of time
-   a given task will take to complete.  The estimate times I use
-   are one of:
+A property called =Effort= records the estimated amount of time a
+given task will take to complete.  The estimate times I use are one
+of:
 
-   - 10 minutes
-   - 30 minutes
-   - 1 hour
-   - 2 hours
-   - 3 hours
-   - 4 hours
-   - 5 hours
-   - 6 hours
-   - 7 hours
-   - 8 hours
+- 10 minutes
+- 30 minutes
+- 1 hour
+- 2 hours
+- 3 hours
+- 4 hours
+- 5 hours
+- 6 hours
+- 7 hours
+- 8 hours
 
-   These are stored for easy use in =column mode= in the global property
-   =Effort_ALL=.
+These are stored for easy use in =column mode= in the global property
+=Effort_ALL=.
 #+begin_src emacs-lisp :tangle yes
   ; global Effort estimate values
   (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00"))))
 #+end_src
 
-   To create an estimate for a task or subtree start column mode
-   with =C-c C-x C-c= and collapse the tree with =c=.  This shows a
-   table overlayed on top of the headlines with the task name, effort
-   estimate, and clocked time in columns.
+To create an estimate for a task or subtree start column mode with
+=C-c C-x C-c= and collapse the tree with =c=.  This shows a table
+overlayed on top of the headlines with the task name, effort estimate,
+and clocked time in columns.
 
-   With the cursor in the =Effort= column for a task you can easily
-   set the estimated effort value with the quick keys =1= through =9=.
+With the cursor in the =Effort= column for a task you can easily set
+the estimated effort value with the quick keys =1= through =9=.
 
-   After setting the effort values exit =column mode= with =q=.
+After setting the effort values exit =column mode= with =q=.
    
 *** Saving your estimate
-    :PROPERTIES:
-    :CUSTOM_ID: SavingEstimate
-    :END:
-    For fixed price jobs where you provide your estimate to a client,
-    then work to complete the project it is useful to save the
-    original estimate that is provided to the client.
+:PROPERTIES:
+:CUSTOM_ID: SavingEstimate
+:END:
+For fixed price jobs where you provide your estimate to a client, then
+work to complete the project it is useful to save the original
+estimate that is provided to the client.
 
-    Save your original estimate by creating a dynamic clock report
-    table at the top of your estimated project subtree.  Entering
-    =C-c C-x i RET= inserts a clock table report with your estimated
-    values and any clocked time to date.
+Save your original estimate by creating a dynamic clock report table
+at the top of your estimated project subtree.  Entering =C-c C-x i
+RET= inserts a clock table report with your estimated values and any
+clocked time to date.
 
 #+begin_src org
   Original Estimate
@@ -1458,78 +1451,78 @@ they occur.
   #+END:
 #+end_src
 
-    I normally delete the =#+BEGIN:= and =#+END:= lines from the original
-    table after providing the estimate to the client to ensure I don't
-    accidentally update the table by hitting =C-c C-c= on the =#+BEGIN:= line.
+I normally delete the =#+BEGIN:= and =#+END:= lines from the original
+table after providing the estimate to the client to ensure I don't
+accidentally update the table by hitting =C-c C-c= on the =#+BEGIN:=
+line.
 
-    Saving the original estimate data makes it possible to refine the
-    project tasks into subtasks as you work on the project without
-    losing the original estimate data.
+Saving the original estimate data makes it possible to refine the
+project tasks into subtasks as you work on the project without losing
+the original estimate data.
     
 *** Reviewing your estimate
-    =Column view= is great for reviewing your estimate.  This shows
-    your estimated time value and the total clock time for the project
-    side-by-side.
+=Column view= is great for reviewing your estimate.  This shows your
+estimated time value and the total clock time for the project
+side-by-side.
 
-    Creating a dynamic clock table with =C-c C-x i RET= is a great
-    way to save this project review if you need to make it available
-    to other applications.
+Creating a dynamic clock table with =C-c C-x i RET= is a great way to
+save this project review if you need to make it available to other
+applications.
 
-    =C-c C-x C-d= also provides a quick summary of clocked time for
-    the current org file.
+=C-c C-x C-d= also provides a quick summary of clocked time for the
+current org file.
 * Tags
-  Tasks can have any number of arbitrary tags.  Tags are used for:
+Tasks can have any number of arbitrary tags.  Tags are used for:
 
-  - filtering todo lists and agenda views
-  - providing context for tasks
-  - tagging notes
-  - tagging phone calls
-  - tagging tasks to be refiled
-  - tagging tasks in a WAITING state because a parent task is WAITING
-  - tagging cancelled tasks because a parent task is CANCELLED
-  - preventing export of some subtrees when publishing
+- filtering todo lists and agenda views
+- providing context for tasks
+- tagging notes
+- tagging phone calls
+- tagging tasks to be refiled
+- tagging tasks in a WAITING state because a parent task is WAITING
+- tagging cancelled tasks because a parent task is CANCELLED
+- preventing export of some subtrees when publishing
 
-  I use tags mostly for filtering in the agenda.  This means you can
-  find tasks with a specific tag easily across your large number of
-  org-mode files.
+I use tags mostly for filtering in the agenda.  This means you can
+find tasks with a specific tag easily across your large number of
+org-mode files.
 
-  Some tags are mutually exclusive.  These are defined in a group so
-  that only one of the tags can be applied to a task at a time
-  (disregarding tag inheritance).  I use these types for tags for
-  applying context to a task.  (Work tasks have an =@office= tag, and are
-  done at the office, Farm tasks have an =@farm= tag and are done at the
-  farm -- I can't change the oil on the tractor if I'm not at the
-  farm... so I hide these and other tasks by filtering my agenda view
-  to only =@office= tasks when I'm at the office.)
+Some tags are mutually exclusive.  These are defined in a group so
+that only one of the tags can be applied to a task at a time
+(disregarding tag inheritance).  I use these types for tags for
+applying context to a task.  (Work tasks have an =@office= tag, and
+are done at the office, Farm tasks have an =@farm= tag and are done at
+the farm -- I can't change the oil on the tractor if I'm not at the
+farm... so I hide these and other tasks by filtering my agenda view to
+only =@office= tasks when I'm at the office.)
 
-  Tasks are grouped together in org-files and a =#+FILETAGS:= entry
-  applies a tag to all tasks in the file.  I use this to apply a
-  tag to all tasks in the file.  My norang.org file creates a NORANG 
-  file tag so I can filter tasks in the agenda in the norang.org file
-  easily.
+Tasks are grouped together in org-files and a =#+FILETAGS:= entry
+applies a tag to all tasks in the file.  I use this to apply a tag to
+all tasks in the file.  My norang.org file creates a NORANG file tag
+so I can filter tasks in the agenda in the norang.org file easily.
 
 ** Tags
-   Here are my tag definitions with associated keys for filtering in
-   the agenda views.
+Here are my tag definitions with associated keys for filtering in the
+agenda views.
 
-   The startgroup - endgroup (=@XXX=) tags are mutually exclusive -
-   selecting one removes a similar tag already on the task.  These are
-   the context tags - you can't be in two places at once so if a task
-   is marked with @farm and you add @office then the @farm tag is
-   removed automagically.
+The startgroup - endgroup (=@XXX=) tags are mutually exclusive -
+selecting one removes a similar tag already on the task.  These are
+the context tags - you can't be in two places at once so if a task is
+marked with @farm and you add @office then the @farm tag is removed
+automagically.
 
-   The other tags =QUOTE= .. =CANCELLED= are not mutually exclusive and
-   multiple tags can appear on a single task.  Some of those tags are
-   created by todo state change triggers.  The shortcut key is used to
-   add or remove the tag using =C-c C-q= or to apply the task for
-   filtering on the agenda.
+The other tags =QUOTE= .. =CANCELLED= are not mutually exclusive and
+multiple tags can appear on a single task.  Some of those tags are
+created by todo state change triggers.  The shortcut key is used to
+add or remove the tag using =C-c C-q= or to apply the task for
+filtering on the agenda.
 
-   I have both =FARM= and =@farm= tags.  =FARM= is set by a =FILETAGS=
-   entry and just gives me a way to filter anything farm related.  The
-   =@farm= tag signifies that the task as to be done /at the farm/.
-   If I have to call someone about something that would have a =FARM=
-   tag but I can do that at home on my lunch break.  I don't
-   physically have to be at the farm to make the call.
+I have both =FARM= and =@farm= tags.  =FARM= is set by a =FILETAGS=
+entry and just gives me a way to filter anything farm related.  The
+=@farm= tag signifies that the task as to be done /at the farm/.  If I
+have to call someone about something that would have a =FARM= tag but
+I can do that at home on my lunch break.  I don't physically have to
+be at the farm to make the call.
 
 #+begin_src emacs-lisp :tangle yes
   ; Tags with fast selection keys
@@ -1559,16 +1552,16 @@ they occur.
 #+end_src
 
 ** Filetags
-   Filetags are a convenient way to apply one or more tags to all of
-   the headings in a file.
+Filetags are a convenient way to apply one or more tags to all of the
+headings in a file.
 
-   Filetags look like this:
+Filetags look like this:
 
 #+begin_src org
   #+FILETAGS: NORANG @office
 #+end_src
 
-   I have the following =#+FILETAGS:= entries in my org-mode files:
+I have the following =#+FILETAGS:= entries in my org-mode files:
 
 *** Non-work related org-mode files
 | File         | Tags         |
@@ -1598,189 +1591,187 @@ they occur.
 |------------+--------------|
 
 ** Trigger Tags
-   The following tags are automatically added or removed by todo state
-   triggers described previously in [[*ToDo%20state%20triggers][*ToDo state triggers]]
+The following tags are automatically added or removed by todo state
+triggers described previously in [[*ToDo%20state%20triggers][*ToDo state triggers]]
 
-   - =WAITING=
-   - =CANCELLED=
-   - =NEXT=
+- =WAITING=
+- =CANCELLED=
+- =NEXT=
 * Handling Notes
-  Notes are little gems of knowledge that you come across during your
-  day.  They are just like tasks except there is nothing to do (except
-  learn and memorize the gem of knowledge).  Unfortunately there are
-  way too many gems to remember and my head explodes just thinking
-  about it.
+Notes are little gems of knowledge that you come across during your
+day.  They are just like tasks except there is nothing to do (except
+learn and memorize the gem of knowledge).  Unfortunately there are way
+too many gems to remember and my head explodes just thinking about it.
 
-  org-mode to the rescue!
+org-mode to the rescue!
 
-  Often I'll find some cool feature or thing I want to remember while
-  reading the org-mode and git mailing lists in Gnus.  To create a
-  note I use my note capture template =C-M-r n=, type a heading for
-  the note and =C-c C-c= to save it.  The only other thing to do is to
-  refile it (later) to the appropriate project file.
+Often I'll find some cool feature or thing I want to remember while
+reading the org-mode and git mailing lists in Gnus.  To create a note
+I use my note capture template =C-M-r n=, type a heading for the note
+and =C-c C-c= to save it.  The only other thing to do is to refile it
+(later) to the appropriate project file.
 
-  I have an agenda view just to find notes.  Notes are refiled to an
-  appropriate project file and task.  If there is no specific task it
-  belongs to it goes to the catchall =* Notes= task.  I generally have
-  a catchall notes task in every project file.  Notes are created with
-  a =NOTE= tag already applied by the capture template so I'm free to
-  refile the note anywhere.  As long as the note is in a project file
-  that contributes to my agenda (ie. in org-agenda-files) then I can
-  find the note back easily with my notes agenda view by hitting the
-  key combination =F12 N=.  I'm free to limit the agenda view of notes
-  using standard agenda tag filtering.
+I have an agenda view just to find notes.  Notes are refiled to an
+appropriate project file and task.  If there is no specific task it
+belongs to it goes to the catchall =* Notes= task.  I generally have a
+catchall notes task in every project file.  Notes are created with a
+=NOTE= tag already applied by the capture template so I'm free to
+refile the note anywhere.  As long as the note is in a project file
+that contributes to my agenda (ie. in org-agenda-files) then I can
+find the note back easily with my notes agenda view by hitting the key
+combination =F12 N=.  I'm free to limit the agenda view of notes using
+standard agenda tag filtering.
 
-  Short notes with a meaningful headline are a great way to remember
-  technical details without the need to actually remember anything -
-  other than how to find them back when you need them using =F12 N=.
+Short notes with a meaningful headline are a great way to remember
+technical details without the need to actually remember anything -
+other than how to find them back when you need them using =F12 N=.
 
-  Notes that are project related and not generally useful can be
-  archived with the project and removed from the agenda when the
-  project is removed.
+Notes that are project related and not generally useful can be
+archived with the project and removed from the agenda when the project
+is removed.
 
-  So my org notes go in org.org and my git notes go in git.org both
-  under the =* Notes= task.  I'll forever be able to find those.  A
-  note about some work project detail I want to remember with the
-  project is filed to the project task under the appropriate work
-  org-mode file and eventually gets removed from the agenda when the
-  project is complete and archived.
-
+So my org notes go in org.org and my git notes go in git.org both
+under the =* Notes= task.  I'll forever be able to find those.  A note
+about some work project detail I want to remember with the project is
+filed to the project task under the appropriate work org-mode file and
+eventually gets removed from the agenda when the project is complete
+and archived.
 * Handling Phone Calls
-  Phone calls are interruptions and I use capture mode to deal with these.
-  Most of the heavy lifting for phone calls is done by capture mode.
-  I use a special capture template for phone calls but activate it
-  with a custom key binding =f9-p=.  I've removed my phone capture mode
-  template from my regular templates since I always use the =bh/phone-call=
-  function mapped to =f9-p= to invoke the capture template.  The definition
-  of this template is now local to the function.
+Phone calls are interruptions and I use capture mode to deal with
+these.  Most of the heavy lifting for phone calls is done by capture
+mode.  I use a special capture template for phone calls but activate
+it with a custom key binding =f9-p=.  I've removed my phone capture
+mode template from my regular templates since I always use the
+=bh/phone-call= function mapped to =f9-p= to invoke the capture
+template.  The definition of this template is now local to the
+function.
 
-  =f9 p= prompts for who is calling and looks up the entered name in my
-  =bbdb= database with completion.  The capture template is then
-  filled in with the appropriate contact data and capture mode starts
-  the clock using the =:clock-in t= setting in the template.
+=f9 p= prompts for who is calling and looks up the entered name in my
+=bbdb= database with completion.  The capture template is then filled
+in with the appropriate contact data and capture mode starts the clock
+using the =:clock-in t= setting in the template.
 
-  Here is my set up for phone calls.  I would like to thank Gregory J. Grubbs
-  for the bbdb lookup functions.
+Here is my set up for phone calls.  I would like to thank Gregory
+J. Grubbs for the bbdb lookup functions.
 
-  #+begin_src emacs-lisp :tangle yes
-    ; Set f9-p to prompt for who is calling and preload the capture template
-    (global-set-key (kbd "<f9> p") 'bh/phone-call)
-    
-    ;;
-    ;; Phone capture template handling with BBDB lookup
-    ;; modified from the original code by Gregory J. Grubbs
-    ;;
-    (defvar gjg/capture-phone-record nil
-      "Either BBDB record vector, or person's name as a string, or nil")
-    
-    (defun bh/phone-call ()
-      (interactive)
-      (let* ((myname (completing-read "Who is calling? " (bbdb-hashtable) 'bbdb-completion-predicate 'confirm))
-             (my-bbdb-name (if (> (length myname) 0) myname nil)))
-        (setq gjg/capture-phone-record
-              (if my-bbdb-name
-                  (first (or (bbdb-search (bbdb-records) my-bbdb-name nil nil)
-                             (bbdb-search (bbdb-records) nil my-bbdb-name nil)))
-                myname))
-        (other-window 1)
-        (let ((org-capture-templates '(("P" "Phone" entry (file "~/git/org/refile.org") "* TODO Phone %(gjg/bbdb-name) - %(gjg/bbdb-company)               :PHONE:\n  %U\n  %?" :clock-in t :clock-resume t))))
-          (org-capture))))
-    
-    (defun gjg/bbdb-name ()
-      "Return full name of saved bbdb record, or empty string - for use in Capture templates"
-      (if (and gjg/capture-phone-record (vectorp gjg/capture-phone-record))
-          (concat "[[bbdb:"
-                  (bbdb-record-name gjg/capture-phone-record) "]["
-                  (bbdb-record-name gjg/capture-phone-record) "]]")
-        "NAME"))
-    
-    (defun gjg/bbdb-company ()
-      "Return company of saved bbdb record, or empty string - for use in Capture templates"
-      (if (and gjg/capture-phone-record (vectorp gjg/capture-phone-record))
-          (or (bbdb-record-company gjg/capture-phone-record) "")
-        "COMPANY"))
-  #+end_src
+#+begin_src emacs-lisp :tangle yes
+  ; Set f9-p to prompt for who is calling and preload the capture template
+  (global-set-key (kbd "<f9> p") 'bh/phone-call)
+  
+  ;;
+  ;; Phone capture template handling with BBDB lookup
+  ;; modified from the original code by Gregory J. Grubbs
+  ;;
+  (defvar gjg/capture-phone-record nil
+    "Either BBDB record vector, or person's name as a string, or nil")
+  
+  (defun bh/phone-call ()
+    (interactive)
+    (let* ((myname (completing-read "Who is calling? " (bbdb-hashtable) 'bbdb-completion-predicate 'confirm))
+           (my-bbdb-name (if (> (length myname) 0) myname nil)))
+      (setq gjg/capture-phone-record
+            (if my-bbdb-name
+                (first (or (bbdb-search (bbdb-records) my-bbdb-name nil nil)
+                           (bbdb-search (bbdb-records) nil my-bbdb-name nil)))
+              myname))
+      (other-window 1)
+      (let ((org-capture-templates '(("P" "Phone" entry (file "~/git/org/refile.org") "* TODO Phone %(gjg/bbdb-name) - %(gjg/bbdb-company)               :PHONE:\n  %U\n  %?" :clock-in t :clock-resume t))))
+        (org-capture))))
+  
+  (defun gjg/bbdb-name ()
+    "Return full name of saved bbdb record, or empty string - for use in Capture templates"
+    (if (and gjg/capture-phone-record (vectorp gjg/capture-phone-record))
+        (concat "[[bbdb:"
+                (bbdb-record-name gjg/capture-phone-record) "]["
+                (bbdb-record-name gjg/capture-phone-record) "]]")
+      "NAME"))
+  
+  (defun gjg/bbdb-company ()
+    "Return company of saved bbdb record, or empty string - for use in Capture templates"
+    (if (and gjg/capture-phone-record (vectorp gjg/capture-phone-record))
+        (or (bbdb-record-company gjg/capture-phone-record) "")
+      "COMPANY"))
+#+end_src
 * GTD stuff
-  Most of my day is deadline/schedule driven.
-  I work off of the agenda first and then pick items from the todo lists as
-  outlined in [[*What%20do%20I%20work%20on%20next][*What do I work on next]]
+Most of my day is deadline/schedule driven.
+I work off of the agenda first and then pick items from the todo lists as
+outlined in [[*What%20do%20I%20work%20on%20next][*What do I work on next]]
 
 ** Weekly Review Process
-   The first day of the week (usually Monday) I do my weekly review. 
-   I keep a list like this one to remind me what needs to be done.
+The first day of the week (usually Monday) I do my weekly review. 
+I keep a list like this one to remind me what needs to be done.
 
-   To keep the agenda fast I set
+To keep the agenda fast I set
 #+begin_src emacs-lisp :tangle yes
   (setq org-agenda-ndays 1)
 #+end_src
-  so only today's date is shown by default.  I only need the weekly
-  view during my weekly review and this keeps my agenda generation
-  fast.
+so only today's date is shown by default.  I only need the weekly
+view during my weekly review and this keeps my agenda generation
+fast.
 
-   I have a recurring task which keeps my weekly review checklist
-   handy.  This pops up as a reminder on Monday's.  This week I'm
-   doing my weekly review on Tuesday since Monday was a holiday.
+I have a recurring task which keeps my weekly review checklist
+handy.  This pops up as a reminder on Monday's.  This week I'm
+doing my weekly review on Tuesday since Monday was a holiday.
 
-   : ** NEXT Weekly Review [0/5]
-   :    SCHEDULED: <2009-05-18 Mon ++1w> 
-   :    :LOGBOOK:...
-   :    :PROPERTIES:...
-   : 
-   :    What to review:
-   : 
-   :     - [ ] Check follow-up folder
-   :     - [ ] Review new tasks                                  F12-r
-   :       - if it takes less than 5 minutes just do it
-   :       - otherwise assign an estimated time and file it somewhere
-   :       - Refile billable work to appropriate location
-   :     - [ ] Check for stuck projects and add next tasks       F12-#         
-   :     - [ ] Review tasks                                      F12 t
-   :       - [ ] Waiting tasks                                         / W
-   :       - [ ] Next Tasks                                      F12 n
-   :         - Move NEXT tag to subtasks or remove as required
-   :     - [ ] Make plan for the week (out of NEXT tasks)
-   :       - schedule important items onto the agenda
-   :       - [ ] Review weekly plan                              F12 a v w
-   :
-   :     - start work
-   :       - daily agenda first - knock off items
-   :         - complete them or adjust deadline warning days appropriately
-   :       - when agenda is empty - work on next tasks
+: ** NEXT Weekly Review [0/5]
+:    SCHEDULED: <2009-05-18 Mon ++1w> 
+:    :LOGBOOK:...
+:    :PROPERTIES:...
+: 
+:    What to review:
+: 
+:     - [ ] Check follow-up folder
+:     - [ ] Review new tasks                                  F12-r
+:       - if it takes less than 5 minutes just do it
+:       - otherwise assign an estimated time and file it somewhere
+:       - Refile billable work to appropriate location
+:     - [ ] Check for stuck projects and add next tasks       F12-#         
+:     - [ ] Review tasks                                      F12 t
+:       - [ ] Waiting tasks                                         / W
+:       - [ ] Next Tasks                                      F12 n
+:         - Move NEXT tag to subtasks or remove as required
+:     - [ ] Make plan for the week (out of NEXT tasks)
+:       - schedule important items onto the agenda
+:       - [ ] Review weekly plan                              F12 a v w
+:
+:     - start work
+:       - daily agenda first - knock off items
+:         - complete them or adjust deadline warning days appropriately
+:       - when agenda is empty - work on next tasks
 
-   The first item [ ] Check follow-up folder makes me pull out the
-   paper file I dump stuff into all week long - things I need to take
-   care of but are in no particular hurry to deal with.  Stuff I get
-   in the mail etc that I don't want to deal with now.  I just toss it
-   in my =Follow-Up= folder in the filing cabinet and forget about it
-   until the weekly review.
+The first item [ ] Check follow-up folder makes me pull out the paper
+file I dump stuff into all week long - things I need to take care of
+but are in no particular hurry to deal with.  Stuff I get in the mail
+etc that I don't want to deal with now.  I just toss it in my
+=Follow-Up= folder in the filing cabinet and forget about it until the
+weekly review.
 
-   I go through the folder and weed out anything that needs to be
-   dealt with.  After that everything else is in =org-mode=.  I tend
-   to schedule tasks onto the agenda for the coming week so that I
-   don't spend lots of time trying to find what needs to be worked on
-   next.
+I go through the folder and weed out anything that needs to be dealt
+with.  After that everything else is in =org-mode=.  I tend to
+schedule tasks onto the agenda for the coming week so that I don't
+spend lots of time trying to find what needs to be worked on next.
 
-   This works for me.  You're mileage may vary ;)
+This works for me.  You're mileage may vary ;)
 ** Project definition and finding stuck projects
-   I'm using a new lazy project definition to mark tasks as projects.
-   This requires zero effort from me.  Any task with a subtask using
-   a todo keyword is a project.  Period.
+I'm using a new lazy project definition to mark tasks as projects.
+This requires zero effort from me.  Any task with a subtask using a
+todo keyword is a project.  Period.
 
-   Projects are 'stuck' if they have no subtask with a =NEXT= todo
-   keyword task defined.
+Projects are 'stuck' if they have no subtask with a =NEXT= todo
+keyword task defined.
 
-   Org-mode stuck projects lists projects that have no =NEXT= task defined.
-   I normally review these in my weekly review and assign a =NEXT= task
-   to all projects to clear the stuck project list.  This helps to keep
-   projects moving forward.
+Org-mode stuck projects lists projects that have no =NEXT= task
+defined.  I normally review these in my weekly review and assign a
+=NEXT= task to all projects to clear the stuck project list.  This
+helps to keep projects moving forward.
 
-   I use a custom agenda view that overrides the default
-   =org-stuck-projects= definition to find stuck projects.
+I use a custom agenda view that overrides the default
+=org-stuck-projects= definition to find stuck projects.
 
-   The stuck project view is available with =F12 #=.
+The stuck project view is available with =F12 #=.
 
-   I have the following helper functions defined for projects.  These are used
-   by agenda views.
+I have the following helper functions defined for projects.  These are
+used by agenda views.
 #+begin_src emacs-lisp :tangle yes
   (defun bh/is-project-p ()
     "Any task with a todo keyword subtask"
@@ -1823,106 +1814,104 @@ they occur.
 
 * Archiving
 ** Archiving Subtrees
-   My normal archiving procedure is to move entire subtrees to a
-   separate archive file for the project.  Task subtrees in =FILE.org=
-   get archived to =FILE.org_archive= using the =a y= command in the
-   agenda.
+My normal archiving procedure is to move entire subtrees to a separate
+archive file for the project.  Task subtrees in =FILE.org= get
+archived to =FILE.org_archive= using the =a y= command in the agenda.
 
-   I archive entire projects and subtrees into a single
-   forever-growing file.  My archive files are huge but so far I
-   haven't found a need to split them by year (or decade) :)
+I archive entire projects and subtrees into a single forever-growing
+file.  My archive files are huge but so far I haven't found a need to
+split them by year (or decade) :)
 
-   All of my tasks to archive start at level 2.  I use an agenda
-   custom command =F12 A= to list candidate tasks for archiving.  My
-   normal sequence is =F12 A= followed by repeated =n SPC= in the
-   agenda to display the task candidate for archiving.  If I closed it
-   over a month ago I archive it.  If it was closed this month or last
-   month I skip it with =n SPC=.  I do this repeatedly for all tasks
-   in the list and then I'm done archiving until next month.
+All of my tasks to archive start at level 2.  I use an agenda custom
+command =F12 A= to list candidate tasks for archiving.  My normal
+sequence is =F12 A= followed by repeated =n SPC= in the agenda to
+display the task candidate for archiving.  If I closed it over a month
+ago I archive it.  If it was closed this month or last month I skip it
+with =n SPC=.  I do this repeatedly for all tasks in the list and then
+I'm done archiving until next month.
 
-   Archiving is easy.  When I find a candidate I can archive I just do
-   =a y SPC= to archive the current task and display the next
-   candidate task.  Then I'm back to =n SPC= if I'm skipping this next
-   candidate task or =a y SPC= to archive it.  Rinse and repeat.
+Archiving is easy.  When I find a candidate I can archive I just do =a
+y SPC= to archive the current task and display the next candidate
+task.  Then I'm back to =n SPC= if I'm skipping this next candidate
+task or =a y SPC= to archive it.  Rinse and repeat.
 
-   I used to archive by visiting one file at a time and doing a tags
-   match for LEVEL=2 -- using the agenda does all of my files in
-   org-agenda-files much more efficiently.
+I used to archive by visiting one file at a time and doing a tags
+match for LEVEL=2 -- using the agenda does all of my files in
+org-agenda-files much more efficiently.
 
 ** Archive Setup
-   Each of my level 1 tasks has a property which specifies where 
-   level 2 tasks under that heading should be archived.  This is done
-   with the =ARCHIVE= property as specified in the [[#OrgFileStructure][Org File Structure]].
+Each of my level 1 tasks has a property which specifies where level 2
+tasks under that heading should be archived.  This is done with the
+=ARCHIVE= property as specified in the [[#OrgFileStructure][Org File Structure]].
 
-   The following setting ensures that task states are untouched when
-   they are archived.  This makes it possible to archive tasks that
-   are not marked DONE.
+The following setting ensures that task states are untouched when they
+are archived.  This makes it possible to archive tasks that are not
+marked DONE.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-archive-mark-done nil)
 #+end_src
 
 ** Archive Tag - Hiding Information
-   The only time I set the ARCHIVE tag on a task is to prevent it from
-   opening by default because it has tons of information I don't
-   really need to look at on a regular basis.  I can open the task
-   with C-TAB if I need to see the gory details (like a huge table of
-   data related to the task) but normally I don't need that
-   information displayed.
+The only time I set the ARCHIVE tag on a task is to prevent it from
+opening by default because it has tons of information I don't really
+need to look at on a regular basis.  I can open the task with C-TAB if
+I need to see the gory details (like a huge table of data related to
+the task) but normally I don't need that information displayed.
 ** When to Archive
-   Archiving monthly works well for me.  I keep completed tasks around
-   for a month or two before archiving them.  This keeps clocking
-   information for the last 30 to 60 days out of the archives.  This
-   keeps my files that contribute to the agenda fairly current (this
-   month, and last month, and anything that is unfinished).  I only
-   rarely visit tasks in the archive when I need to pull up ancient
-   history for something.
+Archiving monthly works well for me.  I keep completed tasks around
+for a month or two before archiving them.  This keeps clocking
+information for the last 30 to 60 days out of the archives.  This
+keeps my files that contribute to the agenda fairly current (this
+month, and last month, and anything that is unfinished).  I only
+rarely visit tasks in the archive when I need to pull up ancient
+history for something.
 
-   Archiving keeps my main working files clutter-free.  If I ever need the
-   detail for the archived tasks they are available in the appropriate
-   archive file.
+Archiving keeps my main working files clutter-free.  If I ever need
+the detail for the archived tasks they are available in the
+appropriate archive file.
 * Publishing
-  :PROPERTIES:
-  :CUSTOM_ID: Publishing
-  :END:
+:PROPERTIES:
+:CUSTOM_ID: Publishing
+:END:
 
-  I don't do a lot of publishing for other people but I do keep a set
-  of private client system documentation online.  Most of this
-  documentation is a collection of notes exported to HTML.
+I don't do a lot of publishing for other people but I do keep a set of
+private client system documentation online.  Most of this
+documentation is a collection of notes exported to HTML.
 
-  Almost everything at http://doc.norang.ca/ is generated by
-  publishing org-files.  The notable exception to that is the index
-  page which is currently automatically generated from a Python script
-  based on the HTML files that exist in the document directory.
+Almost everything at http://doc.norang.ca/ is generated by publishing
+org-files.  The notable exception to that is the index page which is
+currently automatically generated from a Python script based on the
+HTML files that exist in the document directory.
 
-  It is supposed to be possible to generate index files from org-mode
-  but I've never spent the time to figure that out since I already
-  have a working index page in place.
+It is supposed to be possible to generate index files from org-mode
+but I've never spent the time to figure that out since I already have
+a working index page in place.
 
-  Org-mode can export to a variety of publishing formats including (but not limited to)
+Org-mode can export to a variety of publishing formats including (but not limited to)
 
-  - ASCII
-    (plain text - but not the original org-mode file)
-  - HTML 
-  - LaTeX
-  - Docbook
-    which enables getting to lots of other formats like ODF, XML, etc
-  - PDF
-    via LaTeX or Docbook
-  - iCal
+- ASCII
+  (plain text - but not the original org-mode file)
+- HTML 
+- LaTeX
+- Docbook
+  which enables getting to lots of other formats like ODF, XML, etc
+- PDF
+  via LaTeX or Docbook
+- iCal
 
-  I haven't begun the scratch the surface of what org-mode is capable
-  of doing.  My main use case for org-mode publishing is just to
-  create HTML documents for viewing online conveniently.  Someday I'll
-  get time to try out the other formats when I need them for
-  something.
+I haven't begun the scratch the surface of what org-mode is capable of
+doing.  My main use case for org-mode publishing is just to create
+HTML documents for viewing online conveniently.  Someday I'll get time
+to try out the other formats when I need them for something.
 
 ** org-babel Setup
-  Now I've discovered org-babel and how easy it is to generate decent
-  graphics using ditta and graphviz.
+Now I've discovered org-babel and how easy it is to generate decent
+graphics using ditta and graphviz.
 
-  The setup is really easy.  =ditaa= is provided with the org-mode source. 
-  You'll have to install the =graphviz= package for your system.
+The setup is really easy.  =ditaa= is provided with the org-mode
+source.  You'll have to install the =graphviz= package for your
+system.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
@@ -1945,10 +1934,10 @@ they occur.
  (setq org-confirm-babel-evaluate nil)
 #+end_src
 
-  Now you just create a =begin-src= block for the appropriate tool,
-  edit the text, and build the pictures with =C-c C-c=.  After
-  evaluating the block results are displayed.  You can toggle display
-  of inline images with =C-c C-x C-v=
+Now you just create a =begin-src= block for the appropriate tool, edit
+the text, and build the pictures with =C-c C-c=.  After evaluating the
+block results are displayed.  You can toggle display of inline images
+with =C-c C-x C-v=
 
 ** Playing with ditaa
    :PROPERTIES:
@@ -2122,36 +2111,36 @@ The =-Kdot= is optional (defaults to =dot=) but you can substitute other graphvi
 types instead here (ie. =twopi=, =neato=, =circo=, etc).
 
 ** Publishing Single Files
-   Org-mode exports the current file to one of the standard formats by
-   invoking an export function.  The standard key binding for this is
-   =C-c C-e= followed by the key for the type of export you want.
+Org-mode exports the current file to one of the standard formats by
+invoking an export function.  The standard key binding for this is
+=C-c C-e= followed by the key for the type of export you want.
 
-   This works great for single files or parts of files -- if you
-   narrow the buffer to only part of the org-mode file then you only
-   get the narrowed detail in the export.
+This works great for single files or parts of files -- if you narrow
+the buffer to only part of the org-mode file then you only get the
+narrowed detail in the export.
 
 ** Publishing Projects
-   :PROPERTIES:
-   :CUSTOM_ID: PublishingProjects
-   :END:
+:PROPERTIES:
+:CUSTOM_ID: PublishingProjects
+:END:
 
-   I mainly use publishing for publishing multiple files or projects.
-   I don't want to remember where the created export file needs to
-   move to and org-mode projects are a great solution to this.
+I mainly use publishing for publishing multiple files or projects.  I
+don't want to remember where the created export file needs to move to
+and org-mode projects are a great solution to this.
 
-   The [[http://doc.norang.ca]] website (and a bunch of other files that
-   are not publicly available) are all created by editing org-mode
-   files and publishing the project the file is contained in.  This is
-   great for people like me who want to figure out the details once
-   and forget about it.  I love stuff that Just Works(tm).
+The [[http://doc.norang.ca]] website (and a bunch of other files that are
+not publicly available) are all created by editing org-mode files and
+publishing the project the file is contained in.  This is great for
+people like me who want to figure out the details once and forget
+about it.  I love stuff that Just Works(tm).
 
-   I have 3 main projects I use org-mode publishing for currently:
+I have 3 main projects I use org-mode publishing for currently:
 
-   - norang (website)
-   - doc.norang.ca (website)
-   - org files (which are selectively included by other websites)
+- norang (website)
+- doc.norang.ca (website)
+- org files (which are selectively included by other websites)
 
-   Here's my publishing setup:
+Here's my publishing setup:
 
 #+begin_src emacs-lisp
   ; experimenting with docbook exports - not finished
@@ -2260,29 +2249,27 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
   (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
 #+end_src
 
-   The =norang= and =doc= projects publish directly into the webserver
-   directory that serves that site.  Publishing one of these projects
-   exports all modified pages, generates images with ditaa, copies the
-   resulting files to the webserver so that they are immediately
-   available for viewing.
+The =norang= and =doc= projects publish directly into the webserver
+directory that serves that site.  Publishing one of these projects
+exports all modified pages, generates images with ditaa, copies the
+resulting files to the webserver so that they are immediately
+available for viewing.
 
-   The http://doc.norang.ca/ site contains subdirectories with client
-   documentation that are restricted access using Apache Basic
-   authentication and I don't create links to these sites from the
-   publicly viewable pages.  http://doc.norang.ca/someclient/ would
-   show the index for any org files under
-   =~/git/doc.norang.ca/someclient/= if that is set up as a viewable
-   website.  I use most of the information myself but give access to
-   clients if they are interested in the information/notes that I keep
-   about their systems.
+The http://doc.norang.ca/ site contains subdirectories with client
+documentation that are restricted access using Apache Basic
+authentication and I don't create links to these sites from the
+publicly viewable pages.  http://doc.norang.ca/someclient/ would show
+the index for any org files under =~/git/doc.norang.ca/someclient/= if
+that is set up as a viewable website.  I use most of the information
+myself but give access to clients if they are interested in the
+information/notes that I keep about their systems.
 
-   This works great for me - I know where my notes are and I can
-   access them from anywhere on the internet.  I'm also free to share
-   notes with other people by simply giving them the link to the
-   appropriate site.
+This works great for me - I know where my notes are and I can access
+them from anywhere on the internet.  I'm also free to share notes with
+other people by simply giving them the link to the appropriate site.
 
-   All I need to remember to do is edit the appropriate org file and
-   publish it with C-S-F12 -- not exactly hard :)
+All I need to remember to do is edit the appropriate org file and
+publish it with C-S-F12 -- not exactly hard :)
 
 * Reminders
   :PROPERTIES:
@@ -2319,27 +2306,27 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
   (run-at-time "24:01" nil 'bh/org-agenda-to-appt)
 #+end_src
 * Productivity Tools
-  :PROPERTIES:
-  :CUSTOM_ID: ProductivityTools
-  :NOBLOCKING: t
-  :END:
-  This section is a miscellaneous collection of Emacs customizations that I use
-  with org-mode so that it Works-For-Me(tm).
+:PROPERTIES:
+:CUSTOM_ID: ProductivityTools
+:NOBLOCKING: t
+:END:
+This section is a miscellaneous collection of Emacs customizations that I use
+with org-mode so that it Works-For-Me(tm).
 ** Yasnippets
-   :PROPERTIES:
-   :CUSTOM_ID: Yasnippets
-   :END:
-   [[http://code.google.com/p/yasnippet/][Yasnippets]] is cool!  You type the snippet name and =TAB= and
-   yasnippet expands the name with the contents of the snippet text -
-   substituting snippet variables as appropriate.
+:PROPERTIES:
+:CUSTOM_ID: Yasnippets
+:END:
+[[http://code.google.com/p/yasnippet/][Yasnippets]] is cool!  You type the snippet name and =TAB= and yasnippet
+expands the name with the contents of the snippet text - substituting
+snippet variables as appropriate.
 
-   Yasnippet comes with lots of snippets for programming languages.
-   So far I only use 1 snippet (=block=) for =org-mode=.
+Yasnippet comes with lots of snippets for programming languages.  So
+far I only use 1 snippet (=block=) for =org-mode=.
 
-   I downloaded and installed the unbundled version of yasnippet so
-   that I can edit the predefined snippets.  I unpacked the yasnippet
-   software in my =~/.emacs.d/plugins= directory, renamed
-   =yasnippet0.5.10= to =yasnippet= and added the following setup in my =.emacs=:
+I downloaded and installed the unbundled version of yasnippet so that
+I can edit the predefined snippets.  I unpacked the yasnippet software
+in my =~/.emacs.d/plugins= directory, renamed =yasnippet0.5.10= to
+=yasnippet= and added the following setup in my =.emacs=:
 
 #+begin_src emacs-lisp :tangle yes
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins"))
@@ -2359,7 +2346,7 @@ types instead here (ie. =twopi=, =neato=, =circo=, etc).
               (flyspell-mode 1)))
 #+end_src
 
-   Here is the definition for the =block= snippet:
+Here is the definition for the =block= snippet:
 
 org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/block
 #+begin_example
@@ -2370,30 +2357,30 @@ org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/blo
   #+end_$1
 #+end_example
 
-   I use this to create =#+begin_*= blocks like 
-     - =#+begin_example=
-     - =#+begin_ditaa=
-     - =#+begin_dot=
-     - =#+begin_src=
-     - etc.
+I use this to create =#+begin_*= blocks like 
+- =#+begin_example=
+- =#+begin_ditaa=
+- =#+begin_dot=
+- =#+begin_src=
+- etc.
 
-   Simply type =block= then =TAB= and it replaces the =block= text
-   with the snippet contents.  Then type =src TAB emacs-lisp TAB= and
-   your snippet block is done.
+Simply type =block= then =TAB= and it replaces the =block= text with
+the snippet contents.  Then type =src TAB emacs-lisp TAB= and your
+snippet block is done.
 
-   Hit =C-c SingeQuote(')= and insert whatever emacs-lisp code you
-   need.  While in this block you're in a mode that knows how to
-   format and colourize emacs lisp code as you enter it which is
-   really nice.  =C-c SingleQuote(')= exits back to org-mode.  This
-   recognizes any emacs editing mode so all you have to do is enter
-   the appropriate mode name for the block.
+Hit =C-c SingeQuote(')= and insert whatever emacs-lisp code you need.
+While in this block you're in a mode that knows how to format and
+colourize emacs lisp code as you enter it which is really nice.  =C-c
+SingleQuote(')= exits back to org-mode.  This recognizes any emacs
+editing mode so all you have to do is enter the appropriate mode name
+for the block.
 
-   This is a great time saver.
+This is a great time saver.
 ** Limit your view to what you are working on
-   :PROPERTIES:
-   :CUSTOM_ID: LimitingAgendaView
-   :END:
-   There is more than one way to do this.  Use what works for you.
+:PROPERTIES:
+:CUSTOM_ID: LimitingAgendaView
+:END:
+There is more than one way to do this.  Use what works for you.
 *** Narrowing to a subtree with =bh/org-todo=
 =f5= and =S-f5= are bound the functions for narrowing and widening the emacs buffer as follows:
 
@@ -2421,36 +2408,36 @@ shown.
 I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and =C-c C-v= combination
 leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the normal view.
 *** Limiting the agenda to a subtree
-    =C-c C-x <= turns on the agenda restriction lock for the current subtree.
-    This keeps your agenda focused on only this subtree.  Alarms and notifications are still
-    active outside the agenda restriction.  =C-c C-x >= turns off the agenda restriction
-    lock returning your agenda view back to normal.
+=C-c C-x <= turns on the agenda restriction lock for the current
+subtree.  This keeps your agenda focused on only this subtree.  Alarms
+and notifications are still active outside the agenda restriction.
+=C-c C-x >= turns off the agenda restriction lock returning your
+agenda view back to normal.
 
-    I don't normally use the agenda restriction lock.  I normally want
-    to see all =work= tasks which are in multiple files so agenda view
-    filtering works better for me.
+I don't normally use the agenda restriction lock.  I normally want to
+see all =work= tasks which are in multiple files so agenda view
+filtering works better for me.
 *** Limiting the agenda to a file
-    You can limit the agenda view to a single file in multiple ways.
+You can limit the agenda view to a single file in multiple ways.
 
-    You can use the agenda restriction lock =C-c C-x <= on the any
-    line before the first heading to set the agenda restriction lock
-    to this file only.  This lock stays in effect until you remove it
-    with =C-c C-x >=.
+You can use the agenda restriction lock =C-c C-x <= on the any line
+before the first heading to set the agenda restriction lock to this
+file only.  This lock stays in effect until you remove it with =C-c
+C-x >=.
 
-    Another way is to invoke the agenda with =F12 < a= while visiting
-    an org-mode file.  This limits the agenda view to just this file.
-    I occassionally use this to view a file not in my
-    =org-agenda-files= in the agenda.
+Another way is to invoke the agenda with =F12 < a= while visiting an
+org-mode file.  This limits the agenda view to just this file.  I
+occassionally use this to view a file not in my =org-agenda-files= in
+the agenda.
 
 ** Tuning the Agenda Views
-   Various customizations affect how the agenda views show task
-   details.  This section shows each of the customizations I use in my
-   workflow.
+Various customizations affect how the agenda views show task details.
+This section shows each of the customizations I use in my workflow.
 *** Highlight the current agenda line
-    The following code in my =.emacs= file keeps the current agenda
-    line highlighted.  This makes it obvious what task will be
-    affected by commands issued in the agenda.  No more acting on the
-    wrong task by mistake!
+The following code in my =.emacs= file keeps the current agenda line
+highlighted.  This makes it obvious what task will be affected by
+commands issued in the agenda.  No more acting on the wrong task by
+mistake!
 
 #+begin_src emacs-lisp :tangle yes
   ;; Always hilight the current agenda line
@@ -2458,16 +2445,16 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 #+end_src
 
 *** Remove tasks with dates from the global todo lists
-    Tasks with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show
-    up in the agenda when appropriate.  I use the following settings
-    to remove these tasks from the global todo lists when they are too
-    far in the future to be interesting now.  The idea here is the
-    agenda has date-related items and the global todo lists have
-    everything else.  Keeping tasks on one list only prevents having
-    to review tasks more than once when browsing the lists.
+Tasks with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show up
+in the agenda when appropriate.  I use the following settings to
+remove these tasks from the global todo lists when they are too far in
+the future to be interesting now.  The idea here is the agenda has
+date-related items and the global todo lists have everything else.
+Keeping tasks on one list only prevents having to review tasks more
+than once when browsing the lists.
 
-    Tasks with dates are scheduled into the future sometime and you
-    don't need to deal with them until the date approaches.
+Tasks with dates are scheduled into the future sometime and you don't
+need to deal with them until the date approaches.
 #+begin_src emacs-lisp :tangle yes
   ;; Keep tasks with dates off the global todo lists
   (setq org-agenda-todo-ignore-with-date nil)
@@ -2489,69 +2476,70 @@ leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the norma
 #+end_src
 
 *** Use the Diary for Holidays only
-    I don't use the emacs Diary for anything but I like seeing the
-    holidays on my agenda.  This helps with planning for those days
-    when you're not supposed to be working.
+I don't use the emacs Diary for anything but I like seeing the
+holidays on my agenda.  This helps with planning for those days when
+you're not supposed to be working.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-agenda-include-diary nil)
   (setq org-agenda-diary-file "~/git/org/diary.org")
 #+end_src
 
-    I don't use a =~/diary= file anymore.  That is just there as a zero-length file to keep 
-    Emacs happy.  I use org-mode's diary functions instead.  Inserting entries with =i= in 
-    the emacs agenda creates date entries in the =~/git/org/diary.org= file.
+I don't use a =~/diary= file anymore.  That is just there as a
+zero-length file to keep Emacs happy.  I use org-mode's diary
+functions instead.  Inserting entries with =i= in the emacs agenda
+creates date entries in the =~/git/org/diary.org= file.
 
-    I include holidays from the calendar in my =todo.org= file as follows:
-    : #+FILETAGS: HOME
-    : * Appointments
-    :   :PROPERTIES:
-    :   :CATEGORY: Appt
-    :   :ARCHIVE:  %s_archive::* Appointments
-    :   :END:      
-    : ** Holidays
-    :    :PROPERTIES:
-    :    :Category: Holiday
-    :    :END:
-    : %%(org-calendar-holiday)
-    : ** Some other Appointment
-    :    ...
+I include holidays from the calendar in my =todo.org= file as follows:
+: #+FILETAGS: HOME
+: * Appointments
+:   :PROPERTIES:
+:   :CATEGORY: Appt
+:   :ARCHIVE:  %s_archive::* Appointments
+:   :END:      
+: ** Holidays
+:    :PROPERTIES:
+:    :Category: Holiday
+:    :END:
+: %%(org-calendar-holiday)
+: ** Some other Appointment
+:    ...
 
 *** Searches include archive files
-    I keep a single archive file for each of my org-mode project files.
-    This allows me to search the current file and the archive when I need to
-    dig up old information from the archives.
+I keep a single archive file for each of my org-mode project files.
+This allows me to search the current file and the archive when I need
+to dig up old information from the archives.
 
-    I don't need this often but it sure is handy on the occasions that
-    I do need it.
+I don't need this often but it sure is handy on the occasions that
+I do need it.
 
 #+begin_src emacs-lisp :tangle yes
   ;; Include agenda archive files when searching for things
   (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
 #+end_src
 *** Agenda view tweaks
-    The following agenda customizations control 
-    - display of repeating tasks
-    - display of empty dates on the agenda
-    - task sort order
-    - start the agenda weekly view with =today=
-    - display of the grid
-    - habits at the bottom
+The following agenda customizations control 
+- display of repeating tasks
+- display of empty dates on the agenda
+- task sort order
+- start the agenda weekly view with =today=
+- display of the grid
+- habits at the bottom
 
-    I use a custom sorting function so that my daily agenda
-    lists tasks in order of importance.  Tasks on the daily
-    agenda are listed in the following order:
+I use a custom sorting function so that my daily agenda lists tasks in
+order of importance.  Tasks on the daily agenda are listed in the
+following order:
 
-    1. tasks with times at the top so they are hard to miss
-    2. tasks for today (not scheduled or deadline tasks)
-    3. late deadline tasks
-    4. deadlines due today
-    5. late scheduled items
-    6. scheduled items for today
-    7. pending deadlines (due soon)
-    8. habits
+1. tasks with times at the top so they are hard to miss
+2. tasks for today (not scheduled or deadline tasks)
+3. late deadline tasks
+4. deadlines due today
+5. late scheduled items
+6. scheduled items for today
+7. pending deadlines (due soon)
+8. habits
 
-    The lisp for this isn't particularly pretty but it works.
+The lisp for this isn't particularly pretty but it works.
 
 Here are the =.emacs= settings:
 #+begin_src emacs-lisp :tangle yes
@@ -2676,201 +2664,200 @@ Here are the =.emacs= settings:
 #+end_src
 
 ** Checklist handling
-   :PROPERTIES:
-   :CUSTOM_ID: ChecklistHandling
-   :END:
-   Checklists are great for repeated tasks with lots of things that need to be done.
-   For a long time I was manually resetting the check boxes to unchecked when marking
-   the repeated task =DONE= but no more!  There's a contributed =org-checklist= that
-   can uncheck the boxes automagically when the task is marked done.
+:PROPERTIES:
+:CUSTOM_ID: ChecklistHandling
+:END:
+Checklists are great for repeated tasks with lots of things that need
+to be done.  For a long time I was manually resetting the check boxes
+to unchecked when marking the repeated task =DONE= but no more!
+There's a contributed =org-checklist= that can uncheck the boxes
+automagically when the task is marked done.
 
-   Add the following to your =.emacs=
+Add the following to your =.emacs=
 #+begin_src emacs-lisp :tangle yes
   (load "~/git/org-mode/contrib/lisp/org-checklist")
 #+end_src
 
-   and then to use it in a task you simply set the property =RESET_CHECK_BOXES= to =t= 
-   like this
+and then to use it in a task you simply set the property =RESET_CHECK_BOXES= to =t= 
+like this
 
-   : ** TODO Invoicing and Archive Tasks [0/7]
-   :    DEADLINE: <2009-07-01 Wed +1m -0d> 
-   :    :PROPERTIES:
-   :    :RESET_CHECK_BOXES: t
-   :    :END:
-   : 
-   :    - [ ] Do task 1
-   :    - [ ] Do task 2
-   :    ...
-   :    - [ ] Do task 7
+: ** TODO Invoicing and Archive Tasks [0/7]
+:    DEADLINE: <2009-07-01 Wed +1m -0d> 
+:    :PROPERTIES:
+:    :RESET_CHECK_BOXES: t
+:    :END:
+: 
+:    - [ ] Do task 1
+:    - [ ] Do task 2
+:    ...
+:    - [ ] Do task 7
 
 ** Backups
-   =Backups that you have to work hard at don't get gone=.
+=Backups that you have to work hard at don't get gone=.
 
-   I lost a bunch of data over 10 years ago due to not having a
-   working backup solution.  At the time I said =I'm not going to lose
-   any important data ever again=.  So far so good :)
+I lost a bunch of data over 10 years ago due to not having a working
+backup solution.  At the time I said =I'm not going to lose any
+important data ever again=.  So far so good :)
 
-   My backups get done religiously.  What does this have to do with
-   org-mode?  Not much really, other than I don't spend time doing
-   backups -- they just happen -- which saves me time for other more
-   interesting things.
+My backups get done religiously.  What does this have to do with
+org-mode?  Not much really, other than I don't spend time doing
+backups -- they just happen -- which saves me time for other more
+interesting things.
 
-   My backup philosophy is to make it possible to recover your data --
-   not necessarily easy.  It doesn't have to be easy/fast to do the
-   recovery because I'll rarely have to recover data from the backups.
-   Saving time for recovery doesn't make sense to me.  I want the
-   backup to be fast and painless since I do those all the time.
+My backup philosophy is to make it possible to recover your data --
+not necessarily easy.  It doesn't have to be easy/fast to do the
+recovery because I'll rarely have to recover data from the backups.
+Saving time for recovery doesn't make sense to me.  I want the backup
+to be fast and painless since I do those all the time.
 
-   I set up an automated network backup over 10 years ago that is
-   still serving me well today.  All of my systems gets daily backups
-   to a network drive.  These are collected weekly and written to DVD
-   ISO images in case my machines walk off someday.
+I set up an automated network backup over 10 years ago that is still
+serving me well today.  All of my systems gets daily backups to a
+network drive.  These are collected weekly and written to DVD ISO
+images in case my machines walk off someday.
 
-   Once a week I get an email that says 'These ISO images are ready to
-   be burned to disk' and all I have to do is write them out.  Backups
-   take minimal effort currently and I'm really happy about that.
+Once a week I get an email that says 'These ISO images are ready to be
+burned to disk' and all I have to do is write them out.  Backups take
+minimal effort currently and I'm really happy about that.
 
-   Since then =git= came into my life, so backups of =git=
-   repositories that are on multiple machines is much less critical
-   than it used to be.  There is an automatic backup of everything
-   pushed to the remote repository.
+Since then =git= came into my life, so backups of =git= repositories
+that are on multiple machines is much less critical than it used to
+be.  There is an automatic backup of everything pushed to the remote
+repository.
 
 ** Handling blocked tasks
-   :PROPERTIES:
-   :CUSTOM_ID: HandlingBlockedTasks
-   :END:
-   Blocked tasks are tasks that have subtasks which are not in a done
-   todo state.  Blocked tasks show up in a grayed font by default in
-   the agenda.
+:PROPERTIES:
+:CUSTOM_ID: HandlingBlockedTasks
+:END:
+Blocked tasks are tasks that have subtasks which are not in a done
+todo state.  Blocked tasks show up in a grayed font by default in the
+agenda.
 
-   To enable task blocking set the following variable:
+To enable task blocking set the following variable:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-enforce-todo-dependencies t)
 #+end_src
 
-   This setting prevents tasks from changing to =DONE= if any subtasks
-   are still open.  This works pretty well except for repeating tasks.
-   I find I'm regularly adding =TODO= tasks under repeating tasks and
-   not all of the subtasks need to be complete before the next repeat
-   cycle.
+This setting prevents tasks from changing to =DONE= if any subtasks
+are still open.  This works pretty well except for repeating tasks.  I
+find I'm regularly adding =TODO= tasks under repeating tasks and not
+all of the subtasks need to be complete before the next repeat cycle.
 
-   You can override the setting temporarily by changing the task with
-   =C-u C-u C-u C-c C-t= but I never remember that.  I set a permanent
-   property on the repeated tasks as follows:
+You can override the setting temporarily by changing the task with
+=C-u C-u C-u C-c C-t= but I never remember that.  I set a permanent
+property on the repeated tasks as follows:
 
-   : * TODO New Repeating Task
-   :   SCHEDULED: <2009-06-16 Tue +1w>
-   :   :PROPERTIES:
-   :   :NOBLOCKING: t
-   :   :END:
-   : ...
-   : ** TODO Subtask
+: * TODO New Repeating Task
+:   SCHEDULED: <2009-06-16 Tue +1w>
+:   :PROPERTIES:
+:   :NOBLOCKING: t
+:   :END:
+: ...
+: ** TODO Subtask
 
-   This prevents the =New Repeating Task= from being blocked if some
-   of the items under it are not complete.
+This prevents the =New Repeating Task= from being blocked if some of
+the items under it are not complete.
 
-   Occassionally I need to complete tasks in a given order.  Org-mode has
-   a property =ORDERED= that enforces this for subtasks.
+Occassionally I need to complete tasks in a given order.  Org-mode has
+a property =ORDERED= that enforces this for subtasks.
 
-   : * TODO Some Task
-   :   :PROPERTY:
-   :   :ORDERED: t
-   :   :END:
-   : ** TODO Step 1
-   : ** TODO Step 2
-   : ** TODO Step 3
+: * TODO Some Task
+:   :PROPERTY:
+:   :ORDERED: t
+:   :END:
+: ** TODO Step 1
+: ** TODO Step 2
+: ** TODO Step 3
   
-   In this case you need to complete =Step 1= before you can complete
-   =Step 2=, etc. and org-mode prevents the state change to a done task
-   until the preceding tasks are complete.
+In this case you need to complete =Step 1= before you can complete
+=Step 2=, etc. and org-mode prevents the state change to a done task
+until the preceding tasks are complete.
 
 ** Org Task structure and presentation
-   This section describes various org-mode settings I use to control
-   how tasks are displayed while I work on my org mode files.
+This section describes various org-mode settings I use to control how
+tasks are displayed while I work on my org mode files.
 *** Controlling display of leading stars on headlines
-    Org-mode has the ability to show or hide the leading starts on
-    task headlines.  It's also possible to have headlines at odd
-    levels only so that the stars and heading task names line up in
-    sublevels.
+Org-mode has the ability to show or hide the leading starts on task
+headlines.  It's also possible to have headlines at odd levels only so
+that the stars and heading task names line up in sublevels.
 
-    I don't hide leading stars - I want to see the heading levels
-    explicitly.  When I tried the hide leading stars setting I found
-    myself typing ' *' when adding a new heading and then the font
-    lock shows I messed up and created a list instead.
+I don't hide leading stars - I want to see the heading levels
+explicitly.  When I tried the hide leading stars setting I found
+myself typing ' *' when adding a new heading and then the font lock
+shows I messed up and created a list instead.
 
-    To make org show leading stars use
+To make org show leading stars use
 
 #+begin_src emacs-lisp :tangle yes 
   (setq org-hide-leading-stars nil)
-#+end_src emacs-lisp
+#+end_src
 *** Show headings at odd levels only or odd-even levels
-    I've converted my files between odd-levels-only and odd-even using
-    the functions =org-convert-to-odd-levels= and
-    =org-convert-to-oddeven-levels= functions a number of times.  I
-    ended up going back to odd-even levels to reduce the amount of
-    leading whitespace on tasks.  I didn't find that lining up the
-    headlines and tasks in odd-levels-only to be all that helpful.
+I've converted my files between odd-levels-only and odd-even using the
+functions =org-convert-to-odd-levels= and
+=org-convert-to-oddeven-levels= functions a number of times.  I ended
+up going back to odd-even levels to reduce the amount of leading
+whitespace on tasks.  I didn't find that lining up the headlines and
+tasks in odd-levels-only to be all that helpful.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-odd-levels-only nil)
 #+end_src
 *** Handling blank lines
-    Blank lines are evil :).  They keep getting inserted in between
-    headlines and I never want to see them in collapsed (contents)
-    views.  When I use =TAB= to fold (cycle) tasks I don't want to see 
-    any blank lines.
+Blank lines are evil :).  They keep getting inserted in between
+headlines and I never want to see them in collapsed (contents) views.
+When I use =TAB= to fold (cycle) tasks I don't want to see any blank
+lines.
 
-    The following setting hides all blank lines inside folded contents
-    of a tasks:
+The following setting hides all blank lines inside folded contents of
+a tasks:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-cycle-separator-lines 0)
 #+end_src
 
-    I find extra blank lines in lists and headings a bit of a
-    nuisance.  To get a body after a list you need to include a blank
-    line between the list entry and the body -- and indent the body
-    appropriately.  Most of my lists have no body detail so I like the
-    look of collapsed lists with no blank lines better.
+I find extra blank lines in lists and headings a bit of a nuisance.
+To get a body after a list you need to include a blank line between
+the list entry and the body -- and indent the body appropriately.
+Most of my lists have no body detail so I like the look of collapsed
+lists with no blank lines better.
 
-    The following setting prevents creating blank lines before list items
-    and headings:
+The following setting prevents creating blank lines before list items
+and headings:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-blank-before-new-entry (quote ((heading)
                                            (plain-list-item))))
 #+end_src
 *** Adding new tasks quickly without disturbing the current task content
-    To create new headings in a project file it is really convenient to use
-    C-S-RET.  This inserts a new headline.  With the following setting
+To create new headings in a project file it is really convenient to
+use C-S-RET.  This inserts a new headline.  With the following setting
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-insert-heading-respect-content t)
 #+end_src
 
-    Org adds the new heading after the content of the current item.
-    This lets you hit C-S-RET in the middle of an entry and the new
-    heading is added after the body of the current entry.
+Org adds the new heading after the content of the current item.  This
+lets you hit C-S-RET in the middle of an entry and the new heading is
+added after the body of the current entry.
 
 *** Notes at the top
-    I enter notes for tasks with =C-c C-z= (or just =z= in the
-    agenda).  Changing tasks states also sometimes prompt for a note
-    (e.g. moving to =WAITING= prompts for a note and I enter a reason
-    for why it is waiting).  These notes are saved at the top of the
-    task so unfolding the task shows the note first.
+I enter notes for tasks with =C-c C-z= (or just =z= in the agenda).
+Changing tasks states also sometimes prompt for a note (e.g. moving to
+=WAITING= prompts for a note and I enter a reason for why it is
+waiting).  These notes are saved at the top of the task so unfolding
+the task shows the note first.
 #+begin_src emacs-lisp :tangle yes
   (setq org-reverse-note-order nil)
 #+end_src
 *** Searching and showing results
-    Org-mode's searching capabilities are really effective at finding
-    data in your org files.  =C-c / /= does a regular expression
-    search on the current file and shows matching results in a
-    collapsed view of the org-file.
+Org-mode's searching capabilities are really effective at finding data
+in your org files.  =C-c / /= does a regular expression search on the
+current file and shows matching results in a collapsed view of the
+org-file.
 
-    I have org-mode show the hierarchy of tasks above the matched
-    entries and also the immediately following sibling task (but not
-    all siblings) with the following settings:
+I have org-mode show the hierarchy of tasks above the matched entries
+and also the immediately following sibling task (but not all siblings)
+with the following settings:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-show-following-heading t)
@@ -2878,18 +2865,18 @@ Here are the =.emacs= settings:
   (setq org-show-siblings nil)
 #+end_src
 
-    This keeps the results of the search relatively compact and
-    mitigates accidental errors by cutting too much data from your org
-    file with =C-k=.  Cutting folded data (including the ...) can be
-    really dangerous since it cuts text (including following subtrees)
-    which you can't see.  For this reason I always show the following
-    headline when displaying search results.
+This keeps the results of the search relatively compact and mitigates
+accidental errors by cutting too much data from your org file with
+=C-k=.  Cutting folded data (including the ...) can be really
+dangerous since it cuts text (including following subtrees) which you
+can't see.  For this reason I always show the following headline when
+displaying search results.
 *** Editing and Special key handling
-    Org-mode allows special handling of the C-a, C-e, and C-k keys
-    while editing headlines.  I also use the setting that pastes
-    (yanks) subtrees and adjusts the levels to match the task I am
-    pasting to.  See the docstring (=C-h v org-yank-adjust-subtrees=)
-    for more details on each variable and what it does.
+Org-mode allows special handling of the C-a, C-e, and C-k keys while
+editing headlines.  I also use the setting that pastes (yanks)
+subtrees and adjusts the levels to match the task I am pasting to.
+See the docstring (=C-h v org-yank-adjust-subtrees=) for more details
+on each variable and what it does.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-special-ctrl-a/e t)
@@ -2898,118 +2885,119 @@ Here are the =.emacs= settings:
 #+end_src
 
 ** Attachments					
-   Attachments are great for getting large amounts of data related to
-   your project out of your org-mode files.  Before attachments came
-   along I was including huge blocks of SQL code in my org files to
-   keep track of changes I made to project databases.  This bloated my
-   org file sizes badly.
+Attachments are great for getting large amounts of data related to
+your project out of your org-mode files.  Before attachments came
+along I was including huge blocks of SQL code in my org files to keep
+track of changes I made to project databases.  This bloated my org
+file sizes badly.
 
-   Now I can create the data in a separate file and attach it to my
-   project task so it's easily located again in the future.
+Now I can create the data in a separate file and attach it to my
+project task so it's easily located again in the future.
 
-   I set up org-mode to generate unique attachment IDs with
-   =org-id-method= as follows:
+I set up org-mode to generate unique attachment IDs with
+=org-id-method= as follows:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-id-method (quote uuidgen))
 #+end_src
 
-   Say you want to attach a file =x.sql= to your current task.  Create
-   the file data in =/tmp/x.sql= and save it.
+Say you want to attach a file =x.sql= to your current task.  Create
+the file data in =/tmp/x.sql= and save it.
 
-   Attach the file with =C-c C-a a= and enter the filename: =x.sql=.
-   This generates a unique ID for the task and adds the file in the
-   attachment directory.
+Attach the file with =C-c C-a a= and enter the filename: =x.sql=.
+This generates a unique ID for the task and adds the file in the
+attachment directory.
 
-   : ** Attachments		                                   :ATTACH:
-   :    :PROPERTIES:
-   :    :Attachments: x.sql
-   :    :ID:       f1d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b
-   :    :END:
+: ** Attachments		                                   :ATTACH:
+:    :PROPERTIES:
+:    :Attachments: x.sql
+:    :ID:       f1d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b
+:    :END:
 
-   The attached file is saved in
-   =data/f1/d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b/=.  Where it goes
-   exactly isn't important for me -- as long as it is saved and
-   retrievable easily.  Org-mode copies the original file =/tmp/x.sql=
-   into the appropriate attachment directory.
+The attached file is saved in
+=data/f1/d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b/=.  Where it goes exactly
+isn't important for me -- as long as it is saved and retrievable
+easily.  Org-mode copies the original file =/tmp/x.sql= into the
+appropriate attachment directory.
 
-   Tasks with attachments automatically get an =ATTACH= tag so you can
-   easily find tasks with attachments with a tag search.
+Tasks with attachments automatically get an =ATTACH= tag so you can
+easily find tasks with attachments with a tag search.
    
-   To open the attachment for a task use =C-c C-a o=.  This prompts for the
-   attachment to open and =TAB= completion works here.
+To open the attachment for a task use =C-c C-a o=.  This prompts for
+the attachment to open and =TAB= completion works here.
 
-   The =ID= changes for every task header when a new =ID= is generated.
+The =ID= changes for every task header when a new =ID= is generated.
    
-   It's possible to use named directories for attachments but I
-   haven't needed this functionality yet -- it's there if you need it.
+It's possible to use named directories for attachments but I haven't
+needed this functionality yet -- it's there if you need it.
 
-   I store my org-mode attachments with my org files in a subdirectory
-   =data=.  These are automatically added to my =git= repository along
-   with any other org-mode changes I've made.
+I store my org-mode attachments with my org files in a subdirectory
+=data=.  These are automatically added to my =git= repository along
+with any other org-mode changes I've made.
 
 ** Deadlines and Agenda Visibility
 
-   Deadlines and due dates are a fact or life.  By default I want to
-   see deadlines in the agenda 30 days before the due date.
+Deadlines and due dates are a fact or life.  By default I want to see
+deadlines in the agenda 30 days before the due date.
 
-   The following setting accomplishes this:
+The following setting accomplishes this:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-deadline-warning-days 30)
 #+end_src
 
-   This gives me plenty of time to deal with the task so that it is completed
-   on or before the due date.
+This gives me plenty of time to deal with the task so that it is
+completed on or before the due date.
 
-   I also use deadlines for repeating tasks.  If the task repeats more often
-   than once per month it would be always bugging me on the agenda view.
-   For these types of tasks I set an explicit deadline warning date as follows:
+I also use deadlines for repeating tasks.  If the task repeats more
+often than once per month it would be always bugging me on the agenda
+view.  For these types of tasks I set an explicit deadline warning
+date as follows:
 
-   : ** TODO Pay Wages
-   :    DEADLINE: <2009-07-01 Wed +1m -0d> 
+: ** TODO Pay Wages
+:    DEADLINE: <2009-07-01 Wed +1m -0d> 
 
-   This example repeats monthly and shows up in the agenda on the day
-   it is due (with no prior warning).  You can set any number of lead
-   days you want on DEADLINES using -Nd where N is the number of days
-   in advance the task should show up in the agenda.  If no value is
-   specified the default =org-deadline-warning-days= is used.
+This example repeats monthly and shows up in the agenda on the day it
+is due (with no prior warning).  You can set any number of lead days
+you want on DEADLINES using -Nd where N is the number of days in
+advance the task should show up in the agenda.  If no value is
+specified the default =org-deadline-warning-days= is used.
 
 ** Exporting Tables to CSV
-   I generate org-mode tables with details of task specifications and
-   record structures for some of my projects.  My clients like to use
-   spreadsheets for this type of detail.
+I generate org-mode tables with details of task specifications and
+record structures for some of my projects.  My clients like to use
+spreadsheets for this type of detail.
 
-   It's easy to share the details of the org-mode table by exporting
-   in HTML but that isn't easy for anyone else to work with if they
-   need to edit data.
+It's easy to share the details of the org-mode table by exporting in
+HTML but that isn't easy for anyone else to work with if they need to
+edit data.
 
-   To solve this problem I export my table as comma delimited values
-   (CSV) and then send that to the client (or read it into a
-   spreadsheet and email the resulting spreadsheet file).
+To solve this problem I export my table as comma delimited values
+(CSV) and then send that to the client (or read it into a spreadsheet
+and email the resulting spreadsheet file).
 
-   Org-mode can export tables as TAB or comma delimited formats.  I
-   set the default format to CSV with:
+Org-mode can export tables as TAB or comma delimited formats.  I set
+the default format to CSV with:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-table-export-default-format "orgtbl-to-csv")
-#+end_src lisp
+#+end_src
 
-   Exporting to CSV format is the only one I use and this provides the
-   default so I can just hit RETURN when prompted for the format.
+Exporting to CSV format is the only one I use and this provides the
+default so I can just hit RETURN when prompted for the format.
 
-   To export the following table I put the cursor inside the table and
-   hit =M-x org-table-export= which prompts for a filename and the
-   format which defaults to orgtbl-to-csv from the setting above.
+To export the following table I put the cursor inside the table and
+hit =M-x org-table-export= which prompts for a filename and the format
+which defaults to orgtbl-to-csv from the setting above.
 
-   |   One |    Two | Three |
-   |-------+--------+-------|
-   |     1 |      1 |     2 |
-   |     3 |      6 |     5 |
-   |  fred |    kpe |  mary |
-   | 234.5 | 432.12 | 324.3 |
+|   One |    Two | Three |
+|-------+--------+-------|
+|     1 |      1 |     2 |
+|     3 |      6 |     5 |
+|  fred |    kpe |  mary |
+| 234.5 | 432.12 | 324.3 |
 
-   This creates the file with the following data
+This creates the file with the following data
 
 #+begin_src csv
   One,Two,Three
@@ -3021,9 +3009,9 @@ Here are the =.emacs= settings:
 
 ** Visiting links
 
-   Links to emails, web pages, and other files are sprinkled all over
-   my org files.  The following setting control how org-mode handles
-   opening the link.
+Links to emails, web pages, and other files are sprinkled all over my
+org files.  The following setting control how org-mode handles opening
+the link.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-link-frame-setup ((vm . vm-visit-folder)
@@ -3031,20 +3019,20 @@ Here are the =.emacs= settings:
                               (file . find-file-other-window)))
 #+end_src
 
-   I like to keep links in the same window so that I don't end up 
-   with a ton of frames in my window manager.  I normally work
-   in a full-screen window and having links open in the same window
-   just works better for me.
+I like to keep links in the same window so that I don't end up with a
+ton of frames in my window manager.  I normally work in a full-screen
+window and having links open in the same window just works better for
+me.
 ** Logging stuff
-   Most of my logging is controlled by the global =org-todo-keywords=
+Most of my logging is controlled by the global =org-todo-keywords=
 
-   My logging settings are set as follows:
+My logging settings are set as follows:
 #+begin_src emacs-lisp :tangle yes
   (setq org-log-done (quote time))
   (setq org-log-into-drawer t)
 #+end_src
 
-   With =org-todo-keywords= set as 
+With =org-todo-keywords= set as 
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-todo-keywords
@@ -3053,114 +3041,111 @@ Here are the =.emacs= settings:
                 (sequence "OPEN(O)" "|" "CLOSED(C)"))))
 #+end_src
 
-   This adds a log entry whenever a task moves to any of the following states:
-   - to or out of =DONE= status
-   - to =WAITING= status (with a note) or out of =WAITING= status
-   - to =SOMEDAY= status
-   - to =CANCELLED= status (with a note) or out of =CANCELLED= status
-   - to =QUOTE= status
-   - to =QUOTED= status
-   - to =APPROVED= status (with a note)
-   - to =EXPIRED= status (with a note)
-   - to =REJECTED= status (with a note)
+This adds a log entry whenever a task moves to any of the following states:
+- to or out of =DONE= status
+- to =WAITING= status (with a note) or out of =WAITING= status
+- to =SOMEDAY= status
+- to =CANCELLED= status (with a note) or out of =CANCELLED= status
+- to =QUOTE= status
+- to =QUOTED= status
+- to =APPROVED= status (with a note)
+- to =EXPIRED= status (with a note)
+- to =REJECTED= status (with a note)
 
-   I keep clock times and states in the =LOGBOOK= drawer to keep my
-   tasks uncluttered.  If a task is WAITING then the reason for why it
-   is waiting is near the top of the LOGBOOK and unfolding the LOGBOOK
-   drawer provides that information.
+I keep clock times and states in the =LOGBOOK= drawer to keep my tasks
+uncluttered.  If a task is WAITING then the reason for why it is
+waiting is near the top of the LOGBOOK and unfolding the LOGBOOK
+drawer provides that information.
 ** Limiting time spent on tasks
-   :PROPERTIES:
-   :CUSTOM_ID: LimitingTimeSpentOnTasks
-   :END:
-   Org-mode has this great new feature for signalling alarms when the
-   estimated time for a task is reached.  I use this to limit the
-   amount of time I spend on a task during the day.  
+:PROPERTIES:
+:CUSTOM_ID: LimitingTimeSpentOnTasks
+:END:
+Org-mode has this great new feature for signalling alarms when the
+estimated time for a task is reached.  I use this to limit the amount
+of time I spend on a task during the day.
 
-   As an example, I've been working on this document for over two
-   months now.  I want to get it finished but I can't just work on it
-   solely until it's done because then nothing else gets done.  I want
-   to do a little bit every day but limit the total amount of time I
-   spend documenting org-mode to an hour a day.
+As an example, I've been working on this document for over two months
+now.  I want to get it finished but I can't just work on it solely
+until it's done because then nothing else gets done.  I want to do a
+little bit every day but limit the total amount of time I spend
+documenting org-mode to an hour a day.
 
-   To this end I have a task
+To this end I have a task
 
-   : ** NEXT Document my use of org-mode
-   :    :LOGBOOK:...
-   :    :PROPERTIES:
-   :    :CLOCK_MODELINE_TOTAL: today
-   :    :Effort:   1:00
-   :    :END:
+: ** NEXT Document my use of org-mode
+:    :LOGBOOK:...
+:    :PROPERTIES:
+:    :CLOCK_MODELINE_TOTAL: today
+:    :Effort:   1:00
+:    :END:
 
-   The task has an estimated effort of 1 hour and when I clock in the task
-   it gives me a total in the mode-line like this
+The task has an estimated effort of 1 hour and when I clock in the
+task it gives me a total in the mode-line like this
 
-   : --:**  org-mode.org   91% (2348,73) Git:master  (Org Fly yas Font)-----[0:35/1:00 (Document my use of org-mode)]-------
+: --:**  org-mode.org   91% (2348,73) Git:master  (Org Fly yas Font)-----[0:35/1:00 (Document my use of org-mode)]-------
 
-   I've spent 35 minutes of my 1 hour so far today on this document
-   and other help on IRC.
+I've spent 35 minutes of my 1 hour so far today on this document and
+other help on IRC.
 
-   I set up an alarm so the Star Trek red alert klaxon goes off when
-   the total estimated time is hit.  (Yes I'm a Trekkie :) )
+I set up an alarm so the Star Trek red alert klaxon goes off when the
+total estimated time is hit.  (Yes I'm a Trekkie :) )
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-clock-sound "/usr/local/lib/alert1.wav")
 #+end_src
 
-   When the one hour time limit is hit the alarm sound goes off and a
-   message states that I should be done working on this task.  If I
-   switch tasks and try to clock in this task again I get the sound
-   each and every time I clock in the task.  This nags me to go work on
-   something else :)
+When the one hour time limit is hit the alarm sound goes off and a
+message states that I should be done working on this task.  If I
+switch tasks and try to clock in this task again I get the sound each
+and every time I clock in the task.  This nags me to go work on
+something else :)
 
-   You can use similar setups for repeated tasks.  By default the last
-   repeat time is recorded as a property when a repeating task is
-   marked done.  For repeating tasks the mode-line clock total counts
-   since the last repeat time by default.  This lets you accumulate
-   time over multiple days and counts towards your estimated effort
-   limit.
+You can use similar setups for repeated tasks.  By default the last
+repeat time is recorded as a property when a repeating task is marked
+done.  For repeating tasks the mode-line clock total counts since the
+last repeat time by default.  This lets you accumulate time over
+multiple days and counts towards your estimated effort limit.
 ** Habit Tracking
-   John Wiegley recently added support for Habit tracking to org-mode.
+John Wiegley recently added support for Habit tracking to org-mode.
 
-   I have lots of habits (some bad) but I'd still like to improve and
-   build new good habits.  This is what habit tracking is for.  It
-   shows a graph on the agenda of how well you have been doing on
-   developing your habits.
+I have lots of habits (some bad) but I'd still like to improve and
+build new good habits.  This is what habit tracking is for.  It shows
+a graph on the agenda of how well you have been doing on developing
+your habits.
 
-   I have habits like:
+I have habits like:
 
-     - Hand wash the dishes
-     - 30 minute brisk walk
-     - Clean the house
+- Hand wash the dishes
+- 30 minute brisk walk
+- Clean the house
 
-   etc. and most of these need a push to get done regularly.  Logging
-   of the done state needs to be enabled for habit tracking to work.
+etc. and most of these need a push to get done regularly.  Logging of
+the done state needs to be enabled for habit tracking to work.
 
-   A habit is just like a regular task except it has a special
-   =PROPERTY= value setting and a special =SCHEDULED= date entry like
-   this:
+A habit is just like a regular task except it has a special =PROPERTY=
+value setting and a special =SCHEDULED= date entry like this:
 
-   : ** TODO Update Org Mode Doc
-   :    SCHEDULED: <2009-11-21 Sat .+7d/30d>
-   :    [2009-11-14 Sat 11:45]
-   :    :PROPERTIES:
-   :    :STYLE: habit
-   :    :END:
+: ** TODO Update Org Mode Doc
+:    SCHEDULED: <2009-11-21 Sat .+7d/30d>
+:    [2009-11-14 Sat 11:45]
+:    :PROPERTIES:
+:    :STYLE: habit
+:    :END:
 
-   This marks the task as a habit and separates it from the regular
-   task display on the agenda.  When you mark a habit done it shows up
-   on your daily agenda the next time based on the first interval in
-   the SCHEDULED entry (=.+1d=)
+This marks the task as a habit and separates it from the regular task
+display on the agenda.  When you mark a habit done it shows up on your
+daily agenda the next time based on the first interval in the
+SCHEDULED entry (=.+1d=)
 
-   The special =SCHEDULED= entry states that I want to do this every
-   day but at least every 2 days.  If I go 3 days without marking it
-   DONE it shows up RED on the agenda indicating that I have been
-   neglecting this habit.
+The special =SCHEDULED= entry states that I want to do this every day
+but at least every 2 days.  If I go 3 days without marking it DONE it
+shows up RED on the agenda indicating that I have been neglecting this
+habit.
 
-   The world isn't going to end if you neglect your habits.
-   You can hide and display habits quickly using the =K= key on the
-   agenda.
+The world isn't going to end if you neglect your habits.  You can hide
+and display habits quickly using the =K= key on the agenda.
 
-   These are my settings for habit tracking.
+These are my settings for habit tracking.
 
 #+begin_src emacs-lisp :tangle yes
   ; Enable habit tracking (and a bunch of other modules)
@@ -3171,62 +3156,66 @@ Here are the =.emacs= settings:
   (setq org-habit-graph-column 50)
 #+end_src
 
-   During the day I'll turn off the habit display in the agenda with =K=.
-   This is a persistent setting and since I leave my Emacs running for days at
-   a time my habit display doesn't come back.  To make sure I look at the habits
-   daily I have the following settings to redisplay the habits in the agenda each day.
-   This turns the habit display on again at 6AM each morning.
+During the day I'll turn off the habit display in the agenda with =K=.
+This is a persistent setting and since I leave my Emacs running for
+days at a time my habit display doesn't come back.  To make sure I
+look at the habits daily I have the following settings to redisplay
+the habits in the agenda each day.  This turns the habit display on
+again at 6AM each morning.
 
 #+begin_src emacs-lisp :tangle yes
   (run-at-time "06:00" 86400 '(lambda () (setq org-habit-show-habits t)))
 #+end_src
 
 ** Habits only log DONE state changes
-  I tend to keep habits under a level 1 task =* Habits= with a special logging property
-  that only logs changes to the =DONE= state.  This allows me to cancel a habit and
-  not record a timestamp for it since that messes up the habit graph.  Cancelling a habit
-  just to get it off my agenda because it's undoable (like get up before 6AM) should not
-  mark the habit as done today.  I only cancel habits that repeat every day.
+I tend to keep habits under a level 1 task =* Habits= with a special
+logging property that only logs changes to the =DONE= state.  This
+allows me to cancel a habit and not record a timestamp for it since
+that messes up the habit graph.  Cancelling a habit just to get it off
+my agenda because it's undoable (like get up before 6AM) should not
+mark the habit as done today.  I only cancel habits that repeat every
+day.
 
-  My habit tasks look as follows - and I tend to have one in every org file that can have
-  habits defined
-  : * Habits
-  :   :PROPERTIES:
-  :   :LOGGING:  DONE(!)
-  :   :ARCHIVE:  %s_archive::* Habits
-  :   :END:
+My habit tasks look as follows - and I tend to have one in every org
+file that can have habits defined
+: * Habits
+:   :PROPERTIES:
+:   :LOGGING:  DONE(!)
+:   :ARCHIVE:  %s_archive::* Habits
+:   :END:
 ** Auto revert mode
-   I use git to synchronize my org-mode files between my laptop and my
-   workstation.  This normally requires saving all the current
-   changes, pushing to a bare repo, and fetching on the other system.
-   After that I need to revert all of my org-mode files to get the
-   updated information.
+I use git to synchronize my org-mode files between my laptop and my
+workstation.  This normally requires saving all the current changes,
+pushing to a bare repo, and fetching on the other system.  After that
+I need to revert all of my org-mode files to get the updated
+information.
 
-   I used to use =org-revert-all-org-buffers= but have since
-   discovered =global-auto-revert-mode=.  With this setting any files
-   that change on disk where there are no changes in the buffer
-   automatically revert to the on-disk version.
+I used to use =org-revert-all-org-buffers= but have since discovered
+=global-auto-revert-mode=.  With this setting any files that change on
+disk where there are no changes in the buffer automatically revert to
+the on-disk version.
 
-   This is perfect for synchronizing my org-mode files between systems.
+This is perfect for synchronizing my org-mode files between systems.
 
 #+begin_src emacs-lisp :tangle yes
   (setq global-auto-revert-mode t)
 #+end_src
 
 ** Handling Encryption
-   :PROPERTIES:
-   :CUSTOM_ID: HandlingEncryption
-   :END:
-   I used to keep my encrypted data like account passwords in a separate GPG encrypted file.
-   Now I keep them in my org-mode files with a special tag instead.
-   Encrypted data is kept in the org-mode file that it is associated with.
+:PROPERTIES:
+:CUSTOM_ID: HandlingEncryption
+:END:
+I used to keep my encrypted data like account passwords in a separate
+GPG encrypted file.  Now I keep them in my org-mode files with a
+special tag instead.  Encrypted data is kept in the org-mode file that
+it is associated with.
  
-   =org-crypt= allows you to tag headings with a special tag =crypt= and org-mode can keep
-   data in these headings encrypted when saved to disk.  You decrypt the heading temporarily 
-   when you need access to the data and org-mode re-encrypts the heading as soon as you 
-   save the file.
+=org-crypt= allows you to tag headings with a special tag =crypt= and
+org-mode can keep data in these headings encrypted when saved to disk.
+You decrypt the heading temporarily when you need access to the data
+and org-mode re-encrypts the heading as soon as you save the file.
 
-   I use the following setup for encryption:
+I use the following setup for encryption:
 #+begin_src emacs-lisp :tangle yes
   (require 'org-crypt)
   ; Encrypt all entries before saving
@@ -3236,33 +3225,35 @@ Here are the =.emacs= settings:
   (setq org-crypt-key "F0B66B40")
 #+end_src
 
-  =M-x org-decrypt-entry= will prompt for the passphrase associated
-  with your encryption key and replace the encrypted data where the
-  point is with the plaintext details for your encrypted entry.  As
-  soon as you save the file the data is re-encrypted for your key.
-  Encrypting does not require prompting for the passphrase - that's
-  only for looking at the plain text version of the data.
+=M-x org-decrypt-entry= will prompt for the passphrase associated with
+your encryption key and replace the encrypted data where the point is
+with the plaintext details for your encrypted entry.  As soon as you
+save the file the data is re-encrypted for your key.  Encrypting does
+not require prompting for the passphrase - that's only for looking at
+the plain text version of the data.
 
-  I tend to have a single encrypted entry per file (like 
-  =* Passwords=).  I prevent the =crypt= tag from using inheritance so
-  that I don't have encrypted data inside encrypted data.  I found
-  =M-x org-decrypt-entries= prompting for the passphrase to decrypt
-  data over and over again (once per entry to decrypt) too
-  inconvenient.
+I tend to have a single encrypted entry per file (like =* Passwords=).
+I prevent the =crypt= tag from using inheritance so that I don't have
+encrypted data inside encrypted data.  I found =M-x
+org-decrypt-entries= prompting for the passphrase to decrypt data over
+and over again (once per entry to decrypt) too inconvenient.
 
-  I leave my entries encrypted unless I have to look up data - I
-  decrypt on demand and then save the file again to re-encrypt the
-  data.  This keeps the data in plain text as short as possible.
+I leave my entries encrypted unless I have to look up data - I decrypt
+on demand and then save the file again to re-encrypt the data.  This
+keeps the data in plain text as short as possible.
 
 ** Speed Commands
-   There's a new and exciting feature called =org-speed-commands= in the latest development version of org-mode.
+There's a new and exciting feature called =org-speed-commands= in the
+latest development version of org-mode.
 
-   Speed commands allow access to frequently used commands when on the beginning of a headline - similar to
-   one-key agenda commands.  Speed commands are user configurable and org-mode provides a good set of
-   default commands.
+Speed commands allow access to frequently used commands when on the
+beginning of a headline - similar to one-key agenda commands.  Speed
+commands are user configurable and org-mode provides a good set of
+default commands.
 
-   I have the following speed commands set up in addition to the defaults.  I don't use priorities so
-   I override the default settings for the 1, 2, and 3 keys.
+I have the following speed commands set up in addition to the
+defaults.  I don't use priorities so I override the default settings
+for the 1, 2, and 3 keys.
 #+begin_src emacs-lisp :tangle yes
   (setq org-use-speed-commands t)
   (setq org-speed-commands-user (quote (("0" . delete-window)
@@ -3276,71 +3267,73 @@ Here are the =.emacs= settings:
                                         ("z" . org-add-note))))
 #+end_src
 
-   The variable =org-speed-commands-default= sets a lot of useful defaults for speed command keys.
-   The default keys I use the most are =I= and =O= for clocking in and out and =t= to change
-   todo state.
+The variable =org-speed-commands-default= sets a lot of useful
+defaults for speed command keys.  The default keys I use the most are
+=I= and =O= for clocking in and out and =t= to change todo state.
 ** Org Protocol
-   [[http://orgmode.org/worg/org-contrib/org-protocol.php][Org protocol]] is a great way to create capture notes in org-mode from other applications.
-   I use this to create tasks to review interesting web pages I visit in Firefox.
+[[http://orgmode.org/worg/org-contrib/org-protocol.php][Org protocol]] is a great way to create capture notes in org-mode from
+other applications.  I use this to create tasks to review interesting
+web pages I visit in Firefox.
 
-   I have a special capture template set up for org-protocol to use (set up with the =w= key).
+I have a special capture template set up for org-protocol to use (set
+up with the =w= key).
 
-   My org-mode setup for org-protocol is really simple.  It enables org-protocol and creates a 
-   single org-protocol capture template as described in [[id:9507648b-dbfc-4ba1-96c2-36e8ba15cbd0][Capture Templates]].
+My org-mode setup for org-protocol is really simple.  It enables
+org-protocol and creates a single org-protocol capture template as
+described in [[id:9507648b-dbfc-4ba1-96c2-36e8ba15cbd0][Capture Templates]].
 #+begin_src emacs-lisp :tangle yes
   (require 'org-protocol)
 #+end_src
-   The bulk of the setup is in the Firefox application so that C-M-r on a page in Firefox will 
-   trigger the org-protocol capture template with details of the page I'm currently viewing
-   in firefox.
+The bulk of the setup is in the Firefox application so that C-M-r on a
+page in Firefox will trigger the org-protocol capture template with
+details of the page I'm currently viewing in firefox.
 
-   I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
+I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
 ** Add final newline when saving files
-   #+begin_src emacs-lisp :tangle yes
-     (setq require-final-newline t)
-   #+end_src
+#+begin_src emacs-lisp :tangle yes
+  (setq require-final-newline t)
+#+end_src
    
 ** Insert inactive timestamps
-   I insert inactive timestamps when working on org-mode files.
-   Normally I use this to track when a task was created.
+I insert inactive timestamps when working on org-mode files.  Normally
+I use this to track when a task was created.
 
-   For capture tasks the timestamp is in the capture template but
-   for regular structure editing I normally want a clean outline
-   without timestamps.  I find this easier to work with when
-   brainstorming and generating the outline structure for a project.
-   For this reason I've turned off the hook I used to use to
-   automatically insert a timestamp when creating headlines.
+For capture tasks the timestamp is in the capture template but for
+regular structure editing I normally want a clean outline without
+timestamps.  I find this easier to work with when brainstorming and
+generating the outline structure for a project.  For this reason I've
+turned off the hook I used to use to automatically insert a timestamp
+when creating headlines.
 
-   I have the following function bound to the key sequence =f9 t= to
-   insert an inactive timestamp in the text on demand.
+I have the following function bound to the key sequence =f9 t= to
+insert an inactive timestamp in the text on demand.
 
-   #+begin_src emacs-lisp :tangle yes
-     (defun bh/insert-inactive-timestamp ()
-       (interactive)
-       (org-insert-time-stamp nil t t nil nil nil))
-     
-     (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
-   #+end_src
+#+begin_src emacs-lisp :tangle yes
+  (defun bh/insert-inactive-timestamp ()
+    (interactive)
+    (org-insert-time-stamp nil t t nil nil nil))
+  
+  (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
+#+end_src
 
 ** Return follows links
-   The following setting make =RET= open links instead of inserting a
-   new line.  This setting is a love-hate relationship for me.  When
-   it first came out I immediately turned it off because I wanted to
-   insert new lines in front of my links and =RET= would open the link
-   instead which at the time I found extremely annoying.  Now I've
-   trained my fingers to do =C-o= instead for opening the line above
-   the link.  I find I'm hitting =RET= to visit links a lot more than
-   opening lines before the link - so retraining my fingers was the
-   right move for me.
+The following setting make =RET= open links instead of inserting a new
+line.  This setting is a love-hate relationship for me.  When it first
+came out I immediately turned it off because I wanted to insert new
+lines in front of my links and =RET= would open the link instead which
+at the time I found extremely annoying.  Now I've trained my fingers
+to do =C-o= instead for opening the line above the link.  I find I'm
+hitting =RET= to visit links a lot more than opening lines before the
+link - so retraining my fingers was the right move for me.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-return-follows-link t)
 #+end_src
 
 ** Highlight clock when running overtime
-   The current clocking task is displayed on the modeline.
-   If this has an estimated time and we run over the limit I make this
-   stand out on the modeline by changing the background to red as follows
+The current clocking task is displayed on the modeline.  If this has
+an estimated time and we run over the limit I make this stand out on
+the modeline by changing the background to red as follows
 
 #+begin_src emacs-lisp :tangle yes
   (custom-set-faces
@@ -3352,20 +3345,22 @@ Here are the =.emacs= settings:
 #+end_src
 
 ** Meeting Notes
-   I take meeting notes with org-mode.  I record meeting conversations in
-   point-form using org-mode lists.  If action items are decided on in the
-   meeting I'll denote them with a bullet and a TODO: or DONE: flag.
+I take meeting notes with org-mode.  I record meeting conversations in
+point-form using org-mode lists.  If action items are decided on in
+the meeting I'll denote them with a bullet and a TODO: or DONE: flag.
 
-   A meeting is a task and it is complete when the meeting is over.  The body
-   of the task records all of the interesting meeting details.  If TODO items
-   are created in the meeting I make separate TODO tasks from those.
+A meeting is a task and it is complete when the meeting is over.  The
+body of the task records all of the interesting meeting details.  If
+TODO items are created in the meeting I make separate TODO tasks from
+those.
 
-   I use the function =bh/prepare-meeting-notes= to prepare the
-   meeting notes for emailing to the participants (in a fixed-width
-   font like "Courier New").  As soon as the meeting is over the notes are 
-   basically ready for distribution -- there's not need to waste lots of
-   time rewriting the minutes before they go out.  I haven't bothered
-   with fancy HTML output -- the content is more important than the style.
+I use the function =bh/prepare-meeting-notes= to prepare the meeting
+notes for emailing to the participants (in a fixed-width font like
+"Courier New").  As soon as the meeting is over the notes are
+basically ready for distribution -- there's not need to waste lots of
+time rewriting the minutes before they go out.  I haven't bothered
+with fancy HTML output -- the content is more important than the
+style.
 
    
 : ** TODO Sample Meeting
@@ -3406,9 +3401,10 @@ Here are the =.emacs= settings:
 :        - needs more work
 : >>>>>>>> DONE: everything
 
-   Here is the formatting function.  Just highlight the region for the notes
-   and it turns tabs into spaces, and highlights todo items.  The resulting
-   notes are in the kill buffer ready to paste to another application.
+Here is the formatting function.  Just highlight the region for the
+notes and it turns tabs into spaces, and highlights todo items.  The
+resulting notes are in the kill buffer ready to paste to another
+application.
 
 #+begin_src emacs-lisp :tangle yes
   (defun bh/prepare-meeting-notes ()
@@ -3428,93 +3424,93 @@ Here are the =.emacs= settings:
 #+end_src
 
 ** Highlights persist after changes
-   I'm finding I use org-occur =C-c / /= a lot when trying to 
-   find details in my org-files.  The following setting keeps
-   the highlighted results of the search even after modifying 
-   the text.  This allows me to edit the file without having
-   to reissue the org-occur command to find the other matches
-   in my file.
+I'm finding I use org-occur =C-c / /= a lot when trying to find
+details in my org-files.  The following setting keeps the highlighted
+results of the search even after modifying the text.  This allows me
+to edit the file without having to reissue the org-occur command to
+find the other matches in my file.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-remove-highlights-with-change nil)
 #+end_src
 
 ** Getting up to date org-mode info documentation
-   :PROPERTIES:
-   :CUSTOM_ID: InfoDocumentation
-   :END:
-   I use the org-mode info documentation from the git repository
-   so I set up emacs to find the info files from git before the
-   regular (out of date) system versions.
+:PROPERTIES:
+:CUSTOM_ID: InfoDocumentation
+:END:
+I use the org-mode info documentation from the git repository so I set
+up emacs to find the info files from git before the regular (out of
+date) system versions.
 
 #+begin_src emacs-lisp :tangle yes
   (add-to-list 'Info-default-directory-list "~/git/org-mode/doc")
 #+end_src
 
 ** Turn off prefer future dates
-   By default org-mode prefers dates in the future.  This means that
-   if today's date is May 23 and you enter a date for May 21st (2 days
-   ago) org-mode will jump to May 21st next year.  I find this
-   annoying when I want to look at what happened last Wednesday since
-   I have to specify the year.
+By default org-mode prefers dates in the future.  This means that if
+today's date is May 23 and you enter a date for May 21st (2 days ago)
+org-mode will jump to May 21st next year.  I find this annoying when I
+want to look at what happened last Wednesday since I have to specify
+the year.
 
-   To make org-mode prefer the current year when entering dates I set
-   the following variable:
-   #+begin_src emacs-lisp :tangle yes
-     (setq org-read-date-prefer-future nil)
-   #+end_src
+To make org-mode prefer the current year when entering dates I set
+the following variable:
+#+begin_src emacs-lisp :tangle yes
+  (setq org-read-date-prefer-future nil)
+#+end_src
    
 ** Automatically change list bullets
-   I take point-form notes during meetings.  Having the same
-   list bullet for every list level makes it hard to read
-   the details when lists are indented more than 3 levels.
+I take point-form notes during meetings.  Having the same list bullet
+for every list level makes it hard to read the details when lists are
+indented more than 3 levels.
 
-   Org-mode has a way to automatically change the list bullets
-   when you change list levels.
+Org-mode has a way to automatically change the list bullets when you
+change list levels.
 
-   | Current List Bullet | Next indented list bullet |
-   |---------------------+---------------------------|
-   | +                   | -                         |
-   | *                   | -                         |
-   | 1.                  | -                         |
-   | 1)                  | -                         | 
+| Current List Bullet | Next indented list bullet |
+|---------------------+---------------------------|
+| +                   | -                         |
+| *                   | -                         |
+| 1.                  | -                         |
+| 1)                  | -                         |
 
-   #+begin_src emacs-lisp :tangle yes
-     (setq org-list-demote-modify-bullet (quote (("+" . "-")
-                                                 ("*" . "-")
-                                                 ("1." . "-")
-                                                 ("1)" . "-"))))
-   #+end_src
+#+begin_src emacs-lisp :tangle yes
+  (setq org-list-demote-modify-bullet (quote (("+" . "-")
+                                              ("*" . "-")
+                                              ("1." . "-")
+                                              ("1)" . "-"))))
+#+end_src
    
 * Things I Don't Use
-  This is a partial list of things I know about but do not use.
-  =org-mode= is huge with tons of features.  There are features out there
-  that I don't know about yet or haven't explored so this list is not
-  going to be complete.
+This is a partial list of things I know about but do not use.
+=org-mode= is huge with tons of features.  There are features out
+there that I don't know about yet or haven't explored so this list is
+not going to be complete.
 ** Task Priorities
-   I use the agenda to figure out what to do work on next.  I don't
-   use priorities at all.  I've played with them in the past and
-   always go back to using no priorities.
+I use the agenda to figure out what to do work on next.  I don't use
+priorities at all.  I've played with them in the past and always go
+back to using no priorities.
 
-   I disable the priority setting keys in org-mode using
+I disable the priority setting keys in org-mode using
 #+begin_src emacs-lisp :tangle yes
   (setq org-enable-priority-commands nil)
 #+end_src
 
 ** Archive Sibling
-   This was a cute idea but I find archiving entire complete subtrees better.  I don't mind
-   having a bunch of tasks marked =DONE= (but not archived)
+This was a cute idea but I find archiving entire complete subtrees
+better.  I don't mind having a bunch of tasks marked =DONE= (but not
+archived)
    
 ** Cycling plain lists
-    Org mode can fold (cycle) plain lists.  I don't use this feature.
+Org mode can fold (cycle) plain lists.  I don't use this feature.
 #+begin_src emacs-lisp :tangle yes
   (setq org-cycle-include-plain-lists nil)
 #+end_src
 
 ** Strike-through emphasis
-   Strike-through emphasis is just unreadable and tends to only show up when pasting
-   data from other files into org-mode.  This just removes the strike-through completely
-   which I find a lot nicer.
+Strike-through emphasis is just unreadable and tends to only show up
+when pasting data from other files into org-mode.  This just removes
+the strike-through completely which I find a lot nicer.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>")
@@ -3525,53 +3521,55 @@ Here are the =.emacs= settings:
 #+end_src
 
 * Using Git for Automatic History, Backups, and Synchronization
-  :PROPERTIES:
-  :CUSTOM_ID: GitSync
-  :END:
-  Editing folded regions of your org-mode file can be hazardous to
-  your data.  My method for dealing with this is to put my org files
-  in a =Git= source repository.
+:PROPERTIES:
+:CUSTOM_ID: GitSync
+:END:
+Editing folded regions of your org-mode file can be hazardous to your
+data.  My method for dealing with this is to put my org files in a
+=Git= source repository.
   
-  My setup saves all of my org-files every hour and creates a commit
-  with my changes automatically.  This lets me go back in time and
-  view the state of my org files for any given hour over the lifetime
-  of the document.  I've used this once or twice to recover data I
-  accidentally removed while editing folded regions.
+My setup saves all of my org-files every hour and creates a commit
+with my changes automatically.  This lets me go back in time and view
+the state of my org files for any given hour over the lifetime of the
+document.  I've used this once or twice to recover data I accidentally
+removed while editing folded regions.
 
 ** Automatic Hourly Commits
 
-   My Emacs setup saves all org buffers at 1 minute before the hour using the following code in my =.emacs=
+My Emacs setup saves all org buffers at 1 minute before the hour using
+the following code in my =.emacs=
 
 #+begin_src emacs-lisp :tangle yes
   (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 #+end_src
 
-   A =cron= job runs at the top of the hour to commit any changes just
-   saved by the call to =org-save-all-org-buffers= above.  I use a
-   script to create the commits so that I can run it on demand to
-   easily commit all modified work when moving from one machine to another.
+A =cron= job runs at the top of the hour to commit any changes just
+saved by the call to =org-save-all-org-buffers= above.  I use a script
+to create the commits so that I can run it on demand to easily commit
+all modified work when moving from one machine to another.
 
-   =crontab= details:
+=crontab= details:
 #+begin_example 
   0 * * * * ~/bin/org-git-sync.sh >/dev/null
 #+end_example
 
 *** ~/bin/org-git-sync.sh
-    Here is the shell script I use to create a =git= commit for each of my org-repositories.
-    This loops through multiple repositories and commits any modified files.
-    I have the following org-mode repositories:
+Here is the shell script I use to create a =git= commit for each of my
+org-repositories.  This loops through multiple repositories and
+commits any modified files.  I have the following org-mode
+repositories:
 
-    - org 
+- org 
 
-      for all of my organization project files and todo lists
+  for all of my organization project files and todo lists
 
-    - doc-norang.ca
+- doc-norang.ca
 
-      for any changes to documents under http://doc.norang.ca/
+  for any changes to documents under http://doc.norang.ca/
 
-    - www.norang.ca
+- www.norang.ca
 
-      for any changes to my other website http://www.norang.ca/
+  for any changes to my other website http://www.norang.ca/
 
 This script does not create empty commits - =git= only creates a commit
 if something was modified.
@@ -3590,7 +3588,7 @@ if something was modified.
       git add . >/dev/null 2>&1
       git commit -m "$(date)"
   done
-#+end_src sh
+#+end_src
 
 I use the following =.gitignore= file in my org-mode =git=
 repositories to keep export generated files out of my =git=
@@ -3619,65 +3617,64 @@ produced by ditaa during export)
   ,*.toc
 #+end_example
 ** Git - Edit files with confidence
-   I use =git= in all of my directories where editing a file should be
-   tracked.
+I use =git= in all of my directories where editing a file should be
+tracked.
 
-   This means I can edit files with confidence.  I'm free to change
-   stuff and break things because it won't matter.  It's easy to go
-   back to a previous working version or to see exactly what changed
-   since the last commit.  This is great when editing configuration
-   files (such as apache webserver, bind9 DNS configurations, etc.)
+This means I can edit files with confidence.  I'm free to change stuff
+and break things because it won't matter.  It's easy to go back to a
+previous working version or to see exactly what changed since the last
+commit.  This is great when editing configuration files (such as
+apache webserver, bind9 DNS configurations, etc.)
 
-   I find this extremely useful where your edits might break things
-   and having =git= tracking the changes means if you break it you can
-   just go back to the previous working version easily.  This is also
-   true for package upgrades for software where the upgrade modifies
-   the configuration files.
+I find this extremely useful where your edits might break things and
+having =git= tracking the changes means if you break it you can just
+go back to the previous working version easily.  This is also true for
+package upgrades for software where the upgrade modifies the
+configuration files.
 
-   I have every version of my edits in a local =git= repository.
+I have every version of my edits in a local =git= repository.
 
 ** Git Repository synchronization
-   :PROPERTIES:
-   :CUSTOM_ID: git-sync
-   :END:
-   I acquired a Eee PC 1000 HE which now serves as my main
-   road-warrior laptop replacing my 6 year old Toshiba Tecra S1.
+:PROPERTIES:
+:CUSTOM_ID: git-sync
+:END:
+I acquired a Eee PC 1000 HE which now serves as my main road-warrior
+laptop replacing my 6 year old Toshiba Tecra S1.
 
-   I have a server on my LAN that hosts bare git repositories for all
-   of my projects.  The problem I was facing is I have to leave in 5
-   minutes and want to make sure I have up-to-date copies of
-   everything I work on when I take it on the road (without Internet
-   access).
+I have a server on my LAN that hosts bare git repositories for all of
+my projects.  The problem I was facing is I have to leave in 5 minutes
+and want to make sure I have up-to-date copies of everything I work on
+when I take it on the road (without Internet access).
 
-   To solve this I use a server with bare git repositories on it.
-   This includes my org-mode repositories as well as any other git
-   repositories I'm interested in.
+To solve this I use a server with bare git repositories on it.  This
+includes my org-mode repositories as well as any other git
+repositories I'm interested in.
    
-   Just before I leave I run the =git-sync= script on my workstation
-   to update the bare git repositories and then I run it again on my
-   Eee PC to update all my local repositories on the laptop.  For any
-   repositories that give errors due to non-fast-forward merges I
-   manually merge as required and rerun =git-sync= until it reports no
-   errors.  This normally takes a minute to two to do.  Then I grab my
-   Eee PC and leave.  When I'm on the road I have full up-to-date
-   history of all my git repositories.
+Just before I leave I run the =git-sync= script on my workstation to
+update the bare git repositories and then I run it again on my Eee PC
+to update all my local repositories on the laptop.  For any
+repositories that give errors due to non-fast-forward merges I
+manually merge as required and rerun =git-sync= until it reports no
+errors.  This normally takes a minute to two to do.  Then I grab my
+Eee PC and leave.  When I'm on the road I have full up-to-date history
+of all my git repositories.
 
-   The =git-sync= script replaces my previous scripts with an
-   all-in-one tool that basically does this:
+The =git-sync= script replaces my previous scripts with an all-in-one
+tool that basically does this:
 
-   - for each repository on the current system
-     - fetch objects from the remote
-     - for each branch that tracks a remote branch
-       - Check if the ref can be moved
-	 - fast-forwards if behind the remote repository and is fast-forwardable
-	 - Does nothing if ref is up to date
-	 - Pushes ref to remote repository if ref is ahead of remote repository and fast-forwardable
-	 - Fails if ref and remote have diverged
+- for each repository on the current system
+  - fetch objects from the remote
+  - for each branch that tracks a remote branch
+    - Check if the ref can be moved
+      - fast-forwards if behind the remote repository and is fast-forwardable
+      - Does nothing if ref is up to date
+      - Pushes ref to remote repository if ref is ahead of remote repository and fast-forwardable
+      - Fails if ref and remote have diverged
 
-   This automatically advances changes on my 35+ git repositories with 
-   minimal manual intervention.  The only time I need to manually 
-   do something in a repository is when I make changes on my Eee PC and
-   my workstation at the same time - so that a merge is required.
+This automatically advances changes on my 35+ git repositories with
+minimal manual intervention.  The only time I need to manually do
+something in a repository is when I make changes on my Eee PC and my
+workstation at the same time - so that a merge is required.
 
 Here is the =git-sync= script
 #+begin_src sh
@@ -3797,7 +3794,7 @@ Here is the =git-sync= script
 #+end_src
 
 * Change History - What's new
-  This document is created using the publishing features of
+This document is created using the publishing features of
 #+begin_src emacs-lisp :results output :exports results
 (org-version)
 #+end_src
@@ -3805,7 +3802,7 @@ Here is the =git-sync= script
 #+results:
 : Org-mode version 7.01trans (release_7.01h.356.gcbc81)
 
-  with
+with
 
 #+begin_src emacs-lisp :results output :exports results
 (org-version)
@@ -3816,10 +3813,10 @@ Here is the =git-sync= script
 : GNU Emacs 23.2.1 (i486-pc-linux-gnu, GTK+ Version 2.20.0)
 :  of 2010-08-14 on raven, modified by Debian
 
-  The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
-  [[http://doc.norang.ca/org-mode.org][plain text org file]].
+The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
+[[http://doc.norang.ca/org-mode.org][plain text org file]].
 
-  I try to update this document about once a month.
+I try to update this document about once a month.
 
-  The change history for this document can be found at
-  [[http://git.norang.ca/?p%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
+The change history for this document can be found at
+[[http://git.norang.ca/?p%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
