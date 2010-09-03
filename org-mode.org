@@ -84,7 +84,6 @@ speed up creation of standard text blocks in most editing modes.
               ;; yasnippet
               (make-variable-buffer-local 'yas/trigger-key)
               (setq yas/trigger-key [tab])
-              (define-key yas/keymap [tab] 'yas/next-field-group)
               ;; flyspell mode to spell check everywhere
               (flyspell-mode 1)))
 #+end_src
@@ -2341,7 +2340,6 @@ in my =~/.emacs.d/plugins= directory, renamed =yasnippet0.5.10= to
               ;; yasnippet
               (make-variable-buffer-local 'yas/trigger-key)
               (setq yas/trigger-key [tab])
-              (define-key yas/keymap [tab] 'yas/next-field-group)
               ;; flyspell mode to spell check everywhere
               (flyspell-mode 1)))
 #+end_src
