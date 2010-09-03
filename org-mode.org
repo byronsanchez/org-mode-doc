@@ -78,14 +78,16 @@ creating documents with spelling errors.  =yasnippets= are enabled to
 speed up creation of standard text blocks in most editing modes.
 
 #+begin_src emacs-lisp :tangle yes
-  ;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
+  ;; Make TAB the yas trigger key in the org-mode-hook and enable flyspell mode and autofill
   (add-hook 'org-mode-hook
             (lambda ()
               ;; yasnippet
               (make-variable-buffer-local 'yas/trigger-key)
-              (setq yas/trigger-key [tab])
-              ;; flyspell mode to spell check everywhere
-              (flyspell-mode 1)))
+              (org-set-local 'yas/trigger-key [tab])
+              ;; flyspell mode for spell checking everywhere
+              (flyspell-mode 1)
+              ;; auto-fill mode on
+              (auto-fill-mode 1)))
 #+end_src
 
 ** Organizing Your Life Into Org Files
@@ -2334,14 +2336,16 @@ in my =~/.emacs.d/plugins= directory, renamed =yasnippet0.5.10= to
   (yas/initialize)
   (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
   
-  ;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
+  ;; Make TAB the yas trigger key in the org-mode-hook and enable flyspell mode and autofill
   (add-hook 'org-mode-hook
             (lambda ()
               ;; yasnippet
               (make-variable-buffer-local 'yas/trigger-key)
-              (setq yas/trigger-key [tab])
-              ;; flyspell mode to spell check everywhere
-              (flyspell-mode 1)))
+              (org-set-local 'yas/trigger-key [tab])
+              ;; flyspell mode for spell checking everywhere
+              (flyspell-mode 1)
+              ;; auto-fill mode on
+              (auto-fill-mode 1)))
 #+end_src
 
 Here is the definition for the =block= snippet:
