@@ -1754,6 +1754,9 @@ spend lots of time trying to find what needs to be worked on next.
 
 This works for me.  You're mileage may vary ;)
 ** Project definition and finding stuck projects
+:PROPERTIES:
+:CUSTOM_ID: Projects
+:END:
 I'm using a new lazy project definition to mark tasks as projects.
 This requires zero effort from me.  Any task with a subtask using a
 todo keyword is a project.  Period.
