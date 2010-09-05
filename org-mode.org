@@ -2160,6 +2160,8 @@ Here's my publishing setup:
   (setq org-export-html-style-include-default nil)
   ; Do not generate internal css formatting for HTML exports
   (setq org-export-htmlize-output-type (quote css))
+  ; Export with LaTeX fragments
+  (setq org-export-with-LaTeX-fragments t)
   
   ; List of projects
   ; norang - http://www.norang.ca/
