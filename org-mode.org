@@ -532,8 +532,8 @@ are clocked.  There are a few exceptions to this case
 
 If I clock in a task with a keyword of =TODO= it changes to =NEXT=
 otherwise the task is clocked in but the state is left alone.  This
-allows me to clock in tasks with no keyword (things like =*
-Organization=) and they never show up in my =NEXT= task lists.
+allows me to clock in tasks with no keyword (things like 
+=* Organization=) and they never show up in my =NEXT= task lists.
 
 #+begin_src emacs-lisp :tangle yes
   (defun bh/clock-in-to-next (kw)
@@ -885,7 +885,7 @@ To drop a task off the =NEXT= list simply move it back to the =TODO=
 state.
 ** Reading email, newsgroups, and conversations on IRC
 When reading email, newsgroups, and conversations on IRC I just let
-the default task (normally =Organization=) clock the time I spend on
+the default task (normally =* Organization=) clock the time I spend on
 these tasks.  To read email I go to Gnus and read everything in my
 inboxes.  If there are emails that require a response I use
 org-capture to create a new task with a heading of 'Respond to <user>'
@@ -1022,15 +1022,15 @@ I'm working on =Project X= then I can make the top-level =Project X=
 task the default and all clocked time goes on that project until I
 either punch out or change to some other default task.
 
-I now have a default =Organization= task that I use for every major
-context I clock time in.  If I am working on norang.ca tasks, then I
-set the norang.org =Organization= task as the default task.  If I'm
-working for client ABC then I set the =Organization= task in ABC.org
-as the default task etc.  This allows me to block time on my calendar
-and work on a single context for some time frame of my day, then
-totally switch to another context simply by changing my default
-clocking task.  Or course if I get interrupted in the middle of the
-day clocking in a task puts time on that task regardless of the
+I now have a default level 2 =* Organization= task that I use for
+every major context I clock time in.  If I am working on norang.ca
+tasks, then I set the norang.org =* Organization= task as the default
+task.  If I'm working for client ABC then I set the =* Organization=
+task in ABC.org as the default task etc.  This allows me to block time
+on my calendar and work on a single context for some time frame of my
+day, then totally switch to another context simply by changing my
+default clocking task.  Or course if I get interrupted in the middle
+of the day clocking in a task puts time on that task regardless of the
 context I'm supposed to be working in.
 
 This works really well for me.
