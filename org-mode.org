@@ -1030,7 +1030,7 @@ My org files are look like this:
 =todo.org=:
 : #+FILETAGS: HOME
 : ...
-: * Miscellaneous							       :misc:
+: * Miscellaneous						       :misc:
 : ** Organization
 : ...
 
