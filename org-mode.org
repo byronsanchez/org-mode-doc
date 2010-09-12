@@ -3847,7 +3847,6 @@ This document is created using the publishing features of
 with
 
 #+begin_src emacs-lisp :results output :exports results
-(org-version)
 (emacs-version)
 #+end_src
 
