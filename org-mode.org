@@ -143,7 +143,7 @@ See [[Publishing]] for more details.
 Here is my current =org-agenda-files= setup.  It is shown above
 formatted as a =setq= for clarity but in reality this is saved in my
 custom.el file.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-agenda-files (quote ("~/git/org/refile.org"
                                  "~/git/org/gsoc2009.org"
                                  "~/git/org/farm.org"
