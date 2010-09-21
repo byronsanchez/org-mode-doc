@@ -4,7 +4,7 @@
 #+EMAIL: bernt@norang.ca
 #+OPTIONS:   H:3 num:t   toc:2 \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
-#+OPTIONS:   author:t creator:nil timestamp:t
+#+OPTIONS:   author:t creator:nil timestamp:t email:t
 #+DESCRIPTION: A description of how I currently use org-mode
 #+KEYWORDS:  org-mode Emacs organization GTD getting-things-done git
 #+SEQ_TODO: UNFINISHED COMPLETE
@@ -3492,10 +3492,10 @@ date) system versions.
 
 ** Turn off prefer future dates
 By default org-mode prefers dates in the future.  This means that if
-today's date is May 23 and you enter a date for May 21st (2 days ago)
-org-mode will jump to May 21st next year.  I find this annoying when I
-want to look at what happened last Wednesday since I have to specify
-the year.
+today's date is May 2 and you enter a date for April 30th (2 days ago)
+org-mode will jump to April 30th of next year.  I find this annoying
+when I want to look at what happened last Friday since I have to
+specify the year.
 
 To make org-mode prefer the current year when entering dates I set
 the following variable:
