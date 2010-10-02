@@ -1872,6 +1872,14 @@ y SPC= to archive the current task and display the next candidate
 task.  Then I'm back to =n SPC= if I'm skipping this next candidate
 task or =a y SPC= to archive it.  Rinse and repeat.
 
+I actually use a keyboard macro to do the archiving to save a few
+keystrokes.  In the agenda view when I find the first task to archive
+I do =C-x ( a y SPC C-x )=.  For the next task to archive I just do
+=C-x e= to repeat the macro and if there are multiple adjacent tasks
+to archive I just hit =e= again for each sequential task to archive to
+repeat the archive macro.  I still use =n SPC= to skip over tasks that
+should not be archived.
+
 I used to archive by visiting one file at a time and doing a tags
 match for LEVEL=2 -- using the agenda does all of my files in
 org-agenda-files much more efficiently.
@@ -1897,9 +1905,9 @@ I need to see the gory details (like a huge table of data related to
 the task) but normally I don't need that information displayed.
 ** When to Archive
 Archiving monthly works well for me.  I keep completed tasks around
-for a month or two before archiving them.  This keeps clocking
-information for the last 30 to 60 days out of the archives.  This
-keeps my files that contribute to the agenda fairly current (this
+for at least two months before archiving them.  This keeps current
+clocking information for the last 30 to 60 days out of the archives.
+This keeps my files that contribute to the agenda fairly current (this
 month, and last month, and anything that is unfinished).  I only
 rarely visit tasks in the archive when I need to pull up ancient
 history for something.
