@@ -2178,7 +2178,6 @@ Here's my publishing setup:
                  :publishing-function org-publish-org-to-html
                  :style-include-default nil
                  :section-numbers nil
-                 :table-of-contents nil
                  :style "<link rel=\"stylesheet\" href=\"norang.css\" type=\"text/css\" />"
                  :author-info nil
                  :creator-info nil)
