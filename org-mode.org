@@ -3547,7 +3547,22 @@ org-mode source buffer and the exported document.
 
 See this [[#git-sync][Git Repository synchronization]] in this document for an example..
  
+** Agenda persistent filters
+This is a great feature!  Persistent agenda filters means if you limit
+a search with =/ TAB SomeTag= the agenda remembers this filter until
+you change it.
 
+Enable persistent filters with the following variable
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-agenda-persistent-filter t)
+#+end_src
+
+The current filter is displayed in the modeline as ={+SomeTag}= so you
+can easily see what filter currently applies to your agenda view.
+
+I use this with =FILETAGS= to limit the displayed results to a single
+client or context.
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
