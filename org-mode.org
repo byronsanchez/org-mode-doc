@@ -3522,7 +3522,7 @@ change list levels.
                                               ("1." . "-")
                                               ("1)" . "-"))))
 #+end_src
-   
+
 ** Remove indentation on agenda tags view
 I don't like the indented view for sublevels on a tags match in the
 agenda but I want to see all matching tasks (including sublevels) when
@@ -3533,6 +3533,20 @@ in the agenda set the following variable:
 #+begin_src emacs-lisp :tangle yes
   (setq org-tags-match-list-sublevels t)
 #+end_src
+   
+** Fontify source blocks natively
+I use babel for including source blocks in my documents with
+
+: #+begin_src LANG
+:   ...
+: #+end_src
+
+where LANG specifies the language to use (ditaa, dot, sh, emacs-lisp,
+etc)  This displays the language contents fontified in both the
+org-mode source buffer and the exported document.
+
+See this [[#git-sync][Git Repository synchronization]] in this document for an example..
+ 
 
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
@@ -3730,6 +3744,7 @@ something in a repository is when I make changes on my Eee PC and my
 workstation at the same time - so that a merge is required.
 
 Here is the =git-sync= script
+
 #+begin_src sh
   #!/bin/sh
   #
