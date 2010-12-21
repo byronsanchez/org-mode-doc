@@ -2819,6 +2819,20 @@ To make org show leading stars use
 #+begin_src emacs-lisp :tangle yes 
   (setq org-hide-leading-stars nil)
 #+end_src
+*** org-indent mode
+I recently started using org-indent mode.  I like this setting a lot.
+It removes the indentation in the org-file but displays it as if it
+was indented while you are working on the org file buffer.
+
+org-indent mode displays as if org-odd-levels-only is true but it has
+a really clean look that I prefer over my old setup.
+
+I have org-indent mode on by default at startup with the following
+setting:
+#+begin_src emacs-lisp :tangle yes
+(setq org-startup-indented t)
+#+end_src
+
 *** Show headings at odd levels only or odd-even levels
 I've converted my files between odd-levels-only and odd-even using the
 functions =org-convert-to-odd-levels= and
