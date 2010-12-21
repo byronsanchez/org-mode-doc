@@ -3523,6 +3523,17 @@ change list levels.
                                               ("1)" . "-"))))
 #+end_src
    
+** Remove indentation on agenda tags view
+I don't like the indented view for sublevels on a tags match in the
+agenda but I want to see all matching tasks (including sublevels) when
+I do a agenda tag search (=F12 m=).
+
+To make all of the matched headings for a tag show at the same level
+in the agenda set the following variable:
+#+begin_src emacs-lisp :tangle yes
+  (setq org-tags-match-list-sublevels t)
+#+end_src
+
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
