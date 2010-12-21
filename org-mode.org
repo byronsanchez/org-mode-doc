@@ -1074,11 +1074,7 @@ I have the following org-mode settings for clocking:
   (defun bh/clock-in ()
     (interactive)
     (setq bh/keep-clock-running t)
-    (if (marker-buffer org-clock-default-task)
-        (unless (org-clock-is-active)
-          (bh/clock-in-default-task))
-      (unless (marker-buffer org-clock-default-task)
-        (org-agenda nil "c"))))
+    (org-agenda nil "c"))
   
   (defun bh/clock-out ()
     (interactive)
