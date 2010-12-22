@@ -814,7 +814,7 @@ Custom agenda views are used for:
                   (org-agenda-overriding-header "Other Non-Project Tasks")))
                 ("A" "Tasks to be Archived" tags "LEVEL=2-REFILE/DONE|CANCELLED"
                  ((org-agenda-overriding-header "Tasks to Archive")))
-                ("h" "Habits" tags "STYLE=\"habit\""
+                ("h" "Habits" tags-todo "STYLE=\"habit\""
                  ((org-agenda-todo-ignore-with-date nil)
                   (org-agenda-todo-ignore-scheduled nil)
                   (org-agenda-todo-ignore-deadlines nil)
