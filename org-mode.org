@@ -189,7 +189,8 @@ Here are some examples of my level 1 headings in
 - Miscellaneous
 - Lawn and Garden
 
-  =norang.org=:
+
+=norang.org=:
 
 - System Maintenance
 - Payroll
@@ -238,8 +239,8 @@ I have the following custom key bindings set up for my emacs (sorted by frequenc
 | F12     | Agenda (1 key less than C-c a)                  | Very Often |
 | C-c b   | Switch to org file                              | Very Often |
 | C-F11   | Clock in a task (show menu with prefix)         | Very Often |
+| C-M-r   | Capture a task                                  | Very Often |
 | f9 g    | Gnus - I live in gnus                           | Often      |
-| C-M-r   | Capture a task                                  | Often      |
 | F11     | Goto currently clocked item                     | Often      |
 | f5      | Show todo items for this subtree                | Often      |
 | S-f5    | Widen                                           | Often      |
