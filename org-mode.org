@@ -822,6 +822,17 @@ Custom agenda views are used for:
                   (org-agenda-overriding-header "Set default clocking task with C-u C-u I"))))))
 #+end_src
 
+When searching for tasks in the agenda I disable display of child
+tasks with the following setting:
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-tags-match-list-sublevels nil)
+#+end_src
+
+This keeps the list of tasks I'm looking at to a reasonable size.  I
+can always display child tasks for any specific task I want simply by
+visiting it in the org buffer.
+
 My day goes generally like this:
 
 - Punch in (start the clock)
