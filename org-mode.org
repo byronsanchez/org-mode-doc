@@ -2304,6 +2304,14 @@ other people by simply giving them the link to the appropriate site.
 All I need to remember to do is edit the appropriate org file and
 publish it with C-S-F12 -- not exactly hard :)
 
+** Miscellaneous Export Settings
+For export to latex I use the following setting to get fontified
+listings from source blocks:
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-export-latex-listings t)
+#+end_src
+
 * Reminders
   :PROPERTIES:
   :CUSTOM_ID: Reminders
