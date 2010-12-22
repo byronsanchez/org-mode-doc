@@ -297,12 +297,18 @@ Here is the keybinding setup in lisp:
   (global-set-key (kbd "<f9> I") 'bh/clock-in)
   (global-set-key (kbd "<f9> O") 'bh/clock-out)
   (global-set-key (kbd "<f9> r") 'boxquote-region)
-  (global-set-key (kbd "<f9> s") 'bh/go-to-scratch)
+  (global-set-key (kbd "<f9> s") 'bh/switch-to-org-scratch)
   
-  (defun bh/go-to-scratch ()
+  (defun bh/switch-to-org-scratch ()
+    "Switch to a temp Org buffer.
+  If the region is active, insert it."
     (interactive)
-    (switch-to-buffer "*scratch*")
-    (delete-other-windows))
+    (let ((contents
+           (and (region-active-p)
+                (buffer-substring (region-beginning)
+                                  (region-end)))))
+      (find-file "/tmp/org-scratch.org")
+      (if contents (insert contents))))
   
   (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
   (global-set-key (kbd "<f9> u") 'bh/untabify)
