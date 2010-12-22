@@ -3617,6 +3617,15 @@ the strike-through completely which I find a lot nicer.
                                    ("~" org-verbatim "<code>" "</code>" verbatim))))
 #+end_src
 
+** Subscripts and Superscripts
+I don't currently write documents that need subscripts and superscript
+support.  I disable handling of =_= and =^= for subscript and
+superscripts with
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-use-sub-superscripts nil)
+#+end_src
+
 * Using Git for Automatic History, Backups, and Synchronization
 :PROPERTIES:
 :CUSTOM_ID: GitSync
