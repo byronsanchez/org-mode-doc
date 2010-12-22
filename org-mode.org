@@ -485,6 +485,9 @@ cycles through the todo states but skips setting timestamps and
 entering notes which is very convenient when all you want to do is fix
 up the status of an entry.
 ** ToDo state triggers
+:PROPERTIES:
+:CUSTOM_ID: ToDoStateTriggers
+:END:
 I have a few triggers that automatically assign tags to tasks based on
 state changes.  If a task moves to =CANCELLED= state then it gets a
 =CANCELLED= tag.  Moving a =CANCELLED= task back to =TODO= removes the
@@ -844,6 +847,9 @@ My day goes generally like this:
 - Punch out (stop the clock)
 
 ** What do I work on next?
+:PROPERTIES:
+:CUSTOM_ID: WhatDoIWorkOnNext
+:END:
 Use the agenda view for =NEXT= tasks to find stuff in progress and
 things to clock.
 
@@ -1279,7 +1285,7 @@ Billing for clocked time basically boils down to the following steps:
 
 4. Archive complete tasks so they are out of the way.
 
-   See [[*Archiving]] for more details.
+   See [[#Archiving][Archiving]] for more details.
 *** Verify that the clock data is complete and correct
 Since I change tasks often (sometimes more than once in a minute) I
 use the following setting to remove clock entries with a zero
@@ -1575,7 +1581,7 @@ I have the following =#+FILETAGS:= entries in my org-mode files:
 
 ** Trigger Tags
 The following tags are automatically added or removed by todo state
-triggers described previously in [[*ToDo%20state%20triggers][*ToDo state triggers]]
+triggers described previously in [[#ToDoStateTriggers][ToDo state triggers]]
 
 - =WAITING=
 - =CANCELLED=
@@ -1679,8 +1685,7 @@ J. Grubbs for the bbdb lookup functions.
 * GTD stuff
 Most of my day is deadline/schedule driven.
 I work off of the agenda first and then pick items from the todo lists as
-outlined in [[*What%20do%20I%20work%20on%20next][*What do I work on next]]
-
+outlined in [[#WhatDoIWorkOnNext][What do I work on next?]]
 ** Weekly Review Process
 The first day of the week (usually Monday) I do my weekly review. 
 I keep a list like this one to remind me what needs to be done.
@@ -1800,6 +1805,9 @@ used by agenda views.
 #+end_src
 
 * Archiving
+:PROPERTIES:
+:CUSTOM_ID: Archiving
+:END:
 ** Archiving Subtrees
 My normal archiving procedure is to move entire subtrees to a separate
 archive file for the project.  Task subtrees in =FILE.org= get
