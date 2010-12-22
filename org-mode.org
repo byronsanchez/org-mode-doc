@@ -585,12 +585,13 @@ maintaining my org-capture templates when I add a new org file.
 :PROPERTIES:
 :ID:       9507648b-dbfc-4ba1-96c2-36e8ba15cbd0
 :END:
-When a new task needs to be added I categorize it into one of three
+When a new task needs to be added I categorize it into one of a few
 things:
 
 - A phone call
 - A new task
 - A new note
+- an appointment or interruption
 
 and pick the appropriate capture task.
 
@@ -602,7 +603,7 @@ Here is my setup for org-capture
   ;; I use C-M-r to start capture mode
   (global-set-key (kbd "C-M-r") 'org-capture)
   
-  ;; 3 capture templates for TODO tasks, Notes, and org-protocol (untested)
+  ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
   (setq org-capture-templates (quote (("t" "todo" entry (file "~/git/org/refile.org") "* TODO %?
     %U
     %a" :clock-in t :clock-resume t)
@@ -611,6 +612,8 @@ Here is my setup for org-capture
     %a
     :CLOCK:
     :END:" :clock-in t :clock-resume t)
+                                      ("a" "appointment" entry (file+datetree "~/git/org/diary.org") "* %?
+  %U" :clock-in t :clock-resume t)
                                       ("p" "Phone call" entry (file "~/git/org/refile.org") "* Phone %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:\n%U\n\n%?" :clock-in t :clock-resume t)
                                       ("w" "org-protocol" entry (file "~/git/org/refile.org") "* TODO Review %c
     %U" :immediate-finish t :clock-in t :clock-resume t))))
@@ -2551,7 +2554,7 @@ need to deal with them until the date approaches.
   (setq org-agenda-skip-timestamp-if-done t)
 #+end_src
 
-*** Use the Diary for Holidays only
+*** Use the Diary for Holidays and Appointments
 I don't use the emacs Diary for anything but I like seeing the
 holidays on my agenda.  This helps with planning for those days when
 you're not supposed to be working.
@@ -2560,6 +2563,10 @@ you're not supposed to be working.
   (setq org-agenda-include-diary nil)
   (setq org-agenda-diary-file "~/git/org/diary.org")
 #+end_src
+
+The diary file keeps =date-tree= entries created by the capture mode
+'appointment' template.  I use this also for miscellaneous tasks I
+want to clock during interruptions.
 
 I don't use a =~/diary= file anymore.  That is just there as a
 zero-length file to keep Emacs happy.  I use org-mode's diary
