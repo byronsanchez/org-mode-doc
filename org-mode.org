@@ -1674,6 +1674,17 @@ my default task again (if any).
 Here is my set up for phone calls.  I would like to thank Gregory
 J. Grubbs for the bbdb lookup functions.
 
+Below is the partial capture template showing the phone call template
+followed by the phone-call related lookup functions.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
+  (setq org-capture-templates (quote (...
+                                      ("p" "Phone call" entry (file "~/git/org/refile.org") "* Phone %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:\n%U\n\n%?" :clock-in t :clock-resume t)
+                                      ...
+                                      )
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
   ;;
   ;; Phone capture template handling with BBDB lookup
