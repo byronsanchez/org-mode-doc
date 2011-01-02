@@ -355,10 +355,10 @@ file just to leave my =TODO= keyword untouched in this document.
 Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-   (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
-   (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
-   (sequence "OPEN(O)" "|" "CLOSED(C)"))))
+  (setq org-todo-keywords (quote ((sequence "TODO(t!)" "NEXT(n!)" "|" "DONE(d!/!)")
+                                  (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
+                                  (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
+                                  (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
   
   (setq org-todo-keyword-faces
         (quote (("TODO"      :foreground "red"          :weight bold)
@@ -3182,11 +3182,11 @@ My logging settings are set as follows:
 
 With =org-todo-keywords= set as 
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "NEXT(n)" "WAITING(w@/!)" "SOMEDAY(s!)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
+        (quote ((sequence "TODO(t!)" "NEXT(n!)" "WAITING(w@/!)" "SOMEDAY(s!)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
                 (sequence "QUOTE(Q!)" "QUOTED(D!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
-                (sequence "OPEN(O)" "|" "CLOSED(C)"))))
+                (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
 #+end_src
 
 This adds a log entry whenever a task moves to any of the following states:
