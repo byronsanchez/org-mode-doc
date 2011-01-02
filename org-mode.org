@@ -2973,15 +2973,20 @@ and list entries if the previous entry has a blank line.
 #+end_src
 *** Adding new tasks quickly without disturbing the current task content
 To create new headings in a project file it is really convenient to
-use C-S-RET.  This inserts a new headline.  With the following setting
+use =C-RET=, =C-S-RET=, =M-RET=, and =M-S-RET=.  This inserts a new headline
+possibly with a =TODO= keyword.  With the following setting
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-insert-heading-respect-content t)
+  (setq org-insert-heading-respect-content nil)
 #+end_src
 
-Org adds the new heading after the content of the current item.  This
-lets you hit C-S-RET in the middle of an entry and the new heading is
-added after the body of the current entry.
+org inserts the heading at point for the =M-= versions and respects
+content for the =C-= versions.  The respect content setting is
+temporarily turned on for the =C-= versions which adds the new heading
+after the content of the current item.  This lets you hit =C-S-RET= in
+the middle of an entry and the new heading is added after the body of
+the current entry but still allow you to split an entry in the middle
+with =M-S-RET=.
 
 *** Notes at the top
 I enter notes for tasks with =C-c C-z= (or just =z= in the agenda).
