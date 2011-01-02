@@ -2604,6 +2604,13 @@ I include holidays from the calendar in my =todo.org= file as follows:
 : ** Some other Appointment
 :    ...
 
+I use the following setting so any time strings in the heading are
+shown in the agenda.
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-agenda-insert-diary-extract-time t)
+#+end_src
+
 *** Searches include archive files
 I keep a single archive file for each of my org-mode project files.
 This allows me to search the current file and the archive when I need
