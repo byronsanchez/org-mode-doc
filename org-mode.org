@@ -3663,6 +3663,18 @@ the agenda for flagged items.  See [[#OrgTagAlist][Tags]] for the setup of
 
 Finding flagged entries is then simple - just =F12 ?= and you get them all.
 
+** Prevent horizontal window splitting
+Emacs 23 wants to split the window both horizontally and vertically
+based on screen usage.  With today's widescreen monitors this often
+means we split the window horizontally instead of vertically.
+
+I found this change obtrusive and turn it off with the following
+setting.
+
+#+begin_src emacs-lisp :tangle yes
+  (setq split-width-threshold 9999)
+#+end_src
+
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
