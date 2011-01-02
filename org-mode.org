@@ -2364,6 +2364,16 @@ HTML to convert to ODT.
   
 #+end_src
 
+*** Allow binding variables on export without confirmation
+The following setting allows #+BIND: variables to be set on export
+without confirmation.  In rare situations where I want to override
+some org-mode variable for export this allows exporting the document
+without a prompt.
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-export-allow-BIND t)
+#+end_src
+
 * Reminders
   :PROPERTIES:
   :CUSTOM_ID: Reminders
