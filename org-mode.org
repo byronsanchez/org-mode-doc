@@ -1556,7 +1556,7 @@ be at the farm to make the call.
                               ("MARK" . ?M)
                               ("NOTE" . ?n)
                               ("CANCELLED" . ?C)
-                              ("FLAGGED" . ??)))
+                              ("FLAGGED" . ??))))
   
   ; Allow setting single tags without the menu
   (setq org-fast-tag-selection-single-key (quote expert))
