@@ -1677,7 +1677,7 @@ J. Grubbs for the bbdb lookup functions.
 Below is the partial capture template showing the phone call template
 followed by the phone-call related lookup functions.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
   (setq org-capture-templates (quote (...
                                       ("p" "Phone call" entry (file "~/git/org/refile.org") "* Phone %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:\n%U\n\n%?" :clock-in t :clock-resume t)
