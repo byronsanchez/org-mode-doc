@@ -606,18 +606,18 @@ Here is my setup for org-capture
   
   ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
   (setq org-capture-templates (quote (("t" "todo" entry (file "~/git/org/refile.org") "* TODO %?
-    %U
-    %a" :clock-in t :clock-resume t)
+  %U
+  %a" :clock-in t :clock-resume t)
                                       ("n" "note" entry (file "~/git/org/refile.org") "* %?                                                                            :NOTE:
-    %U
-    %a
-    :CLOCK:
-    :END:" :clock-in t :clock-resume t)
+  %U
+  %a
+  :CLOCK:
+  :END:" :clock-in t :clock-resume t)
                                       ("a" "appointment" entry (file+datetree "~/git/org/diary.org") "* %?
   %U" :clock-in t :clock-resume t)
                                       ("p" "Phone call" entry (file "~/git/org/refile.org") "* Phone %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:\n%U\n\n%?" :clock-in t :clock-resume t)
                                       ("w" "org-protocol" entry (file "~/git/org/refile.org") "* TODO Review %c
-    %U" :immediate-finish t :clock-in t :clock-resume t))))
+  %U" :immediate-finish t :clock-in t :clock-resume t))))
 #+end_src
 
 Capture mode now handles automatically clocking in and out of a
