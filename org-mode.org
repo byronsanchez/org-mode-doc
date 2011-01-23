@@ -3707,6 +3707,15 @@ setting.
   (setq split-width-threshold 9999)
 #+end_src
 
+** Mail links open compose-mail
+The following setting makes org-mode open =mailto:= links
+using compose-mail.
+
+#+begin_src emacs-lisp
+  (setq org-link-mailto-program (quote (compose-mail "%a" "%s")))
+#+end_src
+
+
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
