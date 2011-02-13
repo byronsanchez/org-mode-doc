@@ -536,6 +536,8 @@ The tags are used to filter tasks in the agenda views conveniently.
                  ("CANCELLED"))
                 ("NEXT"
                  ("WAITING"))
+                ("STARTED"
+                 ("WAITING"))
                 ("DONE"
                  ("WAITING")
                  ("CANCELLED")))))
