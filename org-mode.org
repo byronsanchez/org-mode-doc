@@ -361,9 +361,8 @@ Here are my =TODO= state keywords and colour settings:
   (color-theme-initialize)
   (color-theme-clarity)
   
-  (setq org-todo-keywords (quote ((sequence "TODO(t!)" "NEXT(n!)" "|" "DONE(d!/!)")
-                                  (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
-                                  (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
+  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "WAITING(w@/!)" "SOMEDAY(S!)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
+                                  (sequence "QUOTE(Q!)" "QUOTED(D!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
                                   (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
   
   (setq org-todo-keyword-faces
@@ -389,17 +388,19 @@ Normal tasks go through the sequence =TODO= -> =NEXT= -> =DONE=.
 The following diagram shows the possible state transitions for a task.
 
 #+begin_src ditaa :file task_states.png :cmdline -r -s 0.8
-     +--------+       +---------+       +--------+
-     |        |       |         |       |        |
-  +--+  TODO  +------>+  NEXT   +------>+  DONE  |
-  |  | cRED   |       |  cBLU   |       | cGRE   |
-  |  +--+-+---+       +--+---+--+       +--------+
-  |     ^ ^              ^   |
-  |     | |              |   |
-  |     | :  +------=----+   +------=------+
-  |     : +--|----=-------+                |
-  |     |    |            |                |
-  |     v    v            v                v
+     +--------+       +---------+       +---------+       +--------+
+     |        |       |         |       |         |       |        |
+  +--+  TODO  +------>+  NEXT   +------>+ STARTED +------>+  DONE  |
+  |  | cRED   |       |  cBLU   |       |  cYEL   |       | cGRE   |
+  |  +--+-+---+       +--+---+--+       +--+---+--+       +--------+
+  |     ^ ^              ^   |             ^   |
+  |     | |              |   |             |   |
+  |     | |+--------=----|-=-|-----=-------+   |
+  |     | ||             |   |               +=+
+  |     | :| +------=----+   +------=------+ |
+  |     : +--|----=-------+                | |
+  |     |  | |            |                | |
+  |     v  v v            v                v v
   |  +--+----+-+     +----+----+     +-----+-----+
   |  |         |     |         |     |           |
   |  | WAITING |     | SOMEDAY |     | CANCELLED |
@@ -908,12 +909,12 @@ today's agenda and follow this order:
   F12 n / RET
 
 *** Why keep it all on the =NEXT= list?
-I've moved to a more GTD way of doing things.  I don't have a
-=STARTED= list or todo keyword anymore.  Now I just use a =NEXT= list.
-If I clock a TODO keyword it changes to =NEXT= if that is appropriate
-automagically on clock in.  A =NEXT= task is something that is
-available to work on /now/, it was either clocked already or is the
-next logical step in some project.
+I've moved to a more GTD way of doing things.  Now I just use a =NEXT=
+list.  I have two keywords that work as NEXT todo states: NEXT and
+STARTED.  If I clock a TODO keyword it changes to =STARTED= if that is
+appropriate automagically on clock in.  A =NEXT= task is something
+that is available to work on /now/, it is the next logical step in
+some project.
 
 I used to have a special keyword =ONGOING= for things that I do a lot
 and want to clock but never really start/end.  I had a special agenda
@@ -921,16 +922,17 @@ view for =ONGOING= tasks that I would pull up to easily find the thing
 I want to clock.
 
 Since then I've moved away from using the =ONGOING= todo keyword.  If
-a task is clocked-in it automatically moves to the =NEXT= state from
-=TODO= state and shows up on the =NEXT= task list without having to
-think about it.  Having an agenda view that shows =NEXT= tasks makes
-it easy to pick the thing to clock - and I don't have to remember if I
-need to look in the =ONGOING= list or the =NEXT= list when looking for
-the task to clock-in.  The =NEXT= list is basically 'what is
-current' - stuff I worked on recently and need to finish and any task
-that moves a project forward.  I want to find the thing to work on as
-fast as I can and actually do work on it - not spend time hunting
-through my org files for the task that needs to be clocked-in.
+a task is clocked-in it automatically moves to the =STARTED= state
+from =TODO= or =NEXT= states and shows up on the =NEXT= task list
+without having to think about it.  Having an agenda view that shows
+=NEXT= tasks makes it easy to pick the thing to clock - and I don't
+have to remember if I need to look in the =ONGOING= list or the =NEXT=
+list when looking for the task to clock-in.  The =NEXT= list is
+basically 'what is current' - stuff I =STARTED= recently and need to
+finish and any task that moves a project forward.  I want to find the
+thing to work on as fast as I can and actually do work on it - not
+spend time hunting through my org files for the task that needs to be
+clocked-in.
 
 To drop a task off the =NEXT= list simply move it back to the =TODO=
 state.
@@ -1007,7 +1009,8 @@ whenever the clock would normally stop.  I found that with the default
 org-mode setup I would lose clocked minutes during the day, a minute
 here, a minute there, and that all adds up.  This is especially true
 if you write notes when moving to a DONE state - in this case the
-clock normally stops before you have composed the note.
+clock normally stops before you have composed the note -- and good
+notes take a few minutes to write.
 
 My clocking setup basically works like this:
 
@@ -1027,7 +1030,7 @@ either punch out or change to some other default task.
 I now have a default level 2 =** Organization= task that I use for
 every major context I clock time in.
 
-My org files are look like this:
+My org files look like this:
 
 =todo.org=:
 : #+FILETAGS: HOME
