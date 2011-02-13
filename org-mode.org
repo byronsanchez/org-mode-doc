@@ -783,7 +783,7 @@ Phone call tasks collect in =refile.org= and are later refiled to the
 appropriate location.  Some phone calls are billable and we want these
 tracked in the appropriate category.
 * Custom agenda views
-I have 10 custom agenda views defined.  Most of my old custom agenda
+I have 11 custom agenda views defined.  Most of my old custom agenda
 views were rendered obsolete when filtering functionality was added to
 the agenda in newer versions of =org-mode=.
 
@@ -798,33 +798,39 @@ Custom agenda views are used for:
 8. Viewing habits
 9. Finding stuck projects
 10. Setting the default clocking task for punching in
+11. Show all TODO state tasks
+
+Most of the agenda view filter out tasks which are scheduled, have a
+deadline, or another timestamp.  When a task is shown all subtasks are
+filtered out of the list to keep the list manageable.  Occasionally I
+need to find a task in my files and I don't want to worry about if it
+has a timestamp or not -- so I use the show all TODO state tasks (=*=)
+and then search in the list for what I need.
 
 ** Setup
 #+begin_src emacs-lisp :tangle yes
   (setq org-agenda-custom-commands
-        (quote (("w" "Tasks waiting on something" tags "WAITING/!"
-                 ((org-use-tag-inheritance nil)
-                  (org-agenda-todo-ignore-scheduled nil)
-                  (org-agenda-todo-ignore-deadlines nil)
-                  (org-agenda-todo-ignore-with-date nil)
-                  (org-agenda-overriding-header "Waiting Tasks")))
+        (quote (("w" "Waiting and Postponed tasks" todo "WAITING|SOMEDAY"
+                 ((org-agenda-overriding-header "Waiting Tasks")))
                 ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE"
                  ((org-agenda-todo-ignore-with-date nil)
                   (org-agenda-todo-ignore-deadlines nil)
                   (org-agenda-todo-ignore-scheduled nil)
+                  (org-agenda-todo-ignore-timestamp nil)
                   (org-agenda-overriding-header "Tasks to Refile")))
                 ("N" "Notes" tags "NOTE"
                  ((org-agenda-overriding-header "Notes")))
-                ("n" "Next" tags-todo "-WAITING-CANCELLED/!NEXT"
+                ("n" "Next and Started tasks" tags-todo "-WAITING-CANCELLED/!NEXT|STARTED"
                  ((org-agenda-overriding-header "Next Tasks")))
-                ("p" "Projects" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED-WAITING-SOMEDAY"
+                ("p" "Projects" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED-WAITING-SOMEDAY-STARTED-NEXT"
                  ((org-agenda-skip-function 'bh/skip-non-projects)
                   (org-agenda-overriding-header "Projects")))
-                ("o" "Other (Non-Project) tasks" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED-WAITING-SOMEDAY"
+                ("o" "Other (Non-Project) tasks" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED-WAITING-SOMEDAY-STARTED-NEXT"
                  ((org-agenda-skip-function 'bh/skip-projects)
                   (org-agenda-overriding-header "Other Non-Project Tasks")))
                 ("A" "Tasks to be Archived" tags "LEVEL=2-REFILE/DONE|CANCELLED"
-                 ((org-agenda-overriding-header "Tasks to Archive")))
+                 ((org-agenda-overriding-header "Tasks to Archive")
+                  (org-agenda-skip-function 'bh/skip-non-archivable-tasks)))
                 ("h" "Habits" tags-todo "STYLE=\"habit\""
                  ((org-agenda-todo-ignore-with-date nil)
                   (org-agenda-todo-ignore-scheduled nil)
@@ -836,7 +842,15 @@ Custom agenda views are used for:
                 ("c" "Select default clocking task" tags "LEVEL=2-REFILE"
                  ((org-agenda-skip-function
                    '(org-agenda-skip-subtree-if 'notregexp "^\\*\\* Organization"))
-                  (org-agenda-overriding-header "Set default clocking task with C-u C-u I"))))))
+                  (org-agenda-overriding-header "Set default clocking task with C-u C-u I")))
+                ("*" "All open TODO tasks" tags-todo "-CANCELLED"
+                 ((org-agenda-overriding-header "All Open TODO tasks")
+                  (org-agenda-todo-ignore-with-date nil)
+                  (org-agenda-todo-ignore-scheduled nil)
+                  (org-agenda-todo-ignore-deadlines nil)
+                  (org-agenda-todo-ignore-timestamp nil)
+                  (org-agenda-todo-list-sublevels t)
+                  (org-tags-match-list-sublevels 'indented))))))
 #+end_src
 
 When searching for tasks in the agenda I disable display of child
