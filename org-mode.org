@@ -543,36 +543,42 @@ The tags are used to filter tasks in the agenda views conveniently.
                  ("CANCELLED")))))
 #+end_src
 
-*** Using =NEXT= for clocked tasks
-=TODO= state tasks automatically change to =NEXT= whenever they
-are clocked.  There are a few exceptions to this case
-- I don't want Capture tasks in a =NEXT= state immediately
+*** Using =STARTED= for clocked tasks
+=TODO= state tasks automatically change to =STARTED= whenever they
+are clocked in.  There are a few exceptions to this case
+- I don't want Capture tasks in a =STARTED= state immediately
   since I clock the time it takes to record capture tasks.
 - I want to clock in some tasks without a keyword
 - I want to clock parent project tasks with incomplete subtasks
 
-If I clock in a task with a keyword of =TODO= it changes to =NEXT=
+If I clock in a task with a keyword of =TODO= it changes to =STARTED=
 otherwise the task is clocked in but the state is left alone.  This
 allows me to clock in tasks with no keyword (things like 
-=** Organization=) and they never show up in my =NEXT= task lists.
+=** Organization=) and they never show up in my =NEXT= task list.
 
 #+begin_src emacs-lisp :tangle yes
-  (defun bh/clock-in-to-next (kw)
-    "Switch task from TODO to NEXT when clocking in.
+  (defun bh/is-project-p-with-open-subtasks ()
+    "Any task with a todo keyword subtask"
+    (let ((has-subtask)
+          (subtree-end (save-excursion (org-end-of-subtree t))))
+      (save-excursion
+        (forward-line 1)
+        (while (and (not has-subtask)
+                    (< (point) subtree-end)
+                    (re-search-forward "^\*+ " subtree-end t))
+          (when (and
+                 (member (org-get-todo-state) org-todo-keywords-1)
+                 (not (member (org-get-todo-state) org-done-keywords)))
+            (setq has-subtask t))))
+      has-subtask))
+  
+  (defun bh/clock-in-to-started (kw)
+    "Switch task from TODO or NEXT to STARTED when clocking in.
   Skips capture tasks and tasks with subtasks"
-    (if (and (string-equal kw "TODO")
-             (not (and (boundp 'org-capture-mode) org-capture-mode)))
-        (let ((subtree-end (save-excursion (org-end-of-subtree t)))
-              (has-subtask nil))
-          (save-excursion
-            (forward-line 1)
-            (while (and (not has-subtask)
-                        (< (point) subtree-end)
-                        (re-search-forward "^\*+ " subtree-end t))
-              (when (member (org-get-todo-state) org-not-done-keywords)
-                (setq has-subtask t))))
-          (when (not has-subtask)
-            "NEXT"))))
+    (if (and (member (org-get-todo-state) (list "TODO" "NEXT"))
+             (not (and (boundp 'org-capture-mode) org-capture-mode))
+             (not (bh/is-project-p-with-open-subtasks)))
+        "STARTED"))
 #+end_src
 
 * Adding New Tasks Quickly with Org Capture
@@ -877,7 +883,7 @@ My day goes generally like this:
 - Check refile tasks and respond to emails
 - Look at my agenda and knock off tasks scheduled for today
   - Clock it in (=I= in the agenda or on the beginning of a task headline 
-    - this changes =TODO= state tasks to =NEXT= when there are no unfinished subtasks
+    - this changes =TODO= state tasks to =STARTED= when there are no unfinished subtasks
   - Work on it until it is =DONE= or it gets interrupted
 - work on tasks
 - Punch out and go for lunch
@@ -906,14 +912,14 @@ today's agenda and follow this order:
   - deadline in the past (it's already late)
   - deadline that is coming up soon
   - a scheduled task for today (or in the past)
-- pick a NEXT task
-- If you run out of items to work on look for NEXT task in the current context
+- pick a STARTED or NEXT task
+- If you run out of items to work on look for a STARTED or NEXT task in the current context
   F12 n / RET
 
 *** Why keep it all on the =NEXT= list?
 I've moved to a more GTD way of doing things.  Now I just use a =NEXT=
-list.  I have two keywords that work as NEXT todo states: NEXT and
-STARTED.  If I clock a TODO keyword it changes to =STARTED= if that is
+list.  I have two keywords that work as NEXT todo states: =NEXT= and
+=STARTED=.  If I clock a TODO keyword it changes to =STARTED= if that is
 appropriate automagically on clock in.  A =NEXT= task is something
 that is available to work on /now/, it is the next logical step in
 some project.
@@ -1108,7 +1114,7 @@ I have the following org-mode settings for clocking:
   ;; Resume clocking task on clock-in if the clock is open
   (setq org-clock-in-resume t)
   ;; Change task state to NEXT when clocking in
-  (setq org-clock-in-switch-to-state (quote bh/clock-in-to-next))
+  (setq org-clock-in-switch-to-state (quote bh/clock-in-to-started))
   ;; Separate drawers for clocking and logs
   (setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK")))
   ;; Save clock data in the CLOCK drawer and state changes and notes in the LOGBOOK drawer
@@ -1176,7 +1182,7 @@ previously clocked task.
 ** Clocking in
 When I start or continue working on a task I clock it in with =C-c C-x
 C-i= (or just =I= in the agenda or speed key setting).  This changes
-the task state from =TODO= to =NEXT= and starts the clock for this
+the task state from =TODO= to =STARTED= and starts the clock for this
 task.
 
 *** Setting a default clock task
@@ -1811,10 +1817,10 @@ I'm using a new lazy project definition to mark tasks as projects.
 This requires zero effort from me.  Any task with a subtask using a
 todo keyword is a project.  Period.
 
-Projects are 'stuck' if they have no subtask with a =NEXT= todo
-keyword task defined.
+Projects are 'stuck' if they have no subtask with a =NEXT= or
+=STARTED= todo keyword task defined.
 
-Org-mode stuck projects lists projects that have no =NEXT= task
+Org-mode stuck projects lists projects that have no next task
 defined.  I normally review these in my weekly review and assign a
 =NEXT= task to all projects to clear the stuck project list.  This
 helps to keep projects moving forward.
@@ -1846,7 +1852,7 @@ used by agenda views.
            (has-next (save-excursion
                        (forward-line 1)
                        (and (< (point) subtree-end)
-                            (re-search-forward "^\\*+ NEXT " subtree-end t)))))
+                            (re-search-forward "^\\*+ \\(NEXT\\|STARTED\\) " subtree-end t)))))
       (if (and (bh/is-project-p) (not has-next))
           nil ; a stuck project, has subtasks but no next task
         subtree-end)))
