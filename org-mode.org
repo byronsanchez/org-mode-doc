@@ -352,9 +352,15 @@ The only exception to this is this document :) since I don't want
 I've set up a dummy =#+SEQ_TODO: FIXME FIXED= entry at the top of this
 file just to leave my =TODO= keyword untouched in this document.
 ** TODO keywords
+I use a dark colour theme in emacs with a black background.
+
 Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp :tangle yes
+  (require 'color-theme)
+  (color-theme-initialize)
+  (color-theme-clarity)
+  
   (setq org-todo-keywords (quote ((sequence "TODO(t!)" "NEXT(n!)" "|" "DONE(d!/!)")
                                   (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)")
                                   (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
@@ -362,9 +368,10 @@ Here are my =TODO= state keywords and colour settings:
   
   (setq org-todo-keyword-faces
         (quote (("TODO"      :foreground "red"          :weight bold)
-                ("NEXT"      :foreground "blue"         :weight bold)
+                ("NEXT"      :foreground "yellow"       :weight bold)
+                ("STARTED"   :foreground "yellow"       :weight bold)
                 ("DONE"      :foreground "forest green" :weight bold)
-                ("WAITING"   :foreground "yellow"       :weight bold)
+                ("WAITING"   :foreground "orange"       :weight bold)
                 ("SOMEDAY"   :foreground "goldenrod"    :weight bold)
                 ("CANCELLED" :foreground "orangered"    :weight bold)
                 ("QUOTE"     :foreground "hotpink"      :weight bold)
@@ -2557,9 +2564,10 @@ mistake!
     ;; If you edit it by hand, you could mess it up, so be careful.
     ;; Your init file should contain only one such instance.
     ;; If there is more than one, they won't work right.
-   '(highlight ((t (:background "cyan"))))
-   '(hl-line ((t (:inherit highlight :background "darkseagreen2"))))
-  ))
+   '(highlight ((t (:background "orangered"))))
+   '(hl-line ((t (:inherit highlight :background "maroon"))))
+    ;; Change occur highlighting colour to blue
+   '(secondary-selection ((t (:background "blue")))))
   
 #+end_src
 
