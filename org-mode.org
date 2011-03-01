@@ -1923,6 +1923,28 @@ marked DONE.
   (setq org-archive-mark-done nil)
 #+end_src
 
+The "Tasks to Archive" agenda view =F12-A= uses the following skip
+function to only show tasks that are ready to archive now.  This means
+I can simple mark all of the tasks on the agenda with =m= and archive
+everything in batch mode with =B $= and I'm done.  That normally takes
+less than 5 minutes and I do it on the first of the month every month.
+
+#+begin_src emacs-lisp :tangle yes
+  (defun bh/skip-non-archivable-tasks ()
+    "Skip trees that are not available for archiving"
+    (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+           (a-month-ago (* 60 60 24 31))
+           (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
+           (this-month (format-time-string "%Y-%m-" (current-time)))
+           (subtree-is-current (save-excursion
+                                 (forward-line 1)
+                                 (and (< (point) subtree-end)
+                                      (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
+      (if subtree-is-current
+          subtree-end ; Has a date in this month or last month, skip it
+        nil)))
+#+end_src
+
 ** Archive Tag - Hiding Information
 The only time I set the ARCHIVE tag on a task is to prevent it from
 opening by default because it has tons of information I don't really
