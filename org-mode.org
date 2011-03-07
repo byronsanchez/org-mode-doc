@@ -273,7 +273,7 @@ Here is the keybinding setup in lisp:
   (global-set-key (kbd "<f12>") 'org-agenda)
   (global-set-key (kbd "<f5>") 'bh/org-todo)
   (global-set-key (kbd "<S-f5>") 'bh/widen)
-  (global-set-key (kbd "<f7>") 'set-truncate-lines)
+  (global-set-key (kbd "<f7>") 'bh/set-truncate-lines)
   (global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
   (global-set-key (kbd "<f9> b") 'bbdb)
   (global-set-key (kbd "<f9> c") 'calendar)
@@ -288,6 +288,15 @@ Here is the keybinding setup in lisp:
       (org-shifttab)
       (org-reveal)
       (org-cycle)))
+  
+  (defun bh/set-truncate-lines ()
+    "Toggle value of truncate-lines and refresh window display."
+    (interactive)
+    (setq truncate-lines (not truncate-lines))
+    ;; now refresh window display (an idiom from simple.el):
+    (save-excursion
+      (set-window-start (selected-window)
+                        (window-start (selected-window)))))
   
   (global-set-key (kbd "<f9> i") 'bh/org-info)
   
