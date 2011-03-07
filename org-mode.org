@@ -2009,7 +2009,7 @@ to try out the other formats when I need them for something.
 
 ** org-babel Setup
 Now I've discovered org-babel and how easy it is to generate decent
-graphics using ditta and graphviz.
+graphics using ditaa and graphviz.
 
 The setup is really easy.  =ditaa= is provided with the org-mode
 source.  You'll have to install the =graphviz= package for your
