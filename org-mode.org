@@ -721,7 +721,7 @@ too.
 
   I collect capture tasks in refile.org for up to a week.  I do my
   weekly review every Monday and one of the tasks for that is to
-  refile all capture tasks.  Often I end up refiling tasks the same
+  refile all captured tasks.  Often I end up refiling tasks the same
   day I create them because they show up in my daily clock report
   summary and are obviously in the wrong place.
 ** Refile Setup
@@ -809,7 +809,7 @@ Custom agenda views are used for:
 1. Finding tasks waiting on something
 2. Finding tasks to be refiled
 3. Finding notes
-4. Finding =NEXT= tasks to work on
+4. Finding =NEXT= and =STARTED= tasks to work on
 5. Reviewing projects
 6. Reviewing other non-project tasks
 7. Findings tasks to be archived
@@ -1779,36 +1779,35 @@ I have a recurring task which keeps my weekly review checklist
 handy.  This pops up as a reminder on Monday's.  This week I'm
 doing my weekly review on Tuesday since Monday was a holiday.
 
-: ** NEXT Weekly Review [0/5]
+: ** NEXT Weekly Review [0/8]
 :    SCHEDULED: <2009-05-18 Mon ++1w> 
-:    :LOGBOOK:...
-:    :PROPERTIES:...
-: 
+:    LOGBOOK:...
+:    PROPERTIES:...
+:         
 :    What to review:
-: 
+:    
 :     - [ ] Check follow-up folder
 :     - [ ] Review new tasks                                  F12-r
-:       - if it takes less than 5 minutes just do it
-:       - otherwise assign an estimated time and file it somewhere
-:       - Refile billable work to appropriate location
+:       - if it takes less than 2 minutes just do it
+:       - file it somewhere
 :     - [ ] Check for stuck projects and add next tasks       F12-#         
-:     - [ ] Review tasks                                      F12 t
-:       - [ ] Waiting tasks                                         / W
-:       - [ ] Next Tasks                                      F12 n
-:         - Move NEXT tag to subtasks or remove as required
-:     - [ ] Make plan for the week (out of NEXT tasks)
-:       - schedule important items onto the agenda
-:       - [ ] Review weekly plan                              F12 a v w
-:
+:     - [ ] Review projects                                   F12-p
+:     - [ ] Review other non-project tasks                    F12-o
+:     - [ ] Waiting tasks                                     F12 w
+:       - Make follow up tasks scheduled for today
+:     - [ ] Next Tasks                                        F12 n
+:       - If blocked move NEXT tag to subtasks or remove as required
+:       - Assign an estimated duration to each
+:     - [ ] Review weekly agenda F12 a w
+:    
 :     - start work
 :       - daily agenda first - knock off items
-:         - complete them or adjust deadline warning days appropriately
-:       - when agenda is empty - work on next tasks
+:       - then work on NEXT tasks
 
 The first item [ ] Check follow-up folder makes me pull out the paper
 file I dump stuff into all week long - things I need to take care of
 but are in no particular hurry to deal with.  Stuff I get in the mail
-etc that I don't want to deal with now.  I just toss it in my
+etc. that I don't want to deal with now.  I just toss it in my
 =Follow-Up= folder in the filing cabinet and forget about it until the
 weekly review.
 
