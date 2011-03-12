@@ -2516,13 +2516,11 @@ in my =~/.emacs.d/plugins= directory, renamed =yasnippet0.5.10= to
 Here is the definition for the =block= snippet:
 
 org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/block
-#+begin_example
-  #name : #+begin_...#+end_
-  # --
-  #+begin_$1 $2
-  $0
-  #+end_$1
-#+end_example
+:  #name : #+begin_...#+end_
+:  # --
+:  #+begin_$1 $2
+:  $0
+:  #+end_$1
 
 I use this to create =#+begin_*= blocks like 
 - =#+begin_example=
