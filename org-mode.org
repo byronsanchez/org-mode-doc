@@ -687,9 +687,7 @@ Normally this file is empty except for a single line at the top which
 creates a =REFILE= tag for anything in the file.
 
 The file has a single permanent line at the top like this
-#+begin_src org
-  #+FILETAGS: REFILE
-#+end_src
+: #+FILETAGS: REFILE
 ** Capture Tasks is all about being FAST
 Okay I'm in the middle of something and oh yeah - I have to remember
 to do that.  I don't stop what I'm doing.  I'm probably clocking a
@@ -1486,21 +1484,19 @@ at the top of your estimated project subtree.  Entering =C-c C-x i
 RET= inserts a clock table report with your estimated values and any
 clocked time to date.
 
-#+begin_src org
-  Original Estimate
-  #+BEGIN: columnview :hlines 1 :id local
-  | Task                        | Estimated Effort | CLOCKSUM |
-  |-----------------------------+------------------+----------|
-  | ** TODO Project to estimate |             5:40 |          |
-  | *** TODO Step 1             |             0:10 |          |
-  | *** TODO Step 2             |             0:10 |          |
-  | *** TODO Step 3             |             5:10 |          |
-  | **** TODO Step 3.1          |             2:00 |          |
-  | **** TODO Step 3.2          |             3:00 |          |
-  | **** TODO Step 3.3          |             0:10 |          |
-  | *** TODO Step 4             |             0:10 |          |
-  #+END:
-#+end_src
+: Original Estimate
+: #+BEGIN: columnview :hlines 1 :id local
+: | Task                        | Estimated Effort | CLOCKSUM |
+: |-----------------------------+------------------+----------|
+: | ** TODO Project to estimate |             5:40 |          |
+: | *** TODO Step 1             |             0:10 |          |
+: | *** TODO Step 2             |             0:10 |          |
+: | *** TODO Step 3             |             5:10 |          |
+: | **** TODO Step 3.1          |             2:00 |          |
+: | **** TODO Step 3.2          |             3:00 |          |
+: | **** TODO Step 3.3          |             0:10 |          |
+: | *** TODO Step 4             |             0:10 |          |
+: #+END:
 
 I normally delete the =#+BEGIN:= and =#+END:= lines from the original
 table after providing the estimate to the client to ensure I don't
@@ -1612,9 +1608,7 @@ headings in a file.
 
 Filetags look like this:
 
-#+begin_src org
-  #+FILETAGS: NORANG @office
-#+end_src
+: #+FILETAGS: NORANG @office
 
 I have the following =#+FILETAGS:= entries in my org-mode files:
 
