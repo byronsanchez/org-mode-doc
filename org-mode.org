@@ -1185,11 +1185,16 @@ previously clocked task.
         (org-clock-in nil))))
   
   (defun bh/clock-in-last-task ()
-    "Clock in the interrupted task if there is one"
+    "Clock in the interrupted task if there is one
+  Skip the default task and get the next one"
     (interactive)
     (let ((clock-in-to-task (if (org-clock-is-active)
-                                (setq clock-in-to-task (cadr org-clock-history))
-                              (setq clock-in-to-task (car org-clock-history)))))
+                                (if (equal org-clock-default-task (cadr org-clock-history))
+                                    (caddr org-clock-history)
+                                  (cadr org-clock-history))
+                              (if (equal org-clock-default-task (car org-clock-history))
+                                  (cadr org-clock-history)
+                                (car org-clock-history)))))
       (org-with-point-at clock-in-to-task
         (org-clock-in nil))))
 #+end_src
