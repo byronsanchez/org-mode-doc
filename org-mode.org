@@ -143,25 +143,33 @@ See [[Publishing]] for more details.
 ** Agenda Setup
 Here is my current =org-agenda-files= setup.  It is shown above
 formatted as a =setq= for clarity but in reality this is saved in my
-custom.el file.
+.emacs file via the customize interface.
 #+begin_src emacs-lisp :tangle yes
-  (setq org-agenda-files (quote ("~/git/org/refile.org"
-                                 "~/git/org/gsoc2009.org"
-                                 "~/git/org/farm.org"
-                                 "~/git/org/mark.org"
-                                 "~/git/org/org.org"
-                                 "~/git/org/norang.org"
-                                 ; client org files removed
-                                 "~/git/org/git.org"
-                                 "~/git/org/todo.org"
-                                 "~/git/org/bzflag.org"
-                                 "~/git/org/diary.org")))
+  (setq org-agenda-files (quote ("~/git/org"
+                                 "~/git/org/client1"
+                                 "~/git/client2")))
 #+end_src
 
-=org-mode= manages the =org-agenda-files= variable.  I just visit an
-org file and add it to the agenda with =C-c [=.  To remove a file I
-just visit it and hit =C-c ]= and all of the tasks in that file are
-instantly removed from my agenda views until I add them back again.
+=org-mode= manages the =org-agenda-files= variable automatically using
+=C-c [= and =C-c ]= to add and remove files respectively.  However,
+this replaces my directory list with a list of explicit filenames
+instead and is not what I want.  If this occurs then adding a new org
+file to any of the above directories will not contribute to my agenda
+and I will probably miss something important.
+
+I no longer use =C-c [= and =C-c ]= manage my =org-agenda-files=
+variable.  I just add and remove directories manually in the
+customize interface.
+
+In the example above I have =~/git/client2= in a separate git
+repository from ~/git/org.  This gives me the flexibility of leaving
+confidential information at the client site and having all of my
+personal information available everywhere I use org-mode.  I
+synchronize my personal repositories on multiple machines and skip the
+confidential info on the non-client laptop I travel with.
+=org-agenda-files= on this laptop does not include the =~/git/client2=
+directory.
+
 ** Org File Structure
 :PROPERTIES:
 :CUSTOM_ID: OrgFileStructure
