@@ -4,7 +4,7 @@
 #+EMAIL: bernt@norang.ca
 #+OPTIONS:   H:3 num:t   toc:2 \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
-#+OPTIONS:   author:t creator:nil timestamp:t email:t
+#+OPTIONS:   author:t creator:t timestamp:t email:t
 #+DESCRIPTION: A description of how I currently use org-mode
 #+KEYWORDS:  org-mode Emacs organization GTD getting-things-done git
 #+SEQ_TODO: UNFINISHED COMPLETE
@@ -4108,23 +4108,7 @@ Here is the =git-sync= script
 #+end_src
 
 * Change History - What's new
-This document is created using the publishing features of
-#+begin_src emacs-lisp :results output :exports results
-(org-version)
-#+end_src
-
-#+results:
-: Org-mode version 7.4 (release_7.4.23.g253ba)
-
-with
-
-#+begin_src emacs-lisp :results output :exports results
-(emacs-version)
-#+end_src
-
-#+results:
-: GNU Emacs 23.2.1 (i486-pc-linux-gnu, GTK+ Version 2.20.0)
-:  of 2010-08-14 on raven, modified by Debian
+This document is created using the publishing features of =org-mode=.
 
 The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
 [[http://doc.norang.ca/org-mode.org][plain text org file]].
