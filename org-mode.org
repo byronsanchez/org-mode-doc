@@ -2245,10 +2245,12 @@ publishing the project the file is contained in.  This is great for
 people like me who want to figure out the details once and forget
 about it.  I love stuff that Just Works(tm).
 
-I have 3 main projects I use org-mode publishing for currently:
+I have 5 main projects I use org-mode publishing for currently:
 
 - norang (website)
-- doc.norang.ca (website)
+- doc.norang.ca (website, published documents)
+- doc.norang.ca/private (website, non-published documents)
+- www.norang.ca/tmp (temporary publishing site for testing org-mode stuff)
 - org files (which are selectively included by other websites)
 
 Here's my publishing setup:
@@ -2290,6 +2292,7 @@ Here's my publishing setup:
                  :publishing-function org-publish-org-to-html
                  :style-include-default nil
                  :section-numbers nil
+                 :table-of-contents nil
                  :style "<link rel=\"stylesheet\" href=\"norang.css\" type=\"text/css\" />"
                  :author-info nil
                  :creator-info nil)
@@ -2302,15 +2305,15 @@ Here's my publishing setup:
                  :author nil)
                 ("norang"
                  :components ("norang-org" "norang-extra"))
-        ;
-        ; http://doc.norang.ca/  (norang website)
-        ; doc-org are the org-files that generate the content
-        ; doc-extra are images and css files that need to be included
-        ; doc is the top-level project that gets published
+                ;
+                ; http://doc.norang.ca/  (norang website)
+                ; doc-org are the org-files that generate the content
+                ; doc-extra are images and css files that need to be included
+                ; doc is the top-level project that gets published
                 ("doc-org"
                  :base-directory "~/git/doc.norang.ca/"
                  :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
-                 :recursive t
+                 :recursive nil
                  :section-numbers nil
                  :table-of-contents nil
                  :base-extension "org"
@@ -2324,13 +2327,38 @@ Here's my publishing setup:
                  :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
                  :base-extension "css\\|pdf\\|png\\|jpg\\|gif"
                  :publishing-function org-publish-attachment
-                 :recursive t
+                 :recursive nil
                  :author nil)
                 ("doc"
                  :components ("doc-org" "doc-extra"))
-        ;
-        ; Miscellaneous pages for other websites
-        ; org are the org-files that generate the content
+                ("doc-private-org"
+                 :base-directory "~/git/doc.norang.ca/private"
+                 :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs/private"
+                 :recursive nil
+                 :section-numbers nil
+                 :table-of-contents nil
+                 :base-extension "org"
+                 :publishing-function (org-publish-org-to-html org-publish-org-to-org)
+                 :style-include-default nil
+                 :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
+                 :auto-sitemap t
+                 :sitemap-filename "index.html"
+                 :sitemap-title "Norang Private Documents"
+                 :sitemap-style "tree"
+                 :author-info nil
+                 :creator-info nil)
+                ("doc-private-extra"
+                 :base-directory "~/git/doc.norang.ca/private"
+                 :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs/private"
+                 :base-extension "css\\|pdf\\|png\\|jpg\\|gif"
+                 :publishing-function org-publish-attachment
+                 :recursive nil
+                 :author nil)
+                ("doc-private"
+                 :components ("doc-private-org" "doc-private-extra"))
+                ;
+                ; Miscellaneous pages for other websites
+                ; org are the org-files that generate the content
                 ("org-org"
                  :base-directory "~/git/org/"
                  :publishing-directory "/ssh:www-data@www:~/org"
@@ -2343,12 +2371,12 @@ Here's my publishing setup:
                  :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
                  :author-info nil
                  :creator-info nil)
-        ;
-        ; http://doc.norang.ca/  (norang website)
-        ; org-mode-doc-org this document
-        ; org-mode-doc-extra are images and css files that need to be included
-        ; org-mode-doc is the top-level project that gets published
-        ; This uses the same target directory as the 'doc' project
+                ;
+                ; http://doc.norang.ca/  (norang website)
+                ; org-mode-doc-org this document
+                ; org-mode-doc-extra are images and css files that need to be included
+                ; org-mode-doc is the top-level project that gets published
+                ; This uses the same target directory as the 'doc' project
                 ("org-mode-doc-org"
                  :base-directory "~/git/org-mode-doc/"
                  :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
@@ -2371,7 +2399,39 @@ Here's my publishing setup:
                  :recursive t
                  :author nil)
                 ("org-mode-doc"
-                 :components ("org-mode-doc-org" "org-mode-doc-extra")))))
+                 :components ("org-mode-doc-org" "org-mode-doc-extra"))
+                ;
+                ; http://doc.norang.ca/  (norang website)
+                ; org-mode-doc-org this document
+                ; org-mode-doc-extra are images and css files that need to be included
+                ; org-mode-doc is the top-level project that gets published
+                ; This uses the same target directory as the 'doc' project
+                ("tmp-org"
+                 :base-directory "/tmp/publish/"
+                 :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs/tmp"
+                 :recursive t
+                 :section-numbers nil
+                 :table-of-contents nil
+                 :base-extension "org"
+                 :publishing-function (org-publish-org-to-html org-publish-org-to-org)
+                 :plain-source t
+                 :htmlized-source t
+                 :style-include-default t
+                 :auto-sitemap t
+                 :sitemap-filename "index.html"
+                 :sitemap-title "Test Publishing Area"
+                 :sitemap-style "tree"
+                 :author-info nil
+                 :creator-info nil)
+                ("tmp-extra"
+                 :base-directory "/tmp/publish/"
+                 :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs/tmp"
+                 :base-extension "png"
+                 :publishing-function org-publish-attachment
+                 :recursive t
+                 :author nil)
+                ("tmp"
+                 :components ("tmp-org" "tmp-extra")))))
   
   ; I'm lazy and don't want to remember the name of the project to publish when I modify
   ; a file that is part of a project.  So this function saves the file, and publishes
@@ -2387,19 +2447,20 @@ Here's my publishing setup:
   (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
 #+end_src
 
-The =norang= and =doc= projects publish directly into the webserver
-directory that serves that site.  Publishing one of these projects
-exports all modified pages, generates images with ditaa, copies the
+The main projects are =norang=, =doc=, =doc-private=, =org-mode-doc=,
+and =tmp=.  These projects publish directly to the webserver directory
+on a remote web server that serves the site.  Publishing one of these
+projects exports all modified pages, generates images, and copies the
 resulting files to the webserver so that they are immediately
 available for viewing.
 
-The http://doc.norang.ca/ site contains subdirectories with client
-documentation that are restricted access using Apache Basic
-authentication and I don't create links to these sites from the
-publicly viewable pages.  http://doc.norang.ca/someclient/ would show
-the index for any org files under =~/git/doc.norang.ca/someclient/= if
-that is set up as a viewable website.  I use most of the information
-myself but give access to clients if they are interested in the
+The http://doc.norang.ca/ site contains subdirectories with client and
+private documentation that are restricted by using Apache Basic
+authentication.  I don't create links to these sites from the publicly
+viewable pages.  http://doc.norang.ca/someclient/ would show the index
+for any org files under =~/git/doc.norang.ca/someclient/= if that is
+set up as a viewable website.  I use most of the information myself
+but give access to clients if they are interested in the
 information/notes that I keep about their systems.
 
 This works great for me - I know where my notes are and I can access
@@ -2409,6 +2470,11 @@ other people by simply giving them the link to the appropriate site.
 All I need to remember to do is edit the appropriate org file and
 publish it with C-S-F12 -- not exactly hard :)
 
+Recently I added a temporary publishing site for testing exports and
+validation.  This is the =tmp= site which takes files from
+=/tmp/publish= and exports those files to a website publishing
+directory.  This makes it easy to try new throw-away things on a live
+server.
 ** Miscellaneous Export Settings
 
 This is a collection of export and publishing related settings that I
@@ -3784,7 +3850,6 @@ using compose-mail.
 #+begin_src emacs-lisp
   (setq org-link-mailto-program (quote (compose-mail "%a" "%s")))
 #+end_src
-
 
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
