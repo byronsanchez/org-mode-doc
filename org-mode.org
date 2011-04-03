@@ -3410,11 +3410,11 @@ task it gives me a total in the mode-line like this
 I've spent 35 minutes of my 1 hour so far today on this document and
 other help on IRC.
 
-I set up an alarm so the Star Trek red alert klaxon goes off when the
+I set up an alarm so the Star Trek door chime goes off when the
 total estimated time is hit.  (Yes I'm a Trekkie :) )
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-clock-sound "/usr/local/lib/alert1.wav")
+  (setq org-clock-sound "/usr/local/lib/tngchime.wav")
 #+end_src
 
 When the one hour time limit is hit the alarm sound goes off and a
