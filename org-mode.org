@@ -646,7 +646,7 @@ Here is my setup for org-capture
                                       ("n" "note" entry (file "~/git/org/refile.org") "* %?                                                                            :NOTE:
   %U
   %a
-  :CLOCK:
+  :LOGBOOK:
   :END:" :clock-in t :clock-resume t)
                                       ("a" "appointment" entry (file+datetree "~/git/org/diary.org") "* %?
   %U" :clock-in t :clock-resume t)
@@ -668,20 +668,20 @@ remove clocking lines with 0:00 length I end up with a clock drawer
 like this:
 
 : * TODO New Capture Task
-:   :CLOCK:
+:   :LOGBOOK:
 :   :END:
 :   [2010-05-08 Sat 13:53]
 
-I have the following setup to remove these empty =CLOCK= drawers if
+I have the following setup to remove these empty =LOGBOOK= drawers if
 they occur.
 
 #+begin_src emacs-lisp :tangle yes
-  ;; Remove empty CLOCK drawers on clock out
+  ;; Remove empty LOGBOOK drawers on clock out
   (defun bh/remove-empty-drawer-on-clock-out ()
     (interactive)
     (save-excursion
       (beginning-of-line 0)
-      (org-remove-empty-drawer-at "CLOCK" (point))))
+      (org-remove-empty-drawer-at "LOGBOOK" (point))))
   
   (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 #+end_src
@@ -1130,8 +1130,8 @@ means clocking continues to apply to the parent task.  I can pick the
 next task from the parent and clock that in without losing a minute or
 two while I'm deciding what to work on next.
 
-I keep clock times in a =:CLOCK:= drawer and state changes in a
-=:LOGBOOK:= drawer.
+I keep clock times, state changes, and other notes in the =:LOGBOOK:=
+drawer.
 
 I have the following org-mode settings for clocking:
 
@@ -1147,9 +1147,9 @@ I have the following org-mode settings for clocking:
   ;; Change task state to NEXT when clocking in
   (setq org-clock-in-switch-to-state (quote bh/clock-in-to-started))
   ;; Separate drawers for clocking and logs
-  (setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK")))
+  (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
   ;; Save clock data in the CLOCK drawer and state changes and notes in the LOGBOOK drawer
-  (setq org-clock-into-drawer "CLOCK")
+  (setq org-clock-into-drawer t)
   ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
   (setq org-clock-out-remove-zero-time-clocks t)
   ;; Clock out when moving task to a done state
