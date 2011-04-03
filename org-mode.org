@@ -3916,6 +3916,24 @@ Here's the smex setup I use
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)  
 #+end_src
 
+** Use Emacs bookmarks for fast navigation
+I've started using emacs bookmarks to save a location and return to it easily.
+Normally I want to get back to my currently clocking task and that's easy - just hit =F11=.
+When I'm working down a long checklist I find it convenient to set a bookmark on the next
+item to check, then go away and work on it, and return to the checkbox to mark it done.
+
+I use Emacs bookmarks for this setup as follows:
+
+#+begin_src emacs-lisp
+  ;; Bookmark handling
+  ;;
+  (global-set-key (kbd "<C-f6>") '(lambda () (interactive) (bookmark-set "SAVED")))
+  (global-set-key (kbd "<f6>") '(lambda () (interactive) (bookmark-jump "SAVED")))
+#+end_src
+
+When I want to save the current location I just hit =C-f6= and then I
+can return to it with =f6= anytime.  I overwrite the same bookmark
+each time I set a new position.
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
