@@ -741,8 +741,20 @@ To refile tasks in org you need to tell it where you want to refile things.
 
 In my setup I let any file in =org-agenda-files= and the current file
 contribute to the list of valid refile targets.  I don't refile to
-tasks more then 5 levels deep just to limit the number of displayed
-targets.  I also use ido mode to help find targets quickly.
+tasks more then 2 levels deep just to limit the number of displayed
+targets.
+
+I've recently moved to using IDO to complete targets directly.  I find
+this to be faster than my previous complete in steps setup.  At first
+I didn't like IDO but after review the documentation again and
+learning about =C-SPC= to limit target searches I find it is much
+better than my previous complete-in-steps setup.  Now when I want to
+refile something I do =C-c C-w= to start the refile process, then type
+something to get some matching targets, then =C-SPC= to restrict the
+matches to the current list, then continue searching with some other
+text to find the target I need.  =C-j= also selects the current
+completion as the final target.  I like this a lot.
+
 
 Here is my refile configuration:
 #+begin_src emacs-lisp :tangle yes
@@ -755,14 +767,16 @@ Here is my refile configuration:
   ; Targets start with the file name - allows creating level 1 tasks
   (setq org-refile-use-outline-path (quote file))
   
-  ; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
-  (setq org-outline-path-complete-in-steps t)
+  ; Targets complete directly with IDO
+  (setq org-outline-path-complete-in-steps nil)
   
   ; Allow refile to create parent tasks with confirmation
   (setq org-refile-allow-creating-parent-nodes (quote confirm))
   
-  ; Use IDO only for buffers
-  ; set ido-mode to buffer and ido-everywhere to t via the customize interface
+  ; Use IDO for both buffer and file completion and ido-everywhere to t
+  ; These are set via the customize interface since setq's do not
+  ; work according to the docstring
+  ;
   ; '(ido-mode (quote both) nil (ido))
   ; '(ido-everywhere t)
 #+end_src
