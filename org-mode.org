@@ -3946,6 +3946,14 @@ I use Emacs bookmarks for this setup as follows:
 When I want to save the current location I just hit =C-f6= and then I
 can return to it with =f6= anytime.  I overwrite the same bookmark
 each time I set a new position.
+** Using org-mime to email
+I'm experimenting with sending mime mail from org.  I've added =C-c M=o= key bindings 
+in the =org-mode-hook= to generate mail from an org-mode subtree.
+
+#+begin_src emacs-lisp
+  (require 'org-mime)
+#+end_src
+
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
