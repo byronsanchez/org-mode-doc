@@ -652,7 +652,7 @@ Here is my setup for org-capture
   %U" :clock-in t :clock-resume t)
                                       ("p" "Phone call" entry (file "~/git/org/refile.org") "* Phone %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:\n%U\n\n%?" :clock-in t :clock-resume t)
                                       ("w" "org-protocol" entry (file "~/git/org/refile.org") "* TODO Review %c
-  %U" :immediate-finish t :clock-in t :clock-resume t))))
+  %U" :immediate-finish t))))
 #+end_src
 
 Capture mode now handles automatically clocking in and out of a
