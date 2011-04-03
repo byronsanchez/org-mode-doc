@@ -3588,9 +3588,14 @@ page in Firefox will trigger the org-protocol capture template with
 details of the page I'm currently viewing in firefox.
 
 I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
-** Add final newline when saving files
+** Do not require a final newline when saving files
+The following setting is mainly for editing yasnippets where I want to
+be able to expand a snippet but stay on the same line.  I use this
+mainly for replacing short strings or initials with full names for
+people during meeting notes.
+
 #+begin_src emacs-lisp :tangle yes
-  (setq require-final-newline t)
+  (setq require-final-newline nil)
 #+end_src
    
 ** Insert inactive timestamps
