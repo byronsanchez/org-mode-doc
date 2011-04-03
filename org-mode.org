@@ -3898,6 +3898,21 @@ to send an email to someone else.  The email contents are already
 contained in the org-mode subtree and all I need to do is =C-c M-o=
 and any minor edits before sending it off.
 
+** Use smex for M-x ido-completion
+I discovered smex for IDO-completion for M-x commands after reading a
+post of the org-mode mailing list.  I actually use M-x a lot now
+because IDO completion is so easy.
+
+Here's the smex setup I use
+#+begin_src emacs-lisp
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+  (require 'smex)
+  (smex-initialize)
+  
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)  
+#+end_src
+
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
