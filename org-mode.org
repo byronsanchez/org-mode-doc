@@ -270,7 +270,7 @@ I have the following custom key bindings set up for my emacs (sorted by frequenc
 | C-f10   | Next buffer                                     | Sometimes  |
 | C-x n r | Narrow to region                                | Sometimes  |
 | f9 f    | Boxquote insert a file                          | Sometimes  |
-| f9 i    | Org-mode Info manual                            | Sometimes  |
+| f9 i    | Info manual                                     | Sometimes  |
 | f9 I    | Punch Clock In  (start clocking)                | Sometimes  |
 | f9 O    | Punch Clock Out (stop clocking)                 | Sometimes  |
 | f9 s    | Switch to scratch buffer                        | Sometimes  |
@@ -312,11 +312,7 @@ Here is the keybinding setup in lisp:
       (set-window-start (selected-window)
                         (window-start (selected-window)))))
   
-  (global-set-key (kbd "<f9> i") 'bh/org-info)
-  
-  (defun bh/org-info ()
-    (interactive)
-    (info "~/git/org-mode/doc/org.info"))
+  (global-set-key (kbd "<f9> i") 'info)
   
   (global-set-key (kbd "<f9> I") 'bh/clock-in)
   (global-set-key (kbd "<f9> O") 'bh/clock-out)
