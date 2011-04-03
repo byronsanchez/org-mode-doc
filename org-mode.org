@@ -87,8 +87,12 @@ speed up creation of standard text blocks in most editing modes.
               (define-key yas/keymap [tab] 'yas/next-field-group)
               ;; flyspell mode for spell checking everywhere
               (flyspell-mode 1)
-              ;; auto-fill mode on
-              (auto-fill-mode 1)))
+              ;; Undefine C-c [ and C-c ] since this breaks my org-agenda files when directories are include
+              ;; It expands the files in the directories individually
+              (org-defkey org-mode-map "\C-c["    'undefined)
+              (org-defkey org-mode-map "\C-c]"    'undefined)
+              (local-set-key (kbd "C-c M-o") 'bh/mail-subtree)))
+  
 #+end_src
 
 ** Organizing Your Life Into Org Files
@@ -157,9 +161,11 @@ instead and is not what I want.  If this occurs then adding a new org
 file to any of the above directories will not contribute to my agenda
 and I will probably miss something important.
 
-I no longer use =C-c [= and =C-c ]= manage my =org-agenda-files=
-variable.  I just add and remove directories manually in the
-customize interface.
+I have disabled the =C-c [= and =C-c ]= keys to prevent messing up my
+list of directories in the =org-agenda-files= variable.  I just add
+and remove directories manually in the customize interface.  Changing
+the list of directories in =org-agenda-files= happens very rarely
+since new files in existing directories are automatically picked up.
 
 In the example above I have =~/git/client2= in a separate git
 repository from ~/git/org.  This gives me the flexibility of leaving
@@ -3585,7 +3591,6 @@ for cycling - I don't need =c= and =C= as well.  =TAB= works
 everywhere while =c= and =C= only works on the headline and sometimes
 I accidentally cycle when I don't intend to.
 
-
 ** Org Protocol
 [[http://orgmode.org/worg/org-contrib/org-protocol.php][Org protocol]] is a great way to create capture notes in org-mode from
 other applications.  I use this to create tasks to review interesting
@@ -3874,6 +3879,14 @@ using compose-mail.
 #+begin_src emacs-lisp
   (setq org-link-mailto-program (quote (compose-mail "%a" "%s")))
 #+end_src
+
+** Composing mail from org mode subtrees
+It's possible to create mail from an org-mode subtree.  I use =C-c
+M-o= to start an email message with the details filled in from the
+current subtree.  I use this for repeating reminder tasks where I need
+to send an email to someone else.  The email contents are already
+contained in the org-mode subtree and all I need to do is =C-c M-o=
+and any minor edits before sending it off.
 
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
