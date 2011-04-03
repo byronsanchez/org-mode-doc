@@ -2037,24 +2037,26 @@ source.  You'll have to install the =graphviz= package for your
 system.
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+   (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+   
+   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+   
+   (setq org-babel-load-languages (quote ((emacs-lisp . t)
+                                          (dot . t)
+                                          (ditaa . t)
+                                          (R . t)
+                                          (python . t)
+                                          (ruby . t)
+                                          (gnuplot . t)
+                                          (clojure . t)
+                                          (sh . t)
+                                          (ledger . t)
+                                          (org . t))))
   
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-  
-  (setq org-babel-load-languages (quote ((emacs-lisp . t)
-                                         (dot . t)
-                                         (ditaa . t)
-                                         (R . t)
-                                         (python . t)
-                                         (ruby . t)
-                                         (gnuplot . t)
-                                         (clojure . t)
-                                         (sh . t))))
-
- ; Do not prompt to confirm evaluation
- ; This may be dangerous - make sure you understand the consequences
- ; of setting this -- see the docstring for details
- (setq org-confirm-babel-evaluate nil)
+  ; Do not prompt to confirm evaluation
+  ; This may be dangerous - make sure you understand the consequences
+  ; of setting this -- see the docstring for details
+  (setq org-confirm-babel-evaluate nil)
 #+end_src
 
 Now you just create a =begin-src= block for the appropriate tool, edit
