@@ -316,6 +316,14 @@ Here is the keybinding setup in lisp:
   
   (global-set-key (kbd "<f9> I") 'bh/clock-in)
   (global-set-key (kbd "<f9> O") 'bh/clock-out)
+  
+  (defun bh/make-org-scratch ()
+    (interactive)
+    (find-file "/tmp/publish/org-scratch.org")
+    (gnus-make-directory "/tmp/publish"))
+  
+  (global-set-key (kbd "<f9> o") 'bh/make-org-scratch)
+  
   (global-set-key (kbd "<f9> r") 'boxquote-region)
   (global-set-key (kbd "<f9> s") 'bh/switch-to-org-scratch)
   
