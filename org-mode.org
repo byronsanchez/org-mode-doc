@@ -2676,8 +2676,18 @@ temporarily by limiting your view to this task subtree.  Tasks are
 folded and hilighted so that only tasks which are incomplete are
 shown.
 
-I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and =C-c C-v= combination
-leaving the buffer in a narrowed state.  I use =S-f5= to widen back to the normal view.
+I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and
+=C-c C-v= combination leaving the buffer in a narrowed state.  I use
+=S-f5= to widen back to the normal view.
+
+I also have the following setting to force showing the next headline.
+#+begin_src emacs-lisp
+  (setq org-show-entry-below (quote ((default))))
+#+end_src
+
+This prevents too many headlines from being folded together when I'm
+working with collapsed trees.
+
 *** Limiting the agenda to a subtree
 =C-c C-x <= turns on the agenda restriction lock for the current
 subtree.  This keeps your agenda focused on only this subtree.  Alarms
@@ -3944,6 +3954,8 @@ Org mode can fold (cycle) plain lists.  I don't use this feature.
   (setq org-cycle-include-plain-lists nil)
 #+end_src
 
+Turning this on makes my =F5= sparse trees way too big.  I just want
+to see the headlines.
 ** Strike-through emphasis
 Strike-through emphasis is just unreadable and tends to only show up
 when pasting data from other files into org-mode.  This just removes
