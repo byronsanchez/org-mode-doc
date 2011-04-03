@@ -572,31 +572,19 @@ are clocked in.  There are a few exceptions to this case
 
 If I clock in a task with a keyword of =TODO= it changes to =STARTED=
 otherwise the task is clocked in but the state is left alone.  This
-allows me to clock in tasks with no keyword (things like 
-=** Organization=) and they never show up in my =NEXT= task list.
+allows me to clock in tasks with no keyword (things like =**
+Organization=) and they never show up in my =NEXT= task list.  Project
+tasks with subtasks are never changed to =STARTED= when I clock them
+in.  I'm likely to create a new subtask that will become the =NEXT=
+task for this project or I'll mark the project complete.
 
 #+begin_src emacs-lisp :tangle yes
-  (defun bh/is-project-p-with-open-subtasks ()
-    "Any task with a todo keyword subtask"
-    (let ((has-subtask)
-          (subtree-end (save-excursion (org-end-of-subtree t))))
-      (save-excursion
-        (forward-line 1)
-        (while (and (not has-subtask)
-                    (< (point) subtree-end)
-                    (re-search-forward "^\*+ " subtree-end t))
-          (when (and
-                 (member (org-get-todo-state) org-todo-keywords-1)
-                 (not (member (org-get-todo-state) org-done-keywords)))
-            (setq has-subtask t))))
-      has-subtask))
-  
   (defun bh/clock-in-to-started (kw)
     "Switch task from TODO or NEXT to STARTED when clocking in.
   Skips capture tasks and tasks with subtasks"
     (if (and (member (org-get-todo-state) (list "TODO" "NEXT"))
              (not (and (boundp 'org-capture-mode) org-capture-mode))
-             (not (bh/is-project-p-with-open-subtasks)))
+             (not (bh/is-project-p)))
         "STARTED"))
 #+end_src
 
