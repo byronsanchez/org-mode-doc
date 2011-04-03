@@ -2823,10 +2823,12 @@ Here are the =.emacs= settings:
   ;; Start the weekly agenda today
   (setq org-agenda-start-on-weekday nil)
   
-  ;; Disable display of the time grid
+  ;; Enable display of the time grid so we can see the marker for the current time
   (setq org-agenda-time-grid
-        (quote (nil "----------------"
-                    (800 1000 1200 1400 1600 1800 2000))))
+        ((daily today remove-match)
+         #("----------------" 0 16
+           (org-heading t))
+         (800 1000 1200 1400 1600 1800 2000)))
   
   ;; Display tags farther right
   (setq org-agenda-tags-column -102)
