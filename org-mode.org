@@ -4287,7 +4287,16 @@ Here is the =git-sync= script
 #+end_src
 
 * Change History - What's new
-This document is created using the publishing features of =org-mode=.
+This is version
+#+begin_src sh :exports results
+  #!/bin/sh
+  git describe --abbrev=4
+#+end_src
+
+#+results:
+: v1.0.0
+
+of this document is created using the publishing features of =org-mode=.
 
 The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
 [[http://doc.norang.ca/org-mode.org][plain text org file]].
