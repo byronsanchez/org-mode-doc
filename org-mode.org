@@ -602,10 +602,11 @@ maintaining my org-capture templates when I add a new org file.
 When a new task needs to be added I categorize it into one of a few
 things:
 
-- A phone call
-- A new task
-- A new note
-- an appointment or interruption
+- A phone call (p)
+- A new task (t)
+- A new note (n)
+- An interruption (j)
+- A new habit (h)
 
 and pick the appropriate capture task.
 
@@ -620,27 +621,43 @@ Here is my setup for org-capture
     ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
     (setq org-capture-templates (quote (("t" "todo" entry (file "~/git/org/refile.org") "* TODO %?
   %U
-  %a" :clock-in t :clock-resume t)
-                                        ("n" "note" entry (file "~/git/org/refile.org") "* %?                                                                            :NOTE:
+  %a
+  
+    %i" :clock-in t :clock-resume t)
+                                        ("n" "note" entry (file "~/git/org/refile.org") "* %? :NOTE:
   %U
   %a
-  :LOGBOOK:
-  :END:" :clock-in t :clock-resume t)
+  
+    %i" :clock-in t :clock-resume t)
                                         ("j" "Journal" entry (file+datetree "~/git/org/diary.org") "* %?
-  %U" :clock-in t :clock-resume t)
+  %U
+  
+    %i" :clock-in t :clock-resume t)
                                         ("w" "org-protocol" entry (file "~/git/org/refile.org") "* TODO Review %c
-  %U" :immediate-finish t)
+  %U
+    %i" :immediate-finish t)
                                         ("p" "Phone call" entry (file "~/git/org/refile.org") "* PHONE %(bh/phone-call) - %(gjg/bbdb-company) :PHONE:
   %U
   
+    %i
+  
   %?" :clock-in t :clock-resume t)
                                         ("h" "Habit" entry (file "~/git/org/refile.org") "* TODO %?
+  %U
+  %a
   SCHEDULED: %t
   :PROPERTIES:
   :STYLE: habit
-  :END:"))))
+  :END:
+  
+    %i"))))
 #+end_src
 
+The =%i= in the templates inserts any text in the kill ring as part of
+the capture task.  This is intentionally indented from the rest of the
+capture task details so that I can include text that starts with '* '
+in column 1 without generating a new headline.
+ 
 Capture mode now handles automatically clocking in and out of a
 capture task.  This all works out of the box now without special hooks.
 When I start a capture mode task the task is clocked in as specified
@@ -648,7 +665,7 @@ by =:clock-in t= and when the task is filed with =C-c C-c= the clock
 resumes on the original clocking task.
 
 The quick clocking in and out of capture mode tasks (often it takes
-less than a minute to capture some new task details) this can leave
+less than a minute to capture some new task details) can leave
 empty clock drawers in my tasks which aren't really useful.  Since I
 remove clocking lines with 0:00 length I end up with a clock drawer
 like this:
