@@ -3967,6 +3967,14 @@ I skip multiple timestamps for the same entry in the agenda view with the follow
 
 This removes the clutter of extra state change log details when multiple timestamps
 exist in a single entry.
+** Drop old style references in tables
+[2011-04-30 Sat 11:19]
+I drop the old A3/B4 style references from tables when editing with the
+following setting.
+
+#+begin_src emacs-lisp
+  (setq org-table-use-standard-references (quote from))
+#+end_src
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
