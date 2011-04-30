@@ -216,27 +216,18 @@ Here are some examples of my level 1 headings in
 - Research
 
 Each of these level 1 tasks normally has a =property drawer=
-specifying the archive location and category for any tasks in that
-tree.  Level 1 headings are set up like this:
+specifying the category for any tasks in that tree.  Level 1 headings
+are set up like this:
 
 : * Appointments
 :   :PROPERTIES:
 :   :CATEGORY: Appt
-:   :ARCHIVE:  %s_archive::* Appointments
 :   :END:      
 :   ...
 : * Miscellaneous
 :   :PROPERTIES:
 :   :CATEGORY: todo
-:   :ARCHIVE: %s_archive::* Miscellaneous
 :   :END:
-
-This ensures that any level 2 task that I archive from this heading
-(I archive by subtree) gets saved in the archive file under the
-appropriate level 1 heading so I can find it back again if needed.
-
-This keeps my main org files and my archives with basically the
-same structure.
 
 ** Key bindings
 :PROPERTIES:
