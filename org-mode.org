@@ -4029,6 +4029,21 @@ following setting.
 #+begin_src emacs-lisp
   (setq org-table-use-standard-references (quote from))
 #+end_src
+** Use system settings for file-application selection
+[2011-04-30 Sat 14:38]
+To get consistent applications for opening tasks I set the =org-file-apps= variable as follows:
+
+#+begin_src emacs-lisp
+  (setq org-file-apps (quote ((auto-mode . emacs)
+                              ("\\.mm\\'" . system)
+                              ("\\.x?html?\\'" . system)
+                              ("\\.pdf\\'" . system))))
+#+end_src
+
+This uses the entries defined in my system =mailcap= settings when
+opening file extensions.  This gives me consistent behaviour when
+opening an link to some HTML file with =C-c C-o= or when previewing an export.
+
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
