@@ -580,37 +580,9 @@ The tags are used to filter tasks in the agenda views conveniently.
                  ("CANCELLED"))
                 ("NEXT"
                  ("WAITING"))
-                ("STARTED"
-                 ("WAITING"))
                 ("DONE"
                  ("WAITING")
                  ("CANCELLED")))))
-#+end_src
-
-*** Using =STARTED= for clocked tasks
-=TODO= state tasks automatically change to =STARTED= whenever they
-are clocked in.  There are a few exceptions to this case
-- I don't want Capture tasks in a =STARTED= state immediately
-  since I clock the time it takes to record capture tasks.
-- I want to clock in some tasks without a keyword
-- I want to clock parent project tasks with incomplete subtasks
-
-If I clock in a task with a keyword of =TODO= it changes to =STARTED=
-otherwise the task is clocked in but the state is left alone.  This
-allows me to clock in tasks with no keyword (things like =**
-Organization=) and they never show up in my =NEXT= task list.  Project
-tasks with subtasks are never changed to =STARTED= when I clock them
-in.  I'm likely to create a new subtask that will become the =NEXT=
-task for this project or I'll mark the project complete.
-
-#+begin_src emacs-lisp :tangle yes
-  (defun bh/clock-in-to-started (kw)
-    "Switch task from TODO or NEXT to STARTED when clocking in.
-  Skips capture tasks and tasks with subtasks"
-    (if (and (member (org-get-todo-state) (list "TODO" "NEXT"))
-             (not (and (boundp 'org-capture-mode) org-capture-mode))
-             (not (bh/is-project-p)))
-        "STARTED"))
 #+end_src
 
 * Adding New Tasks Quickly with Org Capture
@@ -964,35 +936,30 @@ today's agenda and follow this order:
   - deadline in the past (it's already late)
   - deadline that is coming up soon
   - a scheduled task for today (or in the past)
-- pick a STARTED or NEXT task
-- If you run out of items to work on look for a STARTED or NEXT task in the current context
+- pick a NEXT task
+- If you run out of items to work on look for a NEXT task in the current context
   F12 n / RET
 
 *** Why keep it all on the =NEXT= list?
 I've moved to a more GTD way of doing things.  Now I just use a =NEXT=
-list.  I have two keywords that work as NEXT todo states: =NEXT= and
-=STARTED=.  If I clock a TODO keyword it changes to =STARTED= if that is
-appropriate automagically on clock in.  A =NEXT= task is something
-that is available to work on /now/, it is the next logical step in
-some project.
+list.  Only projects get tasks with NEXT keywords since stuck projects
+initiate the need for marking or creating NEXT tasks.  A =NEXT= task
+is something that is available to work on /now/, it is the next
+logical step in some project.
 
 I used to have a special keyword =ONGOING= for things that I do a lot
 and want to clock but never really start/end.  I had a special agenda
 view for =ONGOING= tasks that I would pull up to easily find the thing
 I want to clock.
 
-Since then I've moved away from using the =ONGOING= todo keyword.  If
-a task is clocked-in it automatically moves to the =STARTED= state
-from =TODO= or =NEXT= states and shows up on the =NEXT= task list
-without having to think about it.  Having an agenda view that shows
-=NEXT= tasks makes it easy to pick the thing to clock - and I don't
-have to remember if I need to look in the =ONGOING= list or the =NEXT=
-list when looking for the task to clock-in.  The =NEXT= list is
-basically 'what is current' - stuff I =STARTED= recently and need to
-finish and any task that moves a project forward.  I want to find the
-thing to work on as fast as I can and actually do work on it - not
-spend time hunting through my org files for the task that needs to be
-clocked-in.
+Since then I've moved away from using the =ONGOING= todo keyword.
+Having an agenda view that shows =NEXT= tasks makes it easy to pick
+the thing to clock - and I don't have to remember if I need to look in
+the =ONGOING= list or the =NEXT= list when looking for the task to
+clock-in.  The =NEXT= list is basically 'what is current' - any task
+that moves a project forward.  I want to find the thing to work on as
+fast as I can and actually do work on it - not spend time hunting
+through my org files for the task that needs to be clocked-in.
 
 To drop a task off the =NEXT= list simply move it back to the =TODO=
 state.
@@ -1866,8 +1833,8 @@ I'm using a new lazy project definition to mark tasks as projects.
 This requires zero effort from me.  Any task with a subtask using a
 todo keyword is a project.  Period.
 
-Projects are 'stuck' if they have no subtask with a =NEXT= or
-=STARTED= todo keyword task defined.
+Projects are 'stuck' if they have no subtask with a =NEXT= todo
+keyword task defined.
 
 Org-mode stuck projects lists projects that have no next task
 defined.  I normally review these in my weekly review and assign a
@@ -1901,24 +1868,75 @@ used by agenda views.
            (has-next (save-excursion
                        (forward-line 1)
                        (and (< (point) subtree-end)
-                            (re-search-forward "^\\*+ \\(NEXT\\|STARTED\\) " subtree-end t)))))
+                            (re-search-forward "^\\*+ NEXT " subtree-end t)))))
       (if (and (bh/is-project-p) (not has-next))
           nil ; a stuck project, has subtasks but no next task
         subtree-end)))
   
-  (defun bh/skip-non-projects ()
+  (defun bh/skip-non-project-trees ()
     "Skip trees that are not projects"
-    (let* ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (let ((subtree-end (save-excursion (org-end-of-subtree t))))
       (if (bh/is-project-p)
           nil
         subtree-end)))
   
+  (defun bh/skip-non-subprojects ()
+    "Skip trees that are not projects"
+    (let ((next-headline (save-excursion (outline-next-heading))))
+      (if (bh/is-subproject-p)
+          nil
+        next-headline)))
+  
+  (defun bh/skip-project-trees-and-habits ()
+    "Skip trees that are projects"
+    (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+      (cond
+       ((bh/is-project-p)
+        subtree-end)
+       ((org-is-habit-p)
+        subtree-end)
+       (t
+        nil))))
+  
   (defun bh/skip-projects ()
     "Skip trees that are projects"
-    (let* ((subtree-end (save-excursion (org-end-of-subtree t))))
-      (if (bh/is-project-p)
-          subtree-end
-        nil)))
+    (let ((next-headline (save-excursion (outline-next-heading))))
+      (cond
+       ((bh/is-project-p)
+        next-headline)
+       (t
+        nil))))
+  
+  (defun bh/skip-projects-and-habits ()
+    "Skip trees that are projects and tasks that are habits"
+    (let ((next-headline (save-excursion (outline-next-heading))))
+      (cond
+       ((bh/is-project-p)
+        next-headline)
+       ((org-is-habit-p)
+        next-headline)
+       (t
+        nil))))
+  
+  (defun bh/skip-non-archivable-tasks ()
+    "Skip trees that are not available for archiving"
+    (let ((next-headline (save-excursion (outline-next-heading))))
+      ;; Consider only tasks with done todo headings as archivable candidates
+      (if (member (org-get-todo-state) org-done-keywords)
+          (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+                 (daynr (string-to-int (format-time-string "%d" (current-time))))
+                 (a-month-ago (* 60 60 24 (+ daynr 1)))
+                 (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
+                 (this-month (format-time-string "%Y-%m-" (current-time)))
+                 (subtree-is-current (save-excursion
+                                       (forward-line 1)
+                                       (and (< (point) subtree-end)
+                                            (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
+            (if subtree-is-current
+                subtree-end ; Has a date in this month or last month, skip it
+              nil))  ; available to archive
+        (or next-headline (point-max)))))
+  
 #+end_src
 
 * Archiving
