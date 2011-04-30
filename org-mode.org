@@ -3957,6 +3957,16 @@ in the =org-mode-hook= to generate mail from an org-mode subtree.
   (require 'org-mime)
 #+end_src
 
+** Remove multiple state change log details from the agenda
+[2011-04-30 Sat 11:14]
+I skip multiple timestamps for the same entry in the agenda view with the following setting.
+
+#+begin_src emacs-lisp
+(setq org-agenda-skip-additional-timestamps-same-entry t)
+#+end_src
+
+This removes the clutter of extra state change log details when multiple timestamps
+exist in a single entry.
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
