@@ -412,6 +412,43 @@ Normal tasks go through the sequence =TODO= -> =NEXT= -> =DONE=.
 
 The following diagram shows the possible state transitions for a task.
 
+#+begin_src plantuml :file task_states.png
+[*] -> TODO
+TODO -> NEXT
+NEXT -> DONE
+DONE -> [*]
+TODO --> WAITING
+SOMEDAY --> CANCELLED
+SOMEDAY --> TODO
+NEXT --> WAITING
+WAITING --> NEXT
+WAITING --> TODO
+WAITING --> CANCELLED
+TODO --> DONE
+CANCELLED --> [*]
+TODO --> SOMEDAY
+TODO --> CANCELLED
+'[*] --> PHONE
+'PHONE --> [*]
+'[*] --> OPEN
+'OPEN --> CLOSED
+'CLOSED --> [*]
+TODO: t
+NEXT: n
+DONE: d
+WAITING:w
+note right of WAITING: Note records\nwhat it is waiting for
+SOMEDAY:S
+note right of CANCELLED: Note records\nwhy it was cancelled
+CANCELLED:c
+'OPEN:O
+'CLOSED:C
+WAITING --> DONE
+#+end_src
+
+#+results:
+[[file:task_states.png]]
+
 #+begin_src ditaa :file task_states.png :cmdline -r -s 0.8
      +--------+       +---------+       +---------+       +--------+
      |        |       |         |       |         |       |        |
@@ -442,47 +479,16 @@ The following diagram shows the possible state transitions for a task.
        ----=--- Optional state changes
 #+end_src
 
-#+results:
-[[file:task_states.png]]
-
-*** Quotation Task States
-I also do fixed-price quotation work.  Quotations use the following state transitions:
-
-#+begin_src ditaa :file quote_states.png :cmdline -r -s 0.8
-                                             +----------+
-                                             |          |
-                                         +-->+ EXPIRED  |
-                                         |   | cGRE     |
-                                         |   +----------+
-                                         |
-                                         |
-      +-------------+       +--------+   :   +----------+
-      |             |       |        +---+   |          |
-      |    QUOTE    +------>+ QUOTED +------>+ APPROVED |
-      | cRED        |       |  cC0C  +---+   | cGRE     |
-      +-------------+       +--+---+-+   :   +----------+
-                                         |
-                                         |
-                                         |   +----------+
-                                         |   |          |
-                                         +-->+ REJECTED |
-                                             | cGRE     |
-                                             +----------+
-#+end_src
-
-#+results:
-[[file:quote_states.png]]
-
 *** Purchase Order Task States
-Fixed price jobs normally have a =Purchase Order= associated with it which is used for billing the client.
+Paying projects have a =Purchase Order= associated with it which is used for billing the client.
 The following states track purchase orders.
 
-#+begin_src ditaa :file po_states.png :cmdline -r -s 0.8
-      +----------+       +---------+
-      |          |       |         |
-      |   OPEN   +------>+  CLOSED |
-      | cRED     |       |  cGRE   |
-      +----------+       +---------+
+#+begin_src plantuml :file po_states.png
+[*] -> OPEN
+OPEN -> CLOSED
+CLOSED -> [*]
+OPEN: O
+CLOSED: C
 #+end_src
 
 #+results:
@@ -2045,18 +2051,19 @@ HTML documents for viewing online conveniently.  Someday I'll get time
 to try out the other formats when I need them for something.
 
 ** org-babel Setup
-Now I've discovered org-babel and how easy it is to generate decent
-graphics using ditaa and graphviz.
+Org-babel makes it easy to generate decent graphics using external
+pacakges like ditaa, graphviz, and PlantUML, and others.
 
 The setup is really easy.  =ditaa= is provided with the org-mode
-source.  You'll have to install the =graphviz= package for your
-system.
+source.  You'll have to install the =graphviz= and =PlantUML= packages
+on your system.
 
 #+begin_src emacs-lisp :tangle yes
    (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+   (setq org-plantuml-jar-path "~/java/plantuml.jar")
    
    (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-   
+  
    (setq org-babel-load-languages (quote ((emacs-lisp . t)
                                           (dot . t)
                                           (ditaa . t)
@@ -2067,7 +2074,9 @@ system.
                                           (clojure . t)
                                           (sh . t)
                                           (ledger . t)
-                                          (org . t))))
+                                          (org . t)
+                                          (plantuml . t)
+                                          (latex . t))))
   
   ; Do not prompt to confirm evaluation
   ; This may be dangerous - make sure you understand the consequences
@@ -2093,41 +2102,14 @@ source.
 Artist mode makes it easy to create boxes and lines for ditaa
 graphics.
 
-The following graphic is one example of what you can do easily with
-ditaa:
-
-This
-
-: #+begin_src ditaa :file communication.png :cmdline -r -s 0.8
-:         +-----------+        +---------+  
-:         |    PLC    |        |         |                
-:         |  Network  +<------>+   PLC   +<---=---------+ 
-:         |    cRED   |        |  c707   |              | 
-:         +-----------+        +----+----+              | 
-:                                   ^                   | 
-:                                   |                   | 
-:                                   |  +----------------|-----------------+
-:                                   |  |                |                 |
-:                                   v  v                v                 v
-:           +----------+       +----+--+--+      +-------+---+      +-----+-----+       Windows clients
-:           |          |       |          |      |           |      |           |      +----+      +----+
-:           | Database +<----->+  Shared  +<---->+ Executive +<-=-->+ Operator  +<---->|cYEL| . . .|cYEL|
-:           |   c707   |       |  Memory  |      |   c707    |      | Server    |      |    |      |    |
-:           +--+----+--+       |{d} cGRE  |      +------+----+      |   c707    |      +----+      +----+
-:              ^    ^          +----------+             ^           +-------+---+
-:              |    |                                   |                        
-:              |    +--------=--------------------------+                    
-:              v                                                             
-:     +--------+--------+                                                         
-:     |                 |                                                         
-:     | Millwide System |            -------- Data ---------                      
-:     | cBLU            |            --=----- Signals ---=--                      
-:     +-----------------+                                                         
+The source for a ditaa graphic looks like this in org-mode:
+: #+begin_src ditaa :file some_filename.png :cmdline -r -s 0.8
+:   <context of ditaa source goes here>
 : #+end_src
 
-becomes this!
+Here's an example without the =#+begin_src= and =#+end_src= lines.
 
-#+begin_src ditaa :file communication.png :cmdline -r -s 0.8
+#+begin_src ditaa :file communication.png :cmdline -r -s 0.8 :exports both
         +-----------+        +---------+  
         |    PLC    |        |         |                
         |  Network  +<------>+   PLC   +<---=---------+ 
@@ -2160,53 +2142,12 @@ becomes this!
 ** Playing with graphviz
 [[http://www.graphviz.org/][Graphviz]] is another great tool for creating graphics in your documents.
 
-This
-
-: #+begin_src dot :file gv01.png :cmdline -Kdot -Tpng
-: digraph G {
-:   size="8,6"
-:   ratio=expand
-:   edge [dir=both]
-:   plcnet [shape=box, label="PLC Network"]
-:   subgraph cluster_wrapline {
-:     label="Wrapline Control System"
-:     color=purple
-:     subgraph {
-:     rank=same
-:     exec
-:     sharedmem [style=filled, fillcolor=lightgrey, shape=box]
-:     }
-:     edge[style=dotted, dir=none]
-:     exec -> opserver
-:     exec -> db
-:     plc -> exec
-:     edge [style=line, dir=both]
-:     exec -> sharedmem
-:     sharedmem -> db
-:     plc -> sharedmem
-:     sharedmem -> opserver
-:   }
-:   plcnet -> plc [constraint=false]
-:   millwide [shape=box, label="Millwide System"]
-:   db -> millwide
-: 
-:   subgraph cluster_opclients {
-:     color=blue
-:     label="Operator Clients"
-:     rankdir=LR
-:     labelloc=b
-:     node[label=client]
-:     client1 -> client2 -> client3 [constraint=false]
-:     opserver -> client1
-:     opserver -> client2
-:     opserver -> client3
-:   }
-: }
+The source for a graphviz graphic looks like this in org-mode:
+: #+begin_src dot :file some_filename.png :cmdline -Kdot -Tpng
+:   <context of graphviz source goes here>
 : #+end_src
 
-becomes this!
-
-#+begin_src dot :file gv01.png :cmdline -Kdot -Tpng
+#+begin_src dot :file gv01.png :cmdline -Kdot -Tpng :exports both
 digraph G {
   size="8,6"
   ratio=expand
@@ -2254,7 +2195,74 @@ digraph G {
 The =-Kdot= is optional (defaults to =dot=) but you can substitute other graphviz
 types instead here (ie. =twopi=, =neato=, =circo=, etc).
 
-** Publishing Single Files
+** Playing with PlantUML
+I have just started using [[http://plantuml.sourceforge.net/][PlantUML]] which is built on top of [[http://www.graphviz.org/][Graphviz]].
+I'm still experimenting with this but so far I like it a lot.  The
+todo state change diagrams in this document are created with PlantUML.
+
+The source for a PlantUML graphic looks like this in org-mode:
+: #+begin_src plantuml :file somefile.png
+:   <context of PlantUML source goes here>
+: #+end_src
+
+*** Sequence Diagram
+[2011-04-29 Fri 19:03]
+
+#+begin_src plantuml :file sequence.png :exports both
+title Example Sequence Diagram
+Server <- Client: Session Initiation
+note right: Client requests new session
+Server -> Client: Authorization Request
+note left: Server requires authentication
+Client -> Server: Authorization Response
+note right: Client provides authentication details
+Server -> Client: Session Token
+note left: Session established
+#+end_src
+
+#+results:
+[[file:sequence.png]]
+
+*** Usecase Diagram
+#+begin_src plantuml :file usecase.png :exports both
+LabUser --> (Runs Simulation)
+LabUser --> (Analyses Results)
+#+end_src
+
+#+results:
+[[file:usecase.png]]
+
+
+*** Object Diagram
+#+begin_src plantuml :file object.png :exports both
+Object1 <|-- Object2
+Object1: someVar
+Object1: execute()
+Object2: getState()
+Object2: setState()
+Object2: state
+#+end_src
+
+#+results:
+[[file:object.png]]
+
+*** State Diagram
+#+begin_src plantuml :file plantuml_example_states.png :exports both
+[*] --> Start
+Start -> State2
+State2 -> State3
+note right of State3: Notes can be\nattached to states
+State2 --> State4
+State4 -> Finish
+State3 --> Finish
+Finish --> [*]
+#+end_src
+
+#+results:
+[[file:plantuml_example_states.png]]
+
+
+*** Publishing Single Files
 Org-mode exports the current file to one of the standard formats by
 invoking an export function.  The standard key binding for this is
 =C-c C-e= followed by the key for the type of export you want.
