@@ -1138,7 +1138,7 @@ I have the following org-mode settings for clocking:
   (setq org-clock-in-switch-to-state nil)
   ;; Separate drawers for clocking and logs
   (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
-  ;; Save clock data in the CLOCK drawer and state changes and notes in the LOGBOOK drawer
+  ;; Save clock data and state changes and notes in the LOGBOOK drawer
   (setq org-clock-into-drawer t)
   ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
   (setq org-clock-out-remove-zero-time-clocks t)
