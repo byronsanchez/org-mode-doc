@@ -412,6 +412,51 @@ Normal tasks go through the sequence =TODO= -> =NEXT= -> =DONE=.
 
 The following diagram shows the possible state transitions for a task.
 
+#+begin_src plantuml :file normal_task_states.png
+[*] -> TODO
+TODO -> DONE
+DONE -> [*]
+TODO --> WAITING
+SOMEDAY --> CANCELLED
+SOMEDAY --> TODO
+WAITING --> TODO
+WAITING --> CANCELLED
+TODO --> DONE
+CANCELLED --> [*]
+TODO --> SOMEDAY
+TODO --> CANCELLED
+'[*] --> PHONE
+'PHONE --> [*]
+'[*] --> OPEN
+'OPEN --> CLOSED
+'CLOSED --> [*]
+TODO: t
+DONE: d
+WAITING:w
+note right of WAITING: Note records\nwhat it is waiting for
+SOMEDAY:S
+note right of CANCELLED: Note records\nwhy it was cancelled
+CANCELLED:c
+'OPEN:O
+'CLOSED:C
+WAITING --> DONE
+#+end_src
+
+#+results:
+[[file:normal_task_states.png]]
+
+*** Project Task States
+I use a lazy project definition.  I don't like to bother with manually
+stating 'this is a project' and 'that is not a project'.  For me a project
+definition is really simple.  If a task has subtasks with a todo keyword
+then it's a project.  That's it.
+
+Projects can be defined at any level - just create a task with a todo
+state keyword that has at least one subtask with a todo state keyword
+and you have a project.  Projects use the same todo keywords as
+regular tasks with one exception - one subtask of a project needs to
+be marked =NEXT= so the project is not on the stuck projects list.
+
 #+begin_src plantuml :file task_states.png
 [*] -> TODO
 TODO -> NEXT
@@ -449,36 +494,6 @@ WAITING --> DONE
 #+results:
 [[file:task_states.png]]
 
-#+begin_src ditaa :file task_states.png :cmdline -r -s 0.8
-     +--------+       +---------+       +---------+       +--------+
-     |        |       |         |       |         |       |        |
-  +--+  TODO  +------>+  NEXT   +------>+ STARTED +------>+  DONE  |
-  |  | cRED   |       |  cBLU   |       |  cYEL   |       | cGRE   |
-  |  +--+-+---+       +--+---+--+       +--+---+--+       +--------+
-  |     ^ ^              ^   |             ^   |
-  |     | |              |   |             |   |
-  |     | |+--------=----|-=-|-----=-------+   |
-  |     | ||             |   |               +=+
-  |     | :| +------=----+   +------=------+ |
-  |     : +--|----=-------+                | |
-  |     |  | |            |                | |
-  |     v  v v            v                v v
-  |  +--+----+-+     +----+----+     +-----+-----+
-  |  |         |     |         |     |           |
-  |  | WAITING |     | SOMEDAY |     | CANCELLED |
-  |  |   cF60  |     |  cC0C   |     |   cGRE    |
-  |  +----+----+     +---+--+--+     +-----+--+--+
-  |       ^              ^  |              ^  ^
-  |       |              |  |              |  |
-  |       +--=-----------+  +-=------------+  |
-  |                                           |
-  +---=---------------------------------------+
-  
-  
-       -------- Normal state changes
-       ----=--- Optional state changes
-#+end_src
-
 *** Purchase Order Task States
 Paying projects have a =Purchase Order= associated with it which is used for billing the client.
 The following states track purchase orders.
@@ -493,19 +508,6 @@ CLOSED: C
 
 #+results:
 [[file:po_states.png]]
-
-*** Project Task States
-I use a lazy project definition.  I don't like to bother with manually
-stating 'this is a project' and 'that is not a project'.  For me a project
-definition is really simple.  If a task has subtasks with a todo keyword
-then it's a project.  That's it.  I generally define tasks at level 2 so most
-of my 'projects' live at heading level 2 under some level 1 category task.
-The only exception to this is refile tasks which live at level 1 since there
-is no heading category task at level 1 in refile.org.
-
-I don't want to see hundreds of tasks when I look for the next task to work on.
-My =NEXT= task list now only shows project related tasks and keeps me focused on 
-more important work.
 
 *** Phone Calls
 Telephone calls are special.  They are created in a done state by a capture task.
