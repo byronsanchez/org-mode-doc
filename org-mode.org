@@ -736,7 +736,7 @@ targets.
 
 I've recently moved to using IDO to complete targets directly.  I find
 this to be faster than my previous complete in steps setup.  At first
-I didn't like IDO but after review the documentation again and
+I didn't like IDO but after reviewing the documentation again and
 learning about =C-SPC= to limit target searches I find it is much
 better than my previous complete-in-steps setup.  Now when I want to
 refile something I do =C-c C-w= to start the refile process, then type
@@ -751,8 +751,9 @@ Here is my refile configuration:
   ; Use IDO for target completion
   (setq org-completion-use-ido t)
   
-  ; Targets include this file and any file contributing to the agenda - up to 5 levels deep
-  (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))
+  ; Targets include this file and any file contributing to the agenda - up to 2 levels deep
+  (setq org-refile-targets (quote ((nil :maxlevel . 2)
+                                   (org-agenda-files :maxlevel . 2))))
   
   ; Targets start with the file name - allows creating level 1 tasks
   (setq org-refile-use-outline-path (quote file))
