@@ -1169,7 +1169,10 @@ I have the following org-mode settings for clocking:
         (org-clock-in))))
   
   (defun bh/clock-out-maybe ()
-    (when (and bh/keep-clock-running (not org-clock-clocking-in) (marker-buffer org-clock-default-task))
+    (when (and bh/keep-clock-running
+               (not org-clock-clocking-in)
+               (marker-buffer org-clock-default-task)
+               (not org-clock-resolving-clocks-due-to-idleness))
       (bh/clock-in-default-task)))
   
   (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
