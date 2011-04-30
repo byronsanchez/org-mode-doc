@@ -507,6 +507,17 @@ I don't want to see hundreds of tasks when I look for the next task to work on.
 My =NEXT= task list now only shows project related tasks and keeps me focused on 
 more important work.
 
+*** Phone Calls
+Telephone calls are special.  They are created in a done state by a capture task.
+The time of the call is recorded for as long as the capture task is active.  If I need 
+to look up other details and want to close the capture task early I can just 
+=C-c C-c= to close the capture task (stopping the clock) and then =f9 SPC= to resume
+the clock in the phone call while I do other things
+#+begin_src plantuml :file phone_states.png
+[*] -> PHONE
+PHONE -> [*]
+#+end_src
+
 ** Fast Todo Selection
 Fast todo selection allows changing from any task todo state to any
 other state directly by selecting the appropriate key from the fast
