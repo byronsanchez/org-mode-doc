@@ -1607,6 +1607,7 @@ be at the farm to make the call.
                               ("QUOTE" . ?q)
                               ("WAITING" . ?w)
                               ("PERSONAL" . ?P)
+                              ("WORK" . ?W)
                               ("FARM" . ?F)
                               ("ORG" . ?O)
                               ("NORANG" . ?N)
