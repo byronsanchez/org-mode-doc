@@ -3663,20 +3663,18 @@ I have the following speed commands set up in addition to the
 defaults.  I don't use priorities so I override the default settings
 for the 1, 2, and 3 keys.
 #+begin_src emacs-lisp :tangle yes
-    (setq org-use-speed-commands t)
-    (setq org-speed-commands-user (quote (("0" . delete-window)
-                                          ("1" . delete-other-windows)
-                                          ("2" . split-window-vertically)
-                                          ("3" . split-window-horizontally)
-                                          ("h" . hide-other)
-                                          ("k" . org-kill-note-or-show-branches)
-                                          ("r" . org-reveal)
-                                          ("s" . org-save-all-org-buffers)
-                                          ("z" . org-add-note)
-                                          ("c" . self-insert-command)
-                                          ("C" . self-insert-command)
-                                          ("J" . org-clock-goto))))
-  
+  (setq org-use-speed-commands t)
+  (setq org-speed-commands-user (quote (("1" . delete-other-windows)
+                                        ("2" . split-window-vertically)
+                                        ("3" . split-window-horizontally)
+                                        ("h" . hide-other)
+                                        ("k" . org-kill-note-or-show-branches)
+                                        ("r" . org-reveal)
+                                        ("s" . org-save-all-org-buffers)
+                                        ("z" . org-add-note)
+                                        ("c" . self-insert-command)
+                                        ("C" . self-insert-command)
+                                        ("J" . org-clock-goto))))  
 #+end_src
 
 The variable =org-speed-commands-default= sets a lot of useful
