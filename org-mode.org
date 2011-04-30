@@ -2925,10 +2925,10 @@ Here are the =.emacs= settings:
   
   ;; Sorting order for tasks on the agenda
   (setq org-agenda-sorting-strategy
-        (quote ((agenda habit-down time-up user-defined-up priority-down category-keep)
-                (todo priority-down category-keep)
-                (tags priority-down category-keep)
-                (search category-keep))))
+        (quote ((agenda habit-down time-up user-defined-up priority-down effort-up category-keep)
+                (todo category-up priority-down effort-up)
+                (tags category-up priority-down effort-up)
+                (search category-up))))
   
   ;; Start the weekly agenda today
   (setq org-agenda-start-on-weekday nil)
