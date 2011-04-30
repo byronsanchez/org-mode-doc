@@ -3200,15 +3200,18 @@ tasks in odd-levels-only to be all that helpful.
 #+end_src
 *** Handling blank lines
 Blank lines are evil :).  They keep getting inserted in between
-headlines and I never want to see them in collapsed (contents) views.
+headlines and I don't want to see them in collapsed (contents) views.
 When I use =TAB= to fold (cycle) tasks I don't want to see any blank
-lines.
+lines but the default =org-cycle-separate-lines= setting hides single
+blank lines and reveals where extra empty lines are created in the
+document.  This gives me an easy way to identify and eradicate these
+evil blank lines.
 
-The following setting hides all blank lines inside folded contents of
+The following setting hides single blank lines inside folded contents of
 a tasks:
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-cycle-separator-lines 0)
+  (setq org-cycle-separator-lines 2)
 #+end_src
 
 I find extra blank lines in lists and headings a bit of a nuisance.
