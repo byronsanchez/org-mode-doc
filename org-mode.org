@@ -816,78 +816,82 @@ Phone call tasks collect in =refile.org= and are later refiled to the
 appropriate location.  Some phone calls are billable and we want these
 tracked in the appropriate category.
 * Custom agenda views
-I have 11 custom agenda views defined.  Most of my old custom agenda
-views were rendered obsolete when filtering functionality was added to
-the agenda in newer versions of =org-mode=.
+I now have one block agenda view that has everything on it.  I used to have
+11 custom agenda views defined and this required a weekly review that visited
+most of these agenda views.  Now I'm striving to simplify my layout with 
+everything at my fingertips in a single agenda.
+
+Most of my old custom agenda views were rendered obsolete when
+filtering functionality was added to the agenda in newer versions of
+=org-mode= and now with block agenda functionality I can combine
+everything into a single view.
 
 Custom agenda views are used for:
-1. Finding tasks waiting on something
-2. Finding tasks to be refiled
-3. Finding notes
-4. Finding =NEXT= and =STARTED= tasks to work on
-5. Reviewing projects
-6. Reviewing other non-project tasks
-7. Findings tasks to be archived
-8. Viewing habits
-9. Finding stuck projects
-10. Setting the default clocking task for punching in
-11. Show all TODO state tasks
-
-Most of the agenda view filter out tasks which are scheduled, have a
-deadline, or another timestamp.  When a task is shown all subtasks are
-filtered out of the list to keep the list manageable.  Occasionally I
-need to find a task in my files and I don't want to worry about if it
-has a timestamp or not -- so I use the show all TODO state tasks (=*=)
-and then search in the list for what I need.
+- Single block agenda shows the following
+  - overview of today
+  - Finding tasks to be refiled
+  - Finding =NEXT= tasks to work on
+  - Finding stuck projects
+  - Reviewing projects
+  - Show all TODO state tasks
+  - Finding tasks waiting on something
+  - Findings tasks to be archived
+- Finding notes
+- Viewing habits
 
 ** Setup
 #+begin_src emacs-lisp :tangle yes
+  ;; Do not dim blocked tasks
+  (setq org-agenda-dim-blocked-tasks nil)
+  
+  ;; Custom agenda command definitions
   (setq org-agenda-custom-commands
-        (quote (("w" "Waiting and Postponed tasks" todo "WAITING|SOMEDAY"
-                 ((org-agenda-overriding-header "Waiting Tasks")))
-                ("r" "Refile New Notes and Tasks" tags "LEVEL=1+REFILE"
-                 ((org-agenda-todo-ignore-with-date nil)
-                  (org-agenda-todo-ignore-deadlines nil)
-                  (org-agenda-todo-ignore-scheduled nil)
-                  (org-agenda-todo-ignore-timestamp nil)
-                  (org-agenda-overriding-header "Tasks to Refile")))
-                ("N" "Notes" tags "NOTE"
-                 ((org-agenda-overriding-header "Notes")))
-                ("n" "Next and Started tasks" tags-todo "-WAITING-CANCELLED/!NEXT|STARTED"
-                 ((org-agenda-overriding-header "Next Tasks")))
-                ("p" "Projects" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED-WAITING-SOMEDAY"
-                 ((org-agenda-skip-function 'bh/skip-non-projects)
-                  (org-agenda-overriding-header "Projects")))
-                ("o" "Other (Non-Project) tasks" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED-WAITING-SOMEDAY"
-                 ((org-agenda-skip-function 'bh/skip-projects)
-                  (org-agenda-overriding-header "Other Non-Project Tasks")))
-                ("A" "Tasks to be Archived" tags "LEVEL=2-REFILE/DONE|CANCELLED"
-                 ((org-agenda-overriding-header "Tasks to Archive")
-                  (org-agenda-skip-function 'bh/skip-non-archivable-tasks)))
+        (quote (("n" "Notes" tags "NOTE"
+                 ((org-agenda-overriding-header "Notes")
+                  (org-tags-match-list-sublevels t)))
                 ("h" "Habits" tags-todo "STYLE=\"habit\""
-                 ((org-agenda-todo-ignore-with-date nil)
-                  (org-agenda-todo-ignore-scheduled nil)
-                  (org-agenda-todo-ignore-deadlines nil)
-                  (org-agenda-overriding-header "Habits")))
-                ("#" "Stuck Projects" tags-todo "LEVEL=2-REFILE|LEVEL=1+REFILE/!-DONE-CANCELLED"
-                 ((org-agenda-skip-function 'bh/skip-non-stuck-projects)
-                  (org-agenda-overriding-header "Stuck Projects")))
-                ("c" "Select default clocking task" tags "LEVEL=2-REFILE"
-                 ((org-agenda-skip-function
-                   '(org-agenda-skip-subtree-if 'notregexp "^\\*\\* Organization"))
-                  (org-agenda-overriding-header "Set default clocking task with C-u C-u I")))
-                ("*" "All open TODO tasks" tags-todo "-CANCELLED"
-                 ((org-agenda-overriding-header "All Open TODO tasks")
-                  (org-agenda-todo-ignore-with-date nil)
-                  (org-agenda-todo-ignore-scheduled nil)
-                  (org-agenda-todo-ignore-deadlines nil)
-                  (org-agenda-todo-ignore-timestamp nil)
-                  (org-agenda-todo-list-sublevels t)
-                  (org-tags-match-list-sublevels 'indented))))))
+                 ((org-agenda-overriding-header "Habits")))
+                ("a" "Agenda"
+                 ((agenda "" nil)
+                  (tags "LEVEL=1+REFILE"
+                        ((org-agenda-overriding-header "Notes and Tasks to Refile")
+                         (org-agenda-overriding-header "Tasks to Refile")))
+                  (tags-todo "-WAITING-CANCELLED/!NEXT"
+                             ((org-agenda-overriding-header "Next Tasks")
+                              (org-agenda-skip-function 'bh/skip-projects)
+                              (org-agenda-todo-ignore-scheduled t)
+                              (org-agenda-todo-ignore-deadlines t)
+                              (org-tags-match-list-sublevels t)
+                              (org-agenda-sorting-strategy
+                               '(effort-up category-keep))))
+                  (tags-todo "/!"
+                             ((org-agenda-overriding-header "Stuck Projects")
+                              (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
+                  (tags-todo "/!"
+                             ((org-agenda-overriding-header "Projects")
+                              (org-agenda-skip-function 'bh/skip-non-project-trees)
+                              (org-agenda-sorting-strategy
+                               '(category-keep))))
+                  (tags-todo "/!-NEXT-WAITING"
+                             ((org-agenda-overriding-header "Tasks")
+                              (org-agenda-skip-function 'bh/skip-projects-and-habits)
+                              (org-agenda-sorting-strategy
+                               '(category-keep))
+                              (org-tags-match-list-sublevels 'indented)
+                              (org-agenda-todo-ignore-scheduled t)
+                              (org-agenda-todo-ignore-deadlines t)))
+                  (todo "WAITING|SOMEDAY"
+                        ((org-agenda-overriding-header "Waiting and Postponed tasks")))
+                  (tags "-REFILE/"
+                        ((org-agenda-overriding-header "Tasks to Archive")
+                         (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))
+                 nil))))
 #+end_src
 
-When searching for tasks in the agenda I disable display of child
-tasks with the following setting:
+I generally work top-down on the agenda.  Things with deadlines and
+scheduled dates (planned to work on today show up in the agenda at the
+top.    When searching for tasks in the agenda I disable display of
+child tasks with the following setting:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-tags-match-list-sublevels nil)
@@ -899,26 +903,22 @@ visiting it in the org buffer.
 
 My day goes generally like this:
 
-- Punch in (start the clock)
-- Look at my agenda =F12 a=
-  - make a note of anything important to deal with today
+- Punch in (this starts the clock and shows the block agenda)
+- Look at the agenda and make a mental note of anything important to deal with today
 - Read email and news
   - create notes, and tasks for things that need responses with org-capture
 - Check refile tasks and respond to emails
-- Look at my agenda and knock off tasks scheduled for today
-  - Clock it in (=I= in the agenda or on the beginning of a task headline 
-    - this changes =TODO= state tasks to =STARTED= when there are no unfinished subtasks
+- Look at my agenda and work on important tasks for today
+  - Clock it in
   - Work on it until it is =DONE= or it gets interrupted
 - work on tasks
-- Punch out and go for lunch
-- Punch in and continue work for the afternoon
-- work on tasks
-- Check today's time log report and refile tasks with clocked time
-  - =F12 a R= - any tasks in =refile.org= should be moved to the appropriate file
-  - =F12 r= to get to refile tasks
+- Make journal entries (=C-M-r j=) for interruptions, lunch, etc
+- work on more tasks
+- Refile tasks to empty the list
   - Tag files to be filed with =m= collecting all tasks for the same target
   - Bulk refile the tasks to the target location with =B r=
-  - repeat until the agenda timeclock report has all of the time in project files
+  - Repeat (or refile individually with =C-c C-w=) until all refile tasks are gone
+- Mark habits done today as DONE
 - Punch out (stop the clock)
 
 ** What do I work on next?
@@ -1844,15 +1844,29 @@ helps to keep projects moving forward.
 I use a custom agenda view that overrides the default
 =org-stuck-projects= definition to find stuck projects.
 
-The stuck project view is available with =F12 #=.
+The default stuck project view is available with =F12 #=.  My customized
+stuck projects view is part of my block agenda.
 
 I have the following helper functions defined for projects.  These are
 used by agenda views.
 #+begin_src emacs-lisp :tangle yes
+  (defun bh/is-subproject-p ()
+    "Any task which is a subtask of another project"
+    (let ((is-subproject)
+          (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
+      (save-excursion
+        (while (and (not is-subproject) (org-up-heading-safe))
+          (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
+            (setq is-subproject t))))
+      (and is-a-task is-subproject)))
+  
   (defun bh/is-project-p ()
-    "Any task with a todo keyword subtask"
+    "Any task with a todo keyword subtask and is not a subtask of another project
+  This does not support projects with subprojects"
     (let ((has-subtask)
-          (subtree-end (save-excursion (org-end-of-subtree t))))
+          (subtree-end (save-excursion (org-end-of-subtree t)))
+          (is-subproject (bh/is-subproject-p))
+          (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
       (save-excursion
         (forward-line 1)
         (while (and (not has-subtask)
@@ -1860,7 +1874,7 @@ used by agenda views.
                     (re-search-forward "^\*+ " subtree-end t))
           (when (member (org-get-todo-state) org-todo-keywords-1)
             (setq has-subtask t))))
-      has-subtask))
+      (and is-a-task has-subtask (not is-subproject))))
   
   (defun bh/skip-non-stuck-projects ()
     "Skip trees that are not stuck projects"
@@ -2779,26 +2793,31 @@ The clock modeline time is also shown with a reverse background.
   
 #+end_src
 
-*** Remove tasks with dates from the global todo lists
+*** Keep tasks with timestamps visible on the global todo lists
 Tasks with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show up
-in the agenda when appropriate.  I use the following settings to
-remove these tasks from the global todo lists when they are too far in
-the future to be interesting now.  The idea here is the agenda has
-date-related items and the global todo lists have everything else.
-Keeping tasks on one list only prevents having to review tasks more
-than once when browsing the lists.
+in the agenda when appropriate.  The block agenda view (=F12 a=) tries
+to keep tasks showing up only in one location (either in the calendar
+or other todo lists in later sections of the block agenda.)  I now
+rarely use the global todo list search in org-mode (=F12 t=, =F12 m=)
+and when I do I'm trying to find a specific task quickly.  These lists
+now include _everything_ so I can just search for the item I want and
+move on.
 
-Tasks with dates are scheduled into the future sometime and you don't
-need to deal with them until the date approaches.
+The block agenda prevents display of tasks with deadlines or scheduled
+dates in the future so you can safely ignore these until the
+appropriate time.
 #+begin_src emacs-lisp :tangle yes
-  ;; Keep tasks with dates off the global todo lists
+  ;; Keep tasks with dates on the global todo lists
   (setq org-agenda-todo-ignore-with-date nil)
   
-  ;; Allow deadlines which are due soon to appear on the global todo lists
-  (setq org-agenda-todo-ignore-deadlines (quote far))
+  ;; Keep tasks with deadlines on the global todo lists
+  (setq org-agenda-todo-ignore-deadlines nil)
   
-  ;; Keep tasks scheduled in the future off the global todo lists
-  (setq org-agenda-todo-ignore-scheduled (quote future))
+  ;; Keep tasks with scheduled dates on the global todo lists
+  (setq org-agenda-todo-ignore-scheduled nil)
+  
+  ;; Keep tasks with timestamps on the global todo lists
+  (setq org-agenda-todo-ignore-timestamp nil)
   
   ;; Remove completed deadline tasks from the agenda view
   (setq org-agenda-skip-deadline-if-done t)
@@ -3410,10 +3429,9 @@ changing a scheduled item to a new date.
 My =org-todo-keywords= are set as follows:
 
 #+begin_src emacs-lisp :tangle no
-  (setq org-todo-keywords
-        (quote ((sequence "TODO(t!)" "NEXT(n!)" "WAITING(w@/!)" "SOMEDAY(s!)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
-                (sequence "QUOTE(Q!)" "QUOTED(D!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
-                (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
+  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+                                  (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)" "PHONE")
+                                  (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
 #+end_src
 
 This adds a log entry whenever a task moves to any of the following states:
@@ -3421,16 +3439,14 @@ This adds a log entry whenever a task moves to any of the following states:
 - to =WAITING= status (with a note) or out of =WAITING= status
 - to =SOMEDAY= status
 - to =CANCELLED= status (with a note) or out of =CANCELLED= status
-- to =QUOTE= status
-- to =QUOTED= status
-- to =APPROVED= status (with a note)
-- to =EXPIRED= status (with a note)
-- to =REJECTED= status (with a note)
+- to =OPEN= status
+- to =CLOSED= status
 
 I keep clock times and states in the =LOGBOOK= drawer to keep my tasks
 uncluttered.  If a task is WAITING then the reason for why it is
 waiting is near the top of the LOGBOOK and unfolding the LOGBOOK
-drawer provides that information.
+drawer provides that information.  From the agenda simply hitting
+=SPC= on the task will reveal the LOGBOOK drawer.
 ** Limiting time spent on tasks
 :PROPERTIES:
 :CUSTOM_ID: LimitingTimeSpentOnTasks
