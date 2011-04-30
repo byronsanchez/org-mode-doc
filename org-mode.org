@@ -1061,28 +1061,28 @@ every major context I clock time in.
 My org files look like this:
 
 =todo.org=:
-: #+FILETAGS: HOME
+: #+FILETAGS: PERSONAL
 : ...
 : * Miscellaneous						       :misc:
 : ** Organization
 : ...
 
 =org.org=:
-: #+FILETAGS: ORG
+: #+FILETAGS: ORG WORK
 : ...
 : * Tuning 							     :tuning:
 : ** Organization
 : ...
 
 =norang.org=:
-: #+FILETAGS: NORANG
+: #+FILETAGS: NORANG WORK
 : ...
 : * Administration						      :admin:
 : ** Organization
 : ...
 
 =someclient.org=:
-: #+FILETAGS: SOMECLIENT
+: #+FILETAGS: SOMECLIENT WORK NORANG
 : ...
 : * Administration						      :admin:
 : ** Organization
@@ -1626,15 +1626,15 @@ Filetags look like this:
 I have the following =#+FILETAGS:= entries in my org-mode files:
 
 *** Non-work related org-mode files
-| File         | Tags         |
-|--------------+--------------|
-| todo.org     | HOME         |
-| gsoc2009.org | GSOC HOME    |
-| bzflag.org   | BZFLAG @home |
-| git.org      | GIT          |
-| org.org      | ORG          |
-| mark.org     | MARK         |
-| farm.org     | FARM         |
+| File         | Tags                  |
+|--------------+-----------------------|
+| todo.org     | PERSONAL              |
+| gsoc2009.org | GSOC PERSONAL         |
+| bzflag.org   | BZFLAG @home PERSONAL |
+| git.org      | GIT WORK              |
+| org.org      | ORG WORK              |
+| mark.org     | MARK PERSONAL         |
+| farm.org     | FARM PERSONAL         |
 
 *** Work related org-mode files
 | File        | Tags            |
@@ -2858,7 +2858,7 @@ functions instead.  Inserting entries with =i= in the emacs agenda
 creates date entries in the =~/git/org/diary.org= file.
 
 I include holidays from the calendar in my =todo.org= file as follows:
-: #+FILETAGS: HOME
+: #+FILETAGS: PERSONAL
 : * Appointments
 :   :PROPERTIES:
 :   :CATEGORY: Appt
