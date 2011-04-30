@@ -1165,8 +1165,8 @@ I have the following org-mode settings for clocking:
   (setq org-clock-history-length 28)
   ;; Resume clocking task on clock-in if the clock is open
   (setq org-clock-in-resume t)
-  ;; Change task state to NEXT when clocking in
-  (setq org-clock-in-switch-to-state (quote bh/clock-in-to-started))
+  ;; Do not change task states when clocking in
+  (setq org-clock-in-switch-to-state nil)
   ;; Separate drawers for clocking and logs
   (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
   ;; Save clock data in the CLOCK drawer and state changes and notes in the LOGBOOK drawer
@@ -1238,9 +1238,8 @@ previously clocked task.
 
 ** Clocking in
 When I start or continue working on a task I clock it in with =C-c C-x
-C-i= (or just =I= in the agenda or speed key setting).  This changes
-the task state from =TODO= to =STARTED= and starts the clock for this
-task.
+C-i= (or just =I= in the agenda or speed key setting) or =f9 I=.
+starts the clock for this task.
 
 *** Setting a default clock task
 
