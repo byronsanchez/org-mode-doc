@@ -1423,19 +1423,14 @@ To get a report of time spent on tasks for =XYZ.org= you simply visit
 the =XYZ.org= file and run an agenda clock report for the last month
 with =F12 < a v m b R=.  This limits the agenda to this one file,
 shows the agenda for a full month, moves to last month, and generates
-a clock report.  Just scroll down to the end of the agenda to see the
-report.
+a clock report.
 
-I export the agenda to a text file with =C-x C-w XYZ.txt= so I can cut
-and paste the report and save it as supporting information with the
-invoice.
-
-My agenda org clock report settings show 2 levels of detail and do not
-show links so that they are easier to cut and paste into other
-applications.
+My agenda org clock report settings show 5 levels of detail with links
+to the tasks.
 #+begin_src emacs-lisp :tangle yes
-  ;; Agenda clock report parameters (no links, 2 levels deep)
-  (setq org-agenda-clockreport-parameter-plist (quote (:link nil :maxlevel 2)))
+  ;; Agenda clock report parameters
+  (setq org-agenda-clockreport-parameter-plist
+        (quote (:link t :maxlevel 5 :fileskip0 t :compact t))
 #+end_src
 
 I used to have a monthly clock report dynamic block in each project
