@@ -3695,26 +3695,42 @@ people during meeting notes.
   (setq require-final-newline nil)
 #+end_src
    
-** Insert inactive timestamps
-I insert inactive timestamps when working on org-mode files.  Normally
-I use this to track when a task was created.
+** Insert inactive timestamps and exclude from export
+I insert inactive timestamps when working on org-mode files.
 
-For capture tasks the timestamp is in the capture template but for
-regular structure editing I normally want a clean outline without
-timestamps.  I find this easier to work with when brainstorming and
-generating the outline structure for a project.  For this reason I've
-turned off the hook I used to use to automatically insert a timestamp
-when creating headlines.
+For remember tasks the timestamp is in the remember template but for regular
+structure editing I want the timestamp automatically added when I create the headline.
 
-I have the following function bound to the key sequence =f9 t= to
-insert an inactive timestamp in the text on demand.
+I have a function that is run by an org-mode hook to automatically insert the inactive
+timestamp whenever a headline is created.
 
 #+begin_src emacs-lisp :tangle yes
   (defun bh/insert-inactive-timestamp ()
     (interactive)
     (org-insert-time-stamp nil t t nil nil nil))
   
+  (add-hook 'org-insert-heading-hook 'bh/insert-inactive-timestamp)
+#+end_src
+   
+Everytime I create a heading with =M-RET= or =M-S-RET= the hook invokes the function
+and it inserts an inactive timestamp like this
+
+: ** <point here>
+:    [2009-11-22 Sun 18:45]
+
+This keeps an automatic record of when tasks are created which I find very useful.
+
+I also have a short cut key defined to invoke this function on demand so that I can 
+insert the inactive timestamp anywhere on demand.
+
+#+begin_src emacs-lisp
   (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
+#+end_src
+
+To prevent the timestamps from being exported in documents I use the following setting
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-export-with-timestamps nil)
 #+end_src
 
 ** Return follows links
