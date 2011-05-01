@@ -390,6 +390,7 @@ Normal tasks go through the sequence =TODO= -> =DONE=.
 The following diagram shows the possible state transitions for a task.
 
 #+begin_src plantuml :file normal_task_states.png
+title Normal Task States
 [*] -> TODO
 TODO -> DONE
 DONE -> [*]
@@ -398,7 +399,6 @@ SOMEDAY --> CANCELLED
 SOMEDAY --> TODO
 WAITING --> TODO
 WAITING --> CANCELLED
-TODO --> DONE
 CANCELLED --> [*]
 TODO --> SOMEDAY
 TODO --> CANCELLED
@@ -435,6 +435,7 @@ as regular tasks with one exception - one subtask of a project needs
 to be marked =NEXT= so the project is not on the stuck projects list.
 
 #+begin_src plantuml :file task_states.png
+title Project Task States
 [*] -> TODO
 TODO -> NEXT
 NEXT -> DONE
@@ -476,6 +477,7 @@ Paying projects have a =Purchase Order= associated with it which is used for bil
 The following states track purchase orders.
 
 #+begin_src plantuml :file po_states.png
+title Purchase Order States
 [*] -> OPEN
 OPEN -> CLOSED
 CLOSED -> [*]
@@ -493,9 +495,13 @@ to look up other details and want to close the capture task early I can just
 =C-c C-c= to close the capture task (stopping the clock) and then =f9 SPC= to resume
 the clock in the phone call while I do other things.
 #+begin_src plantuml :file phone_states.png
+title Phone Call Task State
 [*] -> PHONE
 PHONE -> [*]
 #+end_src
+
+#+results:
+[[file:phone_states.png]]
 
 ** Fast Todo Selection
 Fast todo selection allows changing from any task todo state to any
