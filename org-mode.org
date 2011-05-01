@@ -1043,9 +1043,9 @@ My clocking setup basically works like this:
 - Punch out (stop the clock)
 
 I'm free to change the default task multiple times during the day.  If
-I'm working on =Project X= then I can make the top-level =Project X=
-task the default and all clocked time goes on that project until I
-either punch out or change to some other default task.
+I'm punch-in on a task in =Project X= then the top-level =Project X=
+task automatically becomes the default task and all clocked time goes
+on that project until I either punch out or punch in some other task.
 
 I now have a default level 2 =** Organization= task that I use for
 every major context I clock time in.
@@ -1080,15 +1080,15 @@ My org files look like this:
 : ** Organization
 : ...
 
-If I am working on =norang.ca= tasks, then I set the norang.org =**
-Organization= task as the default clock task.  If I'm working for
-client =SOMECLIENT= then I set the =** Organization= task in
-SOMECLIENT.org as the default task etc.  This allows me to block time
-on my calendar and work on a single context for some time frame of my
-day, then totally switch to another context simply by changing my
-default clocking task.  Or course if I get interrupted in the middle
-of the day clocking in a task puts time on that task regardless of the
-context I'm supposed to be working in.
+If I am working on =norang.ca= tasks, then I simply punch in on the
+task and that project becomes the default clocking task.  If the task
+is a single (non-project) task then that clock stays on that task
+until I punch out or punch in some other task.  This allows me to
+block time on my calendar and work on a single context for some time
+frame of my day, then totally switch to another context simply by
+changing my default clocking task.  Or course if I get interrupted in
+the middle of the day clocking in a task puts time on that task
+regardless of the context I'm supposed to be working in.
 
 This works really well for me.
 
@@ -1105,10 +1105,10 @@ that task is clocked in and the parent project (if any) is selected as
 the default clocking task.  If you are not on a task (some non-task
 line in the agenda, before the first headline in an org-mode file, or
 not in an org-mode buffer) then the default Organization task is
-clocked in.  The last step in punching is displays the block agenda.
-If you selected a task then the agenda is restricted to that project /
-task, otherwise you get everything when clocked into the Organization
-task.
+clocked in.  The last step in punching is sets the restriction lock
+for the agenda.  If you selected a task then the agenda is restricted
+to that project / task, otherwise you get everything when clocked into
+the Organization task.
 
 Keeping the clock running when moving a subtask to a =DONE= state
 means clocking continues to apply to the project task.  I can pick the
@@ -1268,30 +1268,35 @@ previously clocked task.
 #+end_src
 
 ** Clocking in
-When I start or continue working on a task I clock it in with =C-c C-x
-C-i= (or just =I= in the agenda or speed key setting) or =f9 I=.
-starts the clock for this task.
+When I start or continue working on a task I clock it in with any of the following:
+
+  - =C-c C-x C-i= 
+  - =I= in the agenda
+  - =I= speed key on the first character of the heading line
+  - =f9 I= while on the task in the agenda
+  - =f9 I= while in the task in an org file
 
 *** Setting a default clock task
 
-I have a default =** Organization= task in my norang.org file that I
+I have a default =** Organization= task in my todo.org file that I
 tend to put miscellaneous clock time on.  While reorganizing my
 org-files and doing other planning work that isn't for a specific
-project I'll clock in this task while I do things.  By clocking this
-task in with a double prefix =C-u C-u C-c C-x C-i= it starts the clock
-and makes this the default clock task.  The first punch-in of the day
-(=f9 I=) shows the context agenda view if no default task is selected,
-otherwise it just clocks in the default task.
+project I'll clock in this task while I do things.  By punching-in
+anywhere that is not a task (any line before first heading in an
+org-file, anywhere in a non-org-mode buffer, in the agenda when not on
+a task, etc) clocks in this Organization task as the default task and
+removes the agenda restriction lock.
 
-You can quickly clock in the default task with =C-u C-c C-x C-i d=
-
-I now set the default clocking task when I punch in and clocking out
-of any task will clock in this default task until I punch out using
-the clocking hooks I have set up.
+You can quickly clock in the default task with =C-u C-c C-x C-i d=, or
+just clock out from the current task and the default task will clock
+in.  I now set the default clocking task when I punch in and clocking
+out of any task will clock in this default task until I punch out
+using the clocking hooks I have set up.
 
 The only thing I need to remember is to set a new default clock task
 when I switch contexts (stop working for client A and start working
-for client B).
+for client B).  All that is necessary is to punch in on some client B
+task and I'm done.
 *** Using the clock history to clock in old tasks
 You can use the clock history to restart clocks on old tasks you've
 clocked or to jump directly to a task you have clocked previously.  I
@@ -1337,33 +1342,37 @@ To deal with this we create a new capture task to record the thing we
 are about to do.  The workflow goes something like this:
 
 - You are clocking some task and an interruption occurs
-- Create a quick capture task =C-M-r=
-- Type the heading 
-- clock it in =C-c C-x C-i=
-- file it =C-c C-c=
-- switch the clock back to it =F9 SPC=
-- Go do it
-- mark it =DONE= which stops the clock (or switches to the context
-  default clocking task you punched in earlier)
-- clock something else in
-- refile the newly created and clocked task later
+- Create a quick capture task journal entry =C-M-r j=
+- Type the heading
+- go do that thing (eat lunch, whatever)
+- file it =C-c C-c=, this restores the clock back to the previous clocking task
+- clock something else in or continue with the current clocking task
 
 This means you can ignore the details like where this task really
 belongs in your org file layout and just get on with completing the
 thing.  Refiling a bunch of tasks later in a group when it is
 convenient to refile the tasks saves time in the long run.
+
+If it's a one-shot uninteresting task (like a coffee break) I create
+a capture journal entry for it that goes to the diary.org date tree.
+If it's a task that actually needs to be tracked and marked done, and 
+applied to some project then I create a capture task instead which files it in 
+refile.org.
 ** Finding tasks to clock in
 To find a task to work on I use one of the following options
 (generally listed most frequently used first)
 
 - Use the clock history C-u C-c C-x C-i
   Go back to something I was clocking that is not finished
-- Pick something off today's agenda
+- Pick something off today's block agenda
   =SCHEDULED= or =DEADLINE= items that need to be done soon
 - Pick something off the =NEXT= tasks agenda view
   Work on some unfinished task to move to completion
-- Pick something off the other (non-project) task list 
+- Pick something off the other task list 
 - Use an agenda view with filtering to pick something to work on
+
+Punching in on the task you select will restrict the agenda view to that project
+so you can focus on just that thing for some period of time.
 ** Editing clock entries
 Sometimes it is necessary to edit clock entries so they reflect
 reality.  I find I do this for maybe 2-3 entries in a week.
@@ -1391,23 +1400,21 @@ want to edit (use the keyboard not the mouse - since the clicking on
 the timestamp with the mouse goes back to the agenda for that day) and
 hit the =S-<up arrow>= or =S-<down arrow>= keys to change the time.
 
-The following setting makes time editing round to 15 minute
+The following setting makes time editing use discrete minute intervals (no rounding)
 increments:
 #+begin_src emacs-lisp :tangle yes
-  (setq org-time-stamp-rounding-minutes (quote (1 15)))
+  (setq org-time-stamp-rounding-minutes (quote (1 1)))
 #+end_src
 
 Editing the time with the shift arrow combination also updates the
 total for the clock line which is a nice convenience.
 
 I always check that I haven't created task overlaps when fixing time
-clock entries by viewing them with log mode on in the agenda.
+clock entries by viewing them with log mode on in the agenda.  There
+is a new view in the agenda for this -- just his =v c= in the daily 
+agenda and clock gaps and overlaps are identified.
 
-I want my clock entries to be as accurate as possible but editing to
-the exact minute (instead of rounding to 15 minutes) takes more time
-and isn't worth the hassle.  Rounding to 15 minutes gets me close to
-the time I want quickly and if extra refining is needed I can edit the
-timestamp directly and update the total with C-c C-y.
+I want my clock entries to be as accurate as possible.
 * Time reporting and tracking
 ** Billing clients based on clocked time
 At the beginning of the month I invoice my clients for work done last
