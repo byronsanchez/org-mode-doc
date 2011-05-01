@@ -3849,19 +3849,21 @@ date) system versions.
   (add-to-list 'Info-default-directory-list "~/git/org-mode/doc")
 #+end_src
 
-** Turn off prefer future dates
+** Prefer future dates or not?
 By default org-mode prefers dates in the future.  This means that if
 today's date is May 2 and you enter a date for April 30th (2 days ago)
-org-mode will jump to April 30th of next year.  I find this annoying
-when I want to look at what happened last Friday since I have to
-specify the year.
+org-mode will jump to April 30th of next year.  I used to find this
+annoying when I wanted to look at what happened last Friday since I have
+to specify the year.  Now I've trained my fingers to go back relatively
+in the agenda with =b= so this isn't really an issue for me anymore.
 
 To make org-mode prefer the current year when entering dates I set
 the following variable:
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (setq org-read-date-prefer-future nil)
 #+end_src
    
+I now have this variable set to =t=.
 ** Automatically change list bullets
 I take point-form notes during meetings.  Having the same list bullet
 for every list level makes it hard to read the details when lists are
