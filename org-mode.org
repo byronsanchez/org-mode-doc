@@ -966,9 +966,10 @@ some take research and a significant amount of time to complete.  I
 clock each one in it's own task just in case I need that clocked time
 later.
 
-Next, I go to my newly created tasks to be refiled with =F12 r= and
-clock in an email task and deal with it.  Repeat this until all of
-the 'Respond to <user>' tasks are marked =DONE=.
+Next, I go to my newly created tasks to be refiled from the block
+agenda with =F12 a= and clock in an email task and deal with it.
+Repeat this until all of the 'Respond to <user>' tasks are marked
+=DONE=.
 
 I read email and newgroups in Gnus so I don't separate clocked time
 for quickly looking at things.  If an article has a useful piece of
