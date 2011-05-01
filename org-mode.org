@@ -305,8 +305,8 @@ Here is the keybinding setup in lisp:
   
   (global-set-key (kbd "<f9> i") 'info)
   
-  (global-set-key (kbd "<f9> I") 'bh/clock-in)
-  (global-set-key (kbd "<f9> O") 'bh/clock-out)
+  (global-set-key (kbd "<f9> I") 'bh/punch-in)
+  (global-set-key (kbd "<f9> O") 'bh/punch-out)
   
   (defun bh/make-org-scratch ()
     (interactive)
@@ -1104,19 +1104,23 @@ This works really well for me.
 ** Clock Setup
 :PROPERTIES:
 :CUSTOM_ID: ClockSetup
- :END:
+:END:
 
 To get started we need to set the default clocking task which we use
-to clock in whenever the clock would normally stop.  I use a special
-custom agenda view for this and I think of it as selecting the context
-for what I'm going to work on for the next few hours.
-
-=F12 c= shows me the tasks I can normally set as the default clocking
-task.  I'm free to set any task as the default but these are the ones
-I normally use.
+to clock in whenever the clock would normally stop.  This is now
+simply a matter of punching in the clock with =F9 I=.  You can do this
+anywhere.  If you are on a task (in the agenda or in an org file then
+that task is clocked in and the parent project (if any) is selected as
+the default clocking task.  If you are not on a task (some non-task
+line in the agenda, before the first headline in an org-mode file, or
+not in an org-mode buffer) then the default Organization task is
+clocked in.  The last step in punching is displays the block agenda.
+If you selected a task then the agenda is restricted to that project /
+task, otherwise you get everything when clocked into the Organization
+task.
 
 Keeping the clock running when moving a subtask to a =DONE= state
-means clocking continues to apply to the parent task.  I can pick the
+means clocking continues to apply to the project task.  I can pick the
 next task from the parent and clock that in without losing a minute or
 two while I'm deciding what to work on next.
 
@@ -1153,16 +1157,80 @@ I have the following org-mode settings for clocking:
   
   (setq bh/keep-clock-running nil)
   
-  (defun bh/clock-in ()
+  (defun bh/find-project-task ()
+    "Move point to the parent (project) task if any"
+    (let ((parent-task (save-excursion (org-back-to-heading) (point))))
+      (while (org-up-heading-safe)
+        (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
+          (setq parent-task (point))))
+      (goto-char parent-task)
+      parent-task))
+  
+  (defun bh/clock-in-and-set-project-as-default (pom)
+    "Clock in the current task and set the parent project (if any) as the
+  default clocking task.  Agenda filter tags are set from the default task"
+    ;; Find the parent project task if any and set that as the default
+    (save-excursion
+      (save-excursion
+        (org-with-point-at pom
+          (bh/find-project-task)
+          (org-clock-in '(16))))
+      (save-excursion
+        (org-with-point-at pom
+          (org-clock-in nil)))))
+  
+  (defun bh/set-agenda-restriction-lock ()
+    "Set filter to tags of POM, current task, or current project and refresh"
+    (interactive)
+    ;;
+    ;; We're in the agenda
+    ;;
+    (let* ((pom (org-get-at-bol 'org-hd-marker))
+           (tags (org-with-point-at pom (org-get-tags-at))))
+      (if (equal major-mode 'org-agenda-mode)
+          (if tags
+              (org-with-point-at pom
+                (bh/find-project-task)
+                (org-agenda-set-restriction-lock))
+            (org-agenda-remove-restriction-lock))
+        (if (equal org-clock-default-task (org-id-find "eb155a82-92b2-4f25-a3c6-0304591af2f9" 'marker))
+            (org-agenda-remove-restriction-lock)
+          (org-with-point-at pom
+            (bh/find-project-task)
+            (org-agenda-set-restriction-lock))))))
+  
+  (defun bh/punch-in ()
+    "Start continuous clocking and set the default task to the project task
+  of the selected task.  If no task is selected set the Organization task as
+  the default task."
     (interactive)
     (setq bh/keep-clock-running t)
-    (org-agenda nil "c"))
+    (if (equal major-mode 'org-agenda-mode)
+        ;;
+        ;; We're in the agenda
+        ;;
+        (let* ((marker (org-get-at-bol 'org-hd-marker))
+               (tags (org-with-point-at marker (org-get-tags-at))))
+          (if tags
+              (bh/clock-in-and-set-project-as-default marker)
+            (bh/clock-in-organization-task-as-default)))
+      ;;
+      ;; We are not in the agenda
+      ;;
+      (save-restriction
+        (widen)
+        ; Find the tags on the current task
+        (if (and (equal major-mode 'org-mode) (not (org-before-first-heading-p)))
+            (bh/clock-in-and-set-project-as-default nil)
+          (bh/clock-in-organization-task-as-default))))
+    (bh/set-agenda-restriction-lock))
   
-  (defun bh/clock-out ()
+  (defun bh/punch-out ()
     (interactive)
     (setq bh/keep-clock-running nil)
     (when (org-clock-is-active)
-      (org-clock-out)))
+      (org-clock-out))
+    (org-agenda-remove-restriction-lock))
   
   (defun bh/clock-in-default-task ()
     (save-excursion
