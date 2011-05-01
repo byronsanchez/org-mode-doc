@@ -429,10 +429,10 @@ definition is really simple.  If a task has subtasks with a todo keyword
 then it's a project.  That's it.
 
 Projects can be defined at any level - just create a task with a todo
-state keyword that has at least one subtask with a todo state keyword
-and you have a project.  Projects use the same todo keywords as
-regular tasks with one exception - one subtask of a project needs to
-be marked =NEXT= so the project is not on the stuck projects list.
+state keyword that has at least one subtask also with a todo state
+keyword and you have a project.  Projects use the same todo keywords
+as regular tasks with one exception - one subtask of a project needs
+to be marked =NEXT= so the project is not on the stuck projects list.
 
 #+begin_src plantuml :file task_states.png
 [*] -> TODO
