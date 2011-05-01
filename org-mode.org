@@ -988,12 +988,13 @@ see tasks that are not work related right now.  I also don't want to
 work on a big project just before lunch... so I need to find small
 tasks that I can knock off the list.
 
-How do we do this?  Get a list of NEXT tasks with =F12 n= and then
-narrow it down with filtering.  To find tasks to work on I remove
-tasks I'm not supposed to be working on now with =/ RET=.  Then limit
-to tasks with estimates of 10 minutes or less with =/ + 1= and I can
-pick something that fits the minutes I have left before I take off for
-lunch.
+How do we do this?  Get a list of NEXT tasks from the block agenda and
+then narrow it down with filtering.  Tasks are ordered in the NEXT
+agenda view by estimated effort so the short tasks are first -- just
+start at the top and work your way down.  I can limit the displayed
+agenda tasks to those estimates of 10 minutes or less with =/ + 1= and
+I can pick something that fits the minutes I have left before I take
+off for lunch.
 
 * Time Clocking
 :PROPERTIES:
