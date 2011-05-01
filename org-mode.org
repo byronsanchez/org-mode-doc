@@ -4185,6 +4185,9 @@ all modified work when moving from one machine to another.
 #+end_example
 
 *** ~/bin/org-git-sync.sh
+:PROPERTIES:
+:CUSTOM_ID: OrgGitSyncSh
+:END:
 Here is the shell script I use to create a =git= commit for each of my
 org-repositories.  This loops through multiple repositories and
 commits any modified files.  I have the following org-mode
