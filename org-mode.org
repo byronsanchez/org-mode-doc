@@ -7,7 +7,7 @@
 #+OPTIONS:   author:t creator:t timestamp:t email:t
 #+DESCRIPTION: A description of how I currently use org-mode
 #+KEYWORDS:  org-mode Emacs organization GTD getting-things-done git
-#+SEQ_TODO: UNFINISHED COMPLETE
+#+SEQ_TODO: FIXME FIXED
 #+INFOJS_OPT: view:nil toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
