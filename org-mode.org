@@ -491,7 +491,7 @@ Telephone calls are special.  They are created in a done state by a capture task
 The time of the call is recorded for as long as the capture task is active.  If I need 
 to look up other details and want to close the capture task early I can just 
 =C-c C-c= to close the capture task (stopping the clock) and then =f9 SPC= to resume
-the clock in the phone call while I do other things
+the clock in the phone call while I do other things.
 #+begin_src plantuml :file phone_states.png
 [*] -> PHONE
 PHONE -> [*]
@@ -706,19 +706,17 @@ capture templates are set to automatically clock in and out of the
 capture task.  This is great for interruptions and telephone calls
 too.
 * Refiling Tasks
-  :PROPERTIES:
-  :CUSTOM_ID: Refiling
-  :END:
-  Refiling tasks is easy.  After collecting a bunch of new tasks in my
-  refile.org file using capture mode I need to move these to the
-  correct org file and topic.  All of my active org-files are in my
-  =org-agenda-files= variable and contribute to the agenda.
+:PROPERTIES:
+:CUSTOM_ID: Refiling
+:END:
+Refiling tasks is easy.  After collecting a bunch of new tasks in my
+refile.org file using capture mode I need to move these to the
+correct org file and topic.  All of my active org-files are in my
+=org-agenda-files= variable and contribute to the agenda.
 
-  I collect capture tasks in refile.org for up to a week.  I do my
-  weekly review every Monday and one of the tasks for that is to
-  refile all captured tasks.  Often I end up refiling tasks the same
-  day I create them because they show up in my daily clock report
-  summary and are obviously in the wrong place.
+I collect capture tasks in refile.org for up to a week.  These now stand
+out daily on my block agenda and I usually refile them at the end of the day.
+
 ** Refile Setup
 To refile tasks in org you need to tell it where you want to refile things.
 
@@ -766,26 +764,19 @@ Here is my refile configuration:
 #+end_src
 
 To refile a task to my =norang.org= file under =System Maintenance= I
-just put the cursor on the task and hit =C-c C-w= and enter =nor TAB
-sys TAB RET= and it's done.  I always know what file it's going into
-but if I don't remember the exact task name I can just hit TAB twice
-and all refile targets that match show up in a list.  Just scroll
-through the list and pick the right refile target.  This works great!
+just put the cursor on the task and hit =C-c C-w= and enter =nor C-SPC
+sys RET= and it's done.  IDO completion makes locating targets a snap.
 ** Refiling Tasks
-To find tasks to refile I run my agenda view (=F12 r= = =C-c a r=)
-which shows tasks with the =REFILE= tag.  This view shows all tasks
-(even ones marked in a =done= state).
+Tasks to refile are in their own section of the block agenda.  To find
+tasks to refile I run my agenda view with =F12 a= and scroll down to
+second section of the block agenda: =Tasks to Refile=.  This view
+shows all tasks (even ones marked in a =done= state).
 
-My single capture target file has this tag in the FILETAGS header so
-every task in the file can be found using this view.
-
-I visit each file with =REFILE= tasks to refile.  If there are a few
-tasks going to the same place (3 or less) I refile the first one, then
-move to the second one and use =C-c C-w up-arrow RET= to refile to the
-same location again.  If more than 3 tasks are going to the same place
-I try to do those last - since refiling everything else away helps to
-group those together.  Then I mark those tasks in =m= and bulk refile
-them to the same target with =B r= in the agenda view.
+Bulk refiling in the agenda works very well for multiple tasks going
+to the same place.  Just mark the tasks with =m= and then =B r= to
+refile all of them to a new location.  Occasionally I'll also refile
+tasks as subtasks of the current clocking task using =C-2 C-c C-w=
+from the =refile.org= file.
 
 Refiling all of my tasks tends to take less than a minute so I may do
 this a couple of times a day.
