@@ -816,7 +816,7 @@ Custom agenda views are used for:
 - Single block agenda shows the following
   - overview of today
   - Finding tasks to be refiled
-  - Finding =NEXT= tasks to work on
+  - Finding NEXT tasks to work on
   - Finding stuck projects
   - Reviewing projects
   - Show all TODO state tasks
@@ -874,10 +874,14 @@ Custom agenda views are used for:
                  nil))))
 #+end_src
 
+My block agenda view looks like this:
+
+[[file:block-agenda.png]]
+
 I generally work top-down on the agenda.  Things with deadlines and
-scheduled dates (planned to work on today show up in the agenda at the
-top.    When searching for tasks in the agenda I disable display of
-child tasks with the following setting:
+scheduled dates (planned to work on today or earlier) show up in the
+agenda at the top.  When searching for tasks in the agenda I disable
+display of child tasks with the following setting:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-tags-match-list-sublevels nil)
@@ -901,7 +905,7 @@ My day goes generally like this:
 - Make journal entries (=C-M-r j=) for interruptions, lunch, etc
 - work on more tasks
 - Refile tasks to empty the list
-  - Tag files to be filed with =m= collecting all tasks for the same target
+  - Tag tasks to be refiled with =m= collecting all tasks for the same target
   - Bulk refile the tasks to the target location with =B r=
   - Repeat (or refile individually with =C-c C-w=) until all refile tasks are gone
 - Mark habits done today as DONE
@@ -911,8 +915,9 @@ My day goes generally like this:
 :PROPERTIES:
 :CUSTOM_ID: WhatDoIWorkOnNext
 :END:
-Use the agenda view for =NEXT= tasks to find stuff in progress and
-things to clock.
+Start with deadlines and tasks scheduled today or earlier from
+the daily agenda view.  Then move on to tasks in the 
+=Next Tasks= list in the block agenda view.
 
 When I look for a new task to work on I generally hit =F12 a= to get
 today's agenda and follow this order:
@@ -920,16 +925,16 @@ today's agenda and follow this order:
 - Pick something off today's agenda
   - deadline for today (do this first - it's not late yet)
   - deadline in the past (it's already late)
-  - deadline that is coming up soon
   - a scheduled task for today (or in the past)
+  - deadline that is coming up soon
 - pick a NEXT task
 - If you run out of items to work on look for a NEXT task in the current context
-  F12 n / RET
+  pick a task from the Tasks list of the current project.
 
 *** Why keep it all on the =NEXT= list?
 I've moved to a more GTD way of doing things.  Now I just use a =NEXT=
-list.  Only projects get tasks with NEXT keywords since stuck projects
-initiate the need for marking or creating NEXT tasks.  A =NEXT= task
+list.  Only projects get tasks with =NEXT= keywords since stuck projects
+initiate the need for marking or creating =NEXT= tasks.  A =NEXT= task
 is something that is available to work on /now/, it is the next
 logical step in some project.
 
