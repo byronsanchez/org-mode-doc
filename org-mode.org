@@ -385,7 +385,7 @@ Here are my =TODO= state keywords and colour settings:
 #+end_src
 
 *** Normal Task States
-Normal tasks go through the sequence =TODO= -> =NEXT= -> =DONE=.
+Normal tasks go through the sequence =TODO= -> =DONE=.
 
 The following diagram shows the possible state transitions for a task.
 
