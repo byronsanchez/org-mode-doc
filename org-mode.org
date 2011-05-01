@@ -244,17 +244,17 @@ I have the following custom key bindings set up for my emacs (sorted by frequenc
 | F12     | Agenda (1 key less than C-c a)                  | Very Often |
 | C-c b   | Switch to org file                              | Very Often |
 | C-F11   | Clock in a task (show menu with prefix)         | Very Often |
+| F11     | Goto currently clocked item                     | Very Often |
 | C-M-r   | Capture a task                                  | Very Often |
 | f9 g    | Gnus - I live in gnus                           | Often      |
-| F11     | Goto currently clocked item                     | Often      |
 | f5      | Show todo items for this subtree                | Often      |
 | S-f5    | Widen                                           | Often      |
 | f9 b    | Quick access to bbdb data                       | Often      |
 | f9 c    | Calendar access                                 | Often      |
-| f9 r    | Boxquote selected region                        | Often      |
 | C-S-f12 | Save buffers and publish current project        | Often      |
 | C-c l   | Store a link for retrieval with C-c C-l         | Often      |
 | f8      | Go to next org file in org-agenda-files         | Sometimes  |
+| f9 r    | Boxquote selected region                        | Sometimes  |
 | f9 t    | Insert inactive timestamp                       | Sometimes  |
 | f9 v    | Toggle visible mode (for showing/editing links) | Sometimes  |
 | C-f9    | Previous buffer                                 | Sometimes  |
