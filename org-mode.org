@@ -1859,26 +1859,18 @@ I have a recurring task which keeps my weekly review checklist
 handy.  This pops up as a reminder on Monday's.  This week I'm
 doing my weekly review on Tuesday since Monday was a holiday.
 
-: ** NEXT Weekly Review [0/8]
+: ,** NEXT Weekly Review [0/8]
 :    SCHEDULED: <2009-05-18 Mon ++1w> 
 :    LOGBOOK:...
 :    PROPERTIES:...
 :         
 :    What to review:
-:    
+:                   
 :     - [ ] Check follow-up folder
-:     - [ ] Review new tasks                                  F12-r
-:       - if it takes less than 2 minutes just do it
-:       - file it somewhere
-:     - [ ] Check for stuck projects and add next tasks       F12-#         
-:     - [ ] Review projects                                   F12-p
-:     - [ ] Review other non-project tasks                    F12-o
-:     - [ ] Waiting tasks                                     F12 w
-:       - Make follow up tasks scheduled for today
-:     - [ ] Next Tasks                                        F12 n
-:       - If blocked move NEXT tag to subtasks or remove as required
-:       - Assign an estimated duration to each
-:     - [ ] Review weekly agenda F12 a w
+:     - [ ] Review weekly agenda F12 a w //
+:     - [ ] Check clocking data for past week v c b
+:     - [ ] Review clock report for past week R
+:       - Check where we spent time (too much or too little) and rectify this week
 :    
 :     - start work
 :       - daily agenda first - knock off items
