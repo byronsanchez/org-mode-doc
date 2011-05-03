@@ -93,6 +93,10 @@ speed up creation of standard text blocks in most editing modes.
               (org-defkey org-mode-map "\C-c]"    'undefined)
               (local-set-key (kbd "C-c M-o") 'bh/mail-subtree)))
   
+  (defun bh/mail-subtree ()
+    (interactive)
+    (org-mark-subtree)
+    (org-mime-subtree))
 #+end_src
 
 ** Organizing Your Life Into Org Files
