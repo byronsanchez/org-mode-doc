@@ -2782,9 +2782,6 @@ and notifications are still active outside the agenda restriction.
 =C-c C-x >= turns off the agenda restriction lock returning your
 agenda view back to normal.
 
-I don't normally use the agenda restriction lock.  I normally want to
-see all =work= tasks which are in multiple files so agenda view
-filtering works better for me.
 *** Limiting the agenda to a file
 You can limit the agenda view to a single file in multiple ways.
 
