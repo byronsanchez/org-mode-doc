@@ -2928,7 +2928,7 @@ order of importance.  Tasks on the daily agenda are listed in the
 following order:
 
 1. tasks with times at the top so they are hard to miss
-2. tasks for today (not scheduled or deadline tasks)
+2. entries for today (active timestamp headlines that are not scheduled or deadline tasks)
 3. deadlines due today
 4. late deadline tasks
 5. scheduled items for today
