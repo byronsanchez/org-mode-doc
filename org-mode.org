@@ -1898,7 +1898,7 @@ with.  After that everything else is in =org-mode=.  I tend to
 schedule tasks onto the agenda for the coming week so that I don't
 spend lots of time trying to find what needs to be worked on next.
 
-This works for me.  You're mileage may vary ;)
+This works for me.  Your mileage may vary ;)
 ** Project definition and finding stuck projects
 :PROPERTIES:
 :CUSTOM_ID: Projects
@@ -2795,7 +2795,7 @@ C-x >=.
 
 Another way is to invoke the agenda with =F12 < a= while visiting an
 org-mode file.  This limits the agenda view to just this file.  I
-occassionally use this to view a file not in my =org-agenda-files= in
+occasionally use this to view a file not in my =org-agenda-files= in
 the agenda.
 
 ** Tuning the Agenda Views
