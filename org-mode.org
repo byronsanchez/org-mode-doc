@@ -3498,12 +3498,7 @@ My logging settings are set as follows:
 #+begin_src emacs-lisp :tangle yes
   (setq org-log-done (quote time))
   (setq org-log-into-drawer t)
-  (setq org-log-redeadline (quote note))
-  (setq org-log-reschedule (quote time))
 #+end_src
-
-I log a note when a deadline is moved and just the original time when
-changing a scheduled item to a new date.
 
 My =org-todo-keywords= are set as follows:
 
