@@ -4146,6 +4146,12 @@ opening an link to some HTML file with =C-c C-o= or when previewing an export.
   (setq org-agenda-window-setup 'current-window)
 #+end_src
 
+** Delete IDs when cloning
+[2011-05-28 Sat 21:27]
+#+begin_src emacs-lisp
+  (setq org-clone-delete-id t)
+#+end_src
+
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
