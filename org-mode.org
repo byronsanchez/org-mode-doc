@@ -1054,41 +1054,21 @@ My clocking setup basically works like this:
 - Punch out (stop the clock)
 
 I'm free to change the default task multiple times during the day.  If
-I'm punch-in on a task in =Project X= then the top-level =Project X=
+I punch-in on a task in =Project X= then the top-level =Project X=
 task automatically becomes the default task and all clocked time goes
 on that project until I either punch out or punch in some other task.
-
-I now have a default level 2 =** Organization= task that I use for
-every major context I clock time in.
 
 My org files look like this:
 
 =todo.org=:
 : #+FILETAGS: PERSONAL
 : ...
-: * Miscellaneous						       :misc:
+: * Tasks
 : ** Organization
-: ...
-
-=org.org=:
-: #+FILETAGS: ORG WORK
-: ...
-: * Tuning 							     :tuning:
-: ** Organization
-: ...
-
-=norang.org=:
-: #+FILETAGS: NORANG WORK
-: ...
-: * Administration						      :admin:
-: ** Organization
-: ...
-
-=someclient.org=:
-: #+FILETAGS: SOMECLIENT WORK NORANG
-: ...
-: * Administration						      :admin:
-: ** Organization
+: :PROPERTIES:
+: :CLOCK_MODELINE_TOTAL: today
+: :ID:       eb155a82-92b2-4f25-a3c6-0304591af2f9
+: :END:
 : ...
 
 If I am working on =norang.ca= tasks, then I simply punch in on the
@@ -1097,9 +1077,9 @@ is a single (non-project) task then that clock stays on that task
 until I punch out or punch in some other task.  This allows me to
 block time on my calendar and work on a single context for some time
 frame of my day, then totally switch to another context simply by
-changing my default clocking task.  Or course if I get interrupted in
-the middle of the day clocking in a task puts time on that task
-regardless of the context I'm supposed to be working in.
+changing my default clocking task.  When an interruption occurs I 
+start a capture task which keeps clocked time on the interruption
+task until I close it with C-c C-c.
 
 This works really well for me.
 
@@ -1238,6 +1218,13 @@ I have the following org-mode settings for clocking:
     (save-excursion
       (org-with-point-at org-clock-default-task
         (org-clock-in))))
+  
+  (defun bh/clock-in-organization-task-as-default ()
+    (interactive)
+    (save-restriction
+      (widen)
+      (org-with-point-at (org-id-find "eb155a82-92b2-4f25-a3c6-0304591af2f9" 'marker)
+        (org-clock-in '(16)))))
   
   (defun bh/clock-out-maybe ()
     (when (and bh/keep-clock-running
