@@ -1409,10 +1409,20 @@ total for the clock line which is a nice convenience.
 
 I always check that I haven't created task overlaps when fixing time
 clock entries by viewing them with log mode on in the agenda.  There
-is a new view in the agenda for this -- just his =v c= in the daily 
+is a new view in the agenda for this -- just hit =v c= in the daily 
 agenda and clock gaps and overlaps are identified.
 
 I want my clock entries to be as accurate as possible.
+
+The following setting shows 1 minute clocking gaps.
+#+begin_src emacs-lisp :tangle yes
+  (setq org-agenda-clock-consistency-checks 
+        (quote (:max-duration "4:00"
+                :min-duration 0
+                :max-gap 0
+                :gap-ok-around ("4:00"))))
+#+end_src
+
 * Time reporting and tracking
 ** Billing clients based on clocked time
 At the beginning of the month I invoice my clients for work done last
