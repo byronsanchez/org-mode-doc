@@ -1220,9 +1220,9 @@ I have the following org-mode settings for clocking:
 #+end_src
 
 I used to clock in tasks by ID using the following function but with
-the new punch-in and punch-out I don't need these anymore.  =f9-SPC=
-calls =bh/clock-in-last-task= which switches the clock back to the
-previously clocked task.
+the new punch-in and punch-out I don't need these as much anymore.
+=f9-SPC= calls =bh/clock-in-last-task= which switches the clock back
+to the previously clocked task.
 
 #+begin_src emacs-lisp :tangle yes
   (require 'org-id)  
@@ -1233,17 +1233,20 @@ previously clocked task.
       (org-with-point-at (org-id-find id 'marker)
         (org-clock-in nil))))
   
-  (defun bh/clock-in-last-task ()
+  (defun bh/clock-in-last-task (arg)
     "Clock in the interrupted task if there is one
-  Skip the default task and get the next one"
-    (interactive)
-    (let ((clock-in-to-task (if (org-clock-is-active)
-                                (if (equal org-clock-default-task (cadr org-clock-history))
-                                    (caddr org-clock-history)
-                                  (cadr org-clock-history))
-                              (if (equal org-clock-default-task (car org-clock-history))
-                                  (cadr org-clock-history)
-                                (car org-clock-history)))))
+  Skip the default task and get the next one.
+  A prefix arg forces clock in of the default task."
+    (interactive "p")
+    (let ((clock-in-to-task
+           (cond
+            ((eq arg 4) org-clock-default-task)
+            ((and (org-clock-is-active)
+                  (equal org-clock-default-task (cadr org-clock-history)))
+             (caddr org-clock-history))
+            ((org-clock-is-active) (cadr org-clock-history))
+            ((equal org-clock-default-task (car org-clock-history)) (cadr org-clock-history))
+            (t (car org-clock-history)))))
       (org-with-point-at clock-in-to-task
         (org-clock-in nil))))
 #+end_src
