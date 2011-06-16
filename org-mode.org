@@ -3027,10 +3027,7 @@ Here are the =.emacs= settings:
        (setq result nil))
       ; if a matches put a first
       ((apply ,fn (list ,a))
-       ; if b also matches leave unsorted
-       (if (apply ,fn (list ,b))
-           (setq result nil)
-         (setq result -1)))
+       (setq result -1))
       ; otherwise if b matches put b first
       ((apply ,fn (list ,b))
        (setq result 1))
