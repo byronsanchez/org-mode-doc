@@ -3706,7 +3706,7 @@ keeps the data in plain text as short as possible.
 
 ** Speed Commands
 There's a new and exciting feature called =org-speed-commands= in the
-latest development version of org-mode.
+org-mode.
 
 Speed commands allow access to frequently used commands when on the
 beginning of a headline - similar to one-key agenda commands.  Speed
@@ -3715,7 +3715,9 @@ default commands.
 
 I have the following speed commands set up in addition to the
 defaults.  I don't use priorities so I override the default settings
-for the 1, 2, and 3 keys.
+for the 1, 2, and 3 keys.  I also disable cycling with 'c' and add 'q'
+as a quick way to get back to the agenda.
+
 #+begin_src emacs-lisp :tangle yes
   (setq org-use-speed-commands t)
   (setq org-speed-commands-user (quote (("1" . delete-other-windows)
@@ -3723,12 +3725,18 @@ for the 1, 2, and 3 keys.
                                         ("3" . split-window-horizontally)
                                         ("h" . hide-other)
                                         ("k" . org-kill-note-or-show-branches)
+                                        ("q" . bh/show-org-agenda)
                                         ("r" . org-reveal)
                                         ("s" . org-save-all-org-buffers)
                                         ("z" . org-add-note)
                                         ("c" . self-insert-command)
                                         ("C" . self-insert-command)
-                                        ("J" . org-clock-goto))))  
+                                        ("J" . org-clock-goto))))
+  
+  (defun bh/show-org-agenda ()
+    (interactive)
+    (switch-to-buffer "*Org Agenda*")
+    (delete-other-windows))
 #+end_src
 
 The variable =org-speed-commands-default= sets a lot of useful
