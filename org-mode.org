@@ -275,7 +275,6 @@ I have the following custom key bindings set up for my emacs (sorted by frequenc
 | f7      | Toggle line truncation/wrap                     | Rare       |
 | f9 u    | Untabify region                                 | Rare       |
 | C-c a   | Enter Agenda (minimal emacs testing)            | Rare       |
-| M-f11   | Resolve open clocks                             | Rare       |
    
 Here is the keybinding setup in lisp:
 #+begin_src emacs-lisp :tangle yes
@@ -342,7 +341,6 @@ Here is the keybinding setup in lisp:
   (global-set-key (kbd "<f11>") 'org-clock-goto)
   (global-set-key (kbd "C-<f11>") 'org-clock-in)
   (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
-  (global-set-key (kbd "M-<f11>") 'org-resolve-clocks)
   (global-set-key (kbd "C-M-r") 'org-capture)
   (global-set-key (kbd "M-<f9>") (lambda ()
                                    (interactive)
