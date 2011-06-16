@@ -3810,17 +3810,15 @@ To prevent the timestamps from being exported in documents I use the following s
 #+end_src
 
 ** Return follows links
-The following setting make =RET= open links instead of inserting a new
-line.  This setting is a love-hate relationship for me.  When it first
-came out I immediately turned it off because I wanted to insert new
-lines in front of my links and =RET= would open the link instead which
-at the time I found extremely annoying.  Now I've trained my fingers
-to do =C-o= instead for opening the line above the link.  I find I'm
-hitting =RET= to visit links a lot more than opening lines before the
-link - so retraining my fingers was the right move for me.
+The following setting make =RET= insert a new line instead of opening
+links.  This setting is a love-hate relationship for me.  When it
+first came out I immediately turned it off because I wanted to insert
+new lines in front of my links and =RET= would open the link instead
+which at the time I found extremely annoying.  I've used it for a while
+with it set but ultimately turned it off again.
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-return-follows-link t)
+  (setq org-return-follows-link nil)
 #+end_src
 
 ** Highlight clock when running overtime
