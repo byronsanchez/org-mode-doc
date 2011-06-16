@@ -1116,8 +1116,8 @@ I have the following org-mode settings for clocking:
   ;; Resume clocking tasks when emacs is restarted
   (org-clock-persistence-insinuate)
   ;;
-  ;; Yes it's long... but more is better ;)
-  (setq org-clock-history-length 28)
+  ;; Small windows on my Eee PC displays only the end of long lists which isn't very useful
+  (setq org-clock-history-length 10)
   ;; Resume clocking task on clock-in if the clock is open
   (setq org-clock-in-resume t)
   ;; Do not change task states when clocking in
