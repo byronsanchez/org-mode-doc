@@ -796,10 +796,12 @@ Phone call tasks collect in =refile.org= and are later refiled to the
 appropriate location.  Some phone calls are billable and we want these
 tracked in the appropriate category.
 * Custom agenda views
-I now have one block agenda view that has everything on it.  I used to have
-11 custom agenda views defined and this required a weekly review that visited
-most of these agenda views.  Now I'm striving to simplify my layout with 
-everything at my fingertips in a single agenda.
+I now have one block agenda view that has everything on it.  I also
+keep separate single view agenda commands for use on my slower Eee
+PC - since it takes prohibitively long to generate my block agenda on
+that slow machine.  I'm striving to simplify my layout with everything
+at my fingertips in a single agenda on my workstation which is where I
+spend the bulk of my time.
 
 Most of my old custom agenda views were rendered obsolete when
 filtering functionality was added to the agenda in newer versions of
@@ -819,6 +821,11 @@ Custom agenda views are used for:
 - Finding notes
 - Viewing habits
 
+If I want just today's calendar view then =F12 a= is still faster than
+generating the block agenda - especially if I want to view a week or
+month's worth of information.  In that case the extra detail on the
+block agenda view is never really needed and I don't want to spend
+time waiting for it to be generated.
 ** Setup
 #+begin_src emacs-lisp :tangle yes
   ;; Do not dim blocked tasks
