@@ -1403,6 +1403,44 @@ The following setting shows 1 minute clocking gaps.
                 :gap-ok-around ("4:00"))))
 #+end_src
 
+** Automatically clocking tasks
+I spend time on an open source project called BZFlag.  During work for releases
+I want to clock the time I spend testing the new BZFlag client.  I have a key
+binding in my window manager that runs a script which starts the clock on my
+testing task, runs the BZFlag client, and on exit resumes the clock on the 
+previous clocking task.
+
+The testing task has an ID property of
+=dcf55180-2a18-460e-8abb-a9f02f0893be= and the following elisp code
+starts the clock on this task.
+
+#+begin_src emacs-lisp :tangle yes
+  (defun bh/clock-in-bzflagt-task ()
+    (interactive)
+    (bh/clock-in-task-by-id "dcf55180-2a18-460e-8abb-a9f02f0893be"))
+#+end_src
+
+This is invoked by a bash shell script as follows:
+
+#+begin_src sh :results output
+  #!/bin/sh
+  emacsclient -e '(bh/clock-in-bzflagt-task)'
+  ~/git/bzflag/trunk/bzflag/src/bzflag/bzflag -directory ~/git/bzflag/trunk/bzflag/data $*
+  emacsclient -e '(bh/resume-clock)'
+#+end_src
+
+The resume clock function just returns the clock to the previous clocking task
+
+#+begin_src emacs-lisp :tangle yes
+  (defun bh/resume-clock ()
+    (interactive)
+    (if (marker-buffer org-clock-interrupted-task)
+        (org-with-point-at org-clock-interrupted-task
+          (org-clock-in))
+      (org-clock-out)))
+#+end_src
+
+If no task was clocking =bh/resume-clock= just stops the clock.
 * Time reporting and tracking
 ** Billing clients based on clocked time
 At the beginning of the month I invoice my clients for work done last
