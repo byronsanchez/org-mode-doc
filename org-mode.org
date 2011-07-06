@@ -844,6 +844,8 @@ Custom agenda views are used for:
                   (tags-todo "/!"
                              ((org-agenda-overriding-header "Projects")
                               (org-agenda-skip-function 'bh/skip-non-project-trees)
+                              (org-agenda-todo-ignore-scheduled 'future)
+                              (org-agenda-todo-ignore-deadlines 'future)
                               (org-agenda-sorting-strategy
                                '(category-keep))))
                   (tags-todo "/!-NEXT-WAITING"
