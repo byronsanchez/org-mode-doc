@@ -735,8 +735,8 @@ Here is my refile configuration:
   (setq org-refile-targets (quote ((nil :maxlevel . 2)
                                    (org-agenda-files :maxlevel . 2))))
   
-  ; Targets start with the file name - allows creating level 1 tasks
-  (setq org-refile-use-outline-path (quote file))
+  ; Stop using paths for refile targets - we file directly with IDO
+  (setq org-refile-use-outline-path nil)
   
   ; Targets complete directly with IDO
   (setq org-outline-path-complete-in-steps nil)
