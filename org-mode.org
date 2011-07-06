@@ -371,13 +371,15 @@ I use a light colour theme in emacs.  I find this easier to read on bright sunny
 Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-                                  (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)" "PHONE")
-                                  (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
+  (setq org-todo-keywords
+        (quote ((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!/!)")
+                (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)" "PHONE")
+                (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
   
-  (setq org-todo-keyword-faces
+  (setq org-todo-keyword-faces 
         (quote (("TODO" :foreground "red" :weight bold)
                 ("NEXT" :foreground "blue" :weight bold)
+                ("STARTED" :foreground "blue" :weight bold)
                 ("DONE" :foreground "forest green" :weight bold)
                 ("WAITING" :foreground "orange" :weight bold)
                 ("SOMEDAY" :foreground "magenta" :weight bold)
@@ -395,15 +397,19 @@ The following diagram shows the possible state transitions for a task.
 #+begin_src plantuml :file normal_task_states.png
 title Normal Task States
 [*] -> TODO
+TODO -> STARTED
 TODO -> DONE
+STARTED -> DONE
 DONE -> [*]
 TODO --> WAITING
-SOMEDAY --> CANCELLED
-SOMEDAY --> TODO
 WAITING --> TODO
+STARTED --> WAITING
+WAITING --> STARTED
+SOMEDAY --> CANCELLED
 WAITING --> CANCELLED
 CANCELLED --> [*]
 TODO --> SOMEDAY
+SOMEDAY --> TODO
 TODO --> CANCELLED
 '[*] --> PHONE
 'PHONE --> [*]
@@ -411,6 +417,7 @@ TODO --> CANCELLED
 'OPEN --> CLOSED
 'CLOSED --> [*]
 TODO: t
+STARTED: s
 DONE: d
 WAITING:w
 note right of WAITING: Note records\nwhat it is waiting for
@@ -435,24 +442,29 @@ Projects can be defined at any level - just create a task with a todo
 state keyword that has at least one subtask also with a todo state
 keyword and you have a project.  Projects use the same todo keywords
 as regular tasks with one exception - one subtask of a project needs
-to be marked =NEXT= so the project is not on the stuck projects list.
+to be marked =NEXT= or =STARTED= so the project is not on the stuck
+projects list.
 
 #+begin_src plantuml :file task_states.png
 title Project Task States
 [*] -> TODO
 TODO -> NEXT
+NEXT -> STARTED
 NEXT -> DONE
+STARTED -> DONE
 DONE -> [*]
 TODO --> WAITING
+WAITING --> TODO
 SOMEDAY --> CANCELLED
-SOMEDAY --> TODO
 NEXT --> WAITING
 WAITING --> NEXT
-WAITING --> TODO
+STARTED --> WAITING
+WAITING --> STARTED
 WAITING --> CANCELLED
 TODO --> DONE
 CANCELLED --> [*]
 TODO --> SOMEDAY
+SOMEDAY --> TODO
 TODO --> CANCELLED
 '[*] --> PHONE
 'PHONE --> [*]
@@ -461,6 +473,7 @@ TODO --> CANCELLED
 'CLOSED --> [*]
 TODO: t
 NEXT: n
+STARTED: s
 DONE: d
 WAITING:w
 note right of WAITING: Note records\nwhat it is waiting for
@@ -547,28 +560,21 @@ The triggers break down to the following rules:
 - Moving a task to a done state removes a =WAITING= tag
 - Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
 - Moving a task to =NEXT= removes a =WAITING= tag
+- Moving a task to =STARTED= removes a =WAITING= tag
 - Moving a task to =DONE= removes =WAITING= and =CANCELLED= tags
 
 The tags are used to filter tasks in the agenda views conveniently.
 
 #+begin_src emacs-lisp :tangle yes 
   (setq org-todo-state-tags-triggers
-        (quote (("CANCELLED"
-                 ("CANCELLED" . t))
-                ("WAITING"
-                 ("WAITING" . t))
-                ("SOMEDAY"
-                 ("WAITING" . t))
-                (done
-                 ("WAITING"))
-                ("TODO"
-                 ("WAITING")
-                 ("CANCELLED"))
-                ("NEXT"
-                 ("WAITING"))
-                ("DONE"
-                 ("WAITING")
-                 ("CANCELLED")))))
+        (quote (("CANCELLED" ("CANCELLED" . t))
+                ("WAITING" ("WAITING" . t))
+                ("SOMEDAY" ("WAITING" . t))
+                (done ("WAITING"))
+                ("TODO" ("WAITING") ("CANCELLED"))
+                ("NEXT" ("WAITING"))
+                ("STARTED" ("WAITING"))
+                ("DONE" ("WAITING") ("CANCELLED")))))
 #+end_src
 
 * Adding New Tasks Quickly with Org Capture
@@ -613,18 +619,18 @@ Here is my setup for org-capture
   
   ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
   (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/git/org/refile.org")
-               "* TODO %?\n%U\n%a\n  %i" :clock-in t :clock-resume t)
-              ("n" "note" entry (file "~/git/org/refile.org")
-               "* %? :NOTE:\n%U\n%a\n  %i" :clock-in t :clock-resume t)
-              ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
-               "* %?\n%U\n  %i" :clock-in t :clock-resume t)
-              ("w" "org-protocol" entry (file "~/git/org/refile.org")
-               "* TODO Review %c\n%U\n  %i" :immediate-finish t)
-              ("p" "Phone call" entry (file "~/git/org/refile.org")
-               "* PHONE (bh/phone-call)%? :PHONE:\n%U\n  %i\n" :clock-in t :clock-resume t)
-              ("h" "Habit" entry (file "~/git/org/refile.org")
-               "* TODO %?\n%U\n%a\nSCHEDULED: %t\n:PROPERTIES:\n:STYLE: habit\n:END:\n  %i"))))
+        (quote (("t" "todo" entry (file "~/git/org/refile.org")
+                 "* TODO %?\n%U\n%a\n  %i" :clock-in t :clock-resume t)
+                ("n" "note" entry (file "~/git/org/refile.org")
+                 "* %? :NOTE:\n%U\n%a\n  %i" :clock-in t :clock-resume t)
+                ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
+                 "* %?\n%U\n  %i" :clock-in t :clock-resume t)
+                ("w" "org-protocol" entry (file "~/git/org/refile.org")
+                 "* TODO Review %c\n%U\n  %i" :immediate-finish t)
+                ("p" "Phone call" entry (file "~/git/org/refile.org")
+                 "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
+                ("h" "Habit" entry (file "~/git/org/refile.org")
+                 "* NEXT %?\n%U\n%a\nSCHEDULED: %t .+1d/3d\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n  %i"))))
     
     
 #+end_src
@@ -820,48 +826,86 @@ Custom agenda views are used for:
   
   ;; Custom agenda command definitions
   (setq org-agenda-custom-commands
-        (quote (("n" "Notes" tags "NOTE"
+        (quote (("N" "Notes" tags "NOTE"
                  ((org-agenda-overriding-header "Notes")
                   (org-tags-match-list-sublevels t)))
                 ("h" "Habits" tags-todo "STYLE=\"habit\""
-                 ((org-agenda-overriding-header "Habits")))
-                ("a" "Agenda"
+                 ((org-agenda-overriding-header "Habits")
+                  (org-agenda-sorting-strategy
+                   '(todo-state-down effort-up category-keep))))
+                (" " "Agenda"
                  ((agenda "" nil)
-                  (tags "LEVEL=1+REFILE"
+                  (tags "REFILE"
                         ((org-agenda-overriding-header "Notes and Tasks to Refile")
                          (org-agenda-overriding-header "Tasks to Refile")))
-                  (tags-todo "-WAITING-CANCELLED/!NEXT"
+                  (tags-todo "-CANCELLED/!"
+                             ((org-agenda-overriding-header "Stuck Projects")
+                              (org-tags-match-list-sublevels 'indented)
+                              (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
+                  (tags-todo "-WAITING-CANCELLED/!NEXT|STARTED"
                              ((org-agenda-overriding-header "Next Tasks")
                               (org-agenda-skip-function 'bh/skip-projects)
                               (org-agenda-todo-ignore-scheduled t)
                               (org-agenda-todo-ignore-deadlines t)
                               (org-tags-match-list-sublevels t)
                               (org-agenda-sorting-strategy
-                               '(effort-up category-keep))))
-                  (tags-todo "/!"
-                             ((org-agenda-overriding-header "Stuck Projects")
-                              (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
-                  (tags-todo "/!"
+                               '(todo-state-down effort-up category-keep))))
+                  (tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
+                             ((org-agenda-overriding-header "Relevant Tasks")
+                              (org-agenda-skip-function 'bh/skip-non-relevant-tasks)
+                              (org-tags-match-list-sublevels 'indented)
+                              (org-agenda-todo-ignore-scheduled t)
+                              (org-agenda-todo-ignore-deadlines t)
+                              (org-agenda-sorting-strategy
+                               '(category-keep))))
+                  (tags-todo "-CANCELLED/!"
                              ((org-agenda-overriding-header "Projects")
-                              (org-agenda-skip-function 'bh/skip-non-project-trees)
+                              (org-agenda-skip-function 'bh/skip-non-projects)
+                              (org-tags-match-list-sublevels 'indented)
                               (org-agenda-todo-ignore-scheduled 'future)
                               (org-agenda-todo-ignore-deadlines 'future)
                               (org-agenda-sorting-strategy
                                '(category-keep))))
-                  (tags-todo "/!-NEXT-WAITING"
-                             ((org-agenda-overriding-header "Tasks")
-                              (org-agenda-skip-function 'bh/skip-projects-and-habits)
-                              (org-agenda-sorting-strategy
-                               '(category-keep))
-                              (org-tags-match-list-sublevels 'indented)
-                              (org-agenda-todo-ignore-scheduled t)
-                              (org-agenda-todo-ignore-deadlines t)))
                   (todo "WAITING|SOMEDAY"
-                        ((org-agenda-overriding-header "Waiting and Postponed tasks")))
+                        ((org-agenda-overriding-header "Waiting and Postponed tasks")
+                         (org-agenda-skip-function 'bh/skip-projects)))
                   (tags "-REFILE/"
                         ((org-agenda-overriding-header "Tasks to Archive")
                          (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))
-                 nil))))
+                 nil)
+                ("r" "Tasks to Refile" tags "REFILE"
+                 ((org-agenda-overriding-header "Notes and Tasks to Refile")
+                  (org-agenda-overriding-header "Tasks to Refile")))
+                ("#" "Stuck Projects" tags-todo "-CANCELLED/!"
+                 ((org-agenda-overriding-header "Stuck Projects")
+                  (org-tags-match-list-sublevels 'indented)
+                  (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
+                ("n" "Next Tasks" tags-todo "-WAITING-CANCELLED/!NEXT|STARTED"
+                 ((org-agenda-overriding-header "Next Tasks")
+                  (org-agenda-skip-function 'bh/skip-projects)
+                  (org-tags-match-list-sublevels t)
+                  (org-agenda-sorting-strategy
+                   '(todo-state-down effort-up category-keep))))
+                ("R" "Relevant Tasks" tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
+                 ((org-agenda-overriding-header "Relevant Tasks")
+                  (org-agenda-skip-function 'bh/skip-non-relevant-tasks)
+                  (org-tags-match-list-sublevels 'indented)
+                  (org-agenda-sorting-strategy
+                   '(category-keep))))
+                ("p" "Projects" tags-todo "-CANCELLED/!"
+                 ((org-agenda-overriding-header "Projects")
+                  (org-agenda-skip-function 'bh/skip-non-projects)
+                  (org-tags-match-list-sublevels 'indented)
+                  (org-agenda-todo-ignore-scheduled 'future)
+                  (org-agenda-todo-ignore-deadlines 'future)
+                  (org-agenda-sorting-strategy
+                   '(category-keep))))
+                ("w" "Waiting Tasks" todo "WAITING|SOMEDAY"
+                 ((org-agenda-overriding-header "Waiting and Postponed tasks"))
+                 (org-agenda-skip-function 'bh/skip-projects))
+                ("A" "Tasks to Archive" tags "-REFILE/"
+                 ((org-agenda-overriding-header "Tasks to Archive")
+                  (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))))
 #+end_src
 
 My block agenda view looks like this:
@@ -1164,8 +1208,8 @@ I have the following org-mode settings for clocking:
   (setq org-clock-history-length 10)
   ;; Resume clocking task on clock-in if the clock is open
   (setq org-clock-in-resume t)
-  ;; Do not change task states when clocking in
-  (setq org-clock-in-switch-to-state nil)
+  ;; Change task to STARTED when clocking in
+  (setq org-clock-in-switch-to-state 'bh/clock-in-to-started)
   ;; Separate drawers for clocking and logs
   (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
   ;; Save clock data and state changes and notes in the LOGBOOK drawer
@@ -1182,6 +1226,13 @@ I have the following org-mode settings for clocking:
   (setq org-clock-report-include-clocking-task t)
   
   (setq bh/keep-clock-running nil)
+  
+  (defun bh/clock-in-to-started (kw)
+    "Switch task from TODO or NEXT to STARTED when clocking in.
+  Skips capture tasks."
+    (if (and (member (org-get-todo-state) (list "TODO" "NEXT"))
+             (not (and (boundp 'org-capture-mode) org-capture-mode)))
+        "STARTED"))
   
   (defun bh/find-project-task ()
     "Move point to the parent (project) task if any"
@@ -1821,7 +1872,6 @@ triggers described previously in [[#ToDoStateTriggers][ToDo state triggers]]
 
 - =WAITING=
 - =CANCELLED=
-- =NEXT=
 * Handling Notes
 Notes are little gems of knowledge that you come across during your
 day.  They are just like tasks except there is nothing to do (except
@@ -1992,13 +2042,13 @@ I'm using a new lazy project definition to mark tasks as projects.
 This requires zero effort from me.  Any task with a subtask using a
 todo keyword is a project.  Period.
 
-Projects are 'stuck' if they have no subtask with a =NEXT= todo
-keyword task defined.
+Projects are 'stuck' if they have no subtask with a =NEXT= or
+=STARTED= todo keyword task defined.
 
 Org-mode stuck projects agenda view lists projects that have no next
-task defined.  I normally review these in my weekly review and assign
-a =NEXT= task to all projects to clear the stuck project list.  This
-helps to keep projects moving forward.
+task defined.  Stuck projects show up on my block agenda and I tend to
+assign a =NEXT= task so the list remains empty.  This helps to keep
+projects moving forward.
 
 I disable the default org-mode stuck projects agenda view with the
 following setting.
@@ -2044,14 +2094,15 @@ used by agenda views.
   
   (defun bh/skip-non-stuck-projects ()
     "Skip trees that are not stuck projects"
-    (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+    (let* ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
+           (subtree-end (save-excursion (org-end-of-subtree t)))
            (has-next (save-excursion
                        (forward-line 1)
                        (and (< (point) subtree-end)
-                            (re-search-forward "^\\*+ NEXT " subtree-end t)))))
+                            (re-search-forward "^\\*+ \\(NEXT\\|STARTED\\) " subtree-end t)))))
       (if (and (bh/is-project-p) (not has-next))
           nil ; a stuck project, has subtasks but no next task
-        subtree-end)))
+        next-headline)))
   
   (defun bh/skip-non-project-trees ()
     "Skip trees that are not projects"
