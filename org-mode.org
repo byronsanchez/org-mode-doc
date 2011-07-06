@@ -1925,12 +1925,22 @@ calls is done by capture mode.  I use a special capture template for
 phone calls combined with a custom function that replaces text with
 information from my =bbdb= addressbook database.
 
-=C-M-r p= starts a capture task normally with a function call on the
-task line so I can enter =C-x C-e= to lookup the name in =bbdb= and
-replace the function call text.  This starts the clock as soon as the
-phone rings and I'm free to lookup and replace the caller in bbdb
-anytime during or after the call.  Capture mode starts the clock using
-the =:clock-in t= setting in the template.
+=C-M-r p= starts a capture task normally and I'm free to enter notes
+from the call in the template immediately.  The cursor starts in the
+template normally where the name of the caller would be inserted.  I
+can use a =bbdb= lookup function to insert the name with =f9-p= or I
+can just type in whatever is appropriate.  If a =bbdb= entry needs to
+be created for the caller I can do that and replace the caller details
+with =f9-p= anytime that is convenient for me.  I found that
+automatically calling the bbdb lookup function would interrupt my
+workflow during the call in cases where the information about the
+caller was not readily available.  Sometimes I want to make notes first 
+and get the caller details later during the call.
+
+The phone call capture template starts the clock as soon as the phone
+rings and I'm free to lookup and replace the caller in bbdb anytime
+during or after the call.  Capture mode starts the clock using the
+=:clock-in t= setting in the template.
 
 When the phone call ends I simple do =C-c C-c= to close the capture
 buffer and stop the clock.  If I have to close it early and look up
@@ -1952,12 +1962,16 @@ followed by the phone-call related lookup functions.
   (setq org-capture-templates
         (quote (...
                 ("p" "Phone call" entry (file "~/git/org/refile.org")
-                 "* PHONE (bh/phone-call)%? :PHONE:\n%U\n  %i\n" :clock-in t :clock-resume t)
+                 "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
                 ...)))
-  
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
+  (require 'bbdb)
+  (require 'bbdb-com)
+  
+  (global-set-key (kbd "<f9> p") 'bh/phone-call)
+  
   ;;
   ;; Phone capture template handling with BBDB lookup
   ;; Adapted from code by Gregory J. Grubbs
@@ -1988,7 +2002,6 @@ followed by the phone-call related lookup functions.
                                       (concat " - " company)))))
                          (rec)
                          (t "NameOfCaller")))
-      (delete-backward-char 15)
       (insert caller)))  
 #+end_src
 * GTD stuff
