@@ -2157,7 +2157,7 @@ used by agenda views.
   
   (defun bh/skip-projects ()
     "Skip trees that are projects"
-    (let ((next-headline (save-excursion (outline-next-heading))))
+    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
       (cond
        ((bh/is-project-p)
         next-headline)
