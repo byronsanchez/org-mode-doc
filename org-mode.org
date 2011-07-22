@@ -271,6 +271,7 @@ I have the following custom key bindings set up for my emacs (sorted by frequenc
 | f9 o    | Switch to org scratch buffer                    | Sometimes  |
 | f9 s    | Switch to scratch buffer                        | Sometimes  |
 | M-f9    | Remove unmodified buffer and frame              | Sometimes  |
+| C-c r   | Capture a task (from my mobile phone)           | Rare       |
 | f9 h    | Hide other tasks                                | Rare       |
 | f7      | Toggle line truncation/wrap                     | Rare       |
 | f9 u    | Untabify region                                 | Rare       |
@@ -342,6 +343,7 @@ Here is the keybinding setup in lisp:
   (global-set-key (kbd "C-<f11>") 'org-clock-in)
   (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
   (global-set-key (kbd "C-M-r") 'org-capture)
+  (global-set-key (kbd "C-c r") 'org-capture)
   (global-set-key (kbd "M-<f9>") (lambda ()
                                    (interactive)
                                    (unless (buffer-modified-p)
@@ -586,7 +588,13 @@ Org Capture mode replaces remember mode for capturing tasks and notes.
 To add new tasks efficiently I use a minimal number of capture
 templates.  I used to have lots of capture templates, one for each
 org-file.  I'd start org-capture with C-M-r and then pick a template
-that filed the task under =* Tasks= in the appropriate file.
+that filed the task under =* Tasks= in the appropriate file.  This
+binding of C-M-r overrides the default emacs reverse regexp search but
+I rarely use that and can invoke it from the =M-x= command line if I
+really need it.  I like =C-M-r= better than =C-c r= since it feels
+like a single keystroke instead of two separate keys and I've been
+using this so long that my fingers just do the right thing without
+really thinking about it.
 
 I found I still needed to refile these capture tasks again to the
 correct location within the org-file so all of these different capture
@@ -616,6 +624,8 @@ Here is my setup for org-capture
   
   ;; I use C-M-r to start capture mode
   (global-set-key (kbd "C-M-r") 'org-capture)
+  ;; I use C-c r to start capture mode when using SSH from my Android phone
+  (global-set-key (kbd "C-c r") 'org-capture)
   
   ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
   (setq org-capture-templates
