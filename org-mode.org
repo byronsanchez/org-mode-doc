@@ -66,11 +66,13 @@ files.
 creating structured email messages.
 
 #+begin_src emacs-lisp :tangle yes
-  (setq message-mode-hook
-        (quote (orgstruct++-mode
-                (lambda nil (setq fill-column 72) (flyspell-mode 1))
-                turn-on-auto-fill
-                bbdb-define-all-aliases)))
+  (add-hook 'message-mode-hook 'orgstruct++-mode 'append)
+  (add-hook 'message-mode-hook 'turn-on-auto-fill 'append)
+  (add-hook 'message-mode-hook 'bbdb-define-all-aliases 'append)
+  (add-hook 'message-mode-hook 'orgtbl-mode 'append)
+  (add-hook 'message-mode-hook 'turn-on-flyspell 'append)
+  (add-hook 'message-mode-hook '(lambda () (setq fill-column 72)) 'append)
+  (add-hook 'message-mode-hook '(lambda () (local-set-key (kbd "C-c M-o") 'org-mime-htmlize)) 'append)
 #+end_src
 
 =flyspell-mode= is enabled for almost everything to help prevent
@@ -78,20 +80,21 @@ creating documents with spelling errors.  =yasnippets= are enabled to
 speed up creation of standard text blocks in most editing modes.
 
 #+begin_src emacs-lisp :tangle yes
-  ;; Make TAB the yas trigger key in the org-mode-hook and enable flyspell mode and autofill
+  ;; flyspell mode for spell checking everywhere
+  (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
+  
+  ;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
   (add-hook 'org-mode-hook
             (lambda ()
               ;; yasnippet
               (make-variable-buffer-local 'yas/trigger-key)
               (org-set-local 'yas/trigger-key [tab])
               (define-key yas/keymap [tab] 'yas/next-field-group)
-              ;; flyspell mode for spell checking everywhere
-              (flyspell-mode 1)
               ;; Undefine C-c [ and C-c ] since this breaks my org-agenda files when directories are include
               ;; It expands the files in the directories individually
               (org-defkey org-mode-map "\C-c["    'undefined)
               (org-defkey org-mode-map "\C-c]"    'undefined)
-              (local-set-key (kbd "C-c M-o") 'bh/mail-subtree)))
+              (local-set-key (kbd "C-c M-o") 'bh/mail-subtree)) 'append)
   
   (defun bh/mail-subtree ()
     (interactive)
@@ -2316,24 +2319,24 @@ source.  You'll have to install the =graphviz= and =PlantUML= packages
 on your system.
 
 #+begin_src emacs-lisp :tangle yes
-   (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
-   (setq org-plantuml-jar-path "~/java/plantuml.jar")
-   
-   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+  (setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+  (setq org-plantuml-jar-path "~/java/plantuml.jar")
   
-   (setq org-babel-load-languages (quote ((emacs-lisp . t)
-                                          (dot . t)
-                                          (ditaa . t)
-                                          (R . t)
-                                          (python . t)
-                                          (ruby . t)
-                                          (gnuplot . t)
-                                          (clojure . t)
-                                          (sh . t)
-                                          (ledger . t)
-                                          (org . t)
-                                          (plantuml . t)
-                                          (latex . t))))
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+  
+  (setq org-babel-load-languages (quote ((emacs-lisp . t)
+                                         (dot . t)
+                                         (ditaa . t)
+                                         (R . t)
+                                         (python . t)
+                                         (ruby . t)
+                                         (gnuplot . t)
+                                         (clojure . t)
+                                         (sh . t)
+                                         (ledger . t)
+                                         (org . t)
+                                         (plantuml . t)
+                                         (latex . t))))
   
   ; Do not prompt to confirm evaluation
   ; This may be dangerous - make sure you understand the consequences
@@ -2843,7 +2846,7 @@ without a prompt.
     (org-agenda-to-appt))
   
   ; Rebuild the reminders everytime the agenda is displayed
-  (add-hook 'org-finalize-agenda-hook 'bh/org-agenda-to-appt)
+  (add-hook 'org-finalize-agenda-hook 'bh/org-agenda-to-appt 'append)
   
   ; This is at the end of my .emacs - so appointments are set up when Emacs starts
   (bh/org-agenda-to-appt)
@@ -3038,8 +3041,7 @@ The clock modeline time is also shown with a reverse background.
 
 #+begin_src emacs-lisp :tangle yes
   ;; Always hilight the current agenda line
-  (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
-  
+  (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)) 'append)
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
@@ -3983,7 +3985,7 @@ timestamp whenever a headline is created.
     (interactive)
     (org-insert-time-stamp nil t t nil nil nil))
   
-  (add-hook 'org-insert-heading-hook 'bh/insert-inactive-timestamp)
+  (add-hook 'org-insert-heading-hook 'bh/insert-heading-inactive-timestamp 'append)
 #+end_src
    
 Everytime I create a heading with =M-RET= or =M-S-RET= the hook invokes the function
