@@ -4342,6 +4342,31 @@ opening an link to some HTML file with =C-c C-o= or when previewing an export.
   (setq org-clone-delete-id t)
 #+end_src
 
+** Propagate STARTED to parent tasks
+When a task is marked =STARTED= (either manually or by clocking it in) the =STARTED=
+state propagates up the tree to any parent tasks of this task that are =TODO= or =NEXT=.
+As soon as I work on the first =NEXT= task in a tree the project is also marked =STARTED=.
+This helps me keep track of things that are in progress.
+
+Here's the setup I use to propagate =STARTED= to parent tasks:
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Mark parent tasks as started
+  (defvar bh/mark-parent-tasks-started nil)
+  
+  (defun bh/mark-parent-tasks-started ()
+    "Visit each parent task and change TODO states to STARTED"
+    (unless bh/mark-parent-tasks-started
+      (when (equal state "STARTED")
+        (let ((bh/mark-parent-tasks-started t))
+          (save-excursion
+            (while (org-up-heading-safe)
+              (when (member (nth 2 (org-heading-components)) (list "TODO" "NEXT"))
+                (org-todo "STARTED"))))))))
+  
+  (add-hook 'org-after-todo-state-change-hook 'bh/mark-parent-tasks-started 'append)
+#+end_src
+
 * Things I Don't Use
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
