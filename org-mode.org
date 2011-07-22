@@ -2961,6 +2961,7 @@ There is more than one way to do this.  Use what works for you.
   
   (defun bh/org-todo ()
     (interactive)
+    (widen)
     (org-narrow-to-subtree)
     (org-show-todo-tree nil))
   
