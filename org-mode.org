@@ -2226,7 +2226,7 @@ Archived Tasks= in the archive file.
 #+begin_src emacs-lisp :tangle yes
   (defun bh/skip-non-archivable-tasks ()
     "Skip trees that are not available for archiving"
-    (let ((next-headline (save-excursion (outline-next-heading))))
+    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
       ;; Consider only tasks with done todo headings as archivable candidates
       (if (member (org-get-todo-state) org-done-keywords)
           (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
@@ -2239,7 +2239,7 @@ Archived Tasks= in the archive file.
                                        (and (< (point) subtree-end)
                                             (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
             (if subtree-is-current
-                subtree-end ; Has a date in this month or last month, skip it
+                next-headline ; Has a date in this month or last month, skip it
               nil))  ; available to archive
         (or next-headline (point-max)))))  
 #+end_src
