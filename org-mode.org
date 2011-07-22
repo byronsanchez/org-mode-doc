@@ -1603,25 +1603,26 @@ in your clocked day and it gets counted as zero (0) for time spent on
 the task when generating clock reports.  Counting it as zero is almost
 certainly wrong.
 
-To check for unclosed clock times I use the agenda-view log-mode (=l=
-in the agenda) with the following setup which shows clocked times only
-by default.  (To see all task state changes you can issue a prefix to
-this command (=C-u l= in the agenda)).
+To check for unclosed clock times I use the agenda-view clock check
+(=v c= in the agenda).  This view shows clocking gaps and overlaps in
+the agenda.
 
-To check the last month's clock data I use =F12 a v m b l= which shows
-a full month in the agenda, moves to the previous month, and shows the
-clocked times only.
+To check the last month's clock data I use =F12 a v m b v c= which
+shows a full month in the agenda, moves to the previous month, and
+shows the clocked times only.  It's important to remove any agenda
+restriction locks and filters when viewing checking the logs for gaps
+and overlaps.
 
 The clocked-time only display in the agenda makes it easy to quickly
 scan down the list to see if an entry is missing an end time.  If an
 entry is not closed you can manually fix the clock entry based on
 other clock info around that time.
 
-Use the following setup to get log mode in the agenda to only show
-clocked times:
+I use log mode in the agenda to show closed tasks and state changes
+with the following setting:
 #+begin_src emacs-lisp :tangle yes
   ;; Agenda log mode items to display (clock time only by default)
-  (setq org-agenda-log-mode-items (quote (clock)))
+  (setq org-agenda-log-mode-items (quote (closed state)))
 #+end_src
 *** Using clock reports to summarize time spent
 Billable time for clients are kept in separate org files.
