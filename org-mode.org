@@ -2111,22 +2111,10 @@ with =F12 a=.
 I have the following helper functions defined for projects.  These are
 used by agenda views.
 #+begin_src emacs-lisp :tangle yes
-  (defun bh/is-subproject-p ()
-    "Any task which is a subtask of another project"
-    (let ((is-subproject)
-          (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
-      (save-excursion
-        (while (and (not is-subproject) (org-up-heading-safe))
-          (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
-            (setq is-subproject t))))
-      (and is-a-task is-subproject)))
-  
   (defun bh/is-project-p ()
-    "Any task with a todo keyword subtask and is not a subtask of another project
-  This does not support projects with subprojects"
+    "Any task with a todo keyword subtask"
     (let ((has-subtask)
           (subtree-end (save-excursion (org-end-of-subtree t)))
-          (is-subproject (bh/is-subproject-p))
           (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
       (save-excursion
         (forward-line 1)
@@ -2135,7 +2123,7 @@ used by agenda views.
                     (re-search-forward "^\*+ " subtree-end t))
           (when (member (org-get-todo-state) org-todo-keywords-1)
             (setq has-subtask t))))
-      (and is-a-task has-subtask (not is-subproject))))
+      (and is-a-task has-subtask)))
   
   (defun bh/skip-non-stuck-projects ()
     "Skip trees that are not stuck projects"
@@ -2149,19 +2137,12 @@ used by agenda views.
           nil ; a stuck project, has subtasks but no next task
         next-headline)))
   
-  (defun bh/skip-non-project-trees ()
+  (defun bh/skip-non-projects ()
     "Skip trees that are not projects"
     (let ((subtree-end (save-excursion (org-end-of-subtree t))))
       (if (bh/is-project-p)
           nil
         subtree-end)))
-  
-  (defun bh/skip-non-subprojects ()
-    "Skip trees that are not projects"
-    (let ((next-headline (save-excursion (outline-next-heading))))
-      (if (bh/is-subproject-p)
-          nil
-        next-headline)))
   
   (defun bh/skip-project-trees-and-habits ()
     "Skip trees that are projects"
@@ -2183,14 +2164,14 @@ used by agenda views.
        (t
         nil))))
   
-  (defun bh/skip-projects-and-habits ()
-    "Skip trees that are projects and tasks that are habits"
-    (let ((next-headline (save-excursion (outline-next-heading))))
+  (defun bh/skip-project-trees-and-habits ()
+    "Skip trees that are projects"
+    (let ((subtree-end (save-excursion (org-end-of-subtree t))))
       (cond
        ((bh/is-project-p)
-        next-headline)
+        subtree-end)
        ((org-is-habit-p)
-        next-headline)
+        subtree-end)
        (t
         nil))))
 #+end_src
