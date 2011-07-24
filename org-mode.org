@@ -142,7 +142,7 @@ Org-mode is great for dealing with multiple clients and client
 projects.  An org file becomes the collection of projects, notes,
 etc. for a single client or client-project.
 
-Clients (ABC Ltd) has multiple customer systems that I work on.
+Client ABC Ltd. has multiple customer systems that I work on.
 Separating the tasks for each client-customer into separate org files
 helps keep things logically grouped and since clients come and go this
 allows entire org files to be added or dropped from my agenda to keep
@@ -194,7 +194,6 @@ Here are some examples of my level 1 headings in
 
 =todo.org=:
 
-- Appointments
 - Special Dates
 
   Includes level 2 headings for
@@ -204,11 +203,13 @@ Here are some examples of my level 1 headings in
   - Holidays
 
 - Finances
-- Health
+- Health and Recreation
 - House Maintenance
-- Medical
-- Miscellaneous
-- Lawn and Garden
+- Lawn and Garden Maintenance
+- Notes
+- Tasks
+- Vehicle Maintenance
+- Passwords
 
 
 =norang.org=:
@@ -218,23 +219,25 @@ Here are some examples of my level 1 headings in
 - Accounting
 - Finances
 - Hardware Maintenance
-- Quotes
-- Administration
-- Research
+- Tasks
+- Research and Development
+- Notes
+- Purchase Order Tracking
+- Passwords
 
 Each of these level 1 tasks normally has a =property drawer=
 specifying the category for any tasks in that tree.  Level 1 headings
 are set up like this:
 
-: * Appointments
+: * Health and Recreation
 :   :PROPERTIES:
-:   :CATEGORY: Appt
-:   :END:      
-:   ...
-: * Miscellaneous
-:   :PROPERTIES:
-:   :CATEGORY: todo
+:   :CATEGORY: Health
 :   :END:
+:   ...
+: * House Maintenance
+:   :PROPERTIES:
+:   :CATEGORY: House
+:   :END:      
 
 ** Key bindings
 :PROPERTIES:
@@ -250,10 +253,10 @@ I have the following custom key bindings set up for my emacs (sorted by frequenc
 |---------+-------------------------------------------------+------------|
 | F12     | Agenda (1 key less than C-c a)                  | Very Often |
 | C-c b   | Switch to org file                              | Very Often |
-| C-F11   | Clock in a task (show menu with prefix)         | Very Often |
 | F11     | Goto currently clocked item                     | Very Often |
 | C-M-r   | Capture a task                                  | Very Often |
-| f9 g    | Gnus - I live in gnus                           | Often      |
+| C-F11   | Clock in a task (show menu with prefix)         | Often      |
+| f9 g    | Gnus - I check mail regularly                   | Often      |
 | f5      | Show todo items for this subtree                | Often      |
 | S-f5    | Widen                                           | Often      |
 | f9 b    | Quick access to bbdb data                       | Often      |
@@ -269,11 +272,10 @@ I have the following custom key bindings set up for my emacs (sorted by frequenc
 | C-x n r | Narrow to region                                | Sometimes  |
 | f9 f    | Boxquote insert a file                          | Sometimes  |
 | f9 i    | Info manual                                     | Sometimes  |
-| f9 I    | Punch Clock In  (start clocking)                | Sometimes  |
-| f9 O    | Punch Clock Out (stop clocking)                 | Sometimes  |
+| f9 I    | Punch Clock In  (once per day)                  | Sometimes  |
+| f9 O    | Punch Clock Out (once per day)                  | Sometimes  |
 | f9 o    | Switch to org scratch buffer                    | Sometimes  |
 | f9 s    | Switch to scratch buffer                        | Sometimes  |
-| M-f9    | Remove unmodified buffer and frame              | Sometimes  |
 | C-c r   | Capture a task (from my mobile phone)           | Rare       |
 | f9 h    | Hide other tasks                                | Rare       |
 | f7      | Toggle line truncation/wrap                     | Rare       |
@@ -293,7 +295,30 @@ Here is the keybinding setup in lisp:
   (global-set-key (kbd "<f9> f") 'boxquote-insert-file)
   (global-set-key (kbd "<f9> g") 'gnus)
   (global-set-key (kbd "<f9> h") 'bh/hide-other)
+  (global-set-key (kbd "<f9> i") 'info)
   
+  (global-set-key (kbd "<f9> I") 'bh/punch-in)
+  (global-set-key (kbd "<f9> O") 'bh/punch-out)
+  
+  (global-set-key (kbd "<f9> o") 'bh/make-org-scratch)
+  
+  (global-set-key (kbd "<f9> r") 'boxquote-region)
+  (global-set-key (kbd "<f9> s") 'bh/switch-to-scratch)
+  
+  (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
+  (global-set-key (kbd "<f9> u") 'bh/untabify)
+  
+  (global-set-key (kbd "<f9> v") 'visible-mode)
+  (global-set-key (kbd "<f9> SPC") 'bh/clock-in-last-task)
+  (global-set-key (kbd "C-<f9>") 'previous-buffer)
+  (global-set-key (kbd "C-x n r") 'narrow-to-region)
+  (global-set-key (kbd "C-<f10>") 'next-buffer)
+  (global-set-key (kbd "<f11>") 'org-clock-goto)
+  (global-set-key (kbd "C-<f11>") 'org-clock-in)
+  (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
+  (global-set-key (kbd "C-M-r") 'org-capture)
+  (global-set-key (kbd "C-c r") 'org-capture)
+
   (defun bh/hide-other ()
     (interactive)
     (save-excursion
@@ -311,47 +336,18 @@ Here is the keybinding setup in lisp:
       (set-window-start (selected-window)
                         (window-start (selected-window)))))
   
-  (global-set-key (kbd "<f9> i") 'info)
-  
-  (global-set-key (kbd "<f9> I") 'bh/punch-in)
-  (global-set-key (kbd "<f9> O") 'bh/punch-out)
-  
   (defun bh/make-org-scratch ()
     (interactive)
     (find-file "/tmp/publish/scratch.org")
     (gnus-make-directory "/tmp/publish"))
   
-  (global-set-key (kbd "<f9> o") 'bh/make-org-scratch)
-  
-  (global-set-key (kbd "<f9> r") 'boxquote-region)
-  (global-set-key (kbd "<f9> s") 'bh/switch-to-scratch)
-  
   (defun bh/switch-to-scratch ()
     (interactive)
     (switch-to-buffer "*scratch*"))
   
-  (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
-  (global-set-key (kbd "<f9> u") 'bh/untabify)
-  
   (defun bh/untabify ()
     (interactive)
     (untabify (point-min) (point-max)))
-  
-  (global-set-key (kbd "<f9> v") 'visible-mode)
-  (global-set-key (kbd "<f9> SPC") 'bh/clock-in-last-task)
-  (global-set-key (kbd "C-<f9>") 'previous-buffer)
-  (global-set-key (kbd "C-x n r") 'narrow-to-region)
-  (global-set-key (kbd "C-<f10>") 'next-buffer)
-  (global-set-key (kbd "<f11>") 'org-clock-goto)
-  (global-set-key (kbd "C-<f11>") 'org-clock-in)
-  (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
-  (global-set-key (kbd "C-M-r") 'org-capture)
-  (global-set-key (kbd "C-c r") 'org-capture)
-  (global-set-key (kbd "M-<f9>") (lambda ()
-                                   (interactive)
-                                   (unless (buffer-modified-p)
-                                     (kill-buffer (current-buffer)))
-                                   (delete-frame)))
 #+end_src
 
 The main reason I have special key bindings (like =F11=, and =F12=) is
@@ -786,9 +782,10 @@ just put the cursor on the task and hit =C-c C-w= and enter =nor C-SPC
 sys RET= and it's done.  IDO completion makes locating targets a snap.
 ** Refiling Tasks
 Tasks to refile are in their own section of the block agenda.  To find
-tasks to refile I run my agenda view with =F12 a= and scroll down to
+tasks to refile I run my agenda view with =F12 SPC= and scroll down to
 second section of the block agenda: =Tasks to Refile=.  This view
-shows all tasks (even ones marked in a =done= state).
+shows all tasks (even ones marked in a =done= state).  Alternatively
+I just use =F12 r= on my slower Eee PC.
 
 Bulk refiling in the agenda works very well for multiple tasks going
 to the same place.  Just mark the tasks with =m= and then =B r= to
