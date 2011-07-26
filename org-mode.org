@@ -1848,7 +1848,8 @@ be at the farm to make the call.
                               ("crypt" . ?E)
                               ("MARK" . ?M)
                               ("NOTE" . ?n)
-                              ("CANCELLED" . ?C)
+                              ("BZFLAG" . ?B)
+                              ("CANCELLED" . ?c)
                               ("FLAGGED" . ??))))
   
   ; Allow setting single tags without the menu
