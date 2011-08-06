@@ -412,11 +412,6 @@ CANCELLED --> [*]
 TODO --> SOMEDAY
 SOMEDAY --> TODO
 TODO --> CANCELLED
-'[*] --> PHONE
-'PHONE --> [*]
-'[*] --> OPEN
-'OPEN --> CLOSED
-'CLOSED --> [*]
 TODO: t
 STARTED: s
 DONE: d
@@ -425,8 +420,6 @@ note right of WAITING: Note records\nwhat it is waiting for
 SOMEDAY:S
 note right of CANCELLED: Note records\nwhy it was cancelled
 CANCELLED:c
-'OPEN:O
-'CLOSED:C
 WAITING --> DONE
 #+end_src
 
@@ -467,11 +460,6 @@ CANCELLED --> [*]
 TODO --> SOMEDAY
 SOMEDAY --> TODO
 TODO --> CANCELLED
-'[*] --> PHONE
-'PHONE --> [*]
-'[*] --> OPEN
-'OPEN --> CLOSED
-'CLOSED --> [*]
 TODO: t
 NEXT: n
 STARTED: s
@@ -481,8 +469,6 @@ note right of WAITING: Note records\nwhat it is waiting for
 SOMEDAY:S
 note right of CANCELLED: Note records\nwhy it was cancelled
 CANCELLED:c
-'OPEN:O
-'CLOSED:C
 WAITING --> DONE
 #+end_src
 
@@ -602,9 +588,6 @@ workflow to use a minimal number of capture templates -- I create the
 new task quickly and refile it once.  This also saves me from
 maintaining my org-capture templates when I add a new org file.
 ** Capture Templates
-:PROPERTIES:
-:ID:       9507648b-dbfc-4ba1-96c2-36e8ba15cbd0
-:END:
 When a new task needs to be added I categorize it into one of a few
 things:
 
