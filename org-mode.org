@@ -2123,6 +2123,16 @@ used by agenda views.
             (setq has-subtask t))))
       (and is-a-task has-subtask)))
   
+  (defun bh/is-subproject-p ()
+    "Any task which is a subtask of another project"
+    (let ((is-subproject)
+          (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
+      (save-excursion
+        (while (and (not is-subproject) (org-up-heading-safe))
+          (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
+            (setq is-subproject t))))
+      (and is-a-task is-subproject)))
+  
   (defun bh/skip-non-stuck-projects ()
     "Skip trees that are not stuck projects"
     (let* ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
@@ -2162,16 +2172,21 @@ used by agenda views.
        (t
         nil))))
   
-  (defun bh/skip-project-trees-and-habits ()
-    "Skip trees that are projects"
-    (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-      (cond
-       ((bh/is-project-p)
-        subtree-end)
-       ((org-is-habit-p)
-        subtree-end)
-       (t
-        nil))))
+  (defun bh/skip-non-relevant-tasks ()
+    "Skip project tasks when clocking organization and non-sub-project tasks otherwise"
+    (if (and bh/keep-clock-running (not (bh/is-default-task-organization-p)))
+        (bh/skip-non-subprojects)
+      (bh/skip-project-trees-and-habits)))
+  
+  (defun bh/skip-non-subprojects ()
+    "Skip trees that are not projects"
+    (let ((next-headline (save-excursion (outline-next-heading))))
+      (if (bh/is-subproject-p)
+          nil
+        next-headline)))
+  
+  (defun bh/is-default-task-organization-p ()
+    (equal org-clock-default-task (org-id-find "eb155a82-92b2-4f25-a3c6-0304591af2f9" 'marker)))
 #+end_src
 
 * Archiving
