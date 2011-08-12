@@ -3965,6 +3965,12 @@ timestamp whenever a headline is created.
     (interactive)
     (org-insert-time-stamp nil t t nil nil nil))
   
+  (defun bh/insert-heading-inactive-timestamp ()
+    (save-excursion
+      (org-return)
+      (org-cycle)
+      (bh/insert-inactive-timestamp)))
+  
   (add-hook 'org-insert-heading-hook 'bh/insert-heading-inactive-timestamp 'append)
 #+end_src
    
