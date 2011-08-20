@@ -3783,7 +3783,24 @@ These are my settings for habit tracking.
 
 #+begin_src emacs-lisp :tangle yes
   ; Enable habit tracking (and a bunch of other modules)
-  (setq org-modules (quote (org-bbdb org-bibtex org-crypt org-gnus org-id org-info org-jsinfo org-habit org-inlinetask org-irc org-mew org-mhe org-protocol org-rmail org-vm org-wl org-w3m)))
+  (setq org-modules (quote (org-bbdb
+                            org-bibtex
+                            org-crypt
+                            org-gnus
+                            org-id
+                            org-info
+                            org-jsinfo
+                            org-habit
+                            org-inlinetask
+                            org-irc
+                            org-mew
+                            org-mhe
+                            org-protocol
+                            org-rmail
+                            org-vm
+                            org-wl
+                            org-w3m)))
+  
   ; global STYLE property values for completion
   (setq org-global-properties (quote (("STYLE_ALL" . "habit"))))
   ; position the habit graph on the agenda to the right of the default
