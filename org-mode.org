@@ -13,7 +13,6 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+LINK_UP:   
 #+LINK_HOME: 
-* Overview
 Org-mode is a fabulous organizational tool built by Carsten Dominik
 that operates on plain text files.  Org-mode is part of Emacs.
 
