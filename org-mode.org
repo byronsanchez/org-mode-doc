@@ -2569,19 +2569,51 @@ in the future.
       [2011-04-29 Fri 19:03]
 
       #+begin_src plantuml :file sequence.png :exports both
-      title Example Sequence Diagram
-      Server <- Client: Session Initiation
-      note right: Client requests new session
-      Server -> Client: Authorization Request
-      note left: Server requires authentication
-      Client -> Server: Authorization Response
-      note right: Client provides authentication details
-      Server -> Client: Session Token
-      note left: Session established
+        title Example Sequence Diagram
+        activate Client
+        Client -> Server: Session Initiation
+        note right: Client requests new session
+        activate Server
+        Client <-- Server: Authorization Request
+        note left: Server requires authentication
+        Client -> Server: Authorization Response
+        note right: Client provides authentication details
+        Server --> Client: Session Token
+        note left: Session established
+        deactivate Server
+        Client -> Client: Saves token
+        deactivate Client
       #+end_src
 
       #+results:
       [[file:sequence.png]]
+
+***** Activity Diagram
+      [2011-09-10 Sat 08:36]
+      #+begin_src plantuml :file activity.png :exports both
+        title Example Activity Diagram
+        note right: Example Function
+        (*)--> "Step 1"
+        --> "Step 2"
+        -> "Step 3"
+        --> "Step 4"
+        --> === STARTLOOP ===
+        note top: For each element in the array
+        --> if "Are we done?" then
+          -> [no] "Do this"
+          -> "Do that"
+          note bottom: Important note\ngoes here
+          -up-> "Increment counters"
+          --> === STARTLOOP ===
+        else
+          --> [yes] === ENDLOOP ===
+        endif
+        --> "Last Step"
+        --> (*)
+      #+end_src
+
+      #+results:
+      [[file:activity.png]]
 
 ***** Usecase Diagram
 
