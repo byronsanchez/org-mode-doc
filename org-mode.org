@@ -3547,15 +3547,26 @@ in the future.
 
 ***** org-indent mode
 
-      I recently started using org-indent mode.  I like this setting a lot.
-      It removes the indentation in the org-file but displays it as if it
-      was indented while you are working on the org file buffer.
+      org-indent mode allows your org files to have all content
+      starting in column 0.  Emacs will display the buffer as if it
+      was indented to the appropriate level for the heading.
 
-      org-indent mode displays as if org-odd-levels-only is true but it has
-      a really clean look that I prefer over my old setup.
+      I used this setting for over a year and it worked very well for
+      me.  I like the clean look of org-indent mode with
+      =org-odd-levels-only= and =org-hide-leading-stars= set.
 
-      I have org-indent mode on by default at startup with the following
-      setting:
+      Now that I have to use Windows at work I find I'm opening
+      org-files in other tools and I prefer to keep the indentation in
+      the org files as hard spaces -- so I've disabled org-indent mode.
+
+      org-indent mode displays as if org-odd-levels-only is true but
+      it has a really clean look that I prefer over my old setup.
+      Since disabling this mode I've enabled both
+      =org-odd-levels-only= and =org-hide-leading-stars= so it looks
+      the same in Emacs.
+
+      If you want to enable org-indent mode by default at startup use
+      the following setting:
       #+begin_src emacs-lisp :tangle yes
       (setq org-startup-indented t)
       #+end_src
