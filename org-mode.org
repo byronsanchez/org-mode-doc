@@ -915,8 +915,6 @@ in the future.
                                  ((org-agenda-overriding-header "Projects")
                                   (org-agenda-skip-function 'bh/skip-non-projects)
                                   (org-tags-match-list-sublevels 'indented)
-                                  (org-agenda-todo-ignore-scheduled 'future)
-                                  (org-agenda-todo-ignore-deadlines 'future)
                                   (org-agenda-sorting-strategy
                                    '(category-keep))))
                       (todo "WAITING|SOMEDAY"
@@ -949,8 +947,6 @@ in the future.
                      ((org-agenda-overriding-header "Projects")
                       (org-agenda-skip-function 'bh/skip-non-projects)
                       (org-tags-match-list-sublevels 'indented)
-                      (org-agenda-todo-ignore-scheduled 'future)
-                      (org-agenda-todo-ignore-deadlines 'future)
                       (org-agenda-sorting-strategy
                        '(category-keep))))
                     ("w" "Waiting Tasks" todo "WAITING|SOMEDAY"
