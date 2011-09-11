@@ -897,7 +897,7 @@ in the future.
                                   (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
                       (tags-todo "-WAITING-CANCELLED/!NEXT|STARTED"
                                  ((org-agenda-overriding-header "Next Tasks")
-                                  (org-agenda-skip-function 'bh/skip-projects)
+                                  (org-agenda-skip-function 'bh/skip-projects-and-habits)
                                   (org-agenda-todo-ignore-scheduled t)
                                   (org-agenda-todo-ignore-deadlines t)
                                   (org-tags-match-list-sublevels t)
@@ -921,7 +921,7 @@ in the future.
                                    '(category-keep))))
                       (todo "WAITING|SOMEDAY"
                             ((org-agenda-overriding-header "Waiting and Postponed tasks")
-                             (org-agenda-skip-function 'bh/skip-projects)))
+                             (org-agenda-skip-function 'bh/skip-projects-and-habits)))
                       (tags "-REFILE/"
                             ((org-agenda-overriding-header "Tasks to Archive")
                              (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))
@@ -935,7 +935,7 @@ in the future.
                       (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
                     ("n" "Next Tasks" tags-todo "-WAITING-CANCELLED/!NEXT|STARTED"
                      ((org-agenda-overriding-header "Next Tasks")
-                      (org-agenda-skip-function 'bh/skip-projects)
+                      (org-agenda-skip-function 'bh/skip-projects-and-habits)
                       (org-tags-match-list-sublevels t)
                       (org-agenda-sorting-strategy
                        '(todo-state-down effort-up category-keep))))
@@ -955,7 +955,7 @@ in the future.
                        '(category-keep))))
                     ("w" "Waiting Tasks" todo "WAITING|SOMEDAY"
                      ((org-agenda-overriding-header "Waiting and Postponed tasks"))
-                     (org-agenda-skip-function 'bh/skip-projects))
+                     (org-agenda-skip-function 'bh/skip-projects-and-habits))
                     ("A" "Tasks to Archive" tags "-REFILE/"
                      ((org-agenda-overriding-header "Tasks to Archive")
                       (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))))
@@ -2243,11 +2243,13 @@ in the future.
            (t
             nil))))
       
-      (defun bh/skip-projects ()
-        "Skip trees that are projects"
+      (defun bh/skip-projects-and-habits ()
+        "Skip trees that are projects and tasks that are habits"
         (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
           (cond
            ((bh/is-project-p)
+            next-headline)
+           ((org-is-habit-p)
             next-headline)
            (t
             nil))))
