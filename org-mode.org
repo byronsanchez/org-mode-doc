@@ -1713,11 +1713,11 @@ in the future.
       entry is not closed you can manually fix the clock entry based on
       other clock info around that time.
 
-      I use log mode in the agenda to show closed tasks and state changes
-      with the following setting:
+      Use the following setup to get log mode in the agenda to only show
+      clocked times:
       #+begin_src emacs-lisp :tangle yes
         ;; Agenda log mode items to display (clock time only by default)
-        (setq org-agenda-log-mode-items (quote (closed state)))
+        (setq org-agenda-log-mode-items (quote (clock)))
       #+end_src
 
 ***** Using clock reports to summarize time spent
