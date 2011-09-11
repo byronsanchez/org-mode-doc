@@ -904,8 +904,8 @@ in the future.
                                   (org-agenda-sorting-strategy
                                    '(todo-state-down effort-up category-keep))))
                       (tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
-                                 ((org-agenda-overriding-header "Relevant Tasks")
-                                  (org-agenda-skip-function 'bh/skip-non-relevant-tasks)
+                                 ((org-agenda-overriding-header "Tasks")
+                                  (org-agenda-skip-function 'bh/skip-projects-and-habits)
                                   (org-tags-match-list-sublevels 'indented)
                                   (org-agenda-todo-ignore-scheduled t)
                                   (org-agenda-todo-ignore-deadlines t)
@@ -939,9 +939,9 @@ in the future.
                       (org-tags-match-list-sublevels t)
                       (org-agenda-sorting-strategy
                        '(todo-state-down effort-up category-keep))))
-                    ("R" "Relevant Tasks" tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
-                     ((org-agenda-overriding-header "Relevant Tasks")
-                      (org-agenda-skip-function 'bh/skip-non-relevant-tasks)
+                    ("R" "Tasks" tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
+                     ((org-agenda-overriding-header "Tasks")
+                      (org-agenda-skip-function 'bh/skip-projects-and-habits)
                       (org-tags-match-list-sublevels 'indented)
                       (org-agenda-sorting-strategy
                        '(category-keep))))
@@ -1199,14 +1199,14 @@ in the future.
     - This identifies a task that is the default task to clock in
       whenever the clock normally stops
   - Clock in tasks normally, and let moving to a DONE state clock out
-    - clocking out automatically clocks time on the default task
+    - clocking out automatically clocks time on a new task
   - Continue clocking whatever tasks you work on
   - Punch out (stop the clock)
 
-  I'm free to change the default task multiple times during the day.  If
-  I punch-in on a task in =Project X= then the top-level =Project X=
-  task automatically becomes the default task and all clocked time goes
-  on that project until I either punch out or punch in some other task.
+  I'm free to change the default task multiple times during the day.
+  If I punch-in with a prefix on a task in =Project X= then that task
+  automatically becomes the default task and all clocked time goes on
+  that project until I either punch out or punch in some other task.
 
   My org files look like this:
 
@@ -1221,35 +1221,62 @@ in the future.
   : :END:
   : ...
 
-  If I am working on =norang.ca= tasks, then I simply punch in on the
-  task and that project becomes the default clocking task.  If the task
-  is a single (non-project) task then that clock stays on that task
-  until I punch out or punch in some other task.  This allows me to
-  block time on my calendar and work on a single context for some time
-  frame of my day, then totally switch to another context simply by
-  changing my default clocking task.  When an interruption occurs I 
-  start a capture task which keeps clocked time on the interruption
-  task until I close it with C-c C-c.
+  If I am working on some task, then I simply clock in on the task.
+  Clocking out moves the clock up to a parent task with a todo keyword
+  (if any) which keeps the clock time in the same subtree.  If there
+  is no parent task with a todo keyword then the clock moves back to
+  the default clocking task until I punch out or clock in some other
+  task.  When an interruption occurs I start a capture task which
+  keeps clocked time on the interruption task until I close it with
+  C-c C-c.
 
   This works really well for me.
+
+  For example, consider the following org file:
+
+  : * TODO Project A
+  : ** NEXT TASK 1
+  : ** TODO TASK 2
+  : ** TODO TASK 3
+  : * Tasks
+  : ** TODO Some miscellaneous task
+
+  I'll work on this file in the following sequence:
+
+  1. I punch in with =F9-I= at the start of my day
+
+     That clocks in the =Organization= task by id in my =todo.org= file.
+
+  2. =F12-SPC= to review my block agenda
+
+     Pick 'TODO Some miscellaneous task' to work on next and clock that in with =I=
+     The clock is now on 'TODO Some miscellaneous task'
+
+  3. I complete that task and mark it done with =C-c C-t d=
+
+     This stops the clock and moves it back to the =Organization= task.
+
+  4. Now I want to work on =Project A= so I clock in =Task 1=
+
+     I work on Task 1 and mark it =DONE=.  This clocks out =Task 1= and moves
+     the clock to =Project A=.  Now I work on =Task 2= and clock that in.
+
+  The entire time I'm working on and clocking some subtask of =Project A=
+  all of the clock time in the interval is applied somewhere to the =Project A=
+  tree.  When I eventually mark =Project A= done then the clock will move
+  back to the default organization task.
 
 *** Clock Setup
     :PROPERTIES:
     :CUSTOM_ID: ClockSetup
     :END:
 
-    To get started we need to set the default clocking task which we use
-    to clock in whenever the clock would normally stop.  This is now
-    simply a matter of punching in the clock with =F9 I=.  You can do this
-    anywhere.  If you are on a task (in the agenda or in an org file then
-    that task is clocked in and the parent project (if any) is selected as
-    the default clocking task.  If you are not on a task (some non-task
-    line in the agenda, before the first headline in an org-mode file, or
-    not in an org-mode buffer) then the default Organization task is
-    clocked in.  The last step in punching is sets the restriction lock
-    for the agenda.  If you selected a task then the agenda is restricted
-    to that project / task, otherwise you get everything when clocked into
-    the Organization task.
+    To get started we need to punch in which clocks in the default
+    task and keeps the clock running.  This is now simply a matter of
+    punching in the clock with =F9 I=.  You can do this anywhere.
+    Clocking out will now clock in the parent task (if there is one
+    with a todo keyword) or clock in the default task if not parent
+    exists.
 
     Keeping the clock running when moving a subtask to a =DONE= state
     means clocking continues to apply to the project task.  I can pick the
@@ -1305,44 +1332,29 @@ in the future.
           (goto-char parent-task)
           parent-task))
       
-      (defun bh/clock-in-and-set-project-as-default (pom)
-        "Clock in the current task and set the parent project (if any) as the
-      default clocking task.  Agenda filter tags are set from the default task"
-        ;; Find the parent project task if any and set that as the default
-        (save-excursion
-          (save-excursion
-            (org-with-point-at pom
-              (bh/find-project-task)
-              (org-clock-in '(16))))
-          (save-excursion
-            (org-with-point-at pom
-              (org-clock-in nil)))))
+      (add-hook 'org-agenda-mode-hook '(lambda () (org-defkey org-agenda-mode-map "\C-c\C-x<" 'bh/set-agenda-restriction-lock) 'append))
       
-      (defun bh/set-agenda-restriction-lock ()
-        "Set filter to tags of POM, current task, or current project and refresh"
-        (interactive)
-        ;;
-        ;; We're in the agenda
-        ;;
+      (defun bh/set-agenda-restriction-lock (arg)
+        "Set restriction lock to current subtree or file if prefix is specified"
+        (interactive "p")
         (let* ((pom (org-get-at-bol 'org-hd-marker))
                (tags (org-with-point-at pom (org-get-tags-at))))
-          (if (equal major-mode 'org-agenda-mode)
-              (if tags
-                  (org-with-point-at pom
-                    (bh/find-project-task)
-                    (org-agenda-set-restriction-lock))
-                (org-agenda-remove-restriction-lock))
-            (if (equal org-clock-default-task (org-id-find "eb155a82-92b2-4f25-a3c6-0304591af2f9" 'marker))
-                (org-agenda-remove-restriction-lock)
+          (let ((restriction-type (if (equal arg 4) 'file 'subtree)))
+            (cond
+             ((equal major-mode 'org-agenda-mode)
               (org-with-point-at pom
-                (bh/find-project-task)
-                (org-agenda-set-restriction-lock))))))
+                (org-agenda-set-restriction-lock restriction-type)))
+             ((and (equal major-mode 'org-mode) (org-before-first-heading-p))
+              (org-agenda-set-restriction-lock 'file))
+             (t
+              (org-with-point-at pom
+                (org-agenda-set-restriction-lock restriction-type)))))))
       
-      (defun bh/punch-in ()
-        "Start continuous clocking and set the default task to the project task
-      of the selected task.  If no task is selected set the Organization task as
-      the default task."
-        (interactive)
+      (defun bh/punch-in (arg)
+        "Start continuous clocking and set the default task to the
+      selected task.  If no task is selected set the Organization task
+      as the default task."
+        (interactive "p")
         (setq bh/keep-clock-running t)
         (if (equal major-mode 'org-agenda-mode)
             ;;
@@ -1350,8 +1362,8 @@ in the future.
             ;;
             (let* ((marker (org-get-at-bol 'org-hd-marker))
                    (tags (org-with-point-at marker (org-get-tags-at))))
-              (if tags
-                  (bh/clock-in-and-set-project-as-default marker)
+              (if (and (eq arg 4) tags)
+                  (org-agenda-clock-in '(16))
                 (bh/clock-in-organization-task-as-default)))
           ;;
           ;; We are not in the agenda
@@ -1359,10 +1371,9 @@ in the future.
           (save-restriction
             (widen)
             ; Find the tags on the current task
-            (if (and (equal major-mode 'org-mode) (not (org-before-first-heading-p)))
-                (bh/clock-in-and-set-project-as-default nil)
-              (bh/clock-in-organization-task-as-default))))
-        (bh/set-agenda-restriction-lock))
+            (if (and (equal major-mode 'org-mode) (not (org-before-first-heading-p)) (eq arg 4))
+                (org-clock-in '(16))
+              (bh/clock-in-organization-task-as-default)))))
       
       (defun bh/punch-out ()
         (interactive)
@@ -1376,11 +1387,28 @@ in the future.
           (org-with-point-at org-clock-default-task
             (org-clock-in))))
       
+      (defun bh/clock-in-parent-task ()
+        "Move point to the parent (project) task if any and clock in"
+        (let ((parent-task))
+          (save-excursion
+            (save-restriction
+              (widen)
+              (while (and (not parent-task) (org-up-heading-safe))
+                (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
+                  (setq parent-task (point))))
+              (if parent-task
+                  (org-with-point-at (or parent-task)
+                    (org-clock-in))
+                (when bh/keep-clock-running
+                  (bh/clock-in-default-task)))))))
+      
+      (defvar bh/organization-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
+      
       (defun bh/clock-in-organization-task-as-default ()
         (interactive)
         (save-restriction
           (widen)
-          (org-with-point-at (org-id-find "eb155a82-92b2-4f25-a3c6-0304591af2f9" 'marker)
+          (org-with-point-at (org-id-find bh/organization-task-id 'marker)
             (org-clock-in '(16)))))
       
       (defun bh/clock-out-maybe ()
@@ -1388,7 +1416,7 @@ in the future.
                    (not org-clock-clocking-in)
                    (marker-buffer org-clock-default-task)
                    (not org-clock-resolving-clocks-due-to-idleness))
-          (bh/clock-in-default-task)))
+          (bh/clock-in-parent-task)))
       
       (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
     #+end_src
@@ -1437,25 +1465,23 @@ in the future.
 
 ***** Setting a default clock task
 
-      I have a default =** Organization= task in my todo.org file that I
-      tend to put miscellaneous clock time on.  While reorganizing my
-      org-files and doing other planning work that isn't for a specific
-      project I'll clock in this task while I do things.  By punching-in
-      anywhere that is not a task (any line before first heading in an
-      org-file, anywhere in a non-org-mode buffer, in the agenda when not on
-      a task, etc) clocks in this Organization task as the default task and
-      removes the agenda restriction lock.
+      I have a default =** Organization= task in my todo.org file that
+      I tend to put miscellaneous clock time on.  This is the task I
+      clock in on when I punch in at the start of my work day with
+      =F9-I=.  While reorganizing my org-files, reading email,
+      clearing my inbox, and doing other planning work that isn't for
+      a specific project I'll clock in this task.  Punching-in
+      anywhere clocks in this Organization task as the default task.
 
-      You can quickly clock in the default task with =C-u C-c C-x C-i d=, or
-      just clock out from the current task and the default task will clock
-      in.  I now set the default clocking task when I punch in and clocking
-      out of any task will clock in this default task until I punch out
-      using the clocking hooks I have set up.
+      If I want to change the default clocking task I just visit the
+      new task in any org buffer and clock it in with =C-u C-u C-c C-x
+      C-i=.  Now this new task that collects miscellaneous clock
+      minutes when the clock would normally stop.
 
-      The only thing I need to remember is to set a new default clock task
-      when I switch contexts (stop working for client A and start working
-      for client B).  All that is necessary is to punch in on some client B
-      task and I'm done.
+      You can quickly clock in the default clocking task with =C-u C-c
+      C-x C-i d=.  Another option is to repeatedly clock out so the
+      clock moves up the project tree until you clock out the
+      top-level task and the clock moves to the default task.
 
 ***** Using the clock history to clock in old tasks
 
@@ -1678,11 +1704,11 @@ in the future.
       (=v c= in the agenda).  This view shows clocking gaps and overlaps in
       the agenda.
 
-      To check the last month's clock data I use =F12 a v m b v c= which
-      shows a full month in the agenda, moves to the previous month, and
-      shows the clocked times only.  It's important to remove any agenda
-      restriction locks and filters when viewing checking the logs for gaps
-      and overlaps.
+      To check the last month's clock data I use =F12 a v m b v c=
+      which shows a full month in the agenda, moves to the previous
+      month, and shows the clocked times only.  It's important to
+      remove any agenda restriction locks and filters when checking
+      the logs for gaps and overlaps.
 
       The clocked-time only display in the agenda makes it easy to quickly
       scan down the list to see if an entry is missing an end time.  If an
@@ -2254,12 +2280,6 @@ in the future.
            (t
             nil))))
       
-      (defun bh/skip-non-relevant-tasks ()
-        "Skip project tasks when clocking organization and non-sub-project tasks otherwise"
-        (if (and bh/keep-clock-running (not (bh/is-default-task-organization-p)))
-            (bh/skip-non-subprojects)
-          (bh/skip-project-trees-and-habits)))
-      
       (defun bh/skip-non-subprojects ()
         "Skip trees that are not projects"
         (let ((next-headline (save-excursion (outline-next-heading))))
@@ -2267,8 +2287,6 @@ in the future.
               nil
             next-headline)))
       
-      (defun bh/is-default-task-organization-p ()
-        (equal org-clock-default-task (org-id-find "eb155a82-92b2-4f25-a3c6-0304591af2f9" 'marker)))
     #+end_src
 
 
@@ -3161,10 +3179,11 @@ in the future.
 
       You can limit the agenda view to a single file in multiple ways.
 
-      You can use the agenda restriction lock =C-c C-x <= on the any line
-      before the first heading to set the agenda restriction lock to this
-      file only.  This lock stays in effect until you remove it with =C-c
-      C-x >=.
+      You can use the agenda restriction lock =C-c C-x <= on the any
+      line before the first heading to set the agenda restriction lock
+      to this file only.  This is equivalent using a prefix argumment
+      (=C-u C-c C-x <=) anywhere in the file.  This lock stays in
+      effect until you remove it with =C-c C-x >=.
 
       Another way is to invoke the agenda with =F12 < a= while visiting an
       org-mode file.  This limits the agenda view to just this file.  I
