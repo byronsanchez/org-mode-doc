@@ -78,30 +78,32 @@ creating structured email messages.
 #+end_src
 
 =flyspell-mode= is enabled for almost everything to help prevent
-creating documents with spelling errors.  =yasnippets= are enabled to
-speed up creation of standard text blocks in most editing modes.
+creating documents with spelling errors.
 
 #+begin_src emacs-lisp :tangle yes
   ;; flyspell mode for spell checking everywhere
   (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
-
-  ;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
+  
+  ;; Disable C-c [ and C-c ] in org-mode
   (add-hook 'org-mode-hook
             (lambda ()
-              ;; yasnippet
-              (make-variable-buffer-local 'yas/trigger-key)
-              (org-set-local 'yas/trigger-key [tab])
-              (define-key yas/keymap [tab] 'yas/next-field-group)
-              ;; Undefine C-c [ and C-c ] since this breaks my org-agenda files when directories are include
-              ;; It expands the files in the directories individually
+              ;; Undefine C-c [ and C-c ] since this breaks my
+              ;; org-agenda files when directories are include It
+              ;; expands the files in the directories individually
               (org-defkey org-mode-map "\C-c["    'undefined)
-              (org-defkey org-mode-map "\C-c]"    'undefined)
+              (org-defkey org-mode-map "\C-c]"    'undefined)) 'append)
+  
+  (add-hook 'org-mode-hook
+            (lambda ()
               (local-set-key (kbd "C-c M-o") 'bh/mail-subtree)) 'append)
-
+  
   (defun bh/mail-subtree ()
     (interactive)
     (org-mark-subtree)
     (org-mime-subtree))
+  
+  ;; Enable abbrev-mode
+  (add-hook 'org-mode-hook (lambda () (abbrev-mode 1)))
 #+end_src
 ** Organizing Your Life Into Org Files
 
@@ -2943,19 +2945,23 @@ with org-mode so that it Works-For-Me(tm).
 :CUSTOM_ID: Yasnippets
 :END:
 
-[[http://code.google.com/p/yasnippet/][Yasnippet]] is cool!  You type the snippet name and =TAB= and yasnippet
-expands the name with the contents of the snippet text - substituting
-snippet variables as appropriate.
+[[http://code.google.com/p/yasnippet/][Yasnippet]] is cool but I don't use this anymore.  I've replaced
+yasnippet with a combination of =abbrev-mode= and =skeletons= which
+are available by default in Emacs.
+
+You type the snippet name and =TAB= and yasnippet expands the name
+with the contents of the snippet text - substituting snippet variables
+as appropriate.
 
 Yasnippet comes with lots of snippets for programming languages.  I
-use a few babel related snippets with =org-mode=.
+used a few babel related snippets with =org-mode=.
 
 I downloaded and installed the unbundled version of yasnippet so that
 I can edit the predefined snippets.  I unpacked the yasnippet software
 in my =~/.emacs.d/plugins= directory, renamed =yasnippet0.5.10= to
 =yasnippet= and added the following setup in my =.emacs=:
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins"))
 
   (require 'yasnippet)
@@ -2975,14 +2981,14 @@ in my =~/.emacs.d/plugins= directory, renamed =yasnippet0.5.10= to
               (auto-fill-mode 1)))
 #+end_src
 
-I use snippets for the following:
+I used snippets for the following:
   - =begin= for generic =#+begin_= blocks
   - =dot=   for graphviz
   - =uml=   for PlantUML graphics
   - =sh=    for bash shell scripts
   - =elisp= for emacs lisp code
   - initials of a person converts to their full name
-    I use this while taking meeting notes
+    I used this while taking meeting notes
 
 Here is the definition for the =begin= snippet:
 
@@ -2993,7 +2999,7 @@ org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/beg
 :  $0
 :  #+end_$1
 
-I use this to create =#+begin_*= blocks like 
+I used this to create =#+begin_*= blocks like 
 - =#+begin_example=
 - =#+begin_src=
 - etc.
@@ -3042,6 +3048,9 @@ for the block.
 : #+end_src
 
 This is a great time saver.
+** Abbrev-mode and Skeletons
+[2011-09-26 Mon 05:44]
+Description coming soon.  My basic setup came from the [[http://orgmode.org/worg/org-faq.html#shortcuts-for-entering-source-blocks][Worg FAQ about shortcuts]].
 ** Limit your view to what you are working on
 :PROPERTIES:
 :CUSTOM_ID: LimitingAgendaView
@@ -4088,15 +4097,23 @@ page in Firefox will trigger the org-protocol capture template with
 details of the page I'm currently viewing in firefox.
 
 I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
-** Do not require a final newline when saving files
+** Require a final newline when saving files
 
-The following setting is mainly for editing yasnippets where I want to
-be able to expand a snippet but stay on the same line.  I use this
+The following setting was mainly for editing yasnippets where I want to
+be able to expand a snippet but stay on the same line.  I used this
 mainly for replacing short strings or initials with full names for
-people during meeting notes.
+people during meeting notes.  I now use =abbrev-mode-= for this and
+no longer need this setting.
+
+#+begin_src emacs-lisp :tangle no
+  (setq require-final-newline nil)
+#+end_src
+
+When I save a file in Emacs I want a final newline - this fits better
+with the source code projects I work on.  This is the setting I use now:
 
 #+begin_src emacs-lisp :tangle yes
-  (setq require-final-newline nil)
+  (setq require-final-newline t)
 #+end_src
 ** Insert inactive timestamps and exclude from export
 
