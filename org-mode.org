@@ -2949,6 +2949,9 @@ with org-mode so that it Works-For-Me(tm).
 yasnippet with a combination of =abbrev-mode= and =skeletons= which
 are available by default in Emacs.
 
+The following description applies to yasnippet version 0.5.10.  The setup
+requirements may have changed with newer versions.
+
 You type the snippet name and =TAB= and yasnippet expands the name
 with the contents of the snippet text - substituting snippet variables
 as appropriate.
