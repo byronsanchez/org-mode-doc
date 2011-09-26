@@ -4003,15 +4003,36 @@ save the file the data is re-encrypted for your key.  Encrypting does
 not require prompting for the passphrase - that's only for looking at
 the plain text version of the data.
 
-I tend to have a single encrypted entry per file (like =* Passwords=).
-I prevent the =crypt= tag from using inheritance so that I don't have
-encrypted data inside encrypted data.  I found =M-x
+I tend to have a single level 1 encrypted entry per file (like =*
+Passwords=).  I prevent the =crypt= tag from using inheritance so that
+I don't have encrypted data inside encrypted data.  I found =M-x
 org-decrypt-entries= prompting for the passphrase to decrypt data over
 and over again (once per entry to decrypt) too inconvenient.
 
 I leave my entries encrypted unless I have to look up data - I decrypt
 on demand and then save the file again to re-encrypt the data.  This
 keeps the data in plain text as short as possible.
+*** Auto Save Files
+[2011-09-26 Mon 04:57]
+
+Emacs temporarily saves your buffer in an autosave file while you are
+editing your org buffer and a sufficient number of changes have
+accumulated.  If you have decrypted subtrees in your buffer these will
+be written to disk in plain text which possibly leaks sensitive information.
+To combat this org-mode now asks if you want to disable the autosave 
+functionality in this buffer.
+
+Personally I really like the autosave feature.  99% of the time my encrypted
+entries are perfectly safe to write to the autosave file since they are
+still encrypted.  I tend to decrypt an entry, read the details for what
+I need to look up and then immediately save the file again with =C-x C-s=
+which re-encrypts the entry immediately.  This pretty much guarantees that 
+my autosave files never have decrypted data stored in them.
+
+I disable the default org crypt auto-save setting as follows:
+#+begin_src emacs-lisp :tangle yes
+  (setq org-crypt-disable-auto-save nil)
+#+end_src
 ** Speed Commands
 
 There's a new and exciting feature called =org-speed-commands= in the
