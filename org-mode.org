@@ -2501,7 +2501,6 @@ The source for a graphviz graphic looks like this in org-mode:
       rankdir=LR
       labelloc=b
       node[label=client]
-      client1 -> client2 -> client3 [constraint=false]
       opserver -> client1
       opserver -> client2
       opserver -> client3
