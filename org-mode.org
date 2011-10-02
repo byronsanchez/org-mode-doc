@@ -3640,8 +3640,7 @@ when I need that.
   (setq org-special-ctrl-k t)
   (setq org-yank-adjusted-subtrees t)
 #+end_src
-** Attachments					
-
+** Attachments
 Attachments are great for getting large amounts of data related to
 your project out of your org-mode files.  Before attachments came
 along I was including huge blocks of SQL code in my org files to keep
