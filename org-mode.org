@@ -3436,12 +3436,12 @@ to be fast and painless since I do those all the time.
 
 I set up an automated network backup over 10 years ago that is still
 serving me well today.  All of my systems gets daily backups to a
-network drive.  These are collected weekly and written to DVD ISO
-images in case my machines walk off someday.
+network drive.  These are collected monthly and written to an external
+removable USB disk.
 
-Once a week I get an email that says 'These ISO images are ready to be
-burned to disk' and all I have to do is write them out.  Backups take
-minimal effort currently and I'm really happy about that.
+Once a month my task for backups prompts me to move the current
+collection of montly backups to the USB drive for external storage.
+Backups take minimal effort currently and I'm really happy about that.
 
 Since then =git= came into my life, so backups of =git= repositories
 that are on multiple machines is much less critical than it used to
