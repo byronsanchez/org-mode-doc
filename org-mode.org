@@ -108,7 +108,9 @@ creating documents with spelling errors.
 ** Organizing Your Life Into Org Files
 
 Tasks are separated into logical groupings or projects.  
-Use separate org files for large task groupings.
+Use separate org files for large task groupings and 
+subdirectories for collections of files for multiple
+projects that belong together.
 
 Here are sample files that I use.
 
