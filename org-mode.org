@@ -2143,7 +2143,7 @@ subtask which is =NEXT=.  =Project C= is not stuck because it has
 because =SubTask E= is not =NEXT= and there are no other tasks
 available in this project.
 
-#+begin_src org
+#+begin_src org :exports src
   ,* Category
   ,** TODO Stuck Project A
   ,*** TODO Task B
