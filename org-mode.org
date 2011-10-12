@@ -3889,7 +3889,7 @@ value setting and a special =SCHEDULED= date entry like this:
 This marks the task as a habit and separates it from the regular task
 display on the agenda.  When you mark a habit done it shows up on your
 daily agenda the next time based on the first interval in the
-SCHEDULED entry (=.+1d=)
+SCHEDULED entry (=.+7d=)
 
 The special =SCHEDULED= entry states that I want to do this every day
 but at least every 2 days.  If I go 3 days without marking it DONE it
