@@ -155,7 +155,7 @@ allows entire org files to be added or dropped from my agenda to keep
 only what is important visible in agenda views.
 
 Other org files are used for publishing only and do not contribute to the agenda.
-See [[Publishing]] for more details.
+See [[#Publishing][Publishing and Exporting]] for more details.
 ** Agenda Setup
 
 Here is my current =org-agenda-files= setup.
@@ -596,6 +596,9 @@ workflow to use a minimal number of capture templates -- I create the
 new task quickly and refile it once.  This also saves me from
 maintaining my org-capture templates when I add a new org file.
 ** Capture Templates
+:PROPERTIES:
+:CUSTOM_ID: CaptureTemplates
+:END:
 
 When a new task needs to be added I categorize it into one of a few
 things:
@@ -4091,7 +4094,7 @@ up with the =w= key).
 
 My org-mode setup for org-protocol is really simple.  It enables
 org-protocol and creates a single org-protocol capture template as
-described in [[id:9507648b-dbfc-4ba1-96c2-36e8ba15cbd0][Capture Templates]].
+described in [[#CaptureTemplates][Capture Templates]].
 #+begin_src emacs-lisp :tangle yes
   (require 'org-protocol)
 #+end_src
