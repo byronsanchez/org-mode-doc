@@ -2816,8 +2816,8 @@ Here's my publishing setup:
                  :sitemap-filename "index.html"
                  :sitemap-title "Test Publishing Area"
                  :sitemap-style "tree"
-                 :author-info nil
-                 :creator-info nil)
+                 :author-info t
+                 :creator-info t)
                 ("tmp-extra"
                  :base-directory "/tmp/publish/"
                  :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs/tmp"
