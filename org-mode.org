@@ -1738,7 +1738,9 @@ These are stored for easy use in =column mode= in the global property
 =Effort_ALL=.
 #+begin_src emacs-lisp :tangle yes
   ; global Effort estimate values
-  (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00"))))
+  ; global STYLE property values for completion
+  (setq org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
+                                      ("STYLE_ALL" . "habit"))))
 #+end_src
 
 To create an estimate for a task or subtree start column mode with
@@ -3928,8 +3930,6 @@ These are my settings for habit tracking.
                             org-wl
                             org-w3m)))
 
-  ; global STYLE property values for completion
-  (setq org-global-properties (quote (("STYLE_ALL" . "habit"))))
   ; position the habit graph on the agenda to the right of the default
   (setq org-habit-graph-column 50)
 #+end_src
