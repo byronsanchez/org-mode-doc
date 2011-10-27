@@ -2067,7 +2067,7 @@ I keep a list like this one to remind me what needs to be done.
 
 To keep the agenda fast I set
 #+begin_src emacs-lisp :tangle yes
-  (setq org-agenda-ndays 1)
+  (setq org-agenda-span 'day)
 #+end_src
 so only today's date is shown by default.  I only need the weekly
 view during my weekly review and this keeps my agenda generation
@@ -3251,7 +3251,7 @@ The following agenda customizations control
 - display of repeating tasks
 - display of empty dates on the agenda
 - task sort order
-- start the agenda weekly view with =today=
+- start the agenda weekly view with Sunday
 - display of the grid
 - habits at the bottom
 
@@ -3286,7 +3286,7 @@ Here are the =.emacs= settings:
                 (search category-up))))
 
   ;; Start the weekly agenda today
-  (setq org-agenda-start-on-weekday nil)
+  (setq org-agenda-start-on-weekday 0)
 
   ;; Enable display of the time grid so we can see the marker for the current time
   (setq org-agenda-time-grid (quote((daily today remove-match)
