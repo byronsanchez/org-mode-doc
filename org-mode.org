@@ -564,13 +564,12 @@ The tags are used to filter tasks in the agenda views conveniently.
   (setq org-todo-state-tags-triggers
         (quote (("CANCELLED" ("CANCELLED" . t))
                 ("WAITING" ("WAITING" . t))
-                ("SOMEDAY" ("WAITING" . t))
-                (done ("WAITING"))
-                ("TODO" ("WAITING") ("CANCELLED"))
-                ("NEXT" ("WAITING") ("CANCELLED"))
-                ("STARTED" ("WAITING") ("CANCELLED"))
-                ("DONE" ("WAITING") ("CANCELLED")))))
-  
+                ("HOLD" ("WAITING" . t) ("HOLD" . t))
+                (done ("WAITING") ("HOLD"))
+                ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
+                ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
+                ("STARTED" ("WAITING") ("CANCELLED") ("HOLD"))
+                ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 #+end_src
 * Adding New Tasks Quickly with Org Capture
 :PROPERTIES:
@@ -1861,12 +1860,13 @@ be at the farm to make the call.
   (setq org-tag-alist (quote ((:startgroup)
                               ("@errand" . ?e)
                               ("@office" . ?o)
-                              ("@home" . ?h)
+                              ("@home" . ?H)
                               ("@farm" . ?f)
                               (:endgroup)
                               ("PHONE" . ?p)
                               ("QUOTE" . ?q)
                               ("WAITING" . ?w)
+                              ("HOLD" . ?h)
                               ("PERSONAL" . ?P)
                               ("WORK" . ?W)
                               ("FARM" . ?F)
