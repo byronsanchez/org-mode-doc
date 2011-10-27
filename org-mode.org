@@ -381,7 +381,7 @@ Here are my =TODO= state keywords and colour settings:
 #+begin_src emacs-lisp :tangle yes
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!/!)")
-                (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)" "PHONE")
+                (sequence "WAITING(w@/!)" "HOLD(h!)" "|" "CANCELLED(c@/!)" "PHONE")
                 (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
   
   (setq org-todo-keyword-faces
@@ -390,7 +390,7 @@ Here are my =TODO= state keywords and colour settings:
                 ("STARTED" :foreground "blue" :weight bold)
                 ("DONE" :foreground "forest green" :weight bold)
                 ("WAITING" :foreground "orange" :weight bold)
-                ("SOMEDAY" :foreground "magenta" :weight bold)
+                ("HOLD" :foreground "magenta" :weight bold)
                 ("CANCELLED" :foreground "forest green" :weight bold)
                 ("OPEN" :foreground "blue" :weight bold)
                 ("CLOSED" :foreground "forest green" :weight bold)
@@ -413,18 +413,18 @@ The following diagram shows the possible state transitions for a task.
   WAITING --> TODO
   STARTED --> WAITING
   WAITING --> STARTED
-  SOMEDAY --> CANCELLED
+  HOLD --> CANCELLED
   WAITING --> CANCELLED
   CANCELLED --> [*]
-  TODO --> SOMEDAY
-  SOMEDAY --> TODO
+  TODO --> HOLD
+  HOLD --> TODO
   TODO --> CANCELLED
   TODO: t
   STARTED: s
   DONE: d
   WAITING:w
   note right of WAITING: Note records\nwhat it is waiting for
-  SOMEDAY:S
+  HOLD:h
   note right of CANCELLED: Note records\nwhy it was cancelled
   CANCELLED:c
   WAITING --> DONE
@@ -456,7 +456,7 @@ projects list.
   DONE -> [*]
   TODO --> WAITING
   WAITING --> TODO
-  SOMEDAY --> CANCELLED
+  HOLD --> CANCELLED
   NEXT --> WAITING
   WAITING --> NEXT
   STARTED --> WAITING
@@ -464,8 +464,8 @@ projects list.
   WAITING --> CANCELLED
   TODO --> DONE
   CANCELLED --> [*]
-  TODO --> SOMEDAY
-  SOMEDAY --> TODO
+  TODO --> HOLD
+  HOLD --> TODO
   TODO --> CANCELLED
   TODO: t
   NEXT: n
@@ -473,7 +473,7 @@ projects list.
   DONE: d
   WAITING:w
   note right of WAITING: Note records\nwhat it is waiting for
-  SOMEDAY:S
+  HOLD:h
   note right of CANCELLED: Note records\nwhy it was cancelled
   CANCELLED:c
   WAITING --> DONE
@@ -551,7 +551,7 @@ The triggers break down to the following rules:
 
 - Moving a task to =CANCELLED= adds a =CANCELLED= tag
 - Moving a task to =WAITING= adds a =WAITING= tag
-- Moving a task to =SOMEDAY= adds a =WAITING= tag
+- Moving a task to =HOLD= adds a =WAITING= tag
 - Moving a task to a done state removes a =WAITING= tag
 - Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
 - Moving a task to =NEXT= removes a =WAITING= tag
@@ -894,7 +894,7 @@ time waiting for it to be generated.
                               (org-tags-match-list-sublevels 'indented)
                               (org-agenda-sorting-strategy
                                '(category-keep))))
-                  (todo "WAITING|SOMEDAY"
+                  (todo "WAITING|HOLD"
                         ((org-agenda-overriding-header "Waiting and Postponed tasks")
                          (org-agenda-skip-function 'bh/skip-projects-and-habits)))
                   (tags "-REFILE/"
@@ -928,7 +928,7 @@ time waiting for it to be generated.
                   (org-tags-match-list-sublevels 'indented)
                   (org-agenda-sorting-strategy
                    '(category-keep))))
-                ("w" "Waiting Tasks" todo "WAITING|SOMEDAY"
+                ("w" "Waiting Tasks" todo "WAITING|HOLD"
                  ((org-agenda-overriding-header "Waiting and Postponed tasks"))
                  (org-agenda-skip-function 'bh/skip-projects-and-habits))
                 ("A" "Tasks to Archive" tags "-REFILE/"
@@ -3800,14 +3800,14 @@ My =org-todo-keywords= are set as follows:
 
 #+begin_src emacs-lisp :tangle no
   (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-                                  (sequence "WAITING(w@/!)" "SOMEDAY(s!)" "|" "CANCELLED(c@/!)" "PHONE")
+                                  (sequence "WAITING(w@/!)" "HOLD(h!)" "|" "CANCELLED(c@/!)" "PHONE")
                                   (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
 #+end_src
 
 This adds a log entry whenever a task moves to any of the following states:
 - to or out of =DONE= status
 - to =WAITING= status (with a note) or out of =WAITING= status
-- to =SOMEDAY= status
+- to =HOLD= status
 - to =CANCELLED= status (with a note) or out of =CANCELLED= status
 - to =OPEN= status
 - to =CLOSED= status
