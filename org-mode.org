@@ -567,9 +567,10 @@ The tags are used to filter tasks in the agenda views conveniently.
                 ("SOMEDAY" ("WAITING" . t))
                 (done ("WAITING"))
                 ("TODO" ("WAITING") ("CANCELLED"))
-                ("NEXT" ("WAITING"))
-                ("STARTED" ("WAITING"))
+                ("NEXT" ("WAITING") ("CANCELLED"))
+                ("STARTED" ("WAITING") ("CANCELLED"))
                 ("DONE" ("WAITING") ("CANCELLED")))))
+  
 #+end_src
 * Adding New Tasks Quickly with Org Capture
 :PROPERTIES:
