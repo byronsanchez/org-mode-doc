@@ -383,8 +383,8 @@ Here are my =TODO= state keywords and colour settings:
         (quote ((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!/!)")
                 (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)" "PHONE")
                 (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
-
-  (setq org-todo-keyword-faces 
+  
+  (setq org-todo-keyword-faces
         (quote (("TODO" :foreground "red" :weight bold)
                 ("NEXT" :foreground "blue" :weight bold)
                 ("STARTED" :foreground "blue" :weight bold)
@@ -1270,16 +1270,16 @@ I have the following org-mode settings for clocking:
   (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
   ;; Include current clocking task in clock reports
   (setq org-clock-report-include-clocking-task t)
-
+  
   (setq bh/keep-clock-running nil)
-
+  
   (defun bh/clock-in-to-started (kw)
     "Switch task from TODO or NEXT to STARTED when clocking in.
   Skips capture tasks."
     (if (and (member (org-get-todo-state) (list "TODO" "NEXT"))
              (not (and (boundp 'org-capture-mode) org-capture-mode)))
         "STARTED"))
-
+  
   (defun bh/find-project-task ()
     "Move point to the parent (project) task if any"
     (let ((parent-task (save-excursion (org-back-to-heading) (point))))
@@ -1288,9 +1288,9 @@ I have the following org-mode settings for clocking:
           (setq parent-task (point))))
       (goto-char parent-task)
       parent-task))
-
+  
   (add-hook 'org-agenda-mode-hook '(lambda () (org-defkey org-agenda-mode-map "\C-c\C-x<" 'bh/set-agenda-restriction-lock) 'append))
-
+  
   (defun bh/set-agenda-restriction-lock (arg)
     "Set restriction lock to current subtree or file if prefix is specified"
     (interactive "p")
@@ -1306,7 +1306,7 @@ I have the following org-mode settings for clocking:
          (t
           (org-with-point-at pom
             (org-agenda-set-restriction-lock restriction-type)))))))
-
+  
   (defun bh/punch-in (arg)
     "Start continuous clocking and set the default task to the
   selected task.  If no task is selected set the Organization task
@@ -1331,19 +1331,19 @@ I have the following org-mode settings for clocking:
         (if (and (equal major-mode 'org-mode) (not (org-before-first-heading-p)) (eq arg 4))
             (org-clock-in '(16))
           (bh/clock-in-organization-task-as-default)))))
-
+  
   (defun bh/punch-out ()
     (interactive)
     (setq bh/keep-clock-running nil)
     (when (org-clock-is-active)
       (org-clock-out))
     (org-agenda-remove-restriction-lock))
-
+  
   (defun bh/clock-in-default-task ()
     (save-excursion
       (org-with-point-at org-clock-default-task
         (org-clock-in))))
-
+  
   (defun bh/clock-in-parent-task ()
     "Move point to the parent (project) task if any and clock in"
     (let ((parent-task))
@@ -1358,23 +1358,23 @@ I have the following org-mode settings for clocking:
                 (org-clock-in))
             (when bh/keep-clock-running
               (bh/clock-in-default-task)))))))
-
+  
   (defvar bh/organization-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
-
+  
   (defun bh/clock-in-organization-task-as-default ()
     (interactive)
     (save-restriction
       (widen)
       (org-with-point-at (org-id-find bh/organization-task-id 'marker)
         (org-clock-in '(16)))))
-
+  
   (defun bh/clock-out-maybe ()
     (when (and bh/keep-clock-running
                (not org-clock-clocking-in)
                (marker-buffer org-clock-default-task)
                (not org-clock-resolving-clocks-due-to-idleness))
       (bh/clock-in-parent-task)))
-
+  
   (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
 #+end_src
 
@@ -1562,7 +1562,7 @@ I want my clock entries to be as accurate as possible.
 
 The following setting shows 1 minute clocking gaps.
 #+begin_src emacs-lisp :tangle yes
-  (setq org-agenda-clock-consistency-checks 
+  (setq org-agenda-clock-consistency-checks
         (quote (:max-duration "4:00"
                 :min-duration 0
                 :max-gap 0
@@ -4070,7 +4070,7 @@ as a quick way to get back to the agenda.
                                         ("c" . self-insert-command)
                                         ("C" . self-insert-command)
                                         ("J" . org-clock-goto))))
-
+  
   (defun bh/show-org-agenda ()
     (interactive)
     (switch-to-buffer "*Org Agenda*")
