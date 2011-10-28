@@ -4901,7 +4901,7 @@ git describe --abbrev=4
 #+results:
 : v1.0.0
 
-of this document is created using the publishing features of =org-mode=.
+of this document and it is created using the publishing features of =org-mode=.
 
 The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and
 [[http://doc.norang.ca/org-mode.org][plain text org file]].
