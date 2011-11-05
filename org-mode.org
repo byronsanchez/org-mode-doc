@@ -4312,6 +4312,9 @@ find the other matches in my file.
 #+begin_src emacs-lisp :tangle yes
   (setq org-remove-highlights-with-change nil)
 #+end_src
+
+Setting this variable to t will automatically remove the yellow
+highlights as soon as the buffer is modified.
 ** Getting up to date org-mode info documentation
 :PROPERTIES:
 :CUSTOM_ID: InfoDocumentation
