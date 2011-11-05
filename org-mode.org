@@ -4205,11 +4205,11 @@ The following setting make =RET= insert a new line instead of opening
 links.  This setting is a love-hate relationship for me.  When it
 first came out I immediately turned it off because I wanted to insert
 new lines in front of my links and =RET= would open the link instead
-which at the time I found extremely annoying.  I've used it for a while
-with it set but ultimately turned it off again.
+which at the time I found extremely annoying.  Since then I've
+retrained my fingers to hit RET at the end of the previous line.
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-return-follows-link nil)
+  (setq org-return-follows-link t)
 #+end_src
 ** Highlight clock when running overtime
 
