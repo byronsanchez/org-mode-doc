@@ -4561,6 +4561,16 @@ Here's the setup I use to propagate =STARTED= to parent tasks:
 
   (add-hook 'org-after-todo-state-change-hook 'bh/mark-parent-tasks-started 'append)
 #+end_src
+** Cycling plain lists
+
+Org mode can fold (cycle) plain lists.
+#+begin_src emacs-lisp :tangle yes
+  (setq org-cycle-include-plain-lists t)
+#+end_src
+
+I find this setting useful when I have repeating tasks with lots of sublists with
+checkboxes.  I can fold the completed list entries and focus on what is remaining easily.
+
 * Things I Don't Use
 
 This is a partial list of things I know about but do not use.
@@ -4582,15 +4592,6 @@ I disable the priority setting keys in org-mode using
 This was a cute idea but I find archiving entire complete subtrees
 better.  I don't mind having a bunch of tasks marked =DONE= (but not
 archived)
-** Cycling plain lists
-
-Org mode can fold (cycle) plain lists.  I don't use this feature.
-#+begin_src emacs-lisp :tangle yes
-  (setq org-cycle-include-plain-lists nil)
-#+end_src
-
-Turning this on makes my =F5= sparse trees way too big.  I just want
-to see the headlines.
 ** Strike-through emphasis
 
 Strike-through emphasis is just unreadable and tends to only show up
