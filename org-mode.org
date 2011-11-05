@@ -3514,16 +3514,14 @@ Org-mode has the ability to show or hide the leading stars on task
 headlines.  It's also possible to have headlines at odd levels only so
 that the stars and heading task names line up in sublevels.
 
-I don't hide leading stars - I want to see the heading levels
-explicitly.  When I tried the hide leading stars setting I found
-myself typing ' *' when adding a new heading and then the font lock
-shows I messed up and created a list instead.
-
 To make org show leading stars use
 
 #+begin_src emacs-lisp :tangle yes 
   (setq org-hide-leading-stars nil)
 #+end_src
+
+I now use org-indent mode which hides leading stars.
+
 *** org-indent mode
 
 I recently started using org-indent mode.  I like this setting a lot.
