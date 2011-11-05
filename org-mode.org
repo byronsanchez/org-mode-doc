@@ -3619,7 +3619,7 @@ with the following settings:
 #+begin_src emacs-lisp :tangle yes
   (setq org-show-following-heading t)
   (setq org-show-hierarchy-above t)
-  (setq org-show-siblings nil)
+  (setq org-show-siblings (quote ((default))))
 #+end_src
 
 This keeps the results of the search relatively compact and mitigates
