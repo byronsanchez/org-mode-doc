@@ -4613,6 +4613,15 @@ superscripts with
 #+begin_src emacs-lisp :tangle yes
   (setq org-use-sub-superscripts nil)
 #+end_src
+** Preserving source block indentation
+I do not preserve indentation for source blocks mainly because this doesn't look
+nice with indented org-files.  The only reason I've found to preserve indentation is
+when TABs in files need to be preserved (e.g. Makefiles).  I don't normally edit
+these files in org-mode so I leave this setting turned off.
+
+#+begin_src emacs-lisp
+  (setq org-src-preserve-indentation nil)
+#+end_src
 * Using Git for Automatic History, Backups, and Synchronization
 :PROPERTIES:
 :CUSTOM_ID: GitSync
