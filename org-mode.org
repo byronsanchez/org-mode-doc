@@ -1063,49 +1063,34 @@ off for lunch.
 added to org-mode by John Wiegley.  It removes tasks automatically by
 filtering based on a user-provided function.
 
-I work from home and set up my day as follows:
+At work I have projects I'm working on which are assigned by my
+manager.  Sometimes priorities changes and projects are delayed to
+sometime in the future.  This means I need to stop working on these
+immediately.  I put the project task on =HOLD= and work on something
+else.  The =/ RET= filter removes =HOLD= tasks and subtasks (because
+of tag inheritance).
 
-- On weekdays 8am-12am, 1pm-5pm I'm working (@office)
-- My son (Mark) is available on weekdays before school 8am-9am
-  and after school to bedtime 4pm-8pm (MARK), and weekends
-  10am-8pm
-- Personal tasks are done outside working hours (PERSONAL)
-- Work tasks are done during working hours (WORK)
+At home I have some tasks tagged with =@farm= since these need to be
+performed when I am physically at our family farm.  Since I am there
+infrequently I have added =@farm= to the list of auto-excluded tags on
+my system.  I can always explicitly filter to just =@farm= tasks with
+=/ TAB @farm RET= when I am physically there.
 
 I have the following setup to allow =/ RET= to filter tasks based on
-what the computer determines my current context to be at the time I
-run the =/ RET= filter command.
+the description above.
 
 #+begin_src emacs-lisp :tangle yes
-  (defun bh/weekday-p ()
-    (let ((wday (nth 6 (decode-time))))
-      (and (< wday 6)
-           (> wday 0))))
-
-  (defun bh/working-p ()
-    (let ((hour (nth 2 (decode-time))))
-      (and (bh/weekday-p)
-           (or (and (>= hour 8) (<= hour 11))
-               (and (>= hour 13) (<= hour 16))))))
-
   (defun bh/org-auto-exclude-function (tag)
     "Automatic task exclusion in the agenda with / RET"
     (and (cond
           ((string= tag "@farm")
            t)
-          ((or (string= tag "@errand") (string= tag "phone"))
-           (let ((hour (nth 2 (decode-time))))
-             (or (< hour 8) (> hour 21))))
-          (t
-           (if (bh/working-p)
-               (setq tag "PERSONAL")
-             (setq tag "WORK"))
-           (unless (member (concat "-" tag) org-agenda-filter)
-             tag)))
+          ((string= tag "hold")
+           t))
          (concat "-" tag)))
-
+  
   (setq org-agenda-auto-exclude-function 'bh/org-auto-exclude-function)
-
+  
 #+end_src
 
 This lets me filter tasks with just =/ RET= on the agenda which removes tasks I'm not
