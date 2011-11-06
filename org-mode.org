@@ -73,8 +73,12 @@ creating structured email messages.
   (add-hook 'message-mode-hook 'bbdb-define-all-aliases 'append)
   (add-hook 'message-mode-hook 'orgtbl-mode 'append)
   (add-hook 'message-mode-hook 'turn-on-flyspell 'append)
-  (add-hook 'message-mode-hook '(lambda () (setq fill-column 72)) 'append)
-  (add-hook 'message-mode-hook '(lambda () (local-set-key (kbd "C-c M-o") 'org-mime-htmlize)) 'append)
+  (add-hook 'message-mode-hook
+            '(lambda () (setq fill-column 72))
+            'append)
+  (add-hook 'message-mode-hook
+            '(lambda () (local-set-key (kbd "C-c M-o") 'org-mime-htmlize))
+            'append)
 #+end_src
 
 =flyspell-mode= is enabled for almost everything to help prevent
@@ -91,11 +95,13 @@ creating documents with spelling errors.
               ;; org-agenda files when directories are include It
               ;; expands the files in the directories individually
               (org-defkey org-mode-map "\C-c["    'undefined)
-              (org-defkey org-mode-map "\C-c]"    'undefined)) 'append)
+              (org-defkey org-mode-map "\C-c]"    'undefined))
+            'append)
   
   (add-hook 'org-mode-hook
             (lambda ()
-              (local-set-key (kbd "C-c M-o") 'bh/mail-subtree)) 'append)
+              (local-set-key (kbd "C-c M-o") 'bh/mail-subtree))
+            'append)
   
   (defun bh/mail-subtree ()
     (interactive)
@@ -3163,7 +3169,10 @@ I have added key bindings for the agenda to allow using =C-c C-x <= in
 the agenda to set the restriction lock to the current task directly.
 The following elisp accomplishes this.
 #+begin_src emacs-lisp :tangle yes
-  (add-hook 'org-agenda-mode-hook '(lambda () (org-defkey org-agenda-mode-map "\C-c\C-x<" 'bh/set-agenda-restriction-lock) 'append))
+  (add-hook 'org-agenda-mode-hook
+            '(lambda ()
+               (org-defkey org-agenda-mode-map "\C-c\C-x<" 'bh/set-agenda-restriction-lock))
+            'append)
   
   (defun bh/set-agenda-restriction-lock (arg)
     "Set restriction lock to current subtree or file if prefix is specified"
@@ -3224,7 +3233,9 @@ The clock modeline time is also shown with a reverse background.
 
 #+begin_src emacs-lisp :tangle yes
   ;; Always hilight the current agenda line
-  (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)) 'append)
+  (add-hook 'org-agenda-mode-hook
+            '(lambda () (hl-line-mode 1))
+            'append)
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
