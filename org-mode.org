@@ -1253,24 +1253,6 @@ I have the following org-mode settings for clocking:
       (goto-char parent-task)
       parent-task))
   
-  (add-hook 'org-agenda-mode-hook '(lambda () (org-defkey org-agenda-mode-map "\C-c\C-x<" 'bh/set-agenda-restriction-lock) 'append))
-  
-  (defun bh/set-agenda-restriction-lock (arg)
-    "Set restriction lock to current subtree or file if prefix is specified"
-    (interactive "p")
-    (let* ((pom (org-get-at-bol 'org-hd-marker))
-           (tags (org-with-point-at pom (org-get-tags-at))))
-      (let ((restriction-type (if (equal arg 4) 'file 'subtree)))
-        (cond
-         ((equal major-mode 'org-agenda-mode)
-          (org-with-point-at pom
-            (org-agenda-set-restriction-lock restriction-type)))
-         ((and (equal major-mode 'org-mode) (org-before-first-heading-p))
-          (org-agenda-set-restriction-lock 'file))
-         (t
-          (org-with-point-at pom
-            (org-agenda-set-restriction-lock restriction-type)))))))
-  
   (defun bh/punch-in (arg)
     "Start continuous clocking and set the default task to the
   selected task.  If no task is selected set the Organization task
@@ -3176,6 +3158,43 @@ subtree.  This keeps your agenda focused on only this subtree.  Alarms
 and notifications are still active outside the agenda restriction.
 =C-c C-x >= turns off the agenda restriction lock returning your
 agenda view back to normal.
+
+I have added key bindings for the agenda to allow using =C-c C-x <= in
+the agenda to set the restriction lock to the current task directly.
+The following elisp accomplishes this.
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'org-agenda-mode-hook '(lambda () (org-defkey org-agenda-mode-map "\C-c\C-x<" 'bh/set-agenda-restriction-lock) 'append))
+  
+  (defun bh/set-agenda-restriction-lock (arg)
+    "Set restriction lock to current subtree or file if prefix is specified"
+    (interactive "p")
+    (let* ((pom (org-get-at-bol 'org-hd-marker))
+           (tags (org-with-point-at pom (org-get-tags-at))))
+      (let ((restriction-type (if (equal arg 4) 'file 'subtree)))
+        (cond
+         ((equal major-mode 'org-agenda-mode)
+          (org-with-point-at pom
+            (org-agenda-set-restriction-lock restriction-type)))
+         ((and (equal major-mode 'org-mode) (org-before-first-heading-p))
+          (org-agenda-set-restriction-lock 'file))
+         (t
+          (org-with-point-at pom
+            (org-agenda-set-restriction-lock restriction-type)))))))
+#+end_src
+
+This allows me to set the restriction lock from agenda to task directly.
+I work from the agenda a lot and I find this very convenient.
+
+Setting the restriction to the task is less surprising than
+automatically moving up the tree to the project level task -- which is
+what I was doing before.  If the select task is too restrictive it's
+easy to move the restriction lock up a level by visiting the task in
+the org file and going up and resetting the lock - in case you want to
+see move of the project.
+
+Selecting the entire project sometimes has too many tasks in it and I
+want to limit the view to part of the subtree.
+
 *** Limiting the agenda to a file
 
 You can limit the agenda view to a single file in multiple ways.
