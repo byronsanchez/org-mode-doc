@@ -379,8 +379,7 @@ Here are my =TODO= state keywords and colour settings:
 #+begin_src emacs-lisp :tangle yes
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!/!)")
-                (sequence "WAITING(w@/!)" "HOLD(h!)" "|" "CANCELLED(c@/!)" "PHONE")
-                (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
+                (sequence "WAITING(w@/@)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE"))))
   
   (setq org-todo-keyword-faces
         (quote (("TODO" :foreground "red" :weight bold)
@@ -390,8 +389,6 @@ Here are my =TODO= state keywords and colour settings:
                 ("WAITING" :foreground "orange" :weight bold)
                 ("HOLD" :foreground "magenta" :weight bold)
                 ("CANCELLED" :foreground "forest green" :weight bold)
-                ("OPEN" :foreground "blue" :weight bold)
-                ("CLOSED" :foreground "forest green" :weight bold)
                 ("PHONE" :foreground "forest green" :weight bold))))
 #+end_src
 *** Normal Task States
@@ -479,22 +476,6 @@ projects list.
 
 #+results:
 [[file:task_states.png]]
-*** Purchase Order Task States
-
-Paying projects have a =Purchase Order= associated with it which is used for billing the client.
-The following states track purchase orders.
-
-#+begin_src plantuml :file po_states.png
-  title Purchase Order States
-  [*] -> OPEN
-  OPEN -> CLOSED
-  CLOSED -> [*]
-  OPEN: O
-  CLOSED: C
-#+end_src
-
-#+results:
-[[file:po_states.png]]
 *** Phone Calls
 
 Telephone calls are special.  They are created in a done state by a capture task.
@@ -3779,9 +3760,9 @@ My logging settings are set as follows:
 My =org-todo-keywords= are set as follows:
 
 #+begin_src emacs-lisp :tangle no
-  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-                                  (sequence "WAITING(w@/!)" "HOLD(h!)" "|" "CANCELLED(c@/!)" "PHONE")
-                                  (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
+  (setq org-todo-keywords
+        (quote ((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!/!)")
+                (sequence "WAITING(w@/@)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE"))))
 #+end_src
 
 This adds a log entry whenever a task moves to any of the following states:
@@ -3789,8 +3770,6 @@ This adds a log entry whenever a task moves to any of the following states:
 - to =WAITING= status (with a note) or out of =WAITING= status
 - to =HOLD= status
 - to =CANCELLED= status (with a note) or out of =CANCELLED= status
-- to =OPEN= status
-- to =CLOSED= status
 
 I keep clock times and states in the =LOGBOOK= drawer to keep my tasks
 uncluttered.  If a task is WAITING then the reason for why it is
