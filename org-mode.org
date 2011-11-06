@@ -2795,9 +2795,10 @@ Here's my publishing setup:
                  :table-of-contents nil
                  :base-extension "org"
                  :publishing-function (org-publish-org-to-html org-publish-org-to-org)
+                 :style "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />"
                  :plain-source t
                  :htmlized-source t
-                 :style-include-default t
+                 :style-include-default nil
                  :auto-sitemap t
                  :sitemap-filename "index.html"
                  :sitemap-title "Test Publishing Area"
@@ -2807,7 +2808,7 @@ Here's my publishing setup:
                 ("tmp-extra"
                  :base-directory "/tmp/publish/"
                  :publishing-directory "/ssh:www-data@www:~/www.norang.ca/htdocs/tmp"
-                 :base-extension "png"
+                 :base-extension "css\\|pdf\\|png\\|jpg\\|gif"
                  :publishing-function org-publish-attachment
                  :recursive t
                  :author nil)
