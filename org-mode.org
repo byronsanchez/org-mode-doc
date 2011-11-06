@@ -1091,47 +1091,48 @@ This helps to keep my agenda clutter-free.
 
 Okay, I admit it.  I'm a clocking fanatic.
 
-I clock everything (well almost everything).  Org-mode makes this
-really easy.  I'd rather clock too much stuff than not enough so I
-find it's easier to get in the habit of clocking everything.
-
-As an example of what I mean my clock data for April 20, 2009 shows 14
-hours 19 minutes of clocked time (which included 3 hours and 17
-minutes of painting my basement.)  My clocked day started at 6:57AM
-and ended at 23:11PM.  I have only a few holes in my clocked day
-(where I wasn't clocking anything):
-
-| Missing Clock Data |
-|--------------------|
-|        16:14-16:53 |
-|        16:55-17:19 |
-|        18:00-18:52 |
+I clock everything at work.  Org-mode makes this really easy.  I'd
+rather clock too much stuff than not enough so I find it's easier to
+get in the habit of clocking everything.
 
 This makes it possible to look back at the day and see where I'm
-spending too much time, or not enough time on specific projects.
+spending too much time, or not enough time on specific projects.  This
+also helps a lot when you need to estimate how long something is going
+to take to do -- you can use your clocking data from similar tasks to
+help tune your estimates so they are more accurate.
 
-Without clocking data it's hard to tell what you did after the fact.
+Without clocking data it's hard to tell how long something took to do
+after the fact.
 
-I now use the concept of punching in and punching out at the start and
-end of my work day.  This defines a default task to clock time on
-whenever the clock would normally stop.  I found that with the default
-org-mode setup I would lose clocked minutes during the day, a minute
-here, a minute there, and that all adds up.  This is especially true
-if you write notes when moving to a DONE state - in this case the
-clock normally stops before you have composed the note -- and good
-notes take a few minutes to write.
+I now use the concept of =punching in= and =punching out= at the start
+and end of my work day.  I punch in when I arrive at work, punch out
+for lunch, punch in after lunch, and punch out at the end of the day.
+Every minute is clocked between punch-in and punch-out times.
+
+Punching in defines a default task to clock time on whenever the clock
+would normally stop.  I found that with the default org-mode setup I
+would lose clocked minutes during the day, a minute here, a minute
+there, and that all adds up.  This is especially true if you write
+notes when moving to a DONE state - in this case the clock normally
+stops before you have composed the note -- and good notes take a few
+minutes to write.
 
 My clocking setup basically works like this:
 
 - Punch in (start the clock)
-  - This identifies a task that is the default task to clock in
-    whenever the clock normally stops
+  - This clocks in a predefined task by =org-id= that is the default
+    task to clock in whenever the clock normally stops
 - Clock in tasks normally, and let moving to a DONE state clock out
-  - clocking out automatically clocks time on a new task
+  - clocking out automatically clocks time on a parent task or moves
+    back to the predefined default task if no parent exists.
 - Continue clocking whatever tasks you work on
 - Punch out (stop the clock)
 
-I'm free to change the default task multiple times during the day.
+I'm free to change the default task multiple times during the day but 
+with the clock moving up the project tree on clock out I no longer 
+need to do this.  I simply have a single task that gets clocked in
+when I punch-in.
+
 If I punch-in with a prefix on a task in =Project X= then that task
 automatically becomes the default task and all clocked time goes on
 that project until I either punch out or punch in some other task.
