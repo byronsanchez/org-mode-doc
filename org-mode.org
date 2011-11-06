@@ -285,7 +285,8 @@ I have the following custom key bindings set up for my emacs (sorted by frequenc
 | C-c r   | Capture a task (from my mobile phone)           | Rare       |
 | f9 h    | Hide other tasks                                | Rare       |
 | f7      | Toggle line truncation/wrap                     | Rare       |
-| f9 u    | Untabify region                                 | Rare       |
+| f9 T    | Tabify region                                   | Rare       |
+| f9 U    | Untabify region                                 | Rare       |
 | C-c a   | Enter Agenda (minimal emacs testing)            | Rare       |
 
 Here is the keybinding setup in lisp:
@@ -312,7 +313,8 @@ Here is the keybinding setup in lisp:
   (global-set-key (kbd "<f9> s") 'bh/switch-to-scratch)
 
   (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
-  (global-set-key (kbd "<f9> u") 'bh/untabify)
+  (global-set-key (kbd "<f9> T") 'tabify)
+  (global-set-key (kbd "<f9> U") 'untabify)
 
   (global-set-key (kbd "<f9> v") 'visible-mode)
   (global-set-key (kbd "<f9> SPC") 'bh/clock-in-last-task)
@@ -350,10 +352,6 @@ Here is the keybinding setup in lisp:
   (defun bh/switch-to-scratch ()
     (interactive)
     (switch-to-buffer "*scratch*"))
-
-  (defun bh/untabify ()
-    (interactive)
-    (untabify (point-min) (point-max)))
 #+end_src
 
 The main reason I have special key bindings (like =F11=, and =F12=) is
