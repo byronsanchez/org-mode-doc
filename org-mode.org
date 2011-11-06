@@ -3027,7 +3027,105 @@ for the block.
 This is a great time saver.
 ** Abbrev-mode and Skeletons
 [2011-09-26 Mon 05:44]
-Description coming soon.  My basic setup came from the [[http://orgmode.org/worg/org-faq.html#shortcuts-for-entering-source-blocks][Worg FAQ about shortcuts]].
+I use skeletons with abbrev-mode to quickly add preconfigured blocks to my 
+Emacs edit buffers.
+
+I have blocks for creating: 
+
+  - generic blocks in org-mode
+  - plantuml blocks in org-mode
+  - graphviz dot blocks in org-mode
+  - ditaa blocks in org-mode
+  - elisp source blocks in org-mode
+
+I still use =< e TAB= and =< s TAB=  for creating example blocks and
+simple shell script blocks that need no further parameters.
+
+Here's my current setup for org-mode related skeletons.  Each one
+defines an abbrev-mode shortcut so I can type =splantumlRET= to create
+a Plantuml block. This prompts for the filename (without extension) for
+the generated image file.
+
+At work I add a =:tangle= header to the skeleton and explicitly
+include the =@startuml= and =@enduml= marker lines in the skeleton so
+I can tangle the source file and share it with my colleagues.  This
+makes the tangled source useable in Notepad and the =PlantUML= jar
+file running standalone.
+
+I have put the =s= (src) prefix on the shortcuts to prevent
+abbrev-mode from trying to expand =PlantUML= when I'm typing it in a
+sentence.
+
+#+begin_src emacs-lisp
+  ;; Skeletons
+  ;;
+  ;; sblk - Generic block #+begin_FOO .. #+end_FOO
+  (define-skeleton skel-org-block
+    "Insert an org block, querying for type."
+    "Type: "
+    "#+begin_" str "\n"
+    _ - \n
+    "#+end_" str "\n")
+  
+  (define-abbrev org-mode-abbrev-table "sblk" "" 'skel-org-block)
+  
+  ;; splantuml - PlantUML Source block
+  (define-skeleton skel-org-block-plantuml
+    "Insert a org plantuml block, querying for filename."
+    "File (no extension): "
+    "#+begin_src plantuml :file " str ".png\n"
+    _ - \n
+    "#+end_src\n")
+  
+  (define-abbrev org-mode-abbrev-table "splantuml" ""
+    'skel-org-block-plantuml)
+  
+  ;; sdot - Graphviz DOT block
+  (define-skeleton skel-org-block-dot
+    "Insert a org graphviz dot block, querying for filename."
+    "File (no extension): "
+    "#+begin_src dot :file " str ".png :cmdline -Kdot -Tpng\n"
+    _ - \n
+    "#+end_src\n")
+  
+  (define-abbrev org-mode-abbrev-table "sdot" "" 'skel-org-block-dot)
+  
+  ;; sditaa - Ditaa source block
+  (define-skeleton skel-org-block-ditaa
+    "Insert a org ditaa block, querying for filename."
+    "File (no extension): "
+    "#+begin_src ditaa :file " str ".png\n"
+    _ - \n
+    "#+end_src\n")
+  
+  (define-abbrev org-mode-abbrev-table "sditaa" ""
+    'skel-org-block-ditaa)
+  
+  ;; selisp - Emacs Lisp source block
+  (define-skeleton skel-org-block-elisp
+    "Insert a org emacs-lisp block"
+    ""
+    "#+begin_src emacs-lisp\n"
+    _ - \n
+    "#+end_src\n")
+  
+  (define-abbrev org-mode-abbrev-table "selisp" ""
+    'skel-org-block-elisp)
+#+end_src
+
+I also use abbrev-mode when taking notes at work.  I tend to write
+first names for people which get expanded to their complete name in my
+notes.  So if I write =mickey= it gets automatically expanded to
+=Mickey Mouse= as I type.  To create an abbreviation just type in the
+short form followed by =C-x a i l= to create an abbreviation for the
+current mode I'm in.
+
+The only thing you have to be careful with is not to use a common word for your
+abbreviation since abbrev-mode will try to expand it everytime you enter it.
+I found this annoying when I used =plantuml= as on my abbreviations.
+
+I also use skeletons and abbrev-mode for C source files at work.
+This works really well for me.
 ** Limit your view to what you are working on
 :PROPERTIES:
 :CUSTOM_ID: LimitingAgendaView
