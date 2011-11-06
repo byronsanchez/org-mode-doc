@@ -3553,14 +3553,13 @@ headlines and I don't want to see them in collapsed (contents) views.
 When I use =TAB= to fold (cycle) tasks I don't want to see any blank
 lines but the default =org-cycle-separate-lines= setting hides single
 blank lines and reveals where extra empty lines are created in the
-document.  This gives me an easy way to identify and eradicate these
-evil blank lines.
+document.  I'd rather not see blank lines at all in collapsed views.
 
-The following setting hides single blank lines inside folded contents of
-a tasks:
+The following setting hides all blank lines inside folded contents of
+headings:
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-cycle-separator-lines 2)
+  (setq org-cycle-separator-lines 0)
 #+end_src
 
 I find extra blank lines in lists and headings a bit of a nuisance.
