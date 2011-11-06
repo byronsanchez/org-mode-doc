@@ -1808,7 +1808,7 @@ the context tags - you can't be in two places at once so if a task is
 marked with @farm and you add @office then the @farm tag is removed
 automagically.
 
-The other tags =QUOTE= .. =CANCELLED= are not mutually exclusive and
+The other tags =PHONE= .. =FLAGGED= are not mutually exclusive and
 multiple tags can appear on a single task.  Some of those tags are
 created by todo state change triggers.  The shortcut key is used to
 add or remove the tag using =C-c C-q= or to apply the task for
@@ -1830,7 +1830,6 @@ be at the farm to make the call.
                               ("@farm" . ?f)
                               (:endgroup)
                               ("PHONE" . ?p)
-                              ("QUOTE" . ?q)
                               ("WAITING" . ?w)
                               ("HOLD" . ?h)
                               ("PERSONAL" . ?P)
