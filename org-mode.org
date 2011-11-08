@@ -3359,9 +3359,9 @@ following order:
 2. entries for today (active timestamp headlines that are not scheduled or deadline tasks)
 3. deadlines due today
 4. late deadline tasks
-5. late scheduled items
-6. scheduled items for today
-7. pending deadlines (due soon)
+5. scheduled items for today
+6. pending deadlines (due soon)
+7. late scheduled items
 8. habits
 
 The lisp for this isn't particularly pretty but it works.
@@ -3412,16 +3412,16 @@ Here are the =.emacs= settings:
   
        ; late deadlines next
        ((bh/agenda-sort-test-num 'bh/is-late-deadline '< a b))
-  
-       ; late scheduled items next
-       ((bh/agenda-sort-test-num 'bh/is-scheduled-late '> a b))
-  
+
        ; scheduled items for today next
        ((bh/agenda-sort-test 'bh/is-scheduled-today a b))
   
        ; pending deadlines last
        ((bh/agenda-sort-test-num 'bh/is-pending-deadline '< a b))
-  
+
+       ; late scheduled items next
+       ((bh/agenda-sort-test-num 'bh/is-scheduled-late '> a b))
+
        ; finally default to unsorted
        (t (setq result nil)))
       result))
