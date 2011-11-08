@@ -3416,11 +3416,11 @@ Here are the =.emacs= settings:
        ; scheduled items for today next
        ((bh/agenda-sort-test 'bh/is-scheduled-today a b))
   
-       ; pending deadlines last
-       ((bh/agenda-sort-test-num 'bh/is-pending-deadline '< a b))
-
        ; late scheduled items next
        ((bh/agenda-sort-test-num 'bh/is-scheduled-late '> a b))
+
+       ; pending deadlines last
+       ((bh/agenda-sort-test-num 'bh/is-pending-deadline '< a b))
 
        ; finally default to unsorted
        (t (setq result nil)))
