@@ -1245,9 +1245,9 @@ I have the following org-mode settings for clocking:
   (setq bh/keep-clock-running nil)
   
   (defun bh/clock-in-to-started (kw)
-    "Switch task from TODO, NEXT, or WAITING to STARTED when clocking in.
+    "Switch task from TODO or NEXT to STARTED when clocking in.
   Skips capture tasks."
-    (if (and (member (org-get-todo-state) (list "TODO" "NEXT" "WAITING"))
+    (if (and (member (org-get-todo-state) (list "TODO" "NEXT"))
              (not (and (boundp 'org-capture-mode) org-capture-mode)))
         "STARTED"))
   
