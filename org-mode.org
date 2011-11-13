@@ -3111,7 +3111,7 @@ current mode I'm in.
 
 The only thing you have to be careful with is not to use a common word for your
 abbreviation since abbrev-mode will try to expand it everytime you enter it.
-I found this annoying when I used =plantuml= as on my abbreviations.
+I found this annoying when I used =plantuml= as one of my abbreviations.
 
 I also use skeletons and abbrev-mode for C source files at work.
 This works really well for me.
