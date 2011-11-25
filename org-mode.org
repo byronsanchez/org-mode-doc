@@ -2519,7 +2519,7 @@ The source for a PlantUML graphic looks like this in org-mode:
   --> "Step 4"
   --> === STARTLOOP ===
   note top: For each element in the array
-  --> if "Are we done?" then
+  if "Are we done?" then
     -> [no] "Do this"
     -> "Do that"
     note bottom: Important note\ngoes here
