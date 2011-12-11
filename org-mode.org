@@ -3066,8 +3066,7 @@ sentence.
     _ - \n
     "#+end_src\n")
   
-  (define-abbrev org-mode-abbrev-table "splantuml" ""
-    'skel-org-block-plantuml)
+  (define-abbrev org-mode-abbrev-table "splantuml" "" 'skel-org-block-plantuml)
   
   ;; sdot - Graphviz DOT block
   (define-skeleton skel-org-block-dot
@@ -3087,8 +3086,7 @@ sentence.
     _ - \n
     "#+end_src\n")
   
-  (define-abbrev org-mode-abbrev-table "sditaa" ""
-    'skel-org-block-ditaa)
+  (define-abbrev org-mode-abbrev-table "sditaa" "" 'skel-org-block-ditaa)
   
   ;; selisp - Emacs Lisp source block
   (define-skeleton skel-org-block-elisp
@@ -3098,8 +3096,7 @@ sentence.
     _ - \n
     "#+end_src\n")
   
-  (define-abbrev org-mode-abbrev-table "selisp" ""
-    'skel-org-block-elisp)
+  (define-abbrev org-mode-abbrev-table "selisp" "" 'skel-org-block-elisp)
 #+end_src
 
 I also use abbrev-mode when taking notes at work.  I tend to write
