@@ -838,7 +838,7 @@ time waiting for it to be generated.
 #+begin_src emacs-lisp :tangle yes
   ;; Do not dim blocked tasks
   (setq org-agenda-dim-blocked-tasks nil)
-
+  
   ;; Custom agenda command definitions
   (setq org-agenda-custom-commands
         (quote (("N" "Notes" tags "NOTE"
@@ -881,7 +881,9 @@ time waiting for it to be generated.
                                '(category-keep))))
                   (todo "WAITING|HOLD"
                         ((org-agenda-overriding-header "Waiting and Postponed tasks")
-                         (org-agenda-skip-function 'bh/skip-projects-and-habits)))
+                         (org-agenda-skip-function 'bh/skip-projects-and-habits)
+                         (org-agenda-todo-ignore-scheduled t)
+                         (org-agenda-todo-ignore-deadlines t)))
                   (tags "-REFILE/"
                         ((org-agenda-overriding-header "Tasks to Archive")
                          (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))
@@ -915,7 +917,9 @@ time waiting for it to be generated.
                    '(category-keep))))
                 ("w" "Waiting Tasks" todo "WAITING|HOLD"
                  ((org-agenda-overriding-header "Waiting and Postponed tasks"))
-                 (org-agenda-skip-function 'bh/skip-projects-and-habits))
+                 (org-agenda-skip-function 'bh/skip-projects-and-habits)
+                 (org-agenda-todo-ignore-scheduled 'future)
+                 (org-agenda-todo-ignore-deadlines 'future))
                 ("A" "Tasks to Archive" tags "-REFILE/"
                  ((org-agenda-overriding-header "Tasks to Archive")
                   (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))))
