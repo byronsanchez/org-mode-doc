@@ -868,7 +868,6 @@ time waiting for it to be generated.
                   (tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
                              ((org-agenda-overriding-header "Tasks")
                               (org-agenda-skip-function 'bh/skip-projects-and-habits)
-                              (org-tags-match-list-sublevels 'indented)
                               (org-agenda-todo-ignore-scheduled t)
                               (org-agenda-todo-ignore-deadlines t)
                               (org-agenda-sorting-strategy
@@ -906,7 +905,6 @@ time waiting for it to be generated.
                 ("R" "Tasks" tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
                  ((org-agenda-overriding-header "Tasks")
                   (org-agenda-skip-function 'bh/skip-projects-and-habits)
-                  (org-tags-match-list-sublevels 'indented)
                   (org-agenda-sorting-strategy
                    '(category-keep))))
                 ("p" "Projects" tags-todo "-CANCELLED/!"
