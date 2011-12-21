@@ -112,6 +112,9 @@ creating documents with spelling errors.
   (add-hook 'org-mode-hook (lambda () (abbrev-mode 1)))
 #+end_src
 ** Organizing Your Life Into Org Files
+:PROPERTIES:
+:CUSTOM_ID: OrgFiles
+:END:
 
 Tasks are separated into logical groupings or projects.  
 Use separate org files for large task groupings and 
@@ -163,6 +166,9 @@ only what is important visible in agenda views.
 Other org files are used for publishing only and do not contribute to the agenda.
 See [[#Publishing][Publishing and Exporting]] for more details.
 ** Agenda Setup
+:PROPERTIES:
+:CUSTOM_ID: AgendaSetup
+:END:
 
 Here is my current =org-agenda-files= setup.
 #+begin_src emacs-lisp :tangle yes
@@ -366,6 +372,9 @@ then =C-u C-c C-x C-i= doesn't work, but the =C-F11= key combination
 does and this saves me time since I don't have to visit an org-mode
 buffer first just to clock in a recent task.
 * Tasks and States
+:PROPERTIES:
+:CUSTOM_ID: TasksAndStates
+:END:
 
 I use one set of TODO keywords for all of my org files.  Org-mode lets
 you define TODO keywords per file but I find it's easier to have a
@@ -660,6 +669,9 @@ they occur.
   (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 #+end_src
 ** Separate file for Capture Tasks
+:PROPERTIES:
+:CUSTOM_ID: CaptureRefileOrg
+:END:
 
 I have a single org file which is the target for my capture templates.
 
@@ -802,6 +814,9 @@ Phone call tasks collect in =refile.org= and are later refiled to the
 appropriate location.  Some phone calls are billable and we want these
 tracked in the appropriate category.
 * Custom agenda views
+:PROPERTIES:
+:CUSTOM_ID: CustomAgendaViews
+:END:
 
 I now have one block agenda view that has everything on it.  I also
 keep separate single view agenda commands for use on my slower Eee
@@ -1563,7 +1578,13 @@ The resume clock function just returns the clock to the previous clocking task
 
 If no task was clocking =bh/resume-clock= just stops the clock.
 * Time reporting and tracking
+:PROPERTIES:
+:CUSTOM_ID: TimeReportingAndTracking
+:END:
 ** Billing clients based on clocked time
+:PROPERTIES:
+:CUSTOM_ID: BillingClientsForClockedTime
+:END:
 
 At the beginning of the month I invoice my clients for work done last
 month.  This is where I review my clocking data for correctness before
@@ -1756,6 +1777,9 @@ applications.
 =C-c C-x C-d= also provides a quick summary of clocked time for the
 current org file.
 * Tags
+:PROPERTIES:
+:CUSTOM_ID: Tags
+:END:
 
 Tasks can have any number of arbitrary tags.  Tags are used for:
 
@@ -1842,6 +1866,9 @@ be at the farm to make the call.
   (setq org-agenda-tags-todo-honor-ignore-options t)
 #+end_src
 ** Filetags
+:PROPERTIES:
+:CUSTOM_ID: FileTags
+:END:
 
 Filetags are a convenient way to apply one or more tags to all of the
 headings in a file.
@@ -1878,7 +1905,10 @@ I have the following =#+FILETAGS:= entries in my org-mode files:
 |------------+--------------|
 | refile.org | REFILE       |
 |------------+--------------|
-** Trigger Tags
+** State Trigger Tags
+:PROPERTIES:
+:CUSTOM_ID: StateTriggerTags
+:END:
 
 The following tags are automatically added or removed by todo state
 triggers described previously in [[#ToDoStateTriggers][ToDo state triggers]]
@@ -1886,6 +1916,9 @@ triggers described previously in [[#ToDoStateTriggers][ToDo state triggers]]
 - =WAITING=
 - =CANCELLED=
 * Handling Notes
+:PROPERTIES:
+:CUSTOM_ID: HandlingNotes
+:END:
 
   Notes are little gems of knowledge that you come across during your
   day.  They are just like tasks except there is nothing to do (except
@@ -1926,6 +1959,9 @@ triggers described previously in [[#ToDoStateTriggers][ToDo state triggers]]
   eventually gets removed from the agenda when the project is complete
   and archived.
 * Handling Phone Calls
+:PROPERTIES:
+:CUSTOM_ID: HandlinePhoneCalls
+:END:
 
 Phone calls are interruptions and I use capture mode to deal with
 these (like all interruptions).  Most of the heavy lifting for phone
@@ -2013,11 +2049,17 @@ followed by the phone-call related lookup functions.
       (insert caller)))  
 #+end_src
 * GTD stuff
+:PROPERTIES:
+:CUSTOM_ID: GTD
+:END:
 
 Most of my day is deadline/schedule driven.
 I work off of the agenda first and then pick items from the todo lists as
 outlined in [[#WhatDoIWorkOnNext][What do I work on next?]]
 ** Weekly Review Process
+:PROPERTIES:
+:CUSTOM_ID: GTDWeeklyReview
+:END:
 
 The first day of the week (usually Monday) I do my weekly review. 
 I keep a list like this one to remind me what needs to be done.
@@ -2242,6 +2284,9 @@ used by agenda views.
 :CUSTOM_ID: Archiving
 :END:
 ** Archiving Subtrees
+:PROPERTIES:
+:CUSTOM_ID: ArchivingSubtrees
+:END:
 
 My archiving procedure has changed.  I used to move entire subtrees to
 a separate archive file for the project.  Task subtrees in =FILE.org=
@@ -2354,6 +2399,9 @@ doing.  My main use case for org-mode publishing is just to create
 HTML documents for viewing online conveniently.  Someday I'll get time
 to try out the other formats when I need them for something.
 ** Org-babel Setup
+:PROPERTIES:
+:CUSTOM_ID: OrgBabel
+:END:
 
 Org-babel makes it easy to generate decent graphics using external
 packages like ditaa, graphviz, PlantUML, and others.
@@ -2464,6 +2512,9 @@ Here's an example without the =#+begin_src= and =#+end_src= lines.
 #+results:
 [[file:communication.png]]
 ** Playing with graphviz
+:PROPERTIES:
+:CUSTOM_ID: Graphviz
+:END:
 
 [[http://www.graphviz.org/][Graphviz]] is another great tool for creating graphics in your documents.
 
@@ -2869,6 +2920,9 @@ validation.  This is the =tmp= site which takes files from
 directory.  This makes it easy to try new throw-away things on a live
 server.
 ** Miscellaneous Export Settings
+:PROPERTIES:
+:CUSTOM_ID: MiscBabelExportSettings
+:END:
 
 This is a collection of export and publishing related settings that I
 use.
@@ -3570,6 +3624,9 @@ like this
 :    ...
 :    - [ ] Do task 7
 ** Backups
+:PROPERTIES:
+:CUSTOM_ID: Backups
+:END:
 
 =Backups that you have to work hard at don't get gone=.
 
@@ -3651,6 +3708,9 @@ In this case you need to complete =Step 1= before you can complete
 =Step 2=, etc. and org-mode prevents the state change to a done task
 until the preceding tasks are complete.
 ** Org Task structure and presentation
+:PROPERTIES:
+:CUSTOM_ID: OrgTaskStructureAndPresentation
+:END:
 
 This section describes various org-mode settings I use to control how
 tasks are displayed while I work on my org mode files.
@@ -3669,6 +3729,9 @@ To make org show leading stars use
 I now use org-indent mode which hides leading stars.
 
 *** org-indent mode
+:PROPERTIES:
+:CUSTOM_ID: OrgIndentMode
+:END:
 
 I recently started using org-indent mode.  I like this setting a lot.
 It removes the indentation in the org-file but displays it as if it
@@ -3792,6 +3855,9 @@ when I need that.
   (setq org-yank-adjusted-subtrees t)
 #+end_src
 ** Attachments
+:PROPERTIES:
+:CUSTOM_ID: Attachments
+:END:
 Attachments are great for getting large amounts of data related to
 your project out of your org-mode files.  Before attachments came
 along I was including huge blocks of SQL code in my org files to keep
