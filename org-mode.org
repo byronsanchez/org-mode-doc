@@ -851,8 +851,8 @@ time waiting for it to be generated.
                 (" " "Agenda"
                  ((agenda "" nil)
                   (tags "REFILE"
-                        ((org-agenda-overriding-header "Notes and Tasks to Refile")
-                         (org-agenda-overriding-header "Tasks to Refile")))
+                        ((org-agenda-overriding-header "Tasks to Refile")
+                         (org-tags-match-list-sublevels nil)))
                   (tags-todo "-CANCELLED/!"
                              ((org-agenda-overriding-header "Stuck Projects")
                               (org-tags-match-list-sublevels 'indented)
@@ -888,8 +888,8 @@ time waiting for it to be generated.
                          (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))
                  nil)
                 ("r" "Tasks to Refile" tags "REFILE"
-                 ((org-agenda-overriding-header "Notes and Tasks to Refile")
-                  (org-agenda-overriding-header "Tasks to Refile")))
+                 ((org-agenda-overriding-header "Tasks to Refile")
+                  (org-tags-match-list-sublevels nil)))
                 ("#" "Stuck Projects" tags-todo "-CANCELLED/!"
                  ((org-agenda-overriding-header "Stuck Projects")
                   (org-tags-match-list-sublevels 'indented)
