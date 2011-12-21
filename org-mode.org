@@ -3520,6 +3520,21 @@ Here are the =.emacs= settings:
   (defun bh/is-scheduled-late (date-str)
     (string-match "Sched\.\\(.*\\)x:" date-str))
 #+end_src
+
+*** q buries the agenda view buffer
+[2011-12-20 Tue 23:52]
+
+I change the =q= key in the agenda so instead of killing the agenda buffer
+it merely buries it to the end of the buffer list.  This allows me to 
+pull it back up quickly with the =q= speed key or =f9 f9= and regenerate
+the results.
+
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'org-agenda-mode-hook
+            (lambda ()
+              (define-key org-agenda-mode-map "q" 'bury-buffer))
+            'append)
+#+end_src
 ** Checklist handling
 :PROPERTIES:
 :CUSTOM_ID: ChecklistHandling
