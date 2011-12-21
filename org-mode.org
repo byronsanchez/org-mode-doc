@@ -867,7 +867,7 @@ time waiting for it to be generated.
                                '(todo-state-down effort-up category-keep))))
                   (tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
                              ((org-agenda-overriding-header "Tasks")
-                              (org-agenda-skip-function 'bh/skip-projects-and-habits)
+                              (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                               (org-agenda-todo-ignore-scheduled t)
                               (org-agenda-todo-ignore-deadlines t)
                               (org-agenda-sorting-strategy
@@ -906,7 +906,7 @@ time waiting for it to be generated.
                    '(todo-state-down effort-up category-keep))))
                 ("R" "Tasks" tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
                  ((org-agenda-overriding-header "Tasks")
-                  (org-agenda-skip-function 'bh/skip-projects-and-habits)
+                  (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                   (org-agenda-sorting-strategy
                    '(category-keep))))
                 ("p" "Projects" tags-todo "-CANCELLED/!"
@@ -2146,7 +2146,18 @@ used by agenda views.
           (when (member (org-get-todo-state) org-todo-keywords-1)
             (setq has-subtask t))))
       (and is-a-task has-subtask)))
-
+  
+  (defun bh/is-project-subtree-p ()
+    "Any task with a todo keyword that is in a project subtree.
+  Callers of this function already widen the buffer view."
+    (let ((task (save-excursion (org-back-to-heading 'invisible-ok)
+                                (point))))
+      (save-excursion
+        (bh/find-project-task)
+        (if (equal (point) task)
+            nil
+          t))))
+  
   (defun bh/is-subproject-p ()
     "Any task which is a subtask of another project"
     (let ((is-subproject)
@@ -2156,7 +2167,7 @@ used by agenda views.
           (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
             (setq is-subproject t))))
       (and is-a-task is-subproject)))
-
+  
   (defun bh/skip-non-stuck-projects ()
     "Skip trees that are not stuck projects"
     (let* ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
@@ -2168,14 +2179,14 @@ used by agenda views.
       (if (and (bh/is-project-p) (not has-next))
           nil ; a stuck project, has subtasks but no next task
         next-headline)))
-
+  
   (defun bh/skip-non-projects ()
     "Skip trees that are not projects"
     (let ((subtree-end (save-excursion (org-end-of-subtree t))))
       (if (bh/is-project-p)
           nil
         subtree-end)))
-
+  
   (defun bh/skip-project-trees-and-habits ()
     "Skip trees that are projects"
     (let ((subtree-end (save-excursion (org-end-of-subtree t))))
@@ -2186,7 +2197,31 @@ used by agenda views.
         subtree-end)
        (t
         nil))))
-
+  
+  (defun bh/skip-project-tasks-maybe ()
+    "Show tasks related to the current restriction.
+  When restricted to a project, skip project and sub project tasks, habits, NEXT tasks, and loose tasks.
+  When not restricted, skip project and sub-project tasks, habits, and project related tasks."
+    (save-restriction
+      (widen)
+      (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+             (next-headline (save-excursion (or (outline-next-heading) (point-max))))
+             (limit-to-project (marker-buffer org-agenda-restrict-begin)))
+        (cond
+         ((bh/is-project-p)
+          next-headline)
+         ((org-is-habit-p)
+          subtree-end)
+         ((and (not limit-to-project)
+               (bh/is-project-subtree-p))
+          subtree-end)
+         ((and limit-to-project
+               (bh/is-project-subtree-p)
+               (member (org-get-todo-state) (list "NEXT")))
+          subtree-end)
+         (t
+          nil)))))
+  
   (defun bh/skip-projects-and-habits ()
     "Skip trees that are projects and tasks that are habits"
     (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
@@ -2197,14 +2232,14 @@ used by agenda views.
         next-headline)
        (t
         nil))))
-
+  
   (defun bh/skip-non-subprojects ()
     "Skip trees that are not projects"
     (let ((next-headline (save-excursion (outline-next-heading))))
       (if (bh/is-subproject-p)
           nil
         next-headline)))
-
+  
 #+end_src
 * Archiving
 :PROPERTIES:
