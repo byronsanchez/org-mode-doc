@@ -4230,7 +4230,8 @@ as a quick way to get back to the agenda.
   (defun bh/show-org-agenda ()
     (interactive)
     (switch-to-buffer "*Org Agenda*")
-    (delete-other-windows))
+    (delete-other-windows)
+    (org-agenda-redo))
 #+end_src
 
 The variable =org-speed-commands-default= sets a lot of useful
