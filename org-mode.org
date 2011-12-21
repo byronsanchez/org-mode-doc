@@ -821,8 +821,8 @@ Custom agenda views are used for:
   - Finding tasks to be refiled
   - Finding stuck projects
   - Finding NEXT tasks to work on
+  - Show all related tasks
   - Reviewing projects
-  - Show all TODO state tasks
   - Finding tasks waiting on something
   - Findings tasks to be archived
 - Finding notes
@@ -830,9 +830,9 @@ Custom agenda views are used for:
 
 If I want just today's calendar view then =F12 a= is still faster than
 generating the block agenda - especially if I want to view a week or
-month's worth of information.  In that case the extra detail on the
-block agenda view is never really needed and I don't want to spend
-time waiting for it to be generated.
+month's worth of information, or check my clocking data.  In that case
+the extra detail on the block agenda view is never really needed and I
+don't want to spend time waiting for it to be generated.
 ** Setup
 
 #+begin_src emacs-lisp :tangle yes
@@ -933,16 +933,7 @@ My block agenda view looks like this:
 
 I generally work top-down on the agenda.  Things with deadlines and
 scheduled dates (planned to work on today or earlier) show up in the
-agenda at the top.  When searching for tasks in the agenda I disable
-display of child tasks with the following setting:
-
-#+begin_src emacs-lisp :tangle yes
-  (setq org-tags-match-list-sublevels nil)
-#+end_src
-
-This keeps the list of tasks I'm looking at to a reasonable size.  I
-can always display child tasks for any specific task I want simply by
-visiting it in the org buffer.
+agenda at the top.
 
 My day goes generally like this:
 
@@ -969,9 +960,13 @@ My day goes generally like this:
 :CUSTOM_ID: WhatDoIWorkOnNext
 :END:
 
-Start with deadlines and tasks scheduled today or earlier from
-the daily agenda view.  Then move on to tasks in the 
-=Next Tasks= list in the block agenda view.
+Start with deadlines and tasks scheduled today or earlier from the
+daily agenda view.  Then move on to tasks in the =Next Tasks= list in
+the block agenda view.  I tend to schedule current projects to 'today'
+when I start work on them and they sit on my daily agenda reminding me
+that they need to be completed.  I normally only schedule one or two
+projects to the daily agenda and unschedule things that are no longer
+important and don't deserve my attention today.
 
 When I look for a new task to work on I generally hit =F12 SPC= to get
 the block agenda and follow this order:
@@ -979,7 +974,8 @@ the block agenda and follow this order:
 - Pick something off today's agenda
   - deadline for today (do this first - it's not late yet)
   - deadline in the past (it's already late)
-  - a scheduled task for today (or in the past)
+  - a scheduled task for today (it's supposed to be done today)
+  - a scheduled task that is still on the agenda
   - deadline that is coming up soon
 - pick a NEXT task
 - If you run out of items to work on look for a NEXT task in the current context
