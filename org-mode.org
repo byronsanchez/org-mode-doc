@@ -4191,14 +4191,14 @@ default commands.
 I have the following speed commands set up in addition to the
 defaults.  I don't use priorities so I override the default settings
 for the 1, 2, and 3 keys.  I also disable cycling with 'c' and add 'q'
-as a quick way to get back to the agenda.
+as a quick way to get back to the agenda and update the current view.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-use-speed-commands t)
-  (setq org-speed-commands-user (quote (("0" . delete-window)
-                                        ("1" . delete-other-windows)
-                                        ("2" . split-window-vertically)
-                                        ("3" . split-window-horizontally)
+  (setq org-speed-commands-user (quote (("0" . ignore)
+                                        ("1" . ignore)
+                                        ("2" . ignore)
+                                        ("3" . ignore)
                                         ("4" . ignore)
                                         ("5" . ignore)
                                         ("6" . ignore)
@@ -4208,7 +4208,10 @@ as a quick way to get back to the agenda.
   
                                         ("a" . ignore)
                                         ("d" . ignore)
-                                        ("h" . hide-other)
+                                        ("h" . bh/hide-other)
+                                        ("i" progn
+                                         (forward-char 1)
+                                         (call-interactively 'org-insert-heading-respect-content))
                                         ("k" . org-kill-note-or-show-branches)
                                         ("l" . ignore)
                                         ("m" . ignore)
@@ -4235,9 +4238,8 @@ as a quick way to get back to the agenda.
                                         ("R" . ignore)
                                         ("Q" . ignore)
                                         ("S" . ignore)
-                                        ("T" . ignore)
+                                        ("T" . (org-show-todo-tree nil))
                                         ("V" . ignore)
-                                        ("W" . ignore)
                                         ("X" . ignore)
                                         ("Y" . ignore)
                                         ("Z" . ignore))))
