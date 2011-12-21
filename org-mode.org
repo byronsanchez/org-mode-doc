@@ -876,6 +876,8 @@ time waiting for it to be generated.
                              ((org-agenda-overriding-header "Projects")
                               (org-agenda-skip-function 'bh/skip-non-projects)
                               (org-tags-match-list-sublevels 'indented)
+                              (org-agenda-todo-ignore-scheduled 'future)
+                              (org-agenda-todo-ignore-deadlines 'future)
                               (org-agenda-sorting-strategy
                                '(category-keep))))
                   (todo "WAITING|HOLD"
@@ -911,6 +913,8 @@ time waiting for it to be generated.
                  ((org-agenda-overriding-header "Projects")
                   (org-agenda-skip-function 'bh/skip-non-projects)
                   (org-tags-match-list-sublevels 'indented)
+                  (org-agenda-todo-ignore-scheduled 'future)
+                  (org-agenda-todo-ignore-deadlines 'future)
                   (org-agenda-sorting-strategy
                    '(category-keep))))
                 ("w" "Waiting Tasks" todo "WAITING|HOLD"
