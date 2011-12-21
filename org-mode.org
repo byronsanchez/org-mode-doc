@@ -2999,117 +2999,6 @@ automatically updated the next time I look at the agenda.
 
 This section is a miscellaneous collection of Emacs customizations that I use
 with org-mode so that it Works-For-Me(tm).
-** Yasnippet
-:PROPERTIES:
-:CUSTOM_ID: Yasnippets
-:END:
-
-[[http://code.google.com/p/yasnippet/][Yasnippet]] is cool but I don't use this anymore.  I've replaced
-yasnippet with a combination of =abbrev-mode= and =skeletons= which
-are available by default in Emacs.
-
-The following description applies to yasnippet version 0.5.10.  The setup
-requirements may have changed with newer versions.
-
-You type the snippet name and =TAB= and yasnippet expands the name
-with the contents of the snippet text - substituting snippet variables
-as appropriate.
-
-Yasnippet comes with lots of snippets for programming languages.  I
-used a few babel related snippets with =org-mode=.
-
-I downloaded and installed the unbundled version of yasnippet so that
-I can edit the predefined snippets.  I unpacked the yasnippet software
-in my =~/.emacs.d/plugins= directory, renamed =yasnippet0.5.10= to
-=yasnippet= and added the following setup in my =.emacs=:
-
-#+begin_src emacs-lisp :tangle no
-  (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins"))
-
-  (require 'yasnippet)
-  (yas/initialize)
-  (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
-
-  ;; Make TAB the yas trigger key in the org-mode-hook and enable flyspell mode and autofill
-  (add-hook 'org-mode-hook
-            (lambda ()
-              ;; yasnippet
-              (make-variable-buffer-local 'yas/trigger-key)
-              (org-set-local 'yas/trigger-key [tab])
-              (define-key yas/keymap [tab] 'yas/next-field-group)
-              ;; flyspell mode for spell checking everywhere
-              (flyspell-mode 1)
-              ;; auto-fill mode on
-              (auto-fill-mode 1)))
-#+end_src
-
-I used snippets for the following:
-  - =begin= for generic =#+begin_= blocks
-  - =dot=   for graphviz
-  - =uml=   for PlantUML graphics
-  - =sh=    for bash shell scripts
-  - =elisp= for emacs lisp code
-  - initials of a person converts to their full name
-    I used this while taking meeting notes
-
-Here is the definition for the =begin= snippet:
-
-org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/begin
-:  #name : #+begin_...#+end_
-:  # --
-:  #+begin_$1 $2
-:  $0
-:  #+end_$1
-
-I used this to create =#+begin_*= blocks like 
-- =#+begin_example=
-- =#+begin_src=
-- etc.
-
-Simply type =begin= and then =TAB= it replaces the =begin= text with
-the snippet contents.  Then type =src TAB emacs-lisp TAB= and your
-snippet block is done.  I've shortened this specific sequence to just
-=elisp TAB= since I use it fairly often.  There is also the build-in org-mode 
-=<s= in column 1 to expand to =#+begin_src ... #+end_src= and
-=<e= for =#+begin_example ... #+end_example=.
-
-Hit =C-c SingeQuote(')= and insert whatever emacs-lisp code you need.
-While in this block you're in a mode that knows how to format and
-colourize emacs lisp code as you enter it which is really nice.  =C-c
-SingleQuote(')= exits back to org-mode.  This recognizes any emacs
-editing mode so all you have to do is enter the appropriate mode name
-for the block.
-
-=dot=
-: #dot : #+begin_src dot ... #+end_src
-: # --
-: #+begin_src dot :file $1 :cmdline -Kdot -Tpng
-: $0
-: #+end_src
-
-=uml=
-: #uml : #+begin_src plantuml ... #+end_src
-: # --
-: #+begin_src plantuml :file $1
-: $0
-: #+end_src
-
-=sh=
-: #sh: #+begin_src sh ... #+end_src
-: # --
-: #+begin_src sh :results output
-: $0
-: #+end_src
-
-
-=elisp=
-: #elisp : #+begin_src emacs-lisp ...#+end_src emacs-lisp
-: # --
-: #+begin_src emacs-lisp
-: $0
-: #+end_src
-
-This is a great time saver.
 ** Abbrev-mode and Skeletons
 [2011-09-26 Mon 05:44]
 I use skeletons with abbrev-mode to quickly add preconfigured blocks to my 
@@ -3744,18 +3633,6 @@ I have org-indent mode on by default at startup with the following
 setting:
 #+begin_src emacs-lisp :tangle yes
   (setq org-startup-indented t)
-#+end_src
-*** Show headings at odd levels only or odd-even levels
-
-I've converted my files between odd-levels-only and odd-even using the
-functions =org-convert-to-odd-levels= and
-=org-convert-to-oddeven-levels= functions a number of times.  I ended
-up going back to odd-even levels to reduce the amount of leading
-whitespace on tasks.  I didn't find that lining up the headlines and
-tasks in odd-levels-only to be all that helpful.
-
-#+begin_src emacs-lisp :tangle yes
-  (setq org-odd-levels-only nil)
 #+end_src
 *** Handling blank lines
 
@@ -4800,7 +4677,7 @@ syntax highlighting when viewing in the org-mode buffer.
   (setq org-src-fontify-natively t)
 #+end_src
 
-* Things I Don't Use
+* Things I Don't Use (Anymore)
 
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
@@ -4851,6 +4728,130 @@ these files in org-mode so I leave this setting turned off.
 
 #+begin_src emacs-lisp
   (setq org-src-preserve-indentation nil)
+#+end_src
+** Yasnippet
+:PROPERTIES:
+:CUSTOM_ID: Yasnippets
+:END:
+
+[[http://code.google.com/p/yasnippet/][Yasnippet]] is cool but I don't use this anymore.  I've replaced
+yasnippet with a combination of =abbrev-mode= and =skeletons= which
+are available by default in Emacs.
+
+The following description applies to yasnippet version 0.5.10.  The setup
+requirements may have changed with newer versions.
+
+You type the snippet name and =TAB= and yasnippet expands the name
+with the contents of the snippet text - substituting snippet variables
+as appropriate.
+
+Yasnippet comes with lots of snippets for programming languages.  I
+used a few babel related snippets with =org-mode=.
+
+I downloaded and installed the unbundled version of yasnippet so that
+I can edit the predefined snippets.  I unpacked the yasnippet software
+in my =~/.emacs.d/plugins= directory, renamed =yasnippet0.5.10= to
+=yasnippet= and added the following setup in my =.emacs=:
+
+#+begin_src emacs-lisp :tangle no
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins"))
+
+  (require 'yasnippet)
+  (yas/initialize)
+  (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
+
+  ;; Make TAB the yas trigger key in the org-mode-hook and enable flyspell mode and autofill
+  (add-hook 'org-mode-hook
+            (lambda ()
+              ;; yasnippet
+              (make-variable-buffer-local 'yas/trigger-key)
+              (org-set-local 'yas/trigger-key [tab])
+              (define-key yas/keymap [tab] 'yas/next-field-group)
+              ;; flyspell mode for spell checking everywhere
+              (flyspell-mode 1)
+              ;; auto-fill mode on
+              (auto-fill-mode 1)))
+#+end_src
+
+I used snippets for the following:
+  - =begin= for generic =#+begin_= blocks
+  - =dot=   for graphviz
+  - =uml=   for PlantUML graphics
+  - =sh=    for bash shell scripts
+  - =elisp= for emacs lisp code
+  - initials of a person converts to their full name
+    I used this while taking meeting notes
+
+Here is the definition for the =begin= snippet:
+
+org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/begin
+:  #name : #+begin_...#+end_
+:  # --
+:  #+begin_$1 $2
+:  $0
+:  #+end_$1
+
+I used this to create =#+begin_*= blocks like 
+- =#+begin_example=
+- =#+begin_src=
+- etc.
+
+Simply type =begin= and then =TAB= it replaces the =begin= text with
+the snippet contents.  Then type =src TAB emacs-lisp TAB= and your
+snippet block is done.  I've shortened this specific sequence to just
+=elisp TAB= since I use it fairly often.  There is also the build-in org-mode 
+=<s= in column 1 to expand to =#+begin_src ... #+end_src= and
+=<e= for =#+begin_example ... #+end_example=.
+
+Hit =C-c SingeQuote(')= and insert whatever emacs-lisp code you need.
+While in this block you're in a mode that knows how to format and
+colourize emacs lisp code as you enter it which is really nice.  =C-c
+SingleQuote(')= exits back to org-mode.  This recognizes any emacs
+editing mode so all you have to do is enter the appropriate mode name
+for the block.
+
+=dot=
+: #dot : #+begin_src dot ... #+end_src
+: # --
+: #+begin_src dot :file $1 :cmdline -Kdot -Tpng
+: $0
+: #+end_src
+
+=uml=
+: #uml : #+begin_src plantuml ... #+end_src
+: # --
+: #+begin_src plantuml :file $1
+: $0
+: #+end_src
+
+=sh=
+: #sh: #+begin_src sh ... #+end_src
+: # --
+: #+begin_src sh :results output
+: $0
+: #+end_src
+
+
+=elisp=
+: #elisp : #+begin_src emacs-lisp ...#+end_src emacs-lisp
+: # --
+: #+begin_src emacs-lisp
+: $0
+: #+end_src
+
+This is a great time saver.
+** Show headings at odd levels only or odd-even levels
+This has been replaced by org-indent-mode
+
+I've converted my files between odd-levels-only and odd-even using the
+functions =org-convert-to-odd-levels= and
+=org-convert-to-oddeven-levels= functions a number of times.  I ended
+up going back to odd-even levels to reduce the amount of leading
+whitespace on tasks.  I didn't find that lining up the headlines and
+tasks in odd-levels-only to be all that helpful.
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-odd-levels-only nil)
 #+end_src
 * Using Git for Automatic History, Backups, and Synchronization
 :PROPERTIES:
