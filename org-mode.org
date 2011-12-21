@@ -309,7 +309,6 @@ Here is the keybinding setup in lisp:
   (global-set-key (kbd "<f9> f") 'boxquote-insert-file)
   (global-set-key (kbd "<f9> g") 'gnus)
   (global-set-key (kbd "<f9> h") 'bh/hide-other)
-  (global-set-key (kbd "<f9> i") 'info)
   
   (global-set-key (kbd "<f9> I") 'bh/punch-in)
   (global-set-key (kbd "<f9> O") 'bh/punch-out)
