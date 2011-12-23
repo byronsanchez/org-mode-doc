@@ -1324,7 +1324,7 @@ I have the following org-mode settings for clocking:
             (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
               (setq parent-task (point))))
           (if parent-task
-              (org-with-point-at (or parent-task)
+              (org-with-point-at parent-task
                 (org-clock-in))
             (when bh/keep-clock-running
               (bh/clock-in-default-task)))))))
