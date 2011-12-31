@@ -1235,7 +1235,7 @@ I have the following org-mode settings for clocking:
 
 #+begin_src emacs-lisp :tangle yes
   ;;
-  ;; Resume clocking tasks when emacs is restarted
+  ;; Resume clocking task when emacs is restarted
   (org-clock-persistence-insinuate)
   ;;
   ;; Small windows on my Eee PC displays only the end of long lists which isn't very useful
@@ -1253,7 +1253,9 @@ I have the following org-mode settings for clocking:
   ;; Clock out when moving task to a done state
   (setq org-clock-out-when-done t)
   ;; Save the running clock and all clock history when exiting Emacs, load it on startup
-  (setq org-clock-persist (quote history))
+  (setq org-clock-persist t)
+  ;; Do not prompt to resume an active clock
+  (setq org-clock-persist-query-resume nil)
   ;; Enable auto clock resolution for finding open clocks
   (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
   ;; Include current clocking task in clock reports
