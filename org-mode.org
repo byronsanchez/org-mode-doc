@@ -397,36 +397,35 @@ Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!/!)")
-                (sequence "WAITING(w@/@)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE"))))
+        (quote ((sequence "TODO(t!)" "NEXT(n!)" "|" "DONE(d!/!)")
+                (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE"))))
   
   (setq org-todo-keyword-faces
         (quote (("TODO" :foreground "red" :weight bold)
                 ("NEXT" :foreground "blue" :weight bold)
-                ("STARTED" :foreground "blue" :weight bold)
                 ("DONE" :foreground "forest green" :weight bold)
                 ("WAITING" :foreground "orange" :weight bold)
                 ("HOLD" :foreground "magenta" :weight bold)
                 ("CANCELLED" :foreground "forest green" :weight bold)
                 ("PHONE" :foreground "forest green" :weight bold))))
 #+end_src
-*** Normal Task States
+*** Task States
 
-Normal tasks go through the sequence =TODO= -> =DONE=.
+Tasks go through the sequence =TODO= -> =DONE=.
 
 The following diagram shows the possible state transitions for a task.
 
 #+begin_src plantuml :file normal_task_states.png
-  title Normal Task States
+  title Task States
   [*] -> TODO
-  TODO -> STARTED
+  TODO -> NEXT
   TODO -> DONE
-  STARTED -> DONE
+  NEXT -> DONE
   DONE -> [*]
   TODO --> WAITING
   WAITING --> TODO
-  STARTED --> WAITING
-  WAITING --> STARTED
+  NEXT --> WAITING
+  WAITING --> NEXT
   HOLD --> CANCELLED
   WAITING --> CANCELLED
   CANCELLED --> [*]
@@ -434,7 +433,7 @@ The following diagram shows the possible state transitions for a task.
   HOLD --> TODO
   TODO --> CANCELLED
   TODO: t
-  STARTED: s
+  NEXT: n
   DONE: d
   WAITING:w
   note right of WAITING: Note records\nwhat it is waiting for
@@ -456,45 +455,9 @@ then it's a project.  That's it.
 Projects can be defined at any level - just create a task with a todo
 state keyword that has at least one subtask also with a todo state
 keyword and you have a project.  Projects use the same todo keywords
-as regular tasks with one exception - one subtask of a project needs
-to be marked =NEXT= or =STARTED= so the project is not on the stuck
-projects list.
+as regular tasks.  One subtask of a project needs to be marked =NEXT=
+so the project is not on the stuck projects list.
 
-#+begin_src plantuml :file task_states.png
-  title Project Task States
-  [*] -> TODO
-  TODO -> NEXT
-  NEXT -> STARTED
-  NEXT -> DONE
-  STARTED -> DONE
-  DONE -> [*]
-  TODO --> WAITING
-  WAITING --> TODO
-  HOLD --> CANCELLED
-  NEXT --> WAITING
-  WAITING --> NEXT
-  STARTED --> WAITING
-  WAITING --> STARTED
-  WAITING --> CANCELLED
-  TODO --> DONE
-  CANCELLED --> [*]
-  TODO --> HOLD
-  HOLD --> TODO
-  TODO --> CANCELLED
-  TODO: t
-  NEXT: n
-  STARTED: s
-  DONE: d
-  WAITING:w
-  note right of WAITING: Note records\nwhat it is waiting for
-  HOLD:h
-  note right of CANCELLED: Note records\nwhy it was cancelled
-  CANCELLED:c
-  WAITING --> DONE
-#+end_src
-
-#+results:
-[[file:task_states.png]]
 *** Phone Calls
 
 Telephone calls are special.  They are created in a done state by a capture task.
@@ -553,7 +516,6 @@ The triggers break down to the following rules:
 - Moving a task to a done state removes a =WAITING= tag
 - Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
 - Moving a task to =NEXT= removes a =WAITING= tag
-- Moving a task to =STARTED= removes a =WAITING= tag
 - Moving a task to =DONE= removes =WAITING= and =CANCELLED= tags
 
 The tags are used to filter tasks in the agenda views conveniently.
@@ -566,7 +528,6 @@ The tags are used to filter tasks in the agenda views conveniently.
                 (done ("WAITING") ("HOLD"))
                 ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
                 ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
-                ("STARTED" ("WAITING") ("CANCELLED") ("HOLD"))
                 ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 #+end_src
 * Adding New Tasks Quickly with Org Capture
@@ -876,7 +837,7 @@ don't want to spend time waiting for it to be generated.
                              ((org-agenda-overriding-header "Stuck Projects")
                               (org-tags-match-list-sublevels 'indented)
                               (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
-                  (tags-todo "-WAITING-CANCELLED/!NEXT|STARTED"
+                  (tags-todo "-WAITING-CANCELLED/!NEXT"
                              ((org-agenda-overriding-header "Next Tasks")
                               (org-agenda-skip-function 'bh/skip-projects-and-habits)
                               (org-agenda-todo-ignore-scheduled t)
@@ -884,7 +845,7 @@ don't want to spend time waiting for it to be generated.
                               (org-tags-match-list-sublevels t)
                               (org-agenda-sorting-strategy
                                '(todo-state-down effort-up category-keep))))
-                  (tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
+                  (tags-todo "-REFILE-CANCELLED/!-NEXT-WAITING"
                              ((org-agenda-overriding-header "Tasks")
                               (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                               (org-agenda-todo-ignore-scheduled t)
@@ -915,7 +876,7 @@ don't want to spend time waiting for it to be generated.
                  ((org-agenda-overriding-header "Stuck Projects")
                   (org-tags-match-list-sublevels 'indented)
                   (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
-                ("n" "Next Tasks" tags-todo "-WAITING-CANCELLED/!NEXT|STARTED"
+                ("n" "Next Tasks" tags-todo "-WAITING-CANCELLED/!NEXT"
                  ((org-agenda-overriding-header "Next Tasks")
                   (org-agenda-skip-function 'bh/skip-projects-and-habits)
                   (org-agenda-todo-ignore-scheduled t)
@@ -923,7 +884,7 @@ don't want to spend time waiting for it to be generated.
                   (org-tags-match-list-sublevels t)
                   (org-agenda-sorting-strategy
                    '(todo-state-down effort-up category-keep))))
-                ("R" "Tasks" tags-todo "-REFILE-CANCELLED/!-NEXT-STARTED-WAITING"
+                ("R" "Tasks" tags-todo "-REFILE-CANCELLED/!-NEXT-WAITING"
                  ((org-agenda-overriding-header "Tasks")
                   (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                   (org-agenda-sorting-strategy
@@ -1246,8 +1207,8 @@ I have the following org-mode settings for clocking:
   (setq org-clock-history-length 10)
   ;; Resume clocking task on clock-in if the clock is open
   (setq org-clock-in-resume t)
-  ;; Change task to STARTED when clocking in
-  (setq org-clock-in-switch-to-state 'bh/clock-in-to-started)
+  ;; Change tasks to NEXT when clocking in
+  (setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
   ;; Separate drawers for clocking and logs
   (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
   ;; Save clock data and state changes and notes in the LOGBOOK drawer
@@ -1267,12 +1228,18 @@ I have the following org-mode settings for clocking:
   
   (setq bh/keep-clock-running nil)
   
-  (defun bh/clock-in-to-started (kw)
-    "Switch task from TODO or NEXT to STARTED when clocking in.
-  Skips capture tasks."
-    (if (and (member (org-get-todo-state) (list "TODO" "NEXT"))
-             (not (and (boundp 'org-capture-mode) org-capture-mode)))
-        "STARTED"))
+  (defun bh/clock-in-to-next (kw)
+    "Switch a task from TODO to NEXT when clocking in.
+  Skips capture tasks, projects, and subprojects.
+  Switch projects and subprojects from NEXT back to TODO"
+    (when (not (and (boundp 'org-capture-mode) org-capture-mode))
+      (cond
+       ((and (member (org-get-todo-state) (list "TODO"))
+             (bh/is-task-p))
+        "NEXT")
+       ((and (member (org-get-todo-state) (list "NEXT"))
+             (bh/is-project-p))
+        "TODO"))))
   
   (defun bh/find-project-task ()
     "Move point to the parent (project) task if any"
@@ -2119,8 +2086,8 @@ I'm using a new lazy project definition to mark tasks as projects.
 This requires zero effort from me.  Any task with a subtask using a
 todo keyword is a project.  Period.
 
-Projects are 'stuck' if they have no subtask with a =NEXT= or
-=STARTED= todo keyword task defined.
+Projects are 'stuck' if they have no subtask with a =NEXT= todo
+keyword task defined.
 
 The org-mode stuck projects agenda view lists projects that have no
 =NEXT= task defined.  Stuck projects show up on my block agenda and I
@@ -3983,7 +3950,7 @@ My =org-todo-keywords= are set as follows:
 
 #+begin_src emacs-lisp :tangle no
   (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!/!)")
+        (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
                 (sequence "WAITING(w@/@)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE"))))
 #+end_src
 
@@ -4728,31 +4695,6 @@ opening an link to some HTML file with =C-c C-o= or when previewing an export.
 #+begin_src emacs-lisp
   (setq org-clone-delete-id t)
 #+end_src
-** Propagate STARTED to parent tasks
-
-When a task is marked =STARTED= (either manually or by clocking it in) the =STARTED=
-state propagates up the tree to any parent tasks of this task that are =TODO= or =NEXT=.
-As soon as I work on the first =NEXT= task in a tree the project is also marked =STARTED=.
-This helps me keep track of things that are in progress.
-
-Here's the setup I use to propagate =STARTED= to parent tasks:
-
-#+begin_src emacs-lisp :tangle yes
-  ;; Mark parent tasks as started
-  (defvar bh/mark-parent-tasks-started nil)
-
-  (defun bh/mark-parent-tasks-started ()
-    "Visit each parent task and change TODO states to STARTED"
-    (unless bh/mark-parent-tasks-started
-      (when (equal state "STARTED")
-        (let ((bh/mark-parent-tasks-started t))
-          (save-excursion
-            (while (org-up-heading-safe)
-              (when (member (nth 2 (org-heading-components)) (list "TODO" "NEXT"))
-                (org-todo "STARTED"))))))))
-
-  (add-hook 'org-after-todo-state-change-hook 'bh/mark-parent-tasks-started 'append)
-#+end_src
 ** Cycling plain lists
 
 Org mode can fold (cycle) plain lists.
@@ -4951,6 +4893,39 @@ tasks in odd-levels-only to be all that helpful.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-odd-levels-only nil)
+#+end_src
+** Propagate STARTED to parent tasks
+
+I used to have a =STARTED= and =NEXT= task state.  These were
+basically the same except =STARTED= indicated that I've clocked some
+time on the task.  Since then I've just moved to using =NEXT= for
+this.
+
+The following code used to propagate the =STARTED= task up the project
+tree but I don't use this anymore.
+
+When a task is marked =STARTED= (either manually or by clocking it in) the =STARTED=
+state propagates up the tree to any parent tasks of this task that are =TODO= or =NEXT=.
+As soon as I work on the first =NEXT= task in a tree the project is also marked =STARTED=.
+This helps me keep track of things that are in progress.
+
+Here's the setup I use to propagate =STARTED= to parent tasks:
+
+#+begin_src emacs-lisp :tangle no
+  ;; Mark parent tasks as started
+  (defvar bh/mark-parent-tasks-started nil)
+
+  (defun bh/mark-parent-tasks-started ()
+    "Visit each parent task and change TODO states to STARTED"
+    (unless bh/mark-parent-tasks-started
+      (when (equal state "STARTED")
+        (let ((bh/mark-parent-tasks-started t))
+          (save-excursion
+            (while (org-up-heading-safe)
+              (when (member (nth 2 (org-heading-components)) (list "TODO" "NEXT"))
+                (org-todo "STARTED"))))))))
+
+  (add-hook 'org-after-todo-state-change-hook 'bh/mark-parent-tasks-started 'append)
 #+end_src
 * Using Git for Automatic History, Backups, and Synchronization
 :PROPERTIES:
