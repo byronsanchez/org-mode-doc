@@ -839,13 +839,13 @@ don't want to spend time waiting for it to be generated.
                               (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
                   (tags-todo "-WAITING-CANCELLED/!NEXT"
                              ((org-agenda-overriding-header "Next Tasks")
-                              (org-agenda-skip-function 'bh/skip-projects-and-habits)
+                              (org-agenda-skip-function 'bh/skip-projects-and-habits-and-single-tasks)
                               (org-agenda-todo-ignore-scheduled t)
                               (org-agenda-todo-ignore-deadlines t)
                               (org-tags-match-list-sublevels t)
                               (org-agenda-sorting-strategy
                                '(todo-state-down effort-up category-keep))))
-                  (tags-todo "-REFILE-CANCELLED/!-NEXT-WAITING"
+                  (tags-todo "-REFILE-CANCELLED/!-HOLD-WAITING"
                              ((org-agenda-overriding-header "Tasks")
                               (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                               (org-agenda-todo-ignore-scheduled t)
@@ -876,13 +876,13 @@ don't want to spend time waiting for it to be generated.
                   (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
                 ("n" "Next Tasks" tags-todo "-WAITING-CANCELLED/!NEXT"
                  ((org-agenda-overriding-header "Next Tasks")
-                  (org-agenda-skip-function 'bh/skip-projects-and-habits)
+                  (org-agenda-skip-function 'bh/skip-projects-and-habits-and-single-tasks)
                   (org-agenda-todo-ignore-scheduled t)
                   (org-agenda-todo-ignore-deadlines t)
                   (org-tags-match-list-sublevels t)
                   (org-agenda-sorting-strategy
                    '(todo-state-down effort-up category-keep))))
-                ("R" "Tasks" tags-todo "-REFILE-CANCELLED/!-NEXT-WAITING"
+                ("R" "Tasks" tags-todo "-REFILE-CANCELLED/!-HOLD-WAITING"
                  ((org-agenda-overriding-header "Tasks")
                   (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                   (org-agenda-sorting-strategy
@@ -2259,6 +2259,21 @@ used by agenda views.
          (t
           nil)))))
   
+(defun bh/skip-projects-and-habits-and-single-tasks ()
+  "Skip trees that are projects, tasks that are habits, single non-project tasks"
+  (save-restriction
+    (widen)
+    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
+      (cond
+       ((org-is-habit-p)
+        next-headline)
+       ((bh/is-project-p)
+        next-headline)
+       ((and (bh/is-task-p) (not (bh/is-project-subtree-p)))
+        next-headline)
+       (t
+        nil)))))
+
   (defun bh/skip-project-tasks-maybe ()
     "Show tasks related to the current restriction.
   When restricted to a project, skip project and sub project tasks, habits, NEXT tasks, and loose tasks.
