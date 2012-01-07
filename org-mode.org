@@ -907,9 +907,19 @@ don't want to spend time waiting for it to be generated.
                   (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))))
 #+end_src
 
-My block agenda view looks like this:
+My block agenda view looks like this when not narrowed to a project.
+This shows top-level projects and =NEXT= tasks but hides the project details since
+we are not focused on any particular project.
 
-[[file:block-agenda.png]]
+[[file:block-agenda-nonproject.png]]
+
+After selecting a project (with =P= on any task in the agenda) the block agenda changes to show the project and
+any subprojects in the Projects section.  Tasks show project-related tasks that are hidden when not
+narrowed to a project.
+
+This makes it easy to focus on the task at hand.
+
+[[file:block-agenda-project.png]]
 
 I generally work top-down on the agenda.  Things with deadlines and
 scheduled dates (planned to work on today or earlier) show up in the
