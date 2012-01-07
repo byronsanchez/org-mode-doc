@@ -1275,12 +1275,14 @@ I have the following org-mode settings for clocking:
   
   (defun bh/find-project-task ()
     "Move point to the parent (project) task if any"
-    (let ((parent-task (save-excursion (org-back-to-heading) (point))))
-      (while (org-up-heading-safe)
-        (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
-          (setq parent-task (point))))
-      (goto-char parent-task)
-      parent-task))
+    (save-restriction
+      (widen)
+      (let ((parent-task (save-excursion (org-back-to-heading 'invisible-ok) (point))))
+        (while (org-up-heading-safe)
+          (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
+            (setq parent-task (point))))
+        (goto-char parent-task)
+        parent-task)))
   
   (defun bh/punch-in (arg)
     "Start continuous clocking and set the default task to the
@@ -1338,10 +1340,8 @@ I have the following org-mode settings for clocking:
   
   (defun bh/clock-in-organization-task-as-default ()
     (interactive)
-    (save-restriction
-      (widen)
-      (org-with-point-at (org-id-find bh/organization-task-id 'marker)
-        (org-clock-in '(16)))))
+    (org-with-point-at (org-id-find bh/organization-task-id 'marker)
+      (org-clock-in '(16))))
   
   (defun bh/clock-out-maybe ()
     (when (and bh/keep-clock-running
@@ -1359,14 +1359,12 @@ the new punch-in and punch-out I don't need these as much anymore.
 to the previously clocked task.
 
 #+begin_src emacs-lisp :tangle yes
-  (require 'org-id)  
+  (require 'org-id)
   (defun bh/clock-in-task-by-id (id)
     "Clock in a task by id"
-    (save-restriction
-      (widen)
-      (org-with-point-at (org-id-find id 'marker)
-        (org-clock-in nil))))
-
+    (org-with-point-at (org-id-find id 'marker)
+      (org-clock-in nil)))
+  
   (defun bh/clock-in-last-task (arg)
     "Clock in the interrupted task if there is one
   Skip the default task and get the next one.
@@ -2178,17 +2176,19 @@ used by agenda views.
 #+begin_src emacs-lisp :tangle yes
   (defun bh/is-project-p ()
     "Any task with a todo keyword subtask"
-    (let ((has-subtask)
-          (subtree-end (save-excursion (org-end-of-subtree t)))
-          (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
-      (save-excursion
-        (forward-line 1)
-        (while (and (not has-subtask)
-                    (< (point) subtree-end)
-                    (re-search-forward "^\*+ " subtree-end t))
-          (when (member (org-get-todo-state) org-todo-keywords-1)
-            (setq has-subtask t))))
-      (and is-a-task has-subtask)))
+    (save-restriction
+      (widen)
+      (let ((has-subtask)
+            (subtree-end (save-excursion (org-end-of-subtree t)))
+            (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
+        (save-excursion
+          (forward-line 1)
+          (while (and (not has-subtask)
+                      (< (point) subtree-end)
+                      (re-search-forward "^\*+ " subtree-end t))
+            (when (member (org-get-todo-state) org-todo-keywords-1)
+              (setq has-subtask t))))
+        (and is-a-task has-subtask))))
   
   (defun bh/is-project-subtree-p ()
     "Any task with a todo keyword that is in a project subtree.
@@ -2200,6 +2200,22 @@ used by agenda views.
         (if (equal (point) task)
             nil
           t))))
+  
+  (defun bh/is-task-p ()
+    "Any task with a todo keyword and no subtask"
+    (save-restriction
+      (widen)
+      (let ((has-subtask)
+            (subtree-end (save-excursion (org-end-of-subtree t)))
+            (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
+        (save-excursion
+          (forward-line 1)
+          (while (and (not has-subtask)
+                      (< (point) subtree-end)
+                      (re-search-forward "^\*+ " subtree-end t))
+            (when (member (org-get-todo-state) org-todo-keywords-1)
+              (setq has-subtask t))))
+        (and is-a-task (not has-subtask)))))
   
   (defun bh/is-subproject-p ()
     "Any task which is a subtask of another project"
@@ -2213,33 +2229,44 @@ used by agenda views.
   
   (defun bh/skip-non-stuck-projects ()
     "Skip trees that are not stuck projects"
-    (let* ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
-           (subtree-end (save-excursion (org-end-of-subtree t)))
-           (has-next (save-excursion
-                       (forward-line 1)
-                       (and (< (point) subtree-end)
-                            (re-search-forward "^\\*+ \\(NEXT\\|STARTED\\) " subtree-end t)))))
-      (if (and (bh/is-project-p) (not has-next))
-          nil ; a stuck project, has subtasks but no next task
-        next-headline)))
+    (save-restriction
+      (widen)
+      (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
+        (if (bh/is-project-p)
+            (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+                   (has-next (save-excursion
+                               (forward-line 1)
+                               (and (< (point) subtree-end)
+                                    (re-search-forward "^\\*+ \\(NEXT\\) " subtree-end t)))))
+              (if has-next
+                  next-headline
+                nil)) ; a stuck project, has subtasks but no next task
+          next-headline))))
   
   (defun bh/skip-non-projects ()
     "Skip trees that are not projects"
-    (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-      (if (bh/is-project-p)
-          nil
-        subtree-end)))
+    (bh/list-sublevels-for-projects-indented)
+    (if (save-excursion (bh/skip-non-stuck-projects))
+        (save-restriction
+          (widen)
+          (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+            (if (bh/is-project-p)
+                nil
+              subtree-end)))
+      (org-end-of-subtree t)))
   
   (defun bh/skip-project-trees-and-habits ()
     "Skip trees that are projects"
-    (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-      (cond
-       ((bh/is-project-p)
-        subtree-end)
-       ((org-is-habit-p)
-        subtree-end)
-       (t
-        nil))))
+    (save-restriction
+      (widen)
+      (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+        (cond
+         ((bh/is-project-p)
+          subtree-end)
+         ((org-is-habit-p)
+          subtree-end)
+         (t
+          nil)))))
   
   (defun bh/skip-project-tasks-maybe ()
     "Show tasks related to the current restriction.
@@ -2267,14 +2294,16 @@ used by agenda views.
   
   (defun bh/skip-projects-and-habits ()
     "Skip trees that are projects and tasks that are habits"
-    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
-      (cond
-       ((bh/is-project-p)
-        next-headline)
-       ((org-is-habit-p)
-        next-headline)
-       (t
-        nil))))
+    (save-restriction
+      (widen)
+      (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+        (cond
+         ((bh/is-project-p)
+          subtree-end)
+         ((org-is-habit-p)
+          subtree-end)
+         (t
+          nil)))))
   
   (defun bh/skip-non-subprojects ()
     "Skip trees that are not projects"
@@ -2338,22 +2367,24 @@ Archived Tasks= in the archive file.
 #+begin_src emacs-lisp :tangle yes
   (defun bh/skip-non-archivable-tasks ()
     "Skip trees that are not available for archiving"
-    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
-      ;; Consider only tasks with done todo headings as archivable candidates
-      (if (member (org-get-todo-state) org-done-keywords)
-          (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
-                 (daynr (string-to-int (format-time-string "%d" (current-time))))
-                 (a-month-ago (* 60 60 24 (+ daynr 1)))
-                 (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
-                 (this-month (format-time-string "%Y-%m-" (current-time)))
-                 (subtree-is-current (save-excursion
-                                       (forward-line 1)
-                                       (and (< (point) subtree-end)
-                                            (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
-            (if subtree-is-current
-                next-headline ; Has a date in this month or last month, skip it
-              nil))  ; available to archive
-        (or next-headline (point-max)))))  
+    (save-restriction
+      (widen)
+      (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
+        ;; Consider only tasks with done todo headings as archivable candidates
+        (if (member (org-get-todo-state) org-done-keywords)
+            (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+                   (daynr (string-to-int (format-time-string "%d" (current-time))))
+                   (a-month-ago (* 60 60 24 (+ daynr 1)))
+                   (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
+                   (this-month (format-time-string "%Y-%m-" (current-time)))
+                   (subtree-is-current (save-excursion
+                                         (forward-line 1)
+                                         (and (< (point) subtree-end)
+                                              (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
+              (if subtree-is-current
+                  next-headline ; Has a date in this month or last month, skip it
+                nil))  ; available to archive
+          (or next-headline (point-max))))))
 #+end_src
 ** Archive Tag - Hiding Information
 
@@ -3222,20 +3253,21 @@ The following elisp accomplishes this.
             'append)
   
   (defun bh/set-agenda-restriction-lock (arg)
-    "Set restriction lock to current subtree or file if prefix is specified"
+    "Set restriction lock to current task subtree or file if prefix is specified"
     (interactive "p")
     (let* ((pom (org-get-at-bol 'org-hd-marker))
            (tags (org-with-point-at pom (org-get-tags-at))))
       (let ((restriction-type (if (equal arg 4) 'file 'subtree)))
-        (cond
-         ((equal major-mode 'org-agenda-mode)
-          (org-with-point-at pom
-            (org-agenda-set-restriction-lock restriction-type)))
-         ((and (equal major-mode 'org-mode) (org-before-first-heading-p))
-          (org-agenda-set-restriction-lock 'file))
-         (t
-          (org-with-point-at pom
-            (org-agenda-set-restriction-lock restriction-type)))))))
+        (save-restriction
+          (cond
+           ((equal major-mode 'org-agenda-mode)
+            (org-with-point-at pom
+              (org-agenda-set-restriction-lock restriction-type)))
+           ((and (equal major-mode 'org-mode) (org-before-first-heading-p))
+            (org-agenda-set-restriction-lock 'file))
+           (t
+            (org-with-point-at pom
+              (org-agenda-set-restriction-lock restriction-type)))))))
 #+end_src
 
 This allows me to set the restriction lock from agenda to task directly.
