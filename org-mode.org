@@ -3981,7 +3981,7 @@ Most of my logging is controlled by the global =org-todo-keywords=
 My logging settings are set as follows:
 #+begin_src emacs-lisp :tangle yes
   (setq org-log-done (quote time))
-  (setq org-log-into-drawer t)
+  (setq org-log-into-drawer "LOGBOOK")
 #+end_src
 
 My =org-todo-keywords= are set as follows:
