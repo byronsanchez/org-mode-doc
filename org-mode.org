@@ -855,7 +855,6 @@ don't want to spend time waiting for it to be generated.
                   (tags-todo "-CANCELLED/!"
                              ((org-agenda-overriding-header "Projects")
                               (org-agenda-skip-function 'bh/skip-non-projects)
-                              (org-tags-match-list-sublevels 'indented)
                               (org-agenda-todo-ignore-scheduled 'future)
                               (org-agenda-todo-ignore-deadlines 'future)
                               (org-agenda-sorting-strategy
@@ -874,7 +873,6 @@ don't want to spend time waiting for it to be generated.
                   (org-tags-match-list-sublevels nil)))
                 ("#" "Stuck Projects" tags-todo "-CANCELLED/!"
                  ((org-agenda-overriding-header "Stuck Projects")
-                  (org-tags-match-list-sublevels 'indented)
                   (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
                 ("n" "Next Tasks" tags-todo "-WAITING-CANCELLED/!NEXT"
                  ((org-agenda-overriding-header "Next Tasks")
@@ -892,7 +890,6 @@ don't want to spend time waiting for it to be generated.
                 ("p" "Projects" tags-todo "-CANCELLED/!"
                  ((org-agenda-overriding-header "Projects")
                   (org-agenda-skip-function 'bh/skip-non-projects)
-                  (org-tags-match-list-sublevels 'indented)
                   (org-agenda-todo-ignore-scheduled 'future)
                   (org-agenda-todo-ignore-deadlines 'future)
                   (org-agenda-sorting-strategy
@@ -2204,6 +2201,22 @@ used by agenda views.
           (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
             (setq is-subproject t))))
       (and is-a-task is-subproject)))
+  
+  (defun bh/list-sublevels-for-projects-indented ()
+    "Set org-tags-match-list-sublevels so when restricted to a subtree we list all subtasks.
+  This is normally used by skipping functions where this variable is already local to the agenda."
+    (if (marker-buffer org-agenda-restrict-begin)
+        (setq org-tags-match-list-sublevels 'indented)
+      (setq org-tags-match-list-sublevels nil))
+    nil)
+  
+  (defun bh/list-sublevels-for-projects ()
+    "Set org-tags-match-list-sublevels so when restricted to a subtree we list all subtasks.
+  This is normally used by skipping functions where this variable is already local to the agenda."
+    (if (marker-buffer org-agenda-restrict-begin)
+        (setq org-tags-match-list-sublevels t)
+      (setq org-tags-match-list-sublevels nil))
+    nil)
   
   (defun bh/skip-non-stuck-projects ()
     "Skip trees that are not stuck projects"
