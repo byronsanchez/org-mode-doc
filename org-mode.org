@@ -2276,8 +2276,8 @@ used by agenda views.
   
   (defun bh/skip-project-tasks-maybe ()
     "Show tasks related to the current restriction.
-    When restricted to a project, skip project and sub project tasks, habits, NEXT tasks, and loose tasks.
-    When not restricted, skip project and sub-project tasks, habits, and project related tasks."
+  When restricted to a project, skip project and sub project tasks, habits, NEXT tasks, and loose tasks.
+  When not restricted, skip project and sub-project tasks, habits, and project related tasks."
     (save-restriction
       (widen)
       (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
