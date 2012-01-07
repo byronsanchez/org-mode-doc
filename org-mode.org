@@ -1210,8 +1210,8 @@ I have the following org-mode settings for clocking:
   ;; Resume clocking task when emacs is restarted
   (org-clock-persistence-insinuate)
   ;;
-  ;; Small windows on my Eee PC displays only the end of long lists which isn't very useful
-  (setq org-clock-history-length 10)
+  ;; Show lot sof clocking history so it's easy to pick items off the C-F11 list
+  (setq org-clock-history-length 36)
   ;; Resume clocking task on clock-in if the clock is open
   (setq org-clock-in-resume t)
   ;; Change tasks to NEXT when clocking in
@@ -4621,10 +4621,13 @@ based on screen usage.  With today's widescreen monitors this often
 means we split the window horizontally instead of vertically.
 
 I found this change obtrusive and turn it off with the following
-setting.
+setting.  However now that I've used it for a long time it makes
+the clocking history list much easier to use -- so reduce the 
+threshold so the clock history list (=C-u C-F11=) shows the menu
+on the right.
 
 #+begin_src emacs-lisp :tangle yes
-  (setq split-width-threshold 9999)
+  (setq split-width-threshold 120)
 #+end_src
 ** Mail links open compose-mail
 
