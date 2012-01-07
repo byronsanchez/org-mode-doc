@@ -346,7 +346,7 @@ Here is the keybinding setup in lisp:
   (defun bh/hide-other ()
     (interactive)
     (save-excursion
-      (org-back-to-heading)
+      (org-back-to-heading 'invisible-ok)
       (org-shifttab)
       (org-reveal)
       (org-cycle)))
