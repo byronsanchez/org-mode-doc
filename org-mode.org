@@ -3460,8 +3460,8 @@ Here are the =.emacs= settings:
                 (tags category-up priority-down effort-up)
                 (search category-up))))
   
-  ;; Start the weekly agenda today
-  (setq org-agenda-start-on-weekday 0)
+  ;; Start the weekly agenda on Monday
+  (setq org-agenda-start-on-weekday 1)
   
   ;; Enable display of the time grid so we can see the marker for the current time
   (setq org-agenda-time-grid (quote ((daily today remove-match)
