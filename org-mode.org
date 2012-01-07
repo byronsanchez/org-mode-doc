@@ -895,11 +895,11 @@ don't want to spend time waiting for it to be generated.
                               (org-agenda-todo-ignore-deadlines 'future)
                               (org-agenda-sorting-strategy
                                '(category-keep))))
-                  (todo "WAITING|HOLD"
-                        ((org-agenda-overriding-header "Waiting and Postponed tasks")
-                         (org-agenda-skip-function 'bh/skip-projects-and-habits)
-                         (org-agenda-todo-ignore-scheduled t)
-                         (org-agenda-todo-ignore-deadlines t)))
+                  (tags-todo "-CANCELLED/!WAITING|HOLD"
+                             ((org-agenda-overriding-header "Waiting and Postponed Tasks")
+                              (org-agenda-skip-function 'bh/skip-projects-and-habits)
+                              (org-agenda-todo-ignore-scheduled t)
+                              (org-agenda-todo-ignore-deadlines t)))
                   (tags "-REFILE/"
                         ((org-agenda-overriding-header "Tasks to Archive")
                          (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))
@@ -932,7 +932,7 @@ don't want to spend time waiting for it to be generated.
                   (org-agenda-todo-ignore-deadlines 'future)
                   (org-agenda-sorting-strategy
                    '(category-keep))))
-                ("w" "Waiting Tasks" todo "WAITING|HOLD"
+                ("w" "Waiting Tasks" tags-todo "-CANCELLED/!WAITING|HOLD"
                  ((org-agenda-overriding-header "Waiting and Postponed tasks"))
                  (org-agenda-skip-function 'bh/skip-projects-and-habits)
                  (org-agenda-todo-ignore-scheduled 'future)
