@@ -3289,6 +3289,21 @@ see move of the project.
 Selecting the entire project sometimes has too many tasks in it and I
 want to limit the view to part of the subtree.
 
+I've added new convenience keys for restricting the agenda and org-buffer to
+subtree, parent task, and project task, as well as removing the restriction.
+
+- =N= in the agenda narrows to the current task subtree
+- =U= in the agenda narrows to the parent subtree of this task
+- =P= in the agenda narrows to the project containing this task
+- =W= in the agenda removes the restriction widening the buffer
+
+These same keys work as speed commands in the org-buffer.
+
+Currently regenerating the agenda removes the org-mode restrictions
+but hopefully I can find a solution to that.  My first attempt changed
+agenda clock reports so they only included the restricted section of
+the org-mode file which wasn't very satisfying.
+
 *** Limiting the agenda to a file
 
 You can limit the agenda view to a single file in multiple ways.
