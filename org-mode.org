@@ -457,7 +457,6 @@ state keyword that has at least one subtask also with a todo state
 keyword and you have a project.  Projects use the same todo keywords
 as regular tasks.  One subtask of a project needs to be marked =NEXT=
 so the project is not on the stuck projects list.
-
 *** Phone Calls
 
 Telephone calls are special.  They are created in a done state by a capture task.
@@ -3303,7 +3302,6 @@ Currently regenerating the agenda removes the org-mode restrictions
 but hopefully I can find a solution to that.  My first attempt changed
 agenda clock reports so they only included the restricted section of
 the org-mode file which wasn't very satisfying.
-
 *** Limiting the agenda to a file
 
 You can limit the agenda view to a single file in multiple ways.
@@ -3584,7 +3582,6 @@ Here are the =.emacs= settings:
   (defun bh/is-scheduled-late (date-str)
     (string-match "Sched\.\\(.*\\)x:" date-str))
 #+end_src
-
 *** q buries the agenda view buffer
 [2011-12-20 Tue 23:52]
 
@@ -3734,7 +3731,6 @@ To make org show leading stars use
 #+end_src
 
 I now use org-indent mode which hides leading stars.
-
 *** org-indent mode
 :PROPERTIES:
 :CUSTOM_ID: OrgIndentMode
@@ -4762,7 +4758,6 @@ Org mode can fold (cycle) plain lists.
 
 I find this setting useful when I have repeating tasks with lots of sublists with
 checkboxes.  I can fold the completed list entries and focus on what is remaining easily.
-
 ** Showing source block syntax highlighting
 
 It is possible to display org-mode source blocks fontified in their
@@ -4775,7 +4770,6 @@ syntax highlighting when viewing in the org-mode buffer.
 #+begin_src emacs-lisp :tangle yes
   (setq org-src-fontify-natively t)
 #+end_src
-
 * Things I Don't Use (Anymore)
 
 This is a partial list of things I know about but do not use.
