@@ -702,7 +702,7 @@ matches to the current list, then continue searching with some other
 text to find the target I need.  =C-j= also selects the current
 completion as the final target.  I like this a lot.
 
-I now exclude DONE state tasks as valid refile targets.  This helps to keep the
+I now exclude =DONE= state tasks as valid refile targets.  This helps to keep the
 refile target list to a reasonable size.
 
 Here is my refile configuration:
