@@ -1045,11 +1045,11 @@ immediately.  I put the project task on =HOLD= and work on something
 else.  The =/ RET= filter removes =HOLD= tasks and subtasks (because
 of tag inheritance).
 
-At home I have some tasks tagged with =@farm= since these need to be
+At home I have some tasks tagged with =farm= since these need to be
 performed when I am physically at our family farm.  Since I am there
-infrequently I have added =@farm= to the list of auto-excluded tags on
-my system.  I can always explicitly filter to just =@farm= tasks with
-=/ TAB @farm RET= when I am physically there.
+infrequently I have added =farm= to the list of auto-excluded tags on
+my system.  I can always explicitly filter to just =farm= tasks with
+=/ TAB farm RET= when I am physically there.
 
 I have the following setup to allow =/ RET= to filter tasks based on
 the description above.
@@ -1058,9 +1058,9 @@ the description above.
   (defun bh/org-auto-exclude-function (tag)
     "Automatic task exclusion in the agenda with / RET"
     (and (cond
-          ((string= tag "@farm")
-           t)
           ((string= tag "hold")
+           t)
+          ((string= tag "farm")
            t))
          (concat "-" tag)))
   
