@@ -3231,7 +3231,7 @@ folded and hilighted so that only tasks which are incomplete are
 shown.
 
 I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and
-=C-c C-v= combination leaving the buffer in a narrowed state.  I use
+=C-c / t= combination leaving the buffer in a narrowed state.  I use
 =S-f5= to widen back to the normal view.
 
 I also have the following setting to force showing the next headline.
@@ -3278,7 +3278,7 @@ The following elisp accomplishes this.
 This allows me to set the restriction lock from agenda to task directly.
 I work from the agenda a lot and I find this very convenient.
 
-Setting the restriction to the task is less surprising than
+Setting the restriction directly to the task is less surprising than
 automatically moving up the tree to the project level task -- which is
 what I was doing before.  If the select task is too restrictive it's
 easy to move the restriction lock up a level by visiting the task in
@@ -3286,22 +3286,29 @@ the org file and going up and resetting the lock - in case you want to
 see move of the project.
 
 Selecting the entire project sometimes has too many tasks in it and I
-want to limit the view to part of the subtree.
+want to limit the view to part of the subtree.  This is why I keep the =N= and
+=U= key bindings for adjusting the narrowed region.
 
 I've added new convenience keys for restricting the agenda and org-buffer to
 subtree, parent task, and project task, as well as removing the restriction.
+These keys work both in the agenda and as speed commands on a headline in the
+org-file.
 
-- =N= in the agenda narrows to the current task subtree
-- =U= in the agenda narrows to the parent subtree of this task
-- =P= in the agenda narrows to the project containing this task
-- =W= in the agenda removes the restriction widening the buffer
+- =N= narrows to the current task subtree
 
-These same keys work as speed commands in the org-buffer.
+  This is the same as same as =C-c C-x <=
 
-Currently regenerating the agenda removes the org-mode restrictions
-but hopefully I can find a solution to that.  My first attempt changed
-agenda clock reports so they only included the restricted section of
-the org-mode file which wasn't very satisfying.
+- =U= narrows to the parent subtree of this task
+
+  This goes up one level and narrows to that subtree.
+
+- =P= narrows to the entire project containing this task
+
+  This goes up the tree to the top-level =TODO= keyword and selects
+  that as the subtree to narrow to
+
+- =W= removes the restriction, widening the buffer
+
 *** Limiting the agenda to a file
 
 You can limit the agenda view to a single file in multiple ways.
@@ -3311,6 +3318,8 @@ line before the first heading to set the agenda restriction lock
 to this file only.  This is equivalent using a prefix argumment
 (=C-u C-c C-x <=) anywhere in the file.  This lock stays in
 effect until you remove it with =C-c C-x >=.
+
+This also works in the agenda with my =C-u C-c c-x <= key binding.
 
 Another way is to invoke the agenda with =F12 < a= while visiting an
 org-mode file.  This limits the agenda view to just this file.  I
