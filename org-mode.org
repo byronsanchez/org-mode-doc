@@ -397,7 +397,7 @@ Here are my =TODO= state keywords and colour settings:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-todo-keywords
-        (quote ((sequence "TODO(t!)" "NEXT(n!)" "|" "DONE(d!/!)")
+        (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
                 (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE"))))
   
   (setq org-todo-keyword-faces
