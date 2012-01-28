@@ -3099,7 +3099,9 @@ sentence.
     "Insert a org graphviz dot block, querying for filename."
     "File (no extension): "
     "#+begin_src dot :file " str ".png :cmdline -Kdot -Tpng\n"
+    "graph G {\n"
     _ - \n
+    "}\n"
     "#+end_src\n")
   
   (define-abbrev org-mode-abbrev-table "sdot" "" 'skel-org-block-dot)
