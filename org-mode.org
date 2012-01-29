@@ -3148,7 +3148,19 @@ This works really well for me.
 There is more than one way to do this.  Use what works for you.
 *** Narrowing to a subtree with =bh/org-todo=
 
-=f5= and =S-f5= are bound the functions for narrowing and widening the emacs buffer as follows:
+=f5= and =S-f5= are bound the functions for narrowing and widening the emacs buffer as defined
+below.
+
+We now use:
+
+    - T for C-c / t on the current buffer
+    - N narrows to this task subtree
+    - U narrows to the immediate parent task subtree without moving
+    - P narrows to the parent project subtree without moving
+
+The agenda keeps widening the org buffer so this gives a convenient
+way to focus on what we are doing.
+
 
 #+begin_src emacs-lisp :tangle yes
   (global-set-key (kbd "<f5>") 'bh/org-todo)
