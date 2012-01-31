@@ -3462,6 +3462,9 @@ I do need it.
   (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
 #+end_src
 *** Agenda view tweaks
+:PROPERTIES:
+:CUSTOM_ID: AgendaViewTweaks
+:END:
 
 The following agenda customizations control 
 - display of repeating tasks
