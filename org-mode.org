@@ -3286,7 +3286,7 @@ The following elisp accomplishes this.
             (org-agenda-set-restriction-lock 'file))
            (t
             (org-with-point-at pom
-              (org-agenda-set-restriction-lock restriction-type)))))))
+              (org-agenda-set-restriction-lock restriction-type))))))))
 #+end_src
 
 This allows me to set the restriction lock from agenda to task directly.
