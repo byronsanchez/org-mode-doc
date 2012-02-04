@@ -50,11 +50,29 @@ The following setup in my .emacs enables org-mode for most buffers.
 =org-mode= is the default mode for =.org=, =.org_archive=, and =.txt=
 files.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   ;;;
   ;;; Org Mode
   ;;;
   (add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp"))
+  (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+  (require 'org-install)
+  ;;
+  ;; Standard key bindings
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cb" 'org-iswitchb)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes :exports none
+  ;; The following setting is different from the document so that you
+  ;; can override the document path by setting your path in the variable
+  ;; org-mode-user-lisp-path
+  ;;
+  (if (boundp 'org-mode-user-lisp-path)
+      (add-to-list 'load-path org-mode-user-lisp-path)
+    (add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp")))
+  
   (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
   (require 'org-install)
   ;;
@@ -171,11 +189,25 @@ See [[#Publishing][Publishing and Exporting]] for more details.
 :END:
 
 Here is my current =org-agenda-files= setup.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (setq org-agenda-files (quote ("~/git/org"
                                  "~/git/org/client1"
                                  "~/git/org/bzflag"
                                  "~/git/client2")))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes :exports none
+  ;; The following setting is different from the document so that you
+  ;; can override the document org-agenda-files by setting your
+  ;; org-agenda-files in the variable org-mode-user-agenda-files
+  ;;
+  (if (boundp 'org-user-agenda-files)
+      (setq org-agenda-files org-user-agenda-files)
+    (setq org-agenda-files (quote ("~/git/org"
+                                 "~/git/org/client1"
+                                 "~/git/org/bzflag"
+                                 "~/git/client2"))))
+  
 #+end_src
 
 =org-mode= manages the =org-agenda-files= variable automatically using
@@ -3634,9 +3666,22 @@ There's a contributed =org-checklist= that can uncheck the boxes
 automagically when the task is marked done.
 
 Add the following to your =.emacs=
-#+begin_src emacs-lisp :tangle yes
+
+#+begin_src emacs-lisp :tangle no
   (add-to-list 'load-path (expand-file-name "~/git/org-mode/contrib/lisp"))
 
+  (require 'org-checklist)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes :exports none
+  ;; The following setting is different from the document so that you
+  ;; can override the document path by setting your path in the variable
+  ;; org-mode-user-contrib-lisp-path
+  ;;
+  (if (boundp 'org-mode-user-contrib-lisp-path)
+      (add-to-list 'load-path org-mode-user-contrib-lisp-path)
+    (add-to-list 'load-path (expand-file-name "~/git/org-mode/contrib/lisp")))
+  
   (require 'org-checklist)
 #+end_src
 
