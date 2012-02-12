@@ -3849,10 +3849,11 @@ blank lines and reveals where extra empty lines are created in the
 document.  I delete extra blank lines that show up in contents views.
 
 The following setting hides single blank lines and exposes the rest so
-I can clean them up.
+I can clean them up.  A single blank line between headings sometimes
+reads nicer... so I allow _one_ blank line only.
 
 #+begin_src emacs-lisp :tangle yes
-  (setq org-cycle-separator-lines 1)
+  (setq org-cycle-separator-lines 2)
 #+end_src
 
 I find extra blank lines in lists and headings a bit of a nuisance.
