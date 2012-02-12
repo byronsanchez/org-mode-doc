@@ -1649,8 +1649,8 @@ other clock info around that time.
 Use the following setup to get log mode in the agenda to only show
 clocked times:
 #+begin_src emacs-lisp :tangle yes
-  ;; Agenda log mode items to display (clock time only by default)
-  (setq org-agenda-log-mode-items (quote (clock)))
+  ;; Agenda log mode items to display (closed and state changes by default)
+  (setq org-agenda-log-mode-items (quote (closed state)))
 #+end_src
 *** Using clock reports to summarize time spent
 
