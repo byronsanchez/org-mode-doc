@@ -1645,13 +1645,6 @@ The clocked-time only display in the agenda makes it easy to quickly
 scan down the list to see if an entry is missing an end time.  If an
 entry is not closed you can manually fix the clock entry based on
 other clock info around that time.
-
-Use the following setup to get log mode in the agenda to only show
-clocked times:
-#+begin_src emacs-lisp :tangle yes
-  ;; Agenda log mode items to display (closed and state changes by default)
-  (setq org-agenda-log-mode-items (quote (closed state)))
-#+end_src
 *** Using clock reports to summarize time spent
 
 Billable time for clients are kept in separate org files.
@@ -1785,6 +1778,35 @@ applications.
 
 =C-c C-x C-d= also provides a quick summary of clocked time for the
 current org file.
+** Providing progress reports to others
+[2012-02-12 Sun 16:11]
+
+When someone wants details of what I've done recently I simple generate a
+log report in the agenda with tasks I've completed and state changes combined
+with a clock report for the appropriate time period.
+
+The following setting shows closed tasks and state changes in the
+agenda.  Combined with the agenda clock report ('R') I can quickly
+generate all of the details required.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Agenda log mode items to display (closed and state changes by default)
+  (setq org-agenda-log-mode-items (quote (closed state)))
+#+end_src
+
+To generate the report I pull up the agenda for the appropriate time frame
+(today, yesterday, this week, or last week) and hit the key sequence
+=l R= to add the log report (without clocking data lines) and the agenda clock
+report at the end.
+
+Then it's simply a matter of exporting the resulting agenda in some useful format
+to provide to other people.  =C-x C-w /tmp/agenda.html RET= exports to HTML
+and =C-x C-w /tmp/agenda.txt RET= exports to plain text.  Other formats are 
+available but I use these two the most.
+
+Combining this export with tag filters and =C-u R= can limit the
+report to exactly the tags that people are interested in.
+
 * Tags
 :PROPERTIES:
 :CUSTOM_ID: Tags
