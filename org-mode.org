@@ -2288,14 +2288,12 @@ used by agenda views.
   (defun bh/skip-non-projects ()
     "Skip trees that are not projects"
     (bh/list-sublevels-for-projects-indented)
-    (if (save-excursion (bh/skip-non-stuck-projects))
-        (save-restriction
-          (widen)
-          (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-            (if (bh/is-project-p)
-                nil
-              subtree-end)))
-      (org-end-of-subtree t)))
+    (save-restriction
+      (widen)
+      (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+        (if (bh/is-project-p)
+            nil
+          subtree-end))))
   
   (defun bh/skip-project-trees-and-habits ()
     "Skip trees that are projects"
