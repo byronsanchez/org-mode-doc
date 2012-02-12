@@ -4388,7 +4388,7 @@ as a quick way to get back to the agenda and update the current view.
                                         ("Q" . ignore)
                                         ("R" . ignore)
                                         ("S" . ignore)
-                                        ("T" . (org-show-todo-tree nil))
+                                        ("T" . bh/org-todo)
                                         ("U" . bh/narrow-up-one-level)
                                         ("V" . ignore)
                                         ("W" . bh/widen)
