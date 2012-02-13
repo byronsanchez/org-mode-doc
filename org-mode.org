@@ -197,7 +197,7 @@ Here is my current =org-agenda-files= setup.
 #+begin_src emacs-lisp :tangle yes :exports none
   ;; The following setting is different from the document so that you
   ;; can override the document org-agenda-files by setting your
-  ;; org-agenda-files in the variable org-mode-user-agenda-files
+  ;; org-agenda-files in the variable org-user-agenda-files
   ;;
   (if (boundp 'org-user-agenda-files)
       (setq org-agenda-files org-user-agenda-files)
