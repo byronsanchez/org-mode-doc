@@ -3723,7 +3723,7 @@ like this
 :CUSTOM_ID: Backups
 :END:
 
-=Backups that you have to work hard at don't get gone=.
+=Backups that you have to work hard at don't get done=.
 
 I lost a bunch of data over 10 years ago due to not having a working
 backup solution.  At the time I said =I'm not going to lose any
