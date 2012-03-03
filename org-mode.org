@@ -604,6 +604,7 @@ and pick the appropriate capture task.
 Here is my setup for org-capture
 
 #+begin_src emacs-lisp :tangle yes
+  (setq org-directory "~/git/org")
   (setq org-default-notes-file "~/git/org/refile.org")
 
   ;; I use C-M-r to start capture mode
