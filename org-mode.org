@@ -473,8 +473,9 @@ The following diagram shows the possible state transitions for a task.
   WAITING --> DONE
 #+end_src
 
-#+results:
+#+results[c0362b66d6337f3ae0ac7ab2d715687debfa6652]:
 [[file:normal_task_states.png]]
+
 *** Project Task States
 
 I use a lazy project definition.  I don't like to bother with manually
@@ -500,8 +501,9 @@ the clock in the phone call while I do other things.
   PHONE -> [*]
 #+end_src
 
-#+results:
+#+results[7fcae03150f58bbcc260379916083e99a91983c4]:
 [[file:phone_states.png]]
+
 ** Fast Todo Selection
 
 Fast todo selection allows changing from any task todo state to any
@@ -2538,6 +2540,12 @@ on your system.
   ; of setting this -- see the docstring for details
   (setq org-confirm-babel-evaluate nil)
   
+  ; Cache all babel results blocks by default
+  ; For graphics generation this is way faster if nothing changes
+  (setq org-babel-default-header-args
+       (cons '(:cache . "yes")
+       (assq-delete-all :cache org-babel-default-header-args)))
+  
   ; Use fundamental mode when editing plantuml blocks with C-c '
   (add-to-list 'org-src-lang-modes (quote ("plantuml" . fundamental)))
 #+end_src
@@ -2605,8 +2613,9 @@ Here's an example without the =#+begin_src= and =#+end_src= lines.
   +-----------------+                                                         
 #+end_src
 
-#+results:
+#+results[57642756cd4e509e2a4f67c40a5147ecb935933e]:
 [[file:communication.png]]
+
 ** Playing with graphviz
 :PROPERTIES:
 :CUSTOM_ID: Graphviz
@@ -2660,7 +2669,7 @@ The source for a graphviz graphic looks like this in org-mode:
   }
 #+end_src
 
-#+results:
+#+results[4bf665d19d319ee40e628cfc80170af69cfb776f]:
 [[file:gv01.png]]
 
 The =-Kdot= is optional (defaults to =dot=) but you can substitute other graphviz
@@ -2695,8 +2704,9 @@ The source for a PlantUML graphic looks like this in org-mode:
   deactivate Client
 #+end_src
 
-#+results:
+#+results[6aff72a7a7c6801812c59c389114f65d462a61a0]:
 [[file:sequence.png]]
+
 *** Activity Diagram
 [2011-09-10 Sat 08:36]
 #+begin_src plantuml :file activity.png :exports both
@@ -2721,8 +2731,9 @@ The source for a PlantUML graphic looks like this in org-mode:
   --> (*)
 #+end_src
 
-#+results:
+#+results[1a0bdaefe8858ab0a55252b9c57fc16f57e27ea5]:
 [[file:activity.png]]
+
 *** Usecase Diagram
 
 #+begin_src plantuml :file usecase.png :exports both
@@ -2730,8 +2741,9 @@ The source for a PlantUML graphic looks like this in org-mode:
   LabUser --> (Analyses Results)
 #+end_src
 
-#+results:
+#+results[14e8911f8940efbc6b90b57dcfa4eecce4a31d9f]:
 [[file:usecase.png]]
+
 *** Object Diagram
 
 #+begin_src plantuml :file object.png :exports both
@@ -2743,8 +2755,9 @@ The source for a PlantUML graphic looks like this in org-mode:
   Object2: state
 #+end_src
 
-#+results:
+#+results[43eece3c12be40bac32cf12898e47d66ec1251da]:
 [[file:object.png]]
+
 *** State Diagram
 
 #+begin_src plantuml :file plantuml_example_states.png :exports both
@@ -2758,8 +2771,9 @@ The source for a PlantUML graphic looks like this in org-mode:
   Finish --> [*]
 #+end_src
 
-#+results:
+#+results[d349aa79d785fec37ad60b1bcf43ced6df10aeb6]:
 [[file:plantuml_example_states.png]]
+
 *** Publishing Single Files
 
 Org-mode exports the current file to one of the standard formats by
