@@ -4944,6 +4944,32 @@ org-mode.
                 ("I" "#+include %file ?" "<include file=%file markup=\"?\">"))))
 #+end_src
 
+** NEXT is for tasks
+:PROPERTIES:
+:CUSTOM_ID: NextTasks
+:END:
+[2012-03-04 Sun 12:41]
+
+=NEXT= keywords are for *tasks* and not *projects*.  I've added a
+function to the todo state change hook and clock in hook so that any
+parent tasks marked =NEXT= automagically change from =NEXT= to =TODO=
+since they are now projects and not tasks.
+
+#+begin_src emacs-lisp
+  (defun bh/mark-next-parent-tasks-todo ()
+    "Visit each parent task and change NEXT states to TODO"
+    (let ((mystate (or (and (fboundp 'state)
+                            state)
+                       (nth 2 (org-heading-components)))))
+      (when (equal mystate "NEXT")
+        (save-excursion
+          (while (org-up-heading-safe)
+            (when (member (nth 2 (org-heading-components)) (list "NEXT"))
+              (org-todo "TODO")))))))
+  
+  (add-hook 'org-after-todo-state-change-hook 'bh/mark-next-parent-tasks-todo 'append)
+  (add-hook 'org-clock-in-hook 'bh/mark-next-parent-tasks-todo 'append)
+#+end_src
 * Things I Don't Use (Anymore)
 
 This is a partial list of things I know about but do not use.
