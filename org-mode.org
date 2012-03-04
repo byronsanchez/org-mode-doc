@@ -3220,19 +3220,19 @@ This works really well for me.
 There is more than one way to do this.  Use what works for you.
 *** Narrowing to a subtree with =bh/org-todo=
 
-=f5= and =S-f5= are bound the functions for narrowing and widening the emacs buffer as defined
-below.
+=f5= and =S-f5= are bound the functions for narrowing and widening the
+emacs buffer as defined below.
 
 We now use:
 
-    - T for C-c / t on the current buffer
-    - N narrows to this task subtree
-    - U narrows to the immediate parent task subtree without moving
-    - P narrows to the parent project subtree without moving
+    - T (tasks) for C-c / t on the current buffer
+    - N (narrow) narrows to this task subtree
+    - U (up) narrows to the immediate parent task subtree without moving
+    - P (project) narrows to the parent project subtree without moving
+    - F (file) narrows to the current file or file of the existing restriction
 
 The agenda keeps widening the org buffer so this gives a convenient
 way to focus on what we are doing.
-
 
 #+begin_src emacs-lisp :tangle yes
   (global-set-key (kbd "<f5>") 'bh/org-todo)
@@ -3257,6 +3257,21 @@ way to focus on what we are doing.
   
   (add-hook 'org-agenda-mode-hook
             '(lambda () (org-defkey org-agenda-mode-map "W" 'bh/widen))
+            'append)
+  
+  (defun bh/restrict-to-file-or-follow (arg)
+    "Set agenda restriction to 'file or with argument invoke follow mode.
+  I don't use follow mode very often but I restrict to file all the time
+  so change the default 'F' binding in the agenda to allow both"
+    (interactive "p")
+    (if (equal arg 4)
+        (org-agenda-follow-mode)
+      (if (equal major-mode 'org-agenda-mode)
+          (bh/set-agenda-restriction-lock 4)
+        (widen))))
+  
+  (add-hook 'org-agenda-mode-hook
+            '(lambda () (org-defkey org-agenda-mode-map "F" 'bh/restrict-to-file-or-follow))
             'append)
   
   (defun bh/narrow-to-org-subtree ()
@@ -4410,7 +4425,7 @@ as a quick way to get back to the agenda and update the current view.
                                         ("A" . ignore)
                                         ("B" . ignore)
                                         ("E" . ignore)
-                                        ("F" . ignore)
+                                        ("F" . bh/restrict-to-file-or-follow)
                                         ("G" . ignore)
                                         ("H" . ignore)
                                         ("J" . org-clock-goto)
