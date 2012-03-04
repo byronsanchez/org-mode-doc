@@ -890,8 +890,6 @@ don't want to spend time waiting for it to be generated.
                   (tags-todo "-CANCELLED/!"
                              ((org-agenda-overriding-header "Projects")
                               (org-agenda-skip-function 'bh/skip-non-projects)
-                              (org-agenda-todo-ignore-scheduled 'future)
-                              (org-agenda-todo-ignore-deadlines 'future)
                               (org-agenda-sorting-strategy
                                '(category-keep))))
                   (tags-todo "-CANCELLED/!WAITING|HOLD"
@@ -925,8 +923,6 @@ don't want to spend time waiting for it to be generated.
                 ("p" "Projects" tags-todo "-CANCELLED/!"
                  ((org-agenda-overriding-header "Projects")
                   (org-agenda-skip-function 'bh/skip-non-projects)
-                  (org-agenda-todo-ignore-scheduled 'future)
-                  (org-agenda-todo-ignore-deadlines 'future)
                   (org-agenda-sorting-strategy
                    '(category-keep))))
                 ("w" "Waiting Tasks" tags-todo "-CANCELLED/!WAITING|HOLD"
