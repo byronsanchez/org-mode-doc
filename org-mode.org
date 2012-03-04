@@ -733,7 +733,10 @@ refile something I do =C-c C-w= to start the refile process, then type
 something to get some matching targets, then =C-SPC= to restrict the
 matches to the current list, then continue searching with some other
 text to find the target I need.  =C-j= also selects the current
-completion as the final target.  I like this a lot.
+completion as the final target.  I like this a lot.  I show full
+outline paths in the targets so I can have the same heading in
+multiple subtrees or projects and still tell them apart while
+refiling.
 
 I now exclude =DONE= state tasks as valid refile targets.  This helps to keep the
 refile target list to a reasonable size.
@@ -744,8 +747,8 @@ Here is my refile configuration:
   (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                    (org-agenda-files :maxlevel . 9))))
   
-  ; Stop using paths for refile targets - we file directly with IDO
-  (setq org-refile-use-outline-path nil)
+  ; Use full outline paths for refile targets - we file directly with IDO
+  (setq org-refile-use-outline-path t)
   
   ; Targets complete directly with IDO
   (setq org-outline-path-complete-in-steps nil)
