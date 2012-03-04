@@ -1660,11 +1660,12 @@ shows the agenda for a full month, moves to last month, and generates
 a clock report.
 
 My agenda org clock report settings show 5 levels of detail with links
-to the tasks.
+to the tasks.  I like wider reports than the default compact setting
+so I override the =:narrow= value.
 #+begin_src emacs-lisp :tangle yes
   ;; Agenda clock report parameters
   (setq org-agenda-clockreport-parameter-plist
-        (quote (:link t :maxlevel 5 :fileskip0 t :compact t)))
+        (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
 #+end_src
 
 I used to have a monthly clock report dynamic block in each project
