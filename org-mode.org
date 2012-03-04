@@ -277,15 +277,17 @@ Each of these level 1 tasks normally has a =property drawer=
 specifying the category for any tasks in that tree.  Level 1 headings
 are set up like this:
 
-: * Health and Recreation
-:   :PROPERTIES:
-:   :CATEGORY: Health
-:   :END:
-:   ...
-: * House Maintenance
-:   :PROPERTIES:
-:   :CATEGORY: House
-:   :END:      
+#+begin_src org :exports src
+  ,* Health and Recreation
+  ,PROPERTIES:
+  ,CATEGORY: Health
+  ,END:
+  ,  ...
+  ,* House Maintenance
+  ,PROPERTIES:
+  ,CATEGORY: House
+  ,END:      
+#+end_src
 ** Key bindings
 :PROPERTIES:
 :CUSTOM_ID: KeyBindings
@@ -515,8 +517,7 @@ todo selection key menu.  This is a great feature!
   (setq org-use-fast-todo-selection t)
 #+end_src
 
-Changing a task state is done with 
-: C-c C-t KEY
+Changing a task state is done with =C-c C-t KEY=
 
 where =KEY= is the appropriate fast todo state selection key as defined in =org-todo-keywords=.
 
@@ -648,11 +649,12 @@ empty clock drawers in my tasks which aren't really useful.  Since I
 remove clocking lines with 0:00 length I end up with a clock drawer
 like this:
 
-: * TODO New Capture Task
-:   :LOGBOOK:
-:   :END:
-:   [2010-05-08 Sat 13:53]
-
+#+begin_src org :exports src
+  ,* TODO New Capture Task
+  ,  LOGBOOK:
+  ,  END:
+  ,  [2010-05-08 Sat 13:53]
+#+end_src
 I have the following setup to remove these empty =LOGBOOK= drawers if
 they occur.
 
@@ -681,7 +683,9 @@ Normally this file is empty except for a single line at the top which
 creates a =REFILE= tag for anything in the file.
 
 The file has a single permanent line at the top like this
-: #+FILETAGS: REFILE
+#+begin_src org :exports src
+  ,#+FILETAGS: REFILE
+#+end_src
 ** Capture Tasks is all about being FAST
 
 Okay I'm in the middle of something and oh yeah - I have to remember
@@ -692,9 +696,11 @@ can't afford to forget this little thing that just came up.
 So what do I do?  Hit =C-M-r= to start capture mode and select =t=
 since it's a new task and I get a buffer like this:
 
-: ** TODO 
-:    [2010-08-05 Thu 21:06]
-:    [[file:~/git/org-mode-doc/org-mode.org::*Capture%20Tasks%20is%20all%20about%20being%20FAST][Capture Tasks is all about being FAST]]
+#+begin_src org :exports src
+  ,* TODO 
+  ,  [2010-08-05 Thu 21:06]
+  ,  [[file:~/git/org-mode-doc/org-mode.org::*Capture%20Tasks%20is%20all%20about%20being%20FAST][Capture Tasks is all about being FAST]]
+#+end_src
 
 Enter the details of the TODO item and =C-c C-c= to file it away in
 refile.org and go right back to what I'm really working on secure in
@@ -1164,15 +1170,17 @@ that project until I either punch out or punch in some other task.
 My org files look like this:
 
 =todo.org=:
-: #+FILETAGS: PERSONAL
-: ...
-: * Tasks
-: ** Organization
-: :PROPERTIES:
-: :CLOCK_MODELINE_TOTAL: today
-: :ID:       eb155a82-92b2-4f25-a3c6-0304591af2f9
-: :END:
-: ...
+#+begin_src org :exports src
+  ,#+FILETAGS: PERSONAL
+  ,...
+  ,* Tasks
+  ,** Organization
+  ,PROPERTIES:
+  ,CLOCK_MODELINE_TOTAL: today
+  ,ID:       eb155a82-92b2-4f25-a3c6-0304591af2f9
+  ,END:
+  ,...
+#+end_src
 
 If I am working on some task, then I simply clock in on the task.
 Clocking out moves the clock up to a parent task with a todo keyword
@@ -1187,12 +1195,14 @@ This works really well for me.
 
 For example, consider the following org file:
 
-: * TODO Project A
-: ** NEXT TASK 1
-: ** TODO TASK 2
-: ** TODO TASK 3
-: * Tasks
-: ** TODO Some miscellaneous task
+#+begin_src org :exports src
+  ,* TODO Project A
+  ,** NEXT TASK 1
+  ,** TODO TASK 2
+  ,** TODO TASK 3
+  ,* Tasks
+  ,** TODO Some miscellaneous task
+#+end_src
 
 I'll work on this file in the following sequence:
 
@@ -1749,20 +1759,21 @@ at the top of your estimated project subtree.  Entering =C-c C-x i
 RET= inserts a clock table report with your estimated values and any
 clocked time to date.
 
-: Original Estimate
-: #+BEGIN: columnview :hlines 1 :id local
-: | Task                        | Estimated Effort | CLOCKSUM |
-: |-----------------------------+------------------+----------|
-: | ** TODO Project to estimate |             5:40 |          |
-: | *** TODO Step 1             |             0:10 |          |
-: | *** TODO Step 2             |             0:10 |          |
-: | *** TODO Step 3             |             5:10 |          |
-: | **** TODO Step 3.1          |             2:00 |          |
-: | **** TODO Step 3.2          |             3:00 |          |
-: | **** TODO Step 3.3          |             0:10 |          |
-: | *** TODO Step 4             |             0:10 |          |
-: #+END:
-
+#+begin_src org :exports src
+  ,Original Estimate
+  ,#+BEGIN: columnview :hlines 1 :id local
+  ,| Task                        | Estimated Effort | CLOCKSUM |
+  ,|-----------------------------+------------------+----------|
+  ,| ** TODO Project to estimate |             5:40 |          |
+  ,| *** TODO Step 1             |             0:10 |          |
+  ,| *** TODO Step 2             |             0:10 |          |
+  ,| *** TODO Step 3             |             5:10 |          |
+  ,| **** TODO Step 3.1          |             2:00 |          |
+  ,| **** TODO Step 3.2          |             3:00 |          |
+  ,| **** TODO Step 3.3          |             0:10 |          |
+  ,| *** TODO Step 4             |             0:10 |          |
+  ,#+END:
+#+end_src
 I normally delete the =#+BEGIN:= and =#+END:= lines from the original
 table after providing the estimate to the client to ensure I don't
 accidentally update the table by hitting =C-c C-c= on the =#+BEGIN:=
@@ -1911,7 +1922,9 @@ headings in a file.
 
 Filetags look like this:
 
-: #+FILETAGS: NORANG @office
+#+begin_src org :exports src
+  ,#+FILETAGS: NORANG @office
+#+end_src
 
 I have the following =#+FILETAGS:= entries in my org-mode files:
 *** Non-work related org-mode files
@@ -2112,23 +2125,24 @@ I have a recurring task which keeps my weekly review checklist
 handy.  This pops up as a reminder on Monday's.  This week I'm
 doing my weekly review on Tuesday since Monday was a holiday.
 
-: ** NEXT Weekly Review [0/8]
-:  SCHEDULED: <2009-05-18 Mon ++1w> 
-:  LOGBOOK:...
-:  PROPERTIES:...
-: 
-:  What to review:
-: 
-:   - [ ] Check follow-up folder
-:   - [ ] Review weekly agenda F12 a w //
-:   - [ ] Check clocking data for past week v c b
-:   - [ ] Review clock report for past week R
-:     - Check where we spent time (too much or too little) and rectify this week
-: 
-:   - start work
-:     - daily agenda first - knock off items
-:     - then work on NEXT tasks
-
+#+begin_src org :exports src
+  ,* NEXT Weekly Review [0/8]
+  , SCHEDULED: <2009-05-18 Mon ++1w> 
+  , LOGBOOK:...
+  , PROPERTIES:...
+  
+  , What to review:
+  
+  ,  - [ ] Check follow-up folder
+  ,  - [ ] Review weekly agenda F12 a w //
+  ,  - [ ] Check clocking data for past week v c b
+  ,  - [ ] Review clock report for past week R
+  ,    - Check where we spent time (too much or too little) and rectify this week
+  
+  ,  - start work
+  ,    - daily agenda first - knock off items
+  ,    - then work on NEXT tasks
+#+end_src
 The first item [ ] Check follow-up folder makes me pull out the paper
 file I dump stuff into all week long - things I need to take care of
 but are in no particular hurry to deal with.  Stuff I get in the mail
@@ -2585,10 +2599,11 @@ Artist mode makes it easy to create boxes and lines for ditaa
 graphics.
 
 The source for a ditaa graphic looks like this in org-mode:
-: #+begin_src ditaa :file some_filename.png :cmdline -r -s 0.8
-:   <context of ditaa source goes here>
-: #+end_src
-
+#+begin_src org :exports src
+  ,#+begin_src ditaa :file some_filename.png :cmdline -r -s 0.8
+  ,  <context of ditaa source goes here>
+  ,#+end_src
+#+end_src
 Here's an example without the =#+begin_src= and =#+end_src= lines.
 
 #+begin_src ditaa :file communication.png :cmdline -r -s 0.8 :exports both :cache yes
@@ -2629,9 +2644,11 @@ Here's an example without the =#+begin_src= and =#+end_src= lines.
 [[http://www.graphviz.org/][Graphviz]] is another great tool for creating graphics in your documents.
 
 The source for a graphviz graphic looks like this in org-mode:
-: #+begin_src dot :file some_filename.png :cmdline -Kdot -Tpng
-:   <context of graphviz source goes here>
-: #+end_src
+#+begin_src org :exports src
+  ,#+begin_src dot :file some_filename.png :cmdline -Kdot -Tpng
+  ,  <context of graphviz source goes here>
+  ,#+end_src
+#+end_src
 
 #+begin_src dot :file gv01.png :cmdline -Kdot -Tpng :exports both :cache yes
   digraph G {
@@ -2686,9 +2703,11 @@ I'm still experimenting with this but so far I like it a lot.  The
 todo state change diagrams in this document are created with PlantUML.
 
 The source for a PlantUML graphic looks like this in org-mode:
-: #+begin_src plantuml :file somefile.png
-:   <context of PlantUML source goes here>
-: #+end_src
+#+begin_src org :exports src
+  ,#+begin_src plantuml :file somefile.png
+  ,  <context of PlantUML source goes here>
+  ,#+end_src
+#+end_src
 *** Sequence Diagram
 [2011-04-29 Fri 19:03]
 
@@ -3517,19 +3536,21 @@ functions instead.  Inserting entries with =i= in the emacs agenda
 creates date entries in the =~/git/org/diary.org= file.
 
 I include holidays from the calendar in my =todo.org= file as follows:
-: #+FILETAGS: PERSONAL
-: * Appointments
-:   :PROPERTIES:
-:   :CATEGORY: Appt
-:   :ARCHIVE:  %s_archive::* Appointments
-:   :END:      
-: ** Holidays
-:    :PROPERTIES:
-:    :Category: Holiday
-:    :END:
-: %%(org-calendar-holiday)
-: ** Some other Appointment
-:    ...
+#+begin_src org :exports src
+  ,#+FILETAGS: PERSONAL
+  ,* Appointments
+  ,PROPERTIES:
+  ,CATEGORY: Appt
+  ,ARCHIVE:  %s_archive::* Appointments
+  ,END:      
+  ,** Holidays
+  ,PROPERTIES:
+  ,Category: Holiday
+  ,END:
+  ,%%(org-calendar-holiday)
+  ,** Some other Appointment
+  ,   ...
+#+end_src
 
 I use the following setting so any time strings in the heading are
 shown in the agenda.
@@ -3745,16 +3766,19 @@ Add the following to your =.emacs=
 and then to use it in a task you simply set the property =RESET_CHECK_BOXES= to =t= 
 like this
 
-: ** TODO Invoicing and Archive Tasks [0/7]
-:    DEADLINE: <2009-07-01 Wed +1m -0d> 
-:    :PROPERTIES:
-:    :RESET_CHECK_BOXES: t
-:    :END:
-: 
-:    - [ ] Do task 1
-:    - [ ] Do task 2
-:    ...
-:    - [ ] Do task 7
+#+begin_src org :exports src
+  ,* TODO Invoicing and Archive Tasks [0/7]
+  ,   DEADLINE: <2009-07-01 Wed +1m -0d> 
+  ,PROPERTIES:
+  ,RESET_CHECK_BOXES: t
+  ,END:
+  
+  ,   - [ ] Do task 1
+  ,   - [ ] Do task 2
+  ,   ...
+  ,   - [ ] Do task 7
+  
+#+end_src
 ** Backups
 :PROPERTIES:
 :CUSTOM_ID: Backups
@@ -3814,13 +3838,15 @@ You can override the setting temporarily by changing the task with
 =C-u C-u C-u C-c C-t= but I never remember that.  I set a permanent
 property on the repeated tasks as follows:
 
-: * TODO New Repeating Task
-:   SCHEDULED: <2009-06-16 Tue +1w>
-:   :PROPERTIES:
-:   :NOBLOCKING: t
-:   :END:
-: ...
-: ** TODO Subtask
+#+begin_src org :exports src
+  ,* TODO New Repeating Task
+  ,  SCHEDULED: <2009-06-16 Tue +1w>
+  ,PROPERTIES:
+  ,NOBLOCKING: t
+  ,END:
+  ,...
+  ,** TODO Subtask  
+#+end_src
 
 This prevents the =New Repeating Task= from being blocked if some of
 the items under it are not complete.
@@ -3828,13 +3854,15 @@ the items under it are not complete.
 Occassionally I need to complete tasks in a given order.  Org-mode has
 a property =ORDERED= that enforces this for subtasks.
 
-: * TODO Some Task
-:   :PROPERTY:
-:   :ORDERED: t
-:   :END:
-: ** TODO Step 1
-: ** TODO Step 2
-: ** TODO Step 3
+#+begin_src org :exports src
+  ,* TODO Some Task
+  ,PROPERTY:
+  ,ORDERED: t
+  ,END:
+  ,** TODO Step 1
+  ,** TODO Step 2
+  ,** TODO Step 3  
+#+end_src
 
 In this case you need to complete =Step 1= before you can complete
 =Step 2=, etc. and org-mode prevents the state change to a done task
@@ -4001,11 +4029,13 @@ Attach the file with =C-c C-a a= and enter the filename: =x.sql=.
 This generates a unique ID for the task and adds the file in the
 attachment directory.
 
-: ** Attachments		                                   :ATTACH:
-:    :PROPERTIES:
-:    :Attachments: x.sql
-:    :ID:       f1d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b
-:    :END:
+#+begin_src org :exports src
+  ,* Attachments                                                        :ATTACH:
+  ,PROPERTIES:
+  ,Attachments: x.sql
+  ,ID:       f1d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b
+  ,END:  
+#+end_src
 
 The attached file is saved in
 =data/f1/d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b/=.  Where it goes exactly
@@ -4046,8 +4076,10 @@ often than once per month it would be always bugging me on the agenda
 view.  For these types of tasks I set an explicit deadline warning
 date as follows:
 
-: ** TODO Pay Wages
-:    DEADLINE: <2009-07-01 Wed +1m -0d> 
+#+begin_src org :exports src
+  ,* TODO Pay Wages
+  ,  DEADLINE: <2009-07-01 Wed +1m -0d>   
+#+end_src
 
 This example repeats monthly and shows up in the agenda on the day it
 is due (with no prior warning).  You can set any number of lead days
@@ -4172,12 +4204,14 @@ documenting org-mode to an hour a day.
 
 To this end I have a task
 
-: ** NEXT Document my use of org-mode
-:    :LOGBOOK:...
-:    :PROPERTIES:
-:    :CLOCK_MODELINE_TOTAL: today
-:    :Effort:   1:00
-:    :END:
+#+begin_src org :exports src
+  ,* NEXT Document my use of org-mode
+  ,LOGBOOK:...
+  ,PROPERTIES:
+  ,CLOCK_MODELINE_TOTAL: today
+  ,Effort:   1:00
+  ,END:  
+#+end_src
 
 The task has an estimated effort of 1 hour and when I clock in the
 task it gives me a total in the mode-line like this
@@ -4226,12 +4260,14 @@ the done state needs to be enabled for habit tracking to work.
 A habit is just like a regular task except it has a special =PROPERTY=
 value setting and a special =SCHEDULED= date entry like this:
 
-: ** TODO Update Org Mode Doc
-:    SCHEDULED: <2009-11-21 Sat .+7d/30d>
-:    [2009-11-14 Sat 11:45]
-:    :PROPERTIES:
-:    :STYLE: habit
-:    :END:
+#+begin_src org :exports src
+  ,* TODO Update Org Mode Doc
+  ,   SCHEDULED: <2009-11-21 Sat .+7d/30d>
+  ,   [2009-11-14 Sat 11:45]
+  ,PROPERTIES:
+  ,STYLE: habit
+  ,END:  
+#+end_src
 
 This marks the task as a habit and separates it from the regular task
 display on the agenda.  When you mark a habit done it shows up on your
@@ -4294,11 +4330,13 @@ day.
 
 My habit tasks look as follows - and I tend to have one in every org
 file that can have habits defined
-: * Habits
-:   :PROPERTIES:
-:   :LOGGING:  DONE(!)
-:   :ARCHIVE:  %s_archive::* Habits
-:   :END:
+#+begin_src org :exports src
+  ,* Habits
+  ,PROPERTIES:
+  ,LOGGING:  DONE(!)
+  ,ARCHIVE:  %s_archive::* Habits
+  ,END:  
+#+end_src
 ** Auto revert mode
 
 I use git to synchronize my org-mode files between my laptop and my
@@ -4528,8 +4566,10 @@ timestamp whenever a headline is created.
 Everytime I create a heading with =M-RET= or =M-S-RET= the hook invokes the function
 and it inserts an inactive timestamp like this
 
-: ** <point here>
-:    [2009-11-22 Sun 18:45]
+#+begin_src org :exports src
+  ,* <point here>
+  ,  [2009-11-22 Sun 18:45]  
+#+end_src
 
 This keeps an automatic record of when tasks are created which I find very useful.
 
@@ -4590,44 +4630,47 @@ time rewriting the minutes before they go out.  I haven't bothered
 with fancy HTML output -- the content is more important than the
 style.
 
+#+begin_src org :exports src
+  ,* TODO Sample Meeting
+  ,  - Attendees
+  ,    - [ ] Joe
+  ,    - [X] Larry
+  ,    - [X] Mary
+  ,    - [X] Fred
+  ,  - Joe is on vacation this week
+  ,  - Status Updates
+  ,    + Larry
+  ,      - did this
+  ,      - and that
+  ,      - TODO: Needs to follow up on this
+  ,    + Mary
+  ,      - got a promotion for her recent efforts
+  ,    + Fred
+  ,      - completed all his tasks 2 days early
+  ,      - needs more work
+  ,      - DONE: everything  
+#+end_src
 
-: ** TODO Sample Meeting
-:    - Attendees
-:      - [ ] Joe
-:      - [X] Larry
-:      - [X] Mary
-:      - [X] Fred
-:    - Joe is on vacation this week
-:    - Status Updates
-:      + Larry
-:        - did this
-:        - and that
-:        - TODO: Needs to follow up on this
-:      + Mary
-:        - got a promotion for her recent efforts
-:      + Fred
-:        - completed all his tasks 2 days early
-:        - needs more work
-:        - DONE: everything
-
-: ** TODO Sample Meeting
-:    - Attendees
-:      - [ ] Joe
-:      - [X] Larry
-:      - [X] Mary
-:      - [X] Fred
-:    - Joe is on vacation this week
-:    - Status Updates
-:      + Larry
-:        - did this
-:        - and that
-: >>>>>>>> TODO: Needs to follow up on this
-:      + Mary
-:        - got a promotion for her recent efforts
-:      + Fred
-:        - completed all his tasks 2 days early
-:        - needs more work
-: >>>>>>>> DONE: everything
+#+begin_src org :exports src
+  ,* TODO Sample Meeting
+  ,   - Attendees
+  ,     - [ ] Joe
+  ,     - [X] Larry
+  ,     - [X] Mary
+  ,     - [X] Fred
+  ,   - Joe is on vacation this week
+  ,   - Status Updates
+  ,     + Larry
+  ,       - did this
+  ,       - and that
+  ,>>>>>>>> TODO: Needs to follow up on this
+  ,     + Mary
+  ,       - got a promotion for her recent efforts
+  ,     + Fred
+  ,       - completed all his tasks 2 days early
+  ,       - needs more work
+  ,>>>>>>>> DONE: everything  
+#+end_src
 
 Here is the formatting function.  Just highlight the region for the
 notes and it turns tabs into spaces, and highlights todo items.  The
@@ -4729,9 +4772,11 @@ in the agenda set the following variable:
 
 I use babel for including source blocks in my documents with
 
-: #+begin_src LANG
-:   ...
-: #+end_src
+#+begin_src org :exports src
+  ,#+begin_src LANG
+  ,  ...
+  ,#+end_src
+#+end_src
 
 where LANG specifies the language to use (ditaa, dot, sh, emacs-lisp,
 etc)  This displays the language contents fontified in both the
