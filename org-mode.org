@@ -3947,10 +3947,10 @@ subtrees and adjusts the levels to match the task I am pasting to.
 See the docstring (=C-h v org-yank-adjust-subtrees=) for more details
 on each variable and what it does.
 
-I have =org-special-ctrl-a/e= reversed because most of the time I want
-to get to the beginning of the headline so the speed commands work and
-this still allows easy access to the beginning of the heading text
-when I need that.
+I have =org-special-ctrl-a/e= set to enable easy access to the
+beginning and end of headlines. I use =M-m= or =C-a C-a= to get to the
+beginning of the line so the speed commands work and =C-a= to give
+easy access to the beginning of the heading text when I need that.
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-special-ctrl-a/e 'reversed)
