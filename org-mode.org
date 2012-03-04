@@ -446,7 +446,7 @@ Tasks go through the sequence =TODO= -> =DONE=.
 
 The following diagram shows the possible state transitions for a task.
 
-#+begin_src plantuml :file normal_task_states.png
+#+begin_src plantuml :file normal_task_states.png :cache yes
   title Task States
   [*] -> TODO
   TODO -> NEXT
@@ -496,7 +496,7 @@ The time of the call is recorded for as long as the capture task is active.  If 
 to look up other details and want to close the capture task early I can just 
 =C-c C-c= to close the capture task (stopping the clock) and then =f9 SPC= to resume
 the clock in the phone call while I do other things.
-#+begin_src plantuml :file phone_states.png
+#+begin_src plantuml :file phone_states.png :cache yes
   title Phone Call Task State
   [*] -> PHONE
   PHONE -> [*]
@@ -2591,7 +2591,7 @@ The source for a ditaa graphic looks like this in org-mode:
 
 Here's an example without the =#+begin_src= and =#+end_src= lines.
 
-#+begin_src ditaa :file communication.png :cmdline -r -s 0.8 :exports both
+#+begin_src ditaa :file communication.png :cmdline -r -s 0.8 :exports both :cache yes
       +-----------+        +---------+  
       |    PLC    |        |         |                
       |  Network  +<------>+   PLC   +<---=---------+ 
@@ -2633,7 +2633,7 @@ The source for a graphviz graphic looks like this in org-mode:
 :   <context of graphviz source goes here>
 : #+end_src
 
-#+begin_src dot :file gv01.png :cmdline -Kdot -Tpng :exports both
+#+begin_src dot :file gv01.png :cmdline -Kdot -Tpng :exports both :cache yes
   digraph G {
     size="8,6"
     ratio=expand
@@ -2692,7 +2692,7 @@ The source for a PlantUML graphic looks like this in org-mode:
 *** Sequence Diagram
 [2011-04-29 Fri 19:03]
 
-#+begin_src plantuml :file sequence.png :exports both
+#+begin_src plantuml :file sequence.png :exports both :cache yes
   title Example Sequence Diagram
   activate Client
   Client -> Server: Session Initiation
@@ -2714,7 +2714,7 @@ The source for a PlantUML graphic looks like this in org-mode:
 
 *** Activity Diagram
 [2011-09-10 Sat 08:36]
-#+begin_src plantuml :file activity.png :exports both
+#+begin_src plantuml :file activity.png :exports both :cache yes
   title Example Activity Diagram
   note right: Example Function
   (*)--> "Step 1"
@@ -2741,7 +2741,7 @@ The source for a PlantUML graphic looks like this in org-mode:
 
 *** Usecase Diagram
 
-#+begin_src plantuml :file usecase.png :exports both
+#+begin_src plantuml :file usecase.png :exports both :cache yes
   LabUser --> (Runs Simulation)
   LabUser --> (Analyses Results)
 #+end_src
@@ -2751,7 +2751,7 @@ The source for a PlantUML graphic looks like this in org-mode:
 
 *** Object Diagram
 
-#+begin_src plantuml :file object.png :exports both
+#+begin_src plantuml :file object.png :exports both :cache yes
   Object1 <|-- Object2
   Object1: someVar
   Object1: execute()
@@ -2765,7 +2765,7 @@ The source for a PlantUML graphic looks like this in org-mode:
 
 *** State Diagram
 
-#+begin_src plantuml :file plantuml_example_states.png :exports both
+#+begin_src plantuml :file plantuml_example_states.png :exports both :cache yes
   [*] --> Start
   Start -> State2
   State2 -> State3
@@ -3162,7 +3162,7 @@ sentence.
   (define-skeleton skel-org-block-plantuml
     "Insert a org plantuml block, querying for filename."
     "File (no extension): "
-    "#+begin_src plantuml :file " str ".png\n"
+    "#+begin_src plantuml :file " str ".png :cache yes\n"
     _ - \n
     "#+end_src\n")
   
@@ -3172,7 +3172,7 @@ sentence.
   (define-skeleton skel-org-block-dot
     "Insert a org graphviz dot block, querying for filename."
     "File (no extension): "
-    "#+begin_src dot :file " str ".png :cmdline -Kdot -Tpng\n"
+    "#+begin_src dot :file " str ".png :cache yes :cmdline -Kdot -Tpng\n"
     "graph G {\n"
     _ - \n
     "}\n"
@@ -3184,7 +3184,7 @@ sentence.
   (define-skeleton skel-org-block-ditaa
     "Insert a org ditaa block, querying for filename."
     "File (no extension): "
-    "#+begin_src ditaa :file " str ".png\n"
+    "#+begin_src ditaa :file " str ".png :cache yes\n"
     _ - \n
     "#+end_src\n")
   
