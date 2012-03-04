@@ -377,8 +377,9 @@ Here is the keybinding setup in lisp:
     (interactive)
     (save-excursion
       (org-back-to-heading 'invisible-ok)
-      (org-shifttab)
-      (org-reveal)
+      (hide-other)
+      (org-cycle)
+      (org-cycle)
       (org-cycle)))
   
   (defun bh/set-truncate-lines ()
