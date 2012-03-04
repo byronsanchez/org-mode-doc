@@ -4078,7 +4078,10 @@ This creates the file with the following data
   fred,kpe,mary
   234.5,432.12,324.3
 #+end_src
-** Visiting links
+** Minimize Emacs Frames
+:PROPERTIES:
+:CUSTOM_ID: MinimizeFrames
+:END:
 
 Links to emails, web pages, and other files are sprinkled all over my
 org files.  The following setting control how org-mode handles opening
@@ -4087,13 +4090,22 @@ the link.
 #+begin_src emacs-lisp :tangle yes
   (setq org-link-frame-setup (quote ((vm . vm-visit-folder)
                                      (gnus . org-gnus-no-new-news)
-                                     (file . find-file-other-window))))
+                                     (file . find-file))))
+
+  ; Use the current window for C-c ' source editing
+  (setq org-src-window-setup 'current-window)
 #+end_src
 
 I like to keep links in the same window so that I don't end up with a
 ton of frames in my window manager.  I normally work in a full-screen
 window and having links open in the same window just works better for
 me.
+
+If I need to work in multiple files I'll manually create the second
+frame with =C-x 5 2= or split the window with =C-x 4 2= or =C-X 4 3=.
+When I visit files in Emacs I normally want to replace the current
+window with the new content.
+
 ** Logging stuff
 
 Most of my logging is controlled by the global =org-todo-keywords=
@@ -4871,7 +4883,7 @@ checkboxes.  I can fold the completed list entries and focus on what is remainin
 
 It is possible to display org-mode source blocks fontified in their
 native mode.  This allows colourization of keywords for C and shell
-script source etc.  If I edit the source I use C-c ' (control-c single
+script source etc.  If I edit the source I use =C-c '= (control-c single
 quote) to bring up the source window which is then rendered with
 syntax highlighting in the native mode.  This setting also shows the
 syntax highlighting when viewing in the org-mode buffer.
