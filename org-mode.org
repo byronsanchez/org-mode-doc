@@ -596,6 +596,7 @@ When a new task needs to be added I categorize it into one of a few
 things:
 
 - A phone call (p)
+- An email I need to respond to (r)
 - A new task (t)
 - A new note (n)
 - An interruption (j)
@@ -608,16 +609,18 @@ Here is my setup for org-capture
 #+begin_src emacs-lisp :tangle yes
   (setq org-directory "~/git/org")
   (setq org-default-notes-file "~/git/org/refile.org")
-
+  
   ;; I use C-M-r to start capture mode
   (global-set-key (kbd "C-M-r") 'org-capture)
   ;; I use C-c r to start capture mode when using SSH from my Android phone
   (global-set-key (kbd "C-c r") 'org-capture)
-
+  
   ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
   (setq org-capture-templates
         (quote (("t" "todo" entry (file "~/git/org/refile.org")
                  "* TODO %?\n%U\n%a\n  %i" :clock-in t :clock-resume t)
+                ("r" "respond" entry (file "~/git/org/refile.org")
+                 "* TODO Respond to %:from on %:subject\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
                 ("n" "note" entry (file "~/git/org/refile.org")
                  "* %? :NOTE:\n%U\n%a\n  %i" :clock-in t :clock-resume t)
                 ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
@@ -628,8 +631,8 @@ Here is my setup for org-capture
                  "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
                 ("h" "Habit" entry (file "~/git/org/refile.org")
                  "* NEXT %?\n%U\n%a\nSCHEDULED: %t .+1d/3d\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n  %i"))))
-
-
+  
+  
 #+end_src
 
 The =%i= in the templates inserts any text in the kill ring as part of
