@@ -3385,7 +3385,8 @@ The following elisp accomplishes this.
   (defun bh/set-agenda-restriction-lock (arg)
     "Set restriction lock to current task subtree or file if prefix is specified"
     (interactive "p")
-    (let* ((pom (org-get-at-bol 'org-hd-marker))
+    (let* ((pom (or (org-get-at-bol 'org-hd-marker)
+                    org-agenda-restrict-begin))
            (tags (org-with-point-at pom (org-get-tags-at))))
       (let ((restriction-type (if (equal arg 4) 'file 'subtree)))
         (save-restriction
