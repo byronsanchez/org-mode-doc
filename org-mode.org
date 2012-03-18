@@ -2295,6 +2295,7 @@ used by agenda views.
   
   (defun bh/skip-non-stuck-projects ()
     "Skip trees that are not stuck projects"
+    (bh/list-sublevels-for-projects-indented)
     (save-restriction
       (widen)
       (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
