@@ -907,9 +907,9 @@ don't want to spend time waiting for it to be generated.
                                '(category-keep))))
                   (tags-todo "-CANCELLED/!WAITING|HOLD"
                              ((org-agenda-overriding-header "Waiting and Postponed Tasks")
-                              (org-agenda-skip-function 'bh/skip-projects-and-habits)
-                              (org-agenda-todo-ignore-scheduled t)
-                              (org-agenda-todo-ignore-deadlines t)))
+                              (org-tags-match-list-sublevels nil)
+                              (org-agenda-todo-ignore-scheduled 'future)
+                              (org-agenda-todo-ignore-deadlines 'future)))
                   (tags "-REFILE/"
                         ((org-agenda-overriding-header "Tasks to Archive")
                          (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))
@@ -940,9 +940,7 @@ don't want to spend time waiting for it to be generated.
                    '(category-keep))))
                 ("w" "Waiting Tasks" tags-todo "-CANCELLED/!WAITING|HOLD"
                  ((org-agenda-overriding-header "Waiting and Postponed tasks"))
-                 (org-agenda-skip-function 'bh/skip-projects-and-habits)
-                 (org-agenda-todo-ignore-scheduled 'future)
-                 (org-agenda-todo-ignore-deadlines 'future))
+                 (org-tags-match-list-sublevels nil))
                 ("A" "Tasks to Archive" tags "-REFILE/"
                  ((org-agenda-overriding-header "Tasks to Archive")
                   (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))))
