@@ -883,7 +883,6 @@ don't want to spend time waiting for it to be generated.
                          (org-tags-match-list-sublevels nil)))
                   (tags-todo "-CANCELLED/!"
                              ((org-agenda-overriding-header "Stuck Projects")
-                              (org-tags-match-list-sublevels 'indented)
                               (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
                   (tags-todo "-WAITING-CANCELLED/!NEXT"
                              ((org-agenda-overriding-header "Next Tasks")
