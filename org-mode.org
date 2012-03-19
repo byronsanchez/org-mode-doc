@@ -618,27 +618,22 @@ Here is my setup for org-capture
   ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
   (setq org-capture-templates
         (quote (("t" "todo" entry (file "~/git/org/refile.org")
-                 "* TODO %?\n%U\n%a\n  %i" :clock-in t :clock-resume t)
+                 "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
                 ("r" "respond" entry (file "~/git/org/refile.org")
                  "* TODO Respond to %:from on %:subject\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
                 ("n" "note" entry (file "~/git/org/refile.org")
-                 "* %? :NOTE:\n%U\n%a\n  %i" :clock-in t :clock-resume t)
+                 "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
                 ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
-                 "* %?\n%U\n  %i" :clock-in t :clock-resume t)
+                 "* %?\n%U\n" :clock-in t :clock-resume t)
                 ("w" "org-protocol" entry (file "~/git/org/refile.org")
-                 "* TODO Review %c\n%U\n  %i" :immediate-finish t)
+                 "* TODO Review %c\n%U\n" :immediate-finish t)
                 ("p" "Phone call" entry (file "~/git/org/refile.org")
                  "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
                 ("h" "Habit" entry (file "~/git/org/refile.org")
-                 "* NEXT %?\n%U\n%a\nSCHEDULED: %t .+1d/3d\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n  %i"))))
+                 "* NEXT %?\n%U\n%a\nSCHEDULED: %t .+1d/3d\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
   
   
 #+end_src
-
-The =%i= in the templates inserts any text in the kill ring as part of
-the capture task.  This is intentionally indented from the rest of the
-capture task details so that I can include text that starts with '* '
-in column 1 without generating a new headline.
 
 Capture mode now handles automatically clocking in and out of a
 capture task.  This all works out of the box now without special hooks.
