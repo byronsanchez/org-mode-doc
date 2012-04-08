@@ -2176,7 +2176,7 @@ keep projects moving forward.
 I disable the default org-mode stuck projects agenda view with the
 following setting.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-stuck-projects (quote ("" nil nil "")))
 #+end_src
 
@@ -2835,7 +2835,7 @@ I have 5 main projects I use org-mode publishing for currently:
 
 Here's my publishing setup:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ; experimenting with docbook exports - not finished
   (setq org-export-docbook-xsl-fo-proc-command "fop %s %s")
   (setq org-export-docbook-xslt-proc-command "xsltproc --output %s /usr/share/xml/docbook/stylesheet/nwalsh/fo/docbook.xsl %s")
@@ -3167,7 +3167,7 @@ I have put the =s= (src) prefix on the shortcuts to prevent
 abbrev-mode from trying to expand =PlantUML= when I'm typing it in a
 sentence.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Skeletons
   ;;
   ;; sblk - Generic block #+begin_FOO .. #+end_FOO
@@ -3360,7 +3360,7 @@ I hit =f5= a lot.  This basically does a =org-narrow-to-subtree= and
 =S-f5= to widen back to the normal view.
 
 I also have the following setting to force showing the next headline.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-show-entry-below (quote ((default))))
 #+end_src
 
@@ -4580,7 +4580,7 @@ This keeps an automatic record of when tasks are created which I find very usefu
 I also have a short cut key defined to invoke this function on demand so that I can 
 insert the inactive timestamp anywhere on demand.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
 #+end_src
 
@@ -4836,7 +4836,7 @@ on the right.
 The following setting makes org-mode open =mailto:= links
 using compose-mail.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-link-mailto-program (quote (compose-mail "%a" "%s")))
 #+end_src
 ** Composing mail from org mode subtrees
@@ -4854,7 +4854,7 @@ post of the org-mode mailing list.  I actually use M-x a lot now
 because IDO completion is so easy.
 
 Here's the smex setup I use
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
   (require 'smex)
   (smex-initialize)
@@ -4872,7 +4872,7 @@ item to check, then go away and work on it, and return to the checkbox to mark i
 
 I use Emacs bookmarks for this setup as follows:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Bookmark handling
   ;;
   (global-set-key (kbd "<C-f6>") '(lambda () (interactive) (bookmark-set "SAVED")))
@@ -4887,7 +4887,7 @@ each time I set a new position.
 I'm experimenting with sending mime mail from org.  I've added =C-c M=o= key bindings 
 in the =org-mode-hook= to generate mail from an org-mode subtree.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (require 'org-mime)
 #+end_src
 ** Remove multiple state change log details from the agenda
@@ -4895,7 +4895,7 @@ in the =org-mode-hook= to generate mail from an org-mode subtree.
 
 I skip multiple timestamps for the same entry in the agenda view with the following setting.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-agenda-skip-additional-timestamps-same-entry t)
 #+end_src
 
@@ -4907,7 +4907,7 @@ exist in a single entry.
 I drop the old A3/B4 style references from tables when editing with the
 following setting.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-table-use-standard-references (quote from))
 #+end_src
 ** Use system settings for file-application selection
@@ -4915,7 +4915,7 @@ following setting.
 
 To get consistent applications for opening tasks I set the =org-file-apps= variable as follows:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-file-apps (quote ((auto-mode . emacs)
                               ("\\.mm\\'" . system)
                               ("\\.x?html?\\'" . system)
@@ -4928,14 +4928,14 @@ opening an link to some HTML file with =C-c C-o= or when previewing an export.
 ** Use the current window for the agenda
 [2011-05-28 Sat 21:20]
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ; Overwrite the current window with the agenda
   (setq org-agenda-window-setup 'current-window)
 #+end_src
 ** Delete IDs when cloning
 [2011-05-28 Sat 21:27]
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-clone-delete-id t)
 #+end_src
 ** Cycling plain lists
@@ -4978,7 +4978,7 @@ I use example and source blocks often in my org files.
 The following lisp makes the blocks lowercase instead of the default upper case in
 org-mode.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-structure-template-alist
         (quote (("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
                 ("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
@@ -5006,7 +5006,7 @@ function to the todo state change hook and clock in hook so that any
 parent tasks marked =NEXT= automagically change from =NEXT= to =TODO=
 since they are now projects and not tasks.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (defun bh/mark-next-parent-tasks-todo ()
     "Visit each parent task and change NEXT states to TODO"
     (let ((mystate (or (and (fboundp 'state)
@@ -5081,7 +5081,7 @@ nice with indented org-files.  The only reason I've found to preserve indentatio
 when TABs in files need to be preserved (e.g. Makefiles).  I don't normally edit
 these files in org-mode so I leave this setting turned off.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-src-preserve-indentation nil)
 #+end_src
 ** Yasnippet
