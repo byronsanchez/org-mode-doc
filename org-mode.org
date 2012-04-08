@@ -3270,8 +3270,10 @@ way to focus on what we are doing.
   
   (defun bh/widen ()
     (interactive)
-    (widen)
-    (org-agenda-remove-restriction-lock))
+    (if (equal major-mode 'org-agenda-mode)
+        (org-agenda-remove-restriction-lock)
+      (widen)
+      (org-agenda-remove-restriction-lock)))
   
   (add-hook 'org-agenda-mode-hook
             '(lambda () (org-defkey org-agenda-mode-map "W" 'bh/widen))
