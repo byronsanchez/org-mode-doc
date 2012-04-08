@@ -5021,6 +5021,17 @@ since they are now projects and not tasks.
   (add-hook 'org-after-todo-state-change-hook 'bh/mark-next-parent-tasks-todo 'append)
   (add-hook 'org-clock-in-hook 'bh/mark-next-parent-tasks-todo 'append)
 #+end_src
+** Startup in content view
+[2012-04-08 Sun 07:26]
+
+Startup in content view.  This allows us to quickly visit all archive
+tasks in follow mode to check that we want to archive everything in
+the list _before_ we archive anything.
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-startup-folded 'content)
+#+end_src
+
 * Things I Don't Use (Anymore)
 
 This is a partial list of things I know about but do not use.
