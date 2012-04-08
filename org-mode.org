@@ -908,7 +908,8 @@ don't want to spend time waiting for it to be generated.
                               (org-agenda-todo-ignore-deadlines 'future)))
                   (tags "-REFILE/"
                         ((org-agenda-overriding-header "Tasks to Archive")
-                         (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))
+                         (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
+                         (org-tags-match-list-sublevels nil))))
                  nil)
                 ("r" "Tasks to Refile" tags "REFILE"
                  ((org-agenda-overriding-header "Tasks to Refile")
@@ -940,7 +941,8 @@ don't want to spend time waiting for it to be generated.
                  (org-tags-match-list-sublevels nil))
                 ("A" "Tasks to Archive" tags "-REFILE/"
                  ((org-agenda-overriding-header "Tasks to Archive")
-                  (org-agenda-skip-function 'bh/skip-non-archivable-tasks))))))
+                  (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
+                  (org-tags-match-list-sublevels nil))))))
 #+end_src
 
 My block agenda view looks like this when not narrowed to a project.
