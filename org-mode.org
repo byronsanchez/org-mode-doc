@@ -2296,10 +2296,12 @@ used by agenda views.
       (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
         (if (bh/is-project-p)
             (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
-                   (has-next (save-excursion
-                               (forward-line 1)
-                               (and (< (point) subtree-end)
-                                    (re-search-forward "^\\*+ \\(NEXT\\) " subtree-end t)))))
+                   (has-next ))
+              (save-excursion
+                (forward-line 1)
+                (while (and (not has-next) (< (point) subtree-end) (re-search-forward "^\\*+ NEXT " subtree-end t))
+                  (unless (member "WAITING" (org-get-tags-at))
+                      (setq has-next t))))
               (if has-next
                   next-headline
                 nil)) ; a stuck project, has subtasks but no next task
