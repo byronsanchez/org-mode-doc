@@ -884,6 +884,7 @@ don't want to spend time waiting for it to be generated.
                               (org-agenda-skip-function 'bh/skip-projects-and-habits-and-single-tasks)
                               (org-agenda-todo-ignore-scheduled t)
                               (org-agenda-todo-ignore-deadlines t)
+                              (org-agenda-todo-ignore-with-date t)
                               (org-tags-match-list-sublevels t)
                               (org-agenda-sorting-strategy
                                '(todo-state-down effort-up category-keep))))
@@ -892,9 +893,10 @@ don't want to spend time waiting for it to be generated.
                               (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                               (org-agenda-todo-ignore-scheduled t)
                               (org-agenda-todo-ignore-deadlines t)
+                              (org-agenda-todo-ignore-with-date t)
                               (org-agenda-sorting-strategy
                                '(category-keep))))
-                  (tags-todo "-CANCELLED/!"
+                  (tags-todo "-HOLD-CANCELLED/!"
                              ((org-agenda-overriding-header "Projects")
                               (org-agenda-skip-function 'bh/skip-non-projects)
                               (org-agenda-sorting-strategy
@@ -919,6 +921,7 @@ don't want to spend time waiting for it to be generated.
                   (org-agenda-skip-function 'bh/skip-projects-and-habits-and-single-tasks)
                   (org-agenda-todo-ignore-scheduled t)
                   (org-agenda-todo-ignore-deadlines t)
+                  (org-agenda-todo-ignore-with-date t)
                   (org-tags-match-list-sublevels t)
                   (org-agenda-sorting-strategy
                    '(todo-state-down effort-up category-keep))))
@@ -927,7 +930,7 @@ don't want to spend time waiting for it to be generated.
                   (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                   (org-agenda-sorting-strategy
                    '(category-keep))))
-                ("p" "Projects" tags-todo "-CANCELLED/!"
+                ("p" "Projects" tags-todo "-HOLD-CANCELLED/!"
                  ((org-agenda-overriding-header "Projects")
                   (org-agenda-skip-function 'bh/skip-non-projects)
                   (org-agenda-sorting-strategy
