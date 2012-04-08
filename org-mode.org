@@ -2562,12 +2562,6 @@ on your system.
   ; of setting this -- see the docstring for details
   (setq org-confirm-babel-evaluate nil)
   
-  ; Cache all babel results blocks by default
-  ; For graphics generation this is way faster if nothing changes
-  (setq org-babel-default-header-args
-       (cons '(:cache . "yes")
-       (assq-delete-all :cache org-babel-default-header-args)))
-  
   ; Use fundamental mode when editing plantuml blocks with C-c '
   (add-to-list 'org-src-lang-modes (quote ("plantuml" . fundamental)))
 #+end_src
