@@ -1795,17 +1795,17 @@ current org file.
 ** Providing progress reports to others
 [2012-02-12 Sun 16:11]
 
-When someone wants details of what I've done recently I simple generate a
-log report in the agenda with tasks I've completed and state changes combined
+When someone wants details of what I've done recently I simple
+generate a log report in the agenda with tasks state changes combined
 with a clock report for the appropriate time period.
 
-The following setting shows closed tasks and state changes in the
-agenda.  Combined with the agenda clock report ('R') I can quickly
-generate all of the details required.
+The following setting shows task state changes in the agenda.
+Combined with the agenda clock report ('R') I can quickly generate all
+of the details required.
 
 #+begin_src emacs-lisp :tangle yes
   ;; Agenda log mode items to display (closed and state changes by default)
-  (setq org-agenda-log-mode-items (quote (closed state)))
+  (setq org-agenda-log-mode-items (quote (state)))
 #+end_src
 
 To generate the report I pull up the agenda for the appropriate time frame
