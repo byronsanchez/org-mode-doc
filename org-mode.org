@@ -5226,7 +5226,7 @@ Here's the setup I use to propagate =STARTED= to parent tasks:
   (defun bh/mark-parent-tasks-started ()
     "Visit each parent task and change TODO states to STARTED"
     (unless bh/mark-parent-tasks-started
-      (when (equal state "STARTED")
+      (when (equal org-state "STARTED")
         (let ((bh/mark-parent-tasks-started t))
           (save-excursion
             (while (org-up-heading-safe)
