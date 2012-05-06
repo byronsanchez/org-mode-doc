@@ -4809,21 +4809,6 @@ the agenda for flagged items.  See [[#OrgTagAlist][Tags]] for the setup of
 =org-tag-alist= for the =FLAGGED= entry.
 
 Finding flagged entries is then simple - just =F12 ?= and you get them all.
-** Prevent horizontal window splitting
-
-Emacs 23 wants to split the window both horizontally and vertically
-based on screen usage.  With today's widescreen monitors this often
-means we split the window horizontally instead of vertically.
-
-I found this change obtrusive and turn it off with the following
-setting.  However now that I've used it for a long time it makes
-the clocking history list much easier to use -- so reduce the 
-threshold so the clock history list (=C-u C-F11=) shows the menu
-on the right.
-
-#+begin_src emacs-lisp :tangle yes
-  (setq split-width-threshold 120)
-#+end_src
 ** Mail links open compose-mail
 
 The following setting makes org-mode open =mailto:= links
