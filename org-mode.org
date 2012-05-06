@@ -3952,11 +3952,11 @@ Most of my lists have no body detail so I like the look of collapsed
 lists with no blank lines better.
 
 The following setting prevents creating blank lines before headings
-but allows list items to adapt to existing blank line behaviour:
+and lists items:
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-blank-before-new-entry (quote ((heading)
-                                           (plain-list-item . auto))))
+                                           (plain-list-item))))
 #+end_src
 *** Adding new tasks quickly without disturbing the current task content
 
