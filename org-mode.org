@@ -3317,10 +3317,16 @@ way to focus on what we are doing.
       (outline-up-heading 1 'invisible-ok)
       (bh/narrow-to-org-subtree)))
   
+  (defun bh/get-pom-from-agenda-restriction-or-point ()
+    (or (org-get-at-bol 'org-hd-marker)
+        (and (marker-position org-agenda-restrict-begin) org-agenda-restrict-begin)
+        (and (equal major-mode 'org-mode) (point))
+        org-clock-marker))
+  
   (defun bh/narrow-up-one-level ()
     (interactive)
     (if (equal major-mode 'org-agenda-mode)
-        (org-with-point-at (org-get-at-bol 'org-hd-marker)
+        (org-with-point-at (bh/get-pom-from-agenda-restriction-or-point)
           (bh/narrow-up-one-org-level))
       (bh/narrow-up-one-org-level)))
   
@@ -3337,7 +3343,7 @@ way to focus on what we are doing.
   (defun bh/narrow-to-project ()
     (interactive)
     (if (equal major-mode 'org-agenda-mode)
-        (org-with-point-at (org-get-at-bol 'org-hd-marker)
+        (org-with-point-at (bh/get-pom-from-agenda-restriction-or-point)
           (bh/narrow-to-org-project))
       (bh/narrow-to-org-project)))
   
@@ -3381,18 +3387,17 @@ The following elisp accomplishes this.
   (defun bh/set-agenda-restriction-lock (arg)
     "Set restriction lock to current task subtree or file if prefix is specified"
     (interactive "p")
-    (let* ((pom (or (org-get-at-bol 'org-hd-marker)
-                    org-agenda-restrict-begin))
+    (let* ((pom (bh/get-pom-from-agenda-restriction-or-point))
            (tags (org-with-point-at pom (org-get-tags-at))))
       (let ((restriction-type (if (equal arg 4) 'file 'subtree)))
         (save-restriction
           (cond
-           ((equal major-mode 'org-agenda-mode)
+           ((and (equal major-mode 'org-agenda-mode) pom)
             (org-with-point-at pom
               (org-agenda-set-restriction-lock restriction-type)))
            ((and (equal major-mode 'org-mode) (org-before-first-heading-p))
             (org-agenda-set-restriction-lock 'file))
-           (t
+           (pom
             (org-with-point-at pom
               (org-agenda-set-restriction-lock restriction-type))))))))
 #+end_src
