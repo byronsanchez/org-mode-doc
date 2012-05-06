@@ -3261,11 +3261,9 @@ way to focus on what we are doing.
     (interactive "p")
     (if (equal arg 4)
         (save-restriction
-          (widen)
-          (org-narrow-to-subtree)
+          (bh/narrow-to-org-subtree)
           (org-show-todo-tree nil))
-      (widen)
-      (org-narrow-to-subtree)
+      (bh/narrow-to-org-subtree)
       (org-show-todo-tree nil)))
   
   (global-set-key (kbd "<S-f5>") 'bh/widen)
