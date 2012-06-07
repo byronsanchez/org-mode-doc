@@ -908,6 +908,7 @@ don't want to spend time waiting for it to be generated.
                                '(category-keep))))
                   (tags-todo "-CANCELLED/!WAITING|HOLD"
                              ((org-agenda-overriding-header "Waiting and Postponed Tasks")
+                              (org-agenda-skip-function 'bh/skip-stuck-projects)
                               (org-tags-match-list-sublevels nil)
                               (org-agenda-todo-ignore-scheduled 'future)
                               (org-agenda-todo-ignore-deadlines 'future)))
@@ -2296,6 +2297,24 @@ used by agenda views.
         (setq org-tags-match-list-sublevels t)
       (setq org-tags-match-list-sublevels nil))
     nil)
+  
+  (defun bh/skip-stuck-projects ()
+    "Skip trees that are not stuck projects"
+    (save-restriction
+      (widen)
+      (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
+        (if (bh/is-project-p)
+            (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+                   (has-next ))
+              (save-excursion
+                (forward-line 1)
+                (while (and (not has-next) (< (point) subtree-end) (re-search-forward "^\\*+ NEXT " subtree-end t))
+                  (unless (member "WAITING" (org-get-tags-at))
+                      (setq has-next t))))
+              (if has-next
+                  nil
+                next-headline)) ; a stuck project, has subtasks but no next task
+          nil))))
   
   (defun bh/skip-non-stuck-projects ()
     "Skip trees that are not stuck projects"
