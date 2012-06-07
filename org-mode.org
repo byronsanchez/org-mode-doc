@@ -5061,6 +5061,19 @@ the list _before_ we archive anything.
   (setq org-startup-folded 'content)
 #+end_src
 
+** Allow alphabetical list entries
+[2012-06-06 Wed 22:23]
+
+The following setting adds alphabetical lists like
+
+#+begin_src org :exports src
+  ,a. item one
+  ,b. item two
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (setq org-alphabetical-lists t)
+#+end_src
 * Things I Don't Use (Anymore)
 
 This is a partial list of things I know about but do not use.
