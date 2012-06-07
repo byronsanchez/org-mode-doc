@@ -861,8 +861,8 @@ don't want to spend time waiting for it to be generated.
 ** Setup
 
 #+begin_src emacs-lisp :tangle yes
-  ;; Do not dim blocked tasks
-  (setq org-agenda-dim-blocked-tasks nil)
+  ;; Dim blocked tasks
+  (setq org-agenda-dim-blocked-tasks t)
   
   ;; Compact the block agenda view
   (setq org-agenda-compact-blocks t)
