@@ -5581,6 +5581,9 @@ I try to update this document about once a month.
 The change history for this document can be found at
 [[http://git.norang.ca/?p%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
 * License
+:PROPERTIES:
+:CUSTOM_ID: License
+:END:
 [2011-11-19 Sat 21:53] 
 
 #+begin_example
