@@ -5498,6 +5498,23 @@ how it behaves compared to the existing one.
 
 To invoke the new exporter use =M-x org-export-dispatch=.
 
+** Preserving source block indentation
+:PROPERTIES:
+:CUSTOM_ID: PreserveSourceIndentations
+:END:
+I do not preserve indentation for source blocks mainly because this doesn't look
+nice with indented org-files.  The only reason I've found to preserve indentation is
+when TABs in files need to be preserved (e.g. Makefiles).  I don't normally edit
+these files in org-mode so I leave this setting turned off.
+
+I've changed the default block indentation so that it is not indented
+from the text in the org file.  This allows editing source blocks in 
+place without requiring use of =C-c '= so that code lines up correctly.
+
+#+begin_src emacs-lisp :tangle yes
+(setq org-src-preserve-indentation nil)
+(setq org-edit-src-content-indentation 0)
+#+end_src
 * Things I Don't Use (Anymore)
 :PROPERTIES:
 :CUSTOM_ID: Unused
@@ -5542,18 +5559,6 @@ superscripts with
 
 #+begin_src emacs-lisp :tangle yes
 (setq org-use-sub-superscripts nil)
-#+end_src
-** Preserving source block indentation
-:PROPERTIES:
-:CUSTOM_ID: PreserveSourceIndentations
-:END:
-I do not preserve indentation for source blocks mainly because this doesn't look
-nice with indented org-files.  The only reason I've found to preserve indentation is
-when TABs in files need to be preserved (e.g. Makefiles).  I don't normally edit
-these files in org-mode so I leave this setting turned off.
-
-#+begin_src emacs-lisp :tangle yes
-(setq org-src-preserve-indentation nil)
 #+end_src
 ** Yasnippet
 :PROPERTIES:
