@@ -2468,10 +2468,17 @@ Callers of this function already widen the buffer view."
       (save-restriction
         (widen)
         (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-          (if (bh/is-project-p)
-              nil
-            subtree-end)))
-    (org-end-of-subtree t)))
+          (cond
+           ((and (bh/is-project-p)
+                 (marker-buffer org-agenda-restrict-begin))
+            nil)
+           ((and (bh/is-project-p)
+                 (not (marker-buffer org-agenda-restrict-begin))
+                 (not (bh/is-project-subtree-p)))
+            nil)
+           (t
+            subtree-end))))
+    (save-excursion (org-end-of-subtree t))))
 
 (defun bh/skip-project-trees-and-habits ()
   "Skip trees that are projects"
