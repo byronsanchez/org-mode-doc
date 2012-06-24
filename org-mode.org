@@ -5475,6 +5475,37 @@ I disable the priority setting keys in org-mode using
 (setq org-default-priority ?E)
 (setq org-lowest-priority ?E)
 #+end_src
+** New Exporter
+:PROPERTIES:
+:CUSTOM_ID: NewExporter
+:END:
+[2012-06-24 Sun 12:10]
+
+The current export engine invoked with =C-c C-e= is going to be replaced with a new
+system soon.  I have the following settings so I can invoke the new exporter to see
+how it behaves compared to the existing one.
+
+#+begin_src emacs-lisp :tangle yes
+(setq org-e-html-inline-images t)
+(setq org-export-html-style-extra "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />")
+(setq org-e-html-style-extra "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />")
+(setq org-e-html-style-include-default nil)
+(setq org-e-html-xml-declaration
+      (quote
+       (("was-html" . "")
+        ("html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
+        ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
+(setq org-e-latex-listings t)
+(setq org-e-html-style-include-scripts nil)
+(setq org-e-html-validation-link nil)
+
+(setq org-export-coding-system 'utf-8)
+
+(require 'org-export)
+#+end_src
+
+To invoke the new exporter use =M-x org-export-dispatch=.
+
 * Things I Don't Use (Anymore)
 :PROPERTIES:
 :CUSTOM_ID: Unused
