@@ -12,8 +12,8 @@
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 
-Org-mode is a fabulous organizational tool built by Carsten Dominik
-that operates on plain text files.  Org-mode is part of Emacs.
+Org-mode is a fabulous organizational tool originally built by Carsten
+Dominik that operates on plain text files.  Org-mode is part of Emacs.
 
 This document assumes you've had some exposure to org-mode already so
 concepts like the agenda, capture mode, etc.  won't be completely
