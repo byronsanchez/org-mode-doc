@@ -94,6 +94,9 @@ I try to update this document about once a month.
 The change history for this document can be found at
 [[http://git.norang.ca/?p%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
 * Getting Started
+:PROPERTIES:
+:CUSTOM_ID: GettingStarted
+:END:
 
 I use =org-mode= in most of my emacs buffers.
 ** Org-Mode Setup
@@ -485,6 +488,9 @@ The only exception to this is this document :) since I don't want
 I've set up a dummy =#+SEQ_TODO: FIXME FIXED= entry at the top of this
 file just to leave my =TODO= keyword untouched in this document.
 ** TODO keywords
+:PROPERTIES:
+:CUSTOM_ID: TodoKeywords
+:END:
 
 I use a light colour theme in emacs.  I find this easier to read on bright sunny days.
 
@@ -505,6 +511,9 @@ Here are my =TODO= state keywords and colour settings:
                 ("PHONE" :foreground "forest green" :weight bold))))
 #+end_src
 *** Task States
+:PROPERTIES:
+:CUSTOM_ID: TodoKeywordTaskStates
+:END:
 
 Tasks go through the sequence =TODO= -> =DONE=.
 
@@ -542,6 +551,9 @@ The following diagram shows the possible state transitions for a task.
 [[file:normal_task_states.png]]
 
 *** Project Task States
+:PROPERTIES:
+:CUSTOM_ID: TodoKeywordProjectTaskStates
+:END:
 
 I use a lazy project definition.  I don't like to bother with manually
 stating 'this is a project' and 'that is not a project'.  For me a project
@@ -554,6 +566,9 @@ keyword and you have a project.  Projects use the same todo keywords
 as regular tasks.  One subtask of a project needs to be marked =NEXT=
 so the project is not on the stuck projects list.
 *** Phone Calls
+:PROPERTIES:
+:CUSTOM_ID: TodoKeywordPhoneCalls
+:END:
 
 Telephone calls are special.  They are created in a done state by a capture task.
 The time of the call is recorded for as long as the capture task is active.  If I need 
@@ -570,6 +585,9 @@ the clock in the phone call while I do other things.
 [[file:phone_states.png]]
 
 ** Fast Todo Selection
+:PROPERTIES:
+:CUSTOM_ID: FastTodoSelection
+:END:
 
 Fast todo selection allows changing from any task todo state to any
 other state directly by selecting the appropriate key from the fast
@@ -747,6 +765,9 @@ The file has a single permanent line at the top like this
   ,#+FILETAGS: REFILE
 #+end_src
 ** Capture Tasks is all about being FAST
+:PROPERTIES:
+:CUSTOM_ID: CaptureTasksAreFast
+:END:
 
 Okay I'm in the middle of something and oh yeah - I have to remember
 to do that.  I don't stop what I'm doing.  I'm probably clocking a
@@ -785,6 +806,9 @@ I collect capture tasks in refile.org for up to a week.  These now
 stand out daily on my block agenda and I usually refile them during
 the day.  I like to keep my refile task list empty.
 ** Refile Setup
+:PROPERTIES:
+:CUSTOM_ID: RefileSetup
+:END:
 
 To refile tasks in org you need to tell it where you want to refile things.
 
@@ -843,6 +867,9 @@ To refile a task to my =norang.org= file under =System Maintenance= I
 just put the cursor on the task and hit =C-c C-w= and enter =nor C-SPC
 sys RET= and it's done.  IDO completion makes locating targets a snap.
 ** Refiling Tasks
+:PROPERTIES:
+:CUSTOM_ID: RefilingTasks
+:END:
 
 Tasks to refile are in their own section of the block agenda.  To find
 tasks to refile I run my agenda view with =F12 SPC= and scroll down to
@@ -859,6 +886,9 @@ from the =refile.org= file.
 Refiling all of my tasks tends to take less than a minute so I
 normally do this a couple of times a day.
 ** Refiling Notes
+:PROPERTIES:
+:CUSTOM_ID: RefilingNotes
+:END:
 
 I keep a =* Notes= headline in most of my org-mode files.  Notes have
 a =NOTE= tag which is created by the capture template for notes.  This
@@ -872,6 +902,9 @@ catchall =* NOTES= task.  Generally these types of notes are specific
 to the project and not generally useful -- so removing them from the
 notes list when the project is archived makes sense.
 ** Refiling Phone Calls
+:PROPERTIES:
+:CUSTOM_ID: RefilingPhoneCalls
+:END:
 
 Phone calls are handled using capture mode.  I time my calls using
 the capture mode template settings to clock in and out the capture
@@ -916,6 +949,9 @@ month's worth of information, or check my clocking data.  In that case
 the extra detail on the block agenda view is never really needed and I
 don't want to spend time waiting for it to be generated.
 ** Setup
+:PROPERTIES:
+:CUSTOM_ID: CustomAgendaViewSetup
+:END:
 
 #+begin_src emacs-lisp :tangle yes
   ;; Dim blocked tasks
@@ -1072,6 +1108,9 @@ the block agenda and follow this order:
 - If you run out of items to work on look for a NEXT task in the current context
   pick a task from the Tasks list of the current project.
 *** Why keep it all on the =NEXT= list?
+:PROPERTIES:
+:CUSTOM_ID: CustomAgendaViewsNextList
+:END:
 
 I've moved to a more GTD way of doing things.  Now I just use a =NEXT=
 list.  Only projects get tasks with =NEXT= keywords since stuck projects
@@ -1096,6 +1135,9 @@ through my org files for the task that needs to be clocked-in.
 To drop a task off the =NEXT= list simply move it back to the =TODO=
 state.
 ** Reading email, newsgroups, and conversations on IRC
+:PROPERTIES:
+:CUSTOM_ID: ReadingMailNewsIRC
+:END:
 
 When reading email, newsgroups, and conversations on IRC I just let
 the default task (normally =** Organization=) clock the time I spend on
@@ -1120,6 +1162,9 @@ and enter the topic and file it.  This takes practically no time at
 all and I know the note is safely filed for later retrieval.  The time
 I spend in the capture buffer is clocked with that capture note.
 ** Filtering
+:PROPERTIES:
+:CUSTOM_ID: CustomAgendaViewFiltering
+:END:
 
 So many tasks, so little time.  I have hundreds of tasks at any given
 time (373 right now).  There is so much stuff to look at it can be
@@ -1138,6 +1183,9 @@ agenda tasks to those estimates of 10 minutes or less with =/ + 1= and
 I can pick something that fits the minutes I have left before I take
 off for lunch.
 *** Automatically removing context based tasks with / RET
+:PROPERTIES:
+:CUSTOM_ID: CustomAgendaViewFilteringContext
+:END:
 
 =/ RET= in the agenda is really useful.  This awesome feature was
 added to org-mode by John Wiegley.  It removes tasks automatically by
@@ -1466,6 +1514,9 @@ to the previously clocked task.
         (org-clock-in nil))))
 #+end_src
 ** Clocking in
+:PROPERTIES:
+:CUSTOM_ID: ClockingIn
+:END:
 
 When I start or continue working on a task I clock it in with any of the following:
 
@@ -1475,6 +1526,9 @@ When I start or continue working on a task I clock it in with any of the followi
   - =f9 I= while on the task in the agenda
   - =f9 I= while in the task in an org file
 *** Setting a default clock task
+:PROPERTIES:
+:CUSTOM_ID: ClockingInDefaultTask
+:END:
 
 I have a default =** Organization= task in my todo.org file that
 I tend to put miscellaneous clock time on.  This is the task I
@@ -1494,6 +1548,9 @@ C-x C-i d=.  Another option is to repeatedly clock out so the
 clock moves up the project tree until you clock out the
 top-level task and the clock moves to the default task.
 *** Using the clock history to clock in old tasks
+:PROPERTIES:
+:CUSTOM_ID: ClockingInByClockHistory
+:END:
 
 You can use the clock history to restart clocks on old tasks you've
 clocked or to jump directly to a task you have clocked previously.  I
@@ -1530,6 +1587,9 @@ selects the interrupted =[i]= entry.
   [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
 #+end_example
 ** Clock Everything - Create New Tasks
+:PROPERTIES:
+:CUSTOM_ID: ClockEverythingWithNewTasks
+:END:
 
 In order to clock everything you need a task for everything.  That's
 fine for planned projects but interruptions inevitably occur and you
@@ -1557,6 +1617,9 @@ If it's a task that actually needs to be tracked and marked done, and
 applied to some project then I create a capture task instead which files it in 
 refile.org.
 ** Finding tasks to clock in
+:PROPERTIES:
+:CUSTOM_ID: FindTasksToClockIn
+:END:
 
 To find a task to work on I use one of the following options
 (generally listed most frequently used first)
@@ -1573,6 +1636,9 @@ To find a task to work on I use one of the following options
 Punching in on the task you select will restrict the agenda view to that project
 so you can focus on just that thing for some period of time.
 ** Editing clock entries
+:PROPERTIES:
+:CUSTOM_ID: EditingClockEntries
+:END:
 
 Sometimes it is necessary to edit clock entries so they reflect
 reality.  I find I do this for maybe 2-3 entries in a week.
@@ -1625,6 +1691,9 @@ The following setting shows 1 minute clocking gaps.
                 :gap-ok-around ("4:00"))))
 #+end_src
 ** Automatically clocking tasks
+:PROPERTIES:
+:CUSTOM_ID: AutomaticallyClockingTasks
+:END:
 
 I spend time on an open source project called BZFlag.  During work for releases
 I want to clock the time I spend testing the new BZFlag client.  I have a key
@@ -1689,6 +1758,9 @@ Billing for clocked time basically boils down to the following steps:
 
    See [[#Archiving][Archiving]] for more details.
 *** Verify that the clock data is complete and correct
+:PROPERTIES:
+:CUSTOM_ID: VerifyingClockData
+:END:
 
 Since I change tasks often (sometimes more than once in a minute) I
 use the following setting to remove clock entries with a zero
@@ -1723,6 +1795,9 @@ scan down the list to see if an entry is missing an end time.  If an
 entry is not closed you can manually fix the clock entry based on
 other clock info around that time.
 *** Using clock reports to summarize time spent
+:PROPERTIES:
+:CUSTOM_ID: ClockReports
+:END:
 
 Billable time for clients are kept in separate org files.
 
@@ -1763,6 +1838,9 @@ tasks and then clock the actual time it takes to complete.
 By repeatedly estimating tasks and reviewing how your estimate relates
 to the actual time clocked you can tune your estimating skills.
 *** Creating a task estimate with column mode
+:PROPERTIES:
+:CUSTOM_ID: CreatingTaskEstimates
+:END:
 
 I use =properties= and =column view= to do project estimates.
 
@@ -1846,6 +1924,9 @@ Saving the original estimate data makes it possible to refine the
 project tasks into subtasks as you work on the project without losing
 the original estimate data.
 *** Reviewing your estimate
+:PROPERTIES:
+:CUSTOM_ID: ReviewingEstimates
+:END:
 
 =Column view= is great for reviewing your estimate.  This shows your
 estimated time value and the total clock time for the project
@@ -1858,6 +1939,9 @@ applications.
 =C-c C-x C-d= also provides a quick summary of clocked time for the
 current org file.
 ** Providing progress reports to others
+:PROPERTIES:
+:CUSTOM_ID: ProgressReporting
+:END:
 [2012-02-12 Sun 16:11]
 
 When someone wants details of what I've done recently I simple
@@ -1991,6 +2075,9 @@ Filetags look like this:
 
 I have the following =#+FILETAGS:= entries in my org-mode files:
 *** Non-work related org-mode files
+:PROPERTIES:
+:CUSTOM_ID: TaggingNonWorkFiles
+:END:
 
 | File         | Tags                  |
 |--------------+-----------------------|
@@ -2002,6 +2089,9 @@ I have the following =#+FILETAGS:= entries in my org-mode files:
 | mark.org     | MARK PERSONAL         |
 | farm.org     | FARM PERSONAL         |
 *** Work related org-mode files
+:PROPERTIES:
+:CUSTOM_ID: TaggingWorkFiles
+:END:
 
 | File        | Tags            |
 |-------------+-----------------|
@@ -2012,6 +2102,9 @@ I have the following =#+FILETAGS:= entries in my org-mode files:
 | ABC-KKK.org | ABC KKK @office |
 | YYY.org     | YYY @office     |
 *** Refile tasks
+:PROPERTIES:
+:CUSTOM_ID: RefileTasks
+:END:
 
 | File       | Tags         |
 |------------+--------------|
@@ -2514,6 +2607,9 @@ Archiving is trivial.  Just mark all of the entries in the block agenda
 using the =m= key and then archive them all to the appropriate place
 with =B $=.  This normally takes less than 5 minutes once a month.
 ** Archive Setup
+:PROPERTIES:
+:CUSTOM_ID: ArchiveSetup
+:END:
 
 I not longer use an =ARCHIVE= property in my subtrees.  Tasks can just
 archive normally to the =Archived Tasks= heading in the archive file.
@@ -2551,6 +2647,9 @@ Archived Tasks= in the archive file.
           (or next-headline (point-max))))))
 #+end_src
 ** Archive Tag - Hiding Information
+:PROPERTIES:
+:CUSTOM_ID: ArchiveTagHidesInfo
+:END:
 
 The only time I set the ARCHIVE tag on a task is to prevent it from
 opening by default because it has tons of information I don't really
@@ -2558,6 +2657,9 @@ need to look at on a regular basis.  I can open the task with C-TAB if
 I need to see the gory details (like a huge table of data related to
 the task) but normally I don't need that information displayed.
 ** When to Archive
+:PROPERTIES:
+:CUSTOM_ID: WhenToArchive
+:END:
 
 Archiving monthly works well for me.  I keep completed tasks around
 for at least 30 days before archiving them.  This keeps current
@@ -2777,6 +2879,9 @@ The source for a graphviz graphic looks like this in org-mode:
 The =-Kdot= is optional (defaults to =dot=) but you can substitute other graphviz
 types instead here (ie. =twopi=, =neato=, =circo=, etc).
 ** Playing with PlantUML
+:PROPERTIES:
+:CUSTOM_ID: PlantUML
+:END:
 
 I have just started using [[http://plantuml.sourceforge.net/][PlantUML]] which is built on top of [[http://www.graphviz.org/][Graphviz]].
 I'm still experimenting with this but so far I like it a lot.  The
@@ -2789,6 +2894,9 @@ The source for a PlantUML graphic looks like this in org-mode:
   ,#+end_src
 #+end_src
 *** Sequence Diagram
+:PROPERTIES:
+:CUSTOM_ID: PlantUMLSequence
+:END:
 [2011-04-29 Fri 19:03]
 
 #+begin_src plantuml :file sequence.png :exports both :cache yes
@@ -2812,6 +2920,9 @@ The source for a PlantUML graphic looks like this in org-mode:
 [[file:sequence.png]]
 
 *** Activity Diagram
+:PROPERTIES:
+:CUSTOM_ID: PlantUMLActivity
+:END:
 [2011-09-10 Sat 08:36]
 #+begin_src plantuml :file activity.png :exports both :cache yes
   title Example Activity Diagram
@@ -2839,6 +2950,9 @@ The source for a PlantUML graphic looks like this in org-mode:
 [[file:activity.png]]
 
 *** Usecase Diagram
+:PROPERTIES:
+:CUSTOM_ID: PlantUMLUseCase
+:END:
 
 #+begin_src plantuml :file usecase.png :exports both :cache yes
   LabUser --> (Runs Simulation)
@@ -2849,6 +2963,9 @@ The source for a PlantUML graphic looks like this in org-mode:
 [[file:usecase.png]]
 
 *** Object Diagram
+:PROPERTIES:
+:CUSTOM_ID: PlantUMLObject
+:END:
 
 #+begin_src plantuml :file object.png :exports both :cache yes
   Object1 <|-- Object2
@@ -2863,6 +2980,9 @@ The source for a PlantUML graphic looks like this in org-mode:
 [[file:object.png]]
 
 *** State Diagram
+:PROPERTIES:
+:CUSTOM_ID: PlantUMLState
+:END:
 
 #+begin_src plantuml :file plantuml_example_states.png :exports both :cache yes
   [*] --> Start
@@ -2878,7 +2998,10 @@ The source for a PlantUML graphic looks like this in org-mode:
 #+results[d349aa79d785fec37ad60b1bcf43ced6df10aeb6]:
 [[file:plantuml_example_states.png]]
 
-*** Publishing Single Files
+** Publishing Single Files
+:PROPERTIES:
+:CUSTOM_ID: PublishingSingleFiles
+:END:
 
 Org-mode exports the current file to one of the standard formats by
 invoking an export function.  The standard key binding for this is
@@ -3141,6 +3264,9 @@ server.
 This is a collection of export and publishing related settings that I
 use.
 *** Fontify Latex listings for source blocks
+:PROPERTIES:
+:CUSTOM_ID: FontifyLatexListings
+:END:
 
 For export to latex I use the following setting to get fontified
 listings from source blocks:
@@ -3149,6 +3275,9 @@ listings from source blocks:
   (setq org-export-latex-listings t)
 #+end_src
 *** Export HTML without XML header
+:PROPERTIES:
+:CUSTOM_ID: ExportHTMLWithoutXMLHeader
+:END:
 
 I use the following setting to remove the xml header line for HTML
 exports.  This xml line was confusing Open Office when opening the
@@ -3161,6 +3290,9 @@ HTML to convert to ODT.
 
 #+end_src
 *** Allow binding variables on export without confirmation
+:PROPERTIES:
+:CUSTOM_ID: AllowVariableBindingForExport
+:END:
 
 The following setting allows #+BIND: variables to be set on export
 without confirmation.  In rare situations where I want to override
@@ -3185,6 +3317,9 @@ details for today.  This means everytime I reschedule something, add
 or remove tasks that are time related the appointment list is
 automatically updated the next time I look at the agenda.
 ** Reminder Setup
+:PROPERTIES:
+:CUSTOM_ID: ReminderSetup
+:END:
 
 #+begin_src emacs-lisp :tangle yes
   ; Erase all reminders and rebuilt reminders for today from the agenda
@@ -3214,6 +3349,9 @@ automatically updated the next time I look at the agenda.
 This section is a miscellaneous collection of Emacs customizations that I use
 with org-mode so that it Works-For-Me(tm).
 ** Abbrev-mode and Skeletons
+:PROPERTIES:
+:CUSTOM_ID: AbbrevMode
+:END:
 [2011-09-26 Mon 05:44]
 I use skeletons with abbrev-mode to quickly add preconfigured blocks to my 
 Emacs edit buffers.
@@ -3313,13 +3451,16 @@ I found this annoying when I used =plantuml= as one of my abbreviations.
 
 I also use skeletons and abbrev-mode for C source files at work.
 This works really well for me.
-** Limit your view to what you are working on
+** Focus On Current Work
 :PROPERTIES:
-:CUSTOM_ID: LimitingAgendaView
+:CUSTOM_ID: FocusOnCurrentWork
 :END:
 
 There is more than one way to do this.  Use what works for you.
 *** Narrowing to a subtree with =bh/org-todo=
+:PROPERTIES:
+:CUSTOM_ID: NarrowToSubtree
+:END:
 
 =f5= and =S-f5= are bound the functions for narrowing and widening the
 emacs buffer as defined below.
@@ -3472,6 +3613,9 @@ I also have the following setting to force showing the next headline.
 This prevents too many headlines from being folded together when I'm
 working with collapsed trees.
 *** Limiting the agenda to a subtree
+:PROPERTIES:
+:CUSTOM_ID: AgendaNarrowToSubtree
+:END:
 
 =C-c C-x <= turns on the agenda restriction lock for the current
 subtree.  This keeps your agenda focused on only this subtree.  Alarms
@@ -3540,6 +3684,9 @@ org-file.
 - =W= removes the restriction, widening the buffer
 
 *** Limiting the agenda to a file
+:PROPERTIES:
+:CUSTOM_ID: AgendaNarrowToFile
+:END:
 
 You can limit the agenda view to a single file in multiple ways.
 
@@ -3556,10 +3703,16 @@ org-mode file.  This limits the agenda view to just this file.  I
 occasionally use this to view a file not in my =org-agenda-files= in
 the agenda.
 ** Tuning the Agenda Views
+:PROPERTIES:
+:CUSTOM_ID: TuningAgendaViews
+:END:
 
 Various customizations affect how the agenda views show task details.
 This section shows each of the customizations I use in my workflow.
 *** Highlight the current agenda line
+:PROPERTIES:
+:CUSTOM_ID: HighlightCurrentAgendaLine
+:END:
 
 The following code in my =.emacs= file keeps the current agenda line
 highlighted.  This makes it obvious what task will be affected by
@@ -3585,6 +3738,9 @@ The clock modeline time is also shown with a reverse background.
    '(org-mode-line-clock ((t (:foreground "red" :box (:line-width -1 :style released-button)))) t))
 #+end_src
 *** Keep tasks with timestamps visible on the global todo lists
+:PROPERTIES:
+:CUSTOM_ID: GlobalTodoListsShowAllTasks
+:END:
 
 Tasks with dates (=SCHEDULED:=, =DEADLINE:=, or active dates) show up
 in the agenda when appropriate.  The block agenda view (=F12 a=) tries
@@ -3621,6 +3777,9 @@ appropriate time.
   (setq org-agenda-skip-timestamp-if-done t)
 #+end_src
 *** Use the Diary for Holidays and Appointments
+:PROPERTIES:
+:CUSTOM_ID: DiaryForAppointments
+:END:
 
 I don't use the emacs Diary for anything but I like seeing the
 holidays on my agenda.  This helps with planning for those days when
@@ -3664,6 +3823,9 @@ shown in the agenda.
   (setq org-agenda-insert-diary-extract-time t)
 #+end_src
 *** Searches include archive files
+:PROPERTIES:
+:CUSTOM_ID: SearchesIncludeArchiveFiles
+:END:
 
 I keep a single archive file for each of my org-mode project files.
 This allows me to search the current file and the archive when I need
@@ -3824,6 +3986,9 @@ Here are the =.emacs= settings:
     (string-match "Sched\.\\(.*\\)x:" date-str))
 #+end_src
 *** q buries the agenda view buffer
+:PROPERTIES:
+:CUSTOM_ID: QBuriesAgenda
+:END:
 [2011-12-20 Tue 23:52]
 
 I change the =q= key in the agenda so instead of killing the agenda buffer
@@ -3980,6 +4145,9 @@ until the preceding tasks are complete.
 This section describes various org-mode settings I use to control how
 tasks are displayed while I work on my org mode files.
 *** Controlling display of leading stars on headlines
+:PROPERTIES:
+:CUSTOM_ID: DisplayLeadingStars
+:END:
 
 Org-mode has the ability to show or hide the leading stars on task
 headlines.  It's also possible to have headlines at odd levels only so
@@ -4010,6 +4178,9 @@ setting:
   (setq org-startup-indented t)
 #+end_src
 *** Handling blank lines
+:PROPERTIES:
+:CUSTOM_ID: HandlingBlankLines
+:END:
 
 Blank lines are evil :).  They keep getting inserted in between
 headlines and I don't want to see them in collapsed (contents) views.
@@ -4040,6 +4211,9 @@ and lists items:
                                            (plain-list-item))))
 #+end_src
 *** Adding new tasks quickly without disturbing the current task content
+:PROPERTIES:
+:CUSTOM_ID: AddingNewTasks
+:END:
 
 To create new headings in a project file it is really convenient to
 use =C-RET=, =C-S-RET=, =M-RET=, and =M-S-RET=.  This inserts a new headline
@@ -4057,6 +4231,9 @@ the middle of an entry and the new heading is added after the body of
 the current entry but still allow you to split an entry in the middle
 with =M-S-RET=.
 *** Notes at the top
+:PROPERTIES:
+:CUSTOM_ID: NotesAtTop
+:END:
 
 I enter notes for tasks with =C-c C-z= (or just =z= in the agenda).
 Changing tasks states also sometimes prompt for a note (e.g. moving to
@@ -4067,6 +4244,9 @@ the task shows the note first.
   (setq org-reverse-note-order nil)
 #+end_src
 *** Searching and showing results
+:PROPERTIES:
+:CUSTOM_ID: SearchingResults
+:END:
 
 Org-mode's searching capabilities are really effective at finding data
 in your org files.  =C-c / /= does a regular expression search on the
@@ -4090,6 +4270,9 @@ dangerous since it cuts text (including following subtrees) which you
 can't see.  For this reason I always show the following headline when
 displaying search results.
 *** Editing and Special key handling
+:PROPERTIES:
+:CUSTOM_ID: SpecialKeyHandling
+:END:
 
 Org-mode allows special handling of the C-a, C-e, and C-k keys while
 editing headlines.  I also use the setting that pastes (yanks)
@@ -4163,6 +4346,9 @@ I store my org-mode attachments with my org files in a subdirectory
 =data=.  These are automatically added to my =git= repository along
 with any other org-mode changes I've made.
 ** Deadlines and Agenda Visibility
+:PROPERTIES:
+:CUSTOM_ID: DeadlinesAndAgendaVisibility
+:END:
 
 Deadlines and due dates are a fact or life.  By default I want to see
 deadlines in the agenda 30 days before the due date.
@@ -4192,6 +4378,9 @@ you want on DEADLINES using -Nd where N is the number of days in
 advance the task should show up in the agenda.  If no value is
 specified the default =org-deadline-warning-days= is used.
 ** Exporting Tables to CSV
+:PROPERTIES:
+:CUSTOM_ID: TableExportToCSV
+:END:
 
 I generate org-mode tables with details of task specifications and
 record structures for some of my projects.  My clients like to use
@@ -4264,6 +4453,9 @@ When I visit files in Emacs I normally want to replace the current
 window with the new content.
 
 ** Logging stuff
+:PROPERTIES:
+:CUSTOM_ID: LoggingStuff
+:END:
 
 Most of my logging is controlled by the global =org-todo-keywords=
 
@@ -4345,6 +4537,9 @@ done.  For repeating tasks the mode-line clock total counts since the
 last repeat time by default.  This lets you accumulate time over
 multiple days and counts towards your estimated effort limit.
 ** Habit Tracking
+:PROPERTIES:
+:CUSTOM_ID: HabitTracking
+:END:
 
 John Wiegley recently added support for Habit tracking to org-mode.
 
@@ -4424,6 +4619,9 @@ again at 6AM each morning.
   (run-at-time "06:00" 86400 '(lambda () (setq org-habit-show-habits t)))
 #+end_src
 ** Habits only log DONE state changes
+:PROPERTIES:
+:CUSTOM_ID: HabitsLogDone
+:END:
 
 I tend to keep habits under a level 1 task =* Habits= with a special
 logging property that only logs changes to the =DONE= state.  This
@@ -4443,6 +4641,9 @@ file that can have habits defined
   ,END:  
 #+end_src
 ** Auto revert mode
+:PROPERTIES:
+:CUSTOM_ID: AutoRevertMode
+:END:
 
 I use git to synchronize my org-mode files between my laptop and my
 workstation.  This normally requires saving all the current changes,
@@ -4502,6 +4703,9 @@ I leave my entries encrypted unless I have to look up data - I decrypt
 on demand and then save the file again to re-encrypt the data.  This
 keeps the data in plain text as short as possible.
 *** Auto Save Files
+:PROPERTIES:
+:CUSTOM_ID: AutoSaveFiles
+:END:
 [2011-09-26 Mon 04:57]
 
 Emacs temporarily saves your buffer in an autosave file while you are
@@ -4523,6 +4727,9 @@ I disable the default org crypt auto-save setting as follows:
   (setq org-crypt-disable-auto-save nil)
 #+end_src
 ** Speed Commands
+:PROPERTIES:
+:CUSTOM_ID: SpeedCommands
+:END:
 
 There's an exciting feature called =org-speed-commands= in the
 org-mode.
@@ -4607,6 +4814,9 @@ for cycling - I don't need =c= and =C= as well.  =TAB= works
 everywhere while =c= and =C= only works on the headline and sometimes
 I accidentally cycle when I don't intend to.
 ** Org Protocol
+:PROPERTIES:
+:CUSTOM_ID: OrgProtocol
+:END:
 
 [[http://orgmode.org/worg/org-contrib/org-protocol.php][Org protocol]] is a great way to create capture notes in org-mode from
 other applications.  I use this to create tasks to review interesting
@@ -4627,6 +4837,9 @@ details of the page I'm currently viewing in firefox.
 
 I set up org-protocol in firefox as described in [[http://orgmode.org/worg/org-contrib/org-protocol.php#sec-9][Keybindings for Firefox]].
 ** Require a final newline when saving files
+:PROPERTIES:
+:CUSTOM_ID: RequireFinalNewline
+:END:
 
 The following setting was mainly for editing yasnippets where I want to
 be able to expand a snippet but stay on the same line.  I used this
@@ -4645,6 +4858,9 @@ with the source code projects I work on.  This is the setting I use now:
   (setq require-final-newline t)
 #+end_src
 ** Insert inactive timestamps and exclude from export
+:PROPERTIES:
+:CUSTOM_ID: InsertInactiveTimestamps
+:END:
 
 I insert inactive timestamps when working on org-mode files.
 
@@ -4691,6 +4907,9 @@ To prevent the timestamps from being exported in documents I use the following s
   (setq org-export-with-timestamps nil)
 #+end_src
 ** Return follows links
+:PROPERTIES:
+:CUSTOM_ID: ReturnFollowsLink
+:END:
 
 The following setting make =RET= insert a new line instead of opening
 links.  This setting is a love-hate relationship for me.  When it
@@ -4703,6 +4922,9 @@ retrained my fingers to hit RET at the end of the previous line.
   (setq org-return-follows-link t)
 #+end_src
 ** Highlight clock when running overtime
+:PROPERTIES:
+:CUSTOM_ID: HighlightClockOvertime
+:END:
 
 The current clocking task is displayed on the modeline.  If this has
 an estimated time and we run over the limit I make this stand out on
@@ -4717,6 +4939,9 @@ the modeline by changing the background to red as follows
    '(org-mode-line-clock ((t (:foreground "red" :box (:line-width -1 :style released-button)))) t))
 #+end_src
 ** Meeting Notes
+:PROPERTIES:
+:CUSTOM_ID: MeetingNotes
+:END:
 
 I take meeting notes with org-mode.  I record meeting conversations in
 point-form using org-mode lists.  If action items are decided on in
@@ -4799,6 +5024,9 @@ application.
           (kill-ring-save (point-min) (point-max))))))
 #+end_src
 ** Highlights persist after changes
+:PROPERTIES:
+:CUSTOM_ID: HighlightPersistAfterEdit
+:END:
 
 I'm finding I use org-occur =C-c / /= a lot when trying to find
 details in my org-files.  The following setting keeps the highlighted
@@ -4814,7 +5042,7 @@ Setting this variable to t will automatically remove the yellow
 highlights as soon as the buffer is modified.
 ** Getting up to date org-mode info documentation
 :PROPERTIES:
-:CUSTOM_ID: InfoDocumentation
+:CUSTOM_ID: OrgModeInfoDocumentation
 :END:
 
 I use the org-mode info documentation from the git repository so I set
@@ -4825,6 +5053,9 @@ date) system versions.
   (add-to-list 'Info-default-directory-list "~/git/org-mode/doc")
 #+end_src
 ** Prefer future dates or not?
+:PROPERTIES:
+:CUSTOM_ID: FutureDates
+:END:
 
 By default org-mode prefers dates in the future.  This means that if
 today's date is May 2 and you enter a date for April 30th (2 days ago)
@@ -4841,6 +5072,9 @@ the following variable:
 
 I now have this variable set to =t=.
 ** Automatically change list bullets
+:PROPERTIES:
+:CUSTOM_ID: ListBullets
+:END:
 
 I take point-form notes during meetings.  Having the same list bullet
 for every list level makes it hard to read the details when lists are
@@ -4863,6 +5097,9 @@ change list levels.
                                               ("1)" . "-"))))
 #+end_src
 ** Remove indentation on agenda tags view
+:PROPERTIES:
+:CUSTOM_ID: IndentationOnTagsView
+:END:
 
 I don't like the indented view for sublevels on a tags match in the
 agenda but I want to see all matching tasks (including sublevels) when
@@ -4874,6 +5111,9 @@ in the agenda set the following variable:
   (setq org-tags-match-list-sublevels t)
 #+end_src
 ** Fontify source blocks natively
+:PROPERTIES:
+:CUSTOM_ID: FontifySrcBlocksNatively
+:END:
 
 I use babel for including source blocks in my documents with
 
@@ -4889,6 +5129,9 @@ org-mode source buffer and the exported document.
 
 See this [[#git-sync][Git Repository synchronization]] in this document for an example..
 ** Agenda persistent filters
+:PROPERTIES:
+:CUSTOM_ID: AgendaPersistentFilters
+:END:
 
 This is a great feature!  Persistent agenda filters means if you limit
 a search with =/ TAB SomeTag= the agenda remembers this filter until
@@ -4906,6 +5149,9 @@ can easily see what filter currently applies to your agenda view.
 I use this with =FILETAGS= to limit the displayed results to a single
 client or context.
 ** Add tags for flagged entries
+:PROPERTIES:
+:CUSTOM_ID: TagFlaggedEntries
+:END:
 
 Everyone so often something will come along that is really important
 and you know you want to be able to find it back fast sometime in the
@@ -4918,6 +5164,9 @@ the agenda for flagged items.  See [[#OrgTagAlist][Tags]] for the setup of
 
 Finding flagged entries is then simple - just =F12 ?= and you get them all.
 ** Mail links open compose-mail
+:PROPERTIES:
+:CUSTOM_ID: MailLinksOpenComposeMail
+:END:
 
 The following setting makes org-mode open =mailto:= links
 using compose-mail.
@@ -4926,6 +5175,9 @@ using compose-mail.
   (setq org-link-mailto-program (quote (compose-mail "%a" "%s")))
 #+end_src
 ** Composing mail from org mode subtrees
+:PROPERTIES:
+:CUSTOM_ID: MailingSubtrees
+:END:
 
 It's possible to create mail from an org-mode subtree.  I use =C-c
 M-o= to start an email message with the details filled in from the
@@ -4934,6 +5186,9 @@ to send an email to someone else.  The email contents are already
 contained in the org-mode subtree and all I need to do is =C-c M-o=
 and any minor edits before sending it off.
 ** Use smex for M-x ido-completion
+:PROPERTIES:
+:CUSTOM_ID: SmexAndIdo
+:END:
 
 I discovered smex for IDO-completion for M-x commands after reading a
 post of the org-mode mailing list.  I actually use M-x a lot now
@@ -4950,6 +5205,9 @@ Here's the smex setup I use
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 #+end_src
 ** Use Emacs bookmarks for fast navigation
+:PROPERTIES:
+:CUSTOM_ID: BookmarksFastNavigation
+:END:
 
 I've started using emacs bookmarks to save a location and return to it easily.
 Normally I want to get back to my currently clocking task and that's easy - just hit =F11=.
@@ -4969,6 +5227,9 @@ When I want to save the current location I just hit =C-f6= and then I
 can return to it with =f6= anytime.  I overwrite the same bookmark
 each time I set a new position.
 ** Using org-mime to email
+:PROPERTIES:
+:CUSTOM_ID: OrgMimeMail
+:END:
 
 I'm experimenting with sending mime mail from org.  I've added =C-c M=o= key bindings 
 in the =org-mode-hook= to generate mail from an org-mode subtree.
@@ -4977,6 +5238,9 @@ in the =org-mode-hook= to generate mail from an org-mode subtree.
   (require 'org-mime)
 #+end_src
 ** Remove multiple state change log details from the agenda
+:PROPERTIES:
+:CUSTOM_ID: StateChangeDetailsInAgenda
+:END:
 [2011-04-30 Sat 11:14]
 
 I skip multiple timestamps for the same entry in the agenda view with the following setting.
@@ -4988,6 +5252,9 @@ I skip multiple timestamps for the same entry in the agenda view with the follow
 This removes the clutter of extra state change log details when multiple timestamps
 exist in a single entry.
 ** Drop old style references in tables
+:PROPERTIES:
+:CUSTOM_ID: OldTableReferences
+:END:
 [2011-04-30 Sat 11:19]
 
 I drop the old A3/B4 style references from tables when editing with the
@@ -4997,6 +5264,9 @@ following setting.
   (setq org-table-use-standard-references (quote from))
 #+end_src
 ** Use system settings for file-application selection
+:PROPERTIES:
+:CUSTOM_ID: SystemSettingsForApplicationSelection
+:END:
 [2011-04-30 Sat 14:38]
 
 To get consistent applications for opening tasks I set the =org-file-apps= variable as follows:
@@ -5012,6 +5282,9 @@ This uses the entries defined in my system =mailcap= settings when
 opening file extensions.  This gives me consistent behaviour when
 opening an link to some HTML file with =C-c C-o= or when previewing an export.
 ** Use the current window for the agenda
+:PROPERTIES:
+:CUSTOM_ID: CurrentWindowForAgenda
+:END:
 [2011-05-28 Sat 21:20]
 
 #+begin_src emacs-lisp :tangle yes
@@ -5019,12 +5292,18 @@ opening an link to some HTML file with =C-c C-o= or when previewing an export.
   (setq org-agenda-window-setup 'current-window)
 #+end_src
 ** Delete IDs when cloning
+:PROPERTIES:
+:CUSTOM_ID: DeleteIdsWhenCloning
+:END:
 [2011-05-28 Sat 21:27]
 
 #+begin_src emacs-lisp :tangle yes
   (setq org-clone-delete-id t)
 #+end_src
 ** Cycling plain lists
+:PROPERTIES:
+:CUSTOM_ID: CyclePlainLists
+:END:
 
 Org mode can fold (cycle) plain lists.
 #+begin_src emacs-lisp :tangle yes
@@ -5034,6 +5313,9 @@ Org mode can fold (cycle) plain lists.
 I find this setting useful when I have repeating tasks with lots of sublists with
 checkboxes.  I can fold the completed list entries and focus on what is remaining easily.
 ** Showing source block syntax highlighting
+:PROPERTIES:
+:CUSTOM_ID: ShowSrcBlockSyntax
+:END:
 
 It is possible to display org-mode source blocks fontified in their
 native mode.  This allows colourization of keywords for C and shell
@@ -5108,6 +5390,9 @@ since they are now projects and not tasks.
   (add-hook 'org-clock-in-hook 'bh/mark-next-parent-tasks-todo 'append)
 #+end_src
 ** Startup in content view
+:PROPERTIES:
+:CUSTOM_ID: StartupContentView
+:END:
 [2012-04-08 Sun 07:26]
 
 Startup in content view.  This allows us to quickly visit all archive
@@ -5119,6 +5404,9 @@ the list _before_ we archive anything.
 #+end_src
 
 ** Allow alphabetical list entries
+:PROPERTIES:
+:CUSTOM_ID: AlphabeticalLists
+:END:
 [2012-06-06 Wed 22:23]
 
 The following setting adds alphabetical lists like
@@ -5132,12 +5420,18 @@ The following setting adds alphabetical lists like
   (setq org-alphabetical-lists t)
 #+end_src
 * Things I Don't Use (Anymore)
+:PROPERTIES:
+:CUSTOM_ID: Unused
+:END:
 
 This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
 there that I don't know about yet or haven't explored so this list is
 not going to be complete.
 ** Task Priorities
+:PROPERTIES:
+:CUSTOM_ID: TaskPriorities
+:END:
 
 I use the agenda to figure out what to do work on next.  I don't use
 priorities at all.  I've played with them in the past and always go
@@ -5148,11 +5442,17 @@ I disable the priority setting keys in org-mode using
   (setq org-enable-priority-commands nil)
 #+end_src
 ** Archive Sibling
+:PROPERTIES:
+:CUSTOM_ID: ArchiveSibling
+:END:
 
 This was a cute idea but I find archiving entire complete subtrees
 better.  I don't mind having a bunch of tasks marked =DONE= (but not
 archived)
 ** Strike-through emphasis
+:PROPERTIES:
+:CUSTOM_ID: StrikeThroughEmphasis
+:END:
 
 Strike-through emphasis is just unreadable and tends to only show up
 when pasting data from other files into org-mode.  This just removes
@@ -5166,6 +5466,9 @@ the strike-through completely which I find a lot nicer.
                                    ("~" org-verbatim "<code>" "</code>" verbatim))))
 #+end_src
 ** Subscripts and Superscripts
+:PROPERTIES:
+:CUSTOM_ID: SubscriptsAndSuperscripts
+:END:
 
 I don't currently write documents that need subscripts and superscript
 support.  I disable handling of =_= and =^= for subscript and
@@ -5175,6 +5478,9 @@ superscripts with
   (setq org-use-sub-superscripts nil)
 #+end_src
 ** Preserving source block indentation
+:PROPERTIES:
+:CUSTOM_ID: PreserveSourceIndentations
+:END:
 I do not preserve indentation for source blocks mainly because this doesn't look
 nice with indented org-files.  The only reason I've found to preserve indentation is
 when TABs in files need to be preserved (e.g. Makefiles).  I don't normally edit
@@ -5293,6 +5599,9 @@ for the block.
 
 This is a great time saver.
 ** Show headings at odd levels only or odd-even levels
+:PROPERTIES:
+:CUSTOM_ID: HeadingLevelsOddEven
+:END:
 This has been replaced by org-indent-mode
 
 I've converted my files between odd-levels-only and odd-even using the
@@ -5306,6 +5615,9 @@ tasks in odd-levels-only to be all that helpful.
   (setq org-odd-levels-only nil)
 #+end_src
 ** Propagate STARTED to parent tasks
+:PROPERTIES:
+:CUSTOM_ID: PropagateStartedToParent
+:END:
 
 I used to have a =STARTED= and =NEXT= task state.  These were
 basically the same except =STARTED= indicated that I've clocked some
@@ -5353,6 +5665,9 @@ the state of my org files for any given hour over the lifetime of the
 document.  I've used this once or twice to recover data I accidentally
 removed while editing folded regions.
 ** Automatic Hourly Commits
+:PROPERTIES:
+:CUSTOM_ID: HourlyCommits
+:END:
 
 My Emacs setup saves all org buffers at 1 minute before the hour using
 the following code in my =.emacs=
@@ -5438,6 +5753,9 @@ produced by ditaa during export)
   ,*.toc
 #+end_example
 ** Git - Edit files with confidence
+:PROPERTIES:
+:CUSTOM_ID: GitEditWithConfidence
+:END:
 
 I use =git= in all of my directories where editing a file should be
 tracked.
