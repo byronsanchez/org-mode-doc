@@ -36,6 +36,63 @@ set at their default values.  This explicitly shows the setting for
 important org-mode variables used in my workflow and to keep my
 workflow behaviour stable in the event that the default value changes
 in the future.
+* License
+:PROPERTIES:
+:CUSTOM_ID: License
+:END:
+[2011-11-19 Sat 21:53] 
+
+#+begin_example
+  Copyright (C)  2012  Bernt Hansen.
+  Permission is granted to copy, distribute and/or modify this document
+  under the terms of the GNU Free Documentation License, Version 1.3
+  or any later version published by the Free Software Foundation;
+  with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+    
+  Code in this document is free software: you can redistribute it
+  and/or modify it under the terms of the GNU General Public
+  License as published by the Free Software Foundation, either
+  version 3 of the License, or (at your option) any later version.
+    
+  This code is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+#+end_example
+
+This document http://doc.norang.ca/org-mode.html and (either in its
+HTML format or in its Org format) is licensed under the GNU Free
+Documentation License version 1.3 or later
+(http://www.gnu.org/copyleft/fdl.html).
+
+The code examples and css stylesheets are licensed under the GNU
+General Public License v3 or later
+(http://www.gnu.org/licenses/gpl.html).
+* Change History - What's new
+:PROPERTIES:
+:CUSTOM_ID: ChangeHistory
+:END:
+
+#+name: org-mode-doc-version
+#+begin_src sh :exports none
+#!/bin/sh
+git describe --abbrev=4
+#+end_src
+
+#+name: org-mode-version
+#+begin_src sh :exports none
+  cd ~/git/org-mode && git describe origin/master
+#+end_src
+
+This is version call_org-mode-doc-version() of this document and it is
+created using the publishing features of =org-mode= git version call_org-mode-version().
+
+The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and as a
+[[http://doc.norang.ca/org-mode.org][plain text org file]].
+I try to update this document about once a month.
+
+The change history for this document can be found at
+[[http://git.norang.ca/?p%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
 * Getting Started
 
 I use =org-mode= in most of my emacs buffers.
@@ -5558,57 +5615,3 @@ Here is the =git-sync= script
 
   exit $retval
 #+end_src
-* Change History - What's new
-
-#+name: org-mode-doc-version
-#+begin_src sh :exports none
-#!/bin/sh
-git describe --abbrev=4
-#+end_src
-
-#+name: org-mode-version
-#+begin_src sh :exports none
-  cd ~/git/org-mode && git describe origin/master
-#+end_src
-
-This is version call_org-mode-doc-version() of this document and it is
-created using the publishing features of =org-mode= git version call_org-mode-version().
-
-The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and as a
-[[http://doc.norang.ca/org-mode.org][plain text org file]].
-I try to update this document about once a month.
-
-The change history for this document can be found at
-[[http://git.norang.ca/?p%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
-* License
-:PROPERTIES:
-:CUSTOM_ID: License
-:END:
-[2011-11-19 Sat 21:53] 
-
-#+begin_example
-  Copyright (C)  2012  Bernt Hansen.
-  Permission is granted to copy, distribute and/or modify this document
-  under the terms of the GNU Free Documentation License, Version 1.3
-  or any later version published by the Free Software Foundation;
-  with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-    
-  Code in this document is free software: you can redistribute it
-  and/or modify it under the terms of the GNU General Public
-  License as published by the Free Software Foundation, either
-  version 3 of the License, or (at your option) any later version.
-    
-  This code is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-#+end_example
-
-This document http://doc.norang.ca/org-mode.html and (either in its
-HTML format or in its Org format) is licensed under the GNU Free
-Documentation License version 1.3 or later
-(http://www.gnu.org/copyleft/fdl.html).
-
-The code examples and css stylesheets are licensed under the GNU
-General Public License v3 or later
-(http://www.gnu.org/licenses/gpl.html).
