@@ -5458,6 +5458,23 @@ creating documents with spelling errors.
     (org-mime-subtree))
 #+end_src
 
+** Task Priorities
+:PROPERTIES:
+:CUSTOM_ID: TaskPriorities
+:END:
+
+I use the agenda to figure out what to do work on next.  I don't use
+priorities at all normally but at work I occasionally get priorities
+from my manager.  In this case I mark my tasks with the priorities
+from the external source just to track the values and force the agenda
+to display tasks in the priority order.
+
+I disable the priority setting keys in org-mode using
+#+begin_src emacs-lisp :tangle yes
+(setq org-enable-priority-commands t)
+(setq org-default-priority ?E)
+(setq org-lowest-priority ?E)
+#+end_src
 * Things I Don't Use (Anymore)
 :PROPERTIES:
 :CUSTOM_ID: Unused
@@ -5467,19 +5484,6 @@ This is a partial list of things I know about but do not use.
 =org-mode= is huge with tons of features.  There are features out
 there that I don't know about yet or haven't explored so this list is
 not going to be complete.
-** Task Priorities
-:PROPERTIES:
-:CUSTOM_ID: TaskPriorities
-:END:
-
-I use the agenda to figure out what to do work on next.  I don't use
-priorities at all.  I've played with them in the past and always go
-back to using no priorities.
-
-I disable the priority setting keys in org-mode using
-#+begin_src emacs-lisp :tangle yes
-  (setq org-enable-priority-commands nil)
-#+end_src
 ** Archive Sibling
 :PROPERTIES:
 :CUSTOM_ID: ArchiveSibling
