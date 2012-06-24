@@ -84,8 +84,9 @@ git describe --abbrev=4
   cd ~/git/org-mode && git describe origin/master
 #+end_src
 
-This is version call_org-mode-doc-version() of this document and it is
-created using the publishing features of =org-mode= git version call_org-mode-version().
+This is version call_org-mode-doc-version() of this document.  This
+document is created using the publishing features of =org-mode= git
+version call_org-mode-version().
 
 The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and as a
 [[http://doc.norang.ca/org-mode.org][plain text org file]].
