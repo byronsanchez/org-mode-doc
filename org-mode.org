@@ -5528,6 +5528,21 @@ place without requiring use of =C-c '= so that code lines up correctly.
 (setq org-src-preserve-indentation nil)
 (setq org-edit-src-content-indentation 0)
 #+end_src
+** Prevent editing invisible text
+:PROPERTIES:
+:CUSTOM_ID: PreventInvisibleEdits
+:END:
+[2012-07-20 Fri 22:26]
+The following setting prevents accidentally editing hidden text when the point is inside a folded region.
+This can happen if you are in the body of a heading and globally fold the org-file with =S-TAB=
+
+I find invisible edits (and undo's) hard to deal with so now I can't edit invisible text.  
+=C-c C-r= (org-reveal) will display where the point is if it is buried in invisible text
+to allow editing again.
+
+#+begin_src emacs-lisp :tangle yes
+(setq org-catch-invisible-edits 'error)
+#+end_src
 * Things I Don't Use (Anymore)
 :PROPERTIES:
 :CUSTOM_ID: Unused
