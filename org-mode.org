@@ -4173,16 +4173,13 @@ setting:
 Blank lines are evil :).  They keep getting inserted in between
 headlines and I don't want to see them in collapsed (contents) views.
 When I use =TAB= to fold (cycle) tasks I don't want to see any blank
-lines but the default =org-cycle-separator-lines= setting hides single
-blank lines and reveals where extra empty lines are created in the
-document.  I delete extra blank lines that show up in contents views.
+lines between headings.
 
-The following setting hides single blank lines and exposes the rest so
-I can clean them up.  A single blank line between headings sometimes
-reads nicer... so I allow _one_ blank line only.
+The following setting hides blank lines between headings which keeps
+folded view nice and compact.
 
 #+begin_src emacs-lisp :tangle yes
-(setq org-cycle-separator-lines 2)
+(setq org-cycle-separator-lines 0)
 #+end_src
 
 I find extra blank lines in lists and headings a bit of a nuisance.
@@ -4192,11 +4189,11 @@ Most of my lists have no body detail so I like the look of collapsed
 lists with no blank lines better.
 
 The following setting prevents creating blank lines before headings
-and lists items:
+but allows list items to adapt to existing blank lines around the items:
 
 #+begin_src emacs-lisp :tangle yes
 (setq org-blank-before-new-entry (quote ((heading)
-                                         (plain-list-item))))
+                                         (plain-list-item . auto))))
 #+end_src
 *** Adding new tasks quickly without disturbing the current task content
 :PROPERTIES:
