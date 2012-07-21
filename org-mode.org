@@ -5325,11 +5325,14 @@ quickly into your org files.
 
 I use example and source blocks often in my org files.
 
-| Key Sequence | Expands to                          |
-|--------------+-------------------------------------|
-| < s TAB      | #+begin_src ... #+end_src           |
-| < e TAB      | #+begin_example ... #+end_example   |
-#+TBLFM: $1=< e TAB=
+| Key Sequence | Expands to                        |
+|--------------+-----------------------------------|
+| < s TAB      | #+begin_src ... #+end_src         |
+| < e TAB      | #+begin_example ... #+end_example |
+| < m TAB      | #+begin_src message ... #+end_src |
+
+I've added a block for saving email text which I copy from MS Outlook at work so I have context
+associated with my org-mode tasks.
 
 The following lisp makes the blocks lowercase instead of the default upper case in
 org-mode.
@@ -5338,6 +5341,7 @@ org-mode.
 (setq org-structure-template-alist
       (quote (("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
               ("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
+              ("m" "#+begin_src message\n\n#+end_src" "<src lang=message>\n\n</src>")
               ("q" "#+begin_quote\n?\n#+end_quote" "<quote>\n?\n</quote>")
               ("v" "#+begin_verse\n?\n#+end_verse" "<verse>\n?\n</verse>")
               ("c" "#+begin_center\n?\n#+end_center" "<center>\n?\n</center>")
