@@ -5449,7 +5449,9 @@ creating documents with spelling errors.
              ;; expands the files in the directories individually
              (org-defkey org-mode-map "\C-c["    'undefined)
              (org-defkey org-mode-map "\C-c]"    'undefined)
-             (org-defkey org-mode-map "\C-c;"    'undefined))
+             (org-defkey org-mode-map "\C-c;"    'undefined)
+             (org-defkey org-mode-map "\C-xnp"   'bh/narrow-to-org-project)
+             (org-defkey org-mode-map "\C-xnu"   'bh/narrow-up-one-org-level))
           'append)
 
 (add-hook 'org-mode-hook
