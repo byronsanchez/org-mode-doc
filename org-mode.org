@@ -5366,7 +5366,7 @@ since they are now projects and not tasks.
 #+begin_src emacs-lisp :tangle yes
 (defun bh/mark-next-parent-tasks-todo ()
   "Visit each parent task and change NEXT states to TODO"
-  (let ((mystate (or (and (fboundp 'state)
+  (let ((mystate (or (and (fboundp 'org-state)
                           state)
                      (nth 2 (org-heading-components)))))
     (when (equal mystate "NEXT")
