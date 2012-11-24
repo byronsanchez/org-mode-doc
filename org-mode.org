@@ -1486,6 +1486,7 @@ A prefix arg forces clock in of the default task."
           ((org-clock-is-active) (cadr org-clock-history))
           ((equal org-clock-default-task (car org-clock-history)) (cadr org-clock-history))
           (t (car org-clock-history)))))
+    (widen)
     (org-with-point-at clock-in-to-task
       (org-clock-in nil))))
 #+end_src
