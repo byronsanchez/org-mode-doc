@@ -5521,7 +5521,7 @@ to display tasks in the priority order.
 
 I disable the priority setting keys in org-mode using
 #+begin_src emacs-lisp :tangle yes
-(setq org-enable-priority-commands t)
+(setq org-enable-priority-commands nil)
 (setq org-default-priority ?E)
 (setq org-lowest-priority ?E)
 #+end_src
