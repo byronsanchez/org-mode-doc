@@ -5085,13 +5085,18 @@ annoying when I wanted to look at what happened last Friday since I have
 to specify the year.  Now I've trained my fingers to go back relatively
 in the agenda with =b= so this isn't really an issue for me anymore.
 
-To make org-mode prefer the current year when entering dates I set
+To make org-mode prefer the current year when entering dates set
 the following variable:
 #+begin_src emacs-lisp :tangle no
 (setq org-read-date-prefer-future nil)
 #+end_src
 
-I now have this variable set to =t=.
+I now have this variable set to ='time= so times before now (with no
+date specified) will default to tomorrow..
+
+#+begin_src emacs-lisp :tangle yes
+(setq org-read-date-prefer-future 'time)
+#+end_src
 ** Automatically change list bullets
 :PROPERTIES:
 :CUSTOM_ID: ListBullets
