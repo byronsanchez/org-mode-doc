@@ -81,7 +81,7 @@ git describe --abbrev=4
 
 #+name: org-mode-version
 #+begin_src sh :exports none
-cd ~/git/org-mode && git describe origin/master
+cd ~/git/org-mode && git describe HEAD
 #+end_src
 
 This is version call_org-mode-doc-version() of this document.  This
