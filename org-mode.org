@@ -3033,6 +3033,8 @@ Here's my publishing setup:
 (setq org-export-htmlize-output-type (quote css))
 ; Export with LaTeX fragments
 (setq org-export-with-LaTeX-fragments t)
+; Increase default number of headings to export
+(setq org-export-headline-levels 6)
 
 ; List of projects
 ; norang       - http://www.norang.ca/
