@@ -4309,7 +4309,7 @@ beginning of the line so the speed commands work and =C-a= to give
 easy access to the beginning of the heading text when I need that.
 
 #+begin_src emacs-lisp :tangle yes
-(setq org-special-ctrl-a/e 'reversed)
+(setq org-special-ctrl-a/e t)
 (setq org-special-ctrl-k t)
 (setq org-yank-adjusted-subtrees t)
 #+end_src
