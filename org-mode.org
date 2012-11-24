@@ -3341,6 +3341,8 @@ I have blocks for creating:
 
   - generic blocks in org-mode
   - plantuml blocks in org-mode
+    - plantuml activity diagram block in org-mode
+    - plantuml sequent diagram block in org-mode
   - graphviz dot blocks in org-mode
   - ditaa blocks in org-mode
   - elisp source blocks in org-mode
@@ -3388,6 +3390,40 @@ sentence.
   "#+end_src\n")
 
 (define-abbrev org-mode-abbrev-table "splantuml" "" 'skel-org-block-plantuml)
+
+(define-skeleton skel-org-block-plantuml-activity
+  "Insert a org plantuml block, querying for filename."
+  "File (no extension): "
+  "#+begin_src plantuml :file " str "-act.png :cache yes :tangle " str "-act.txt\n"
+  "@startuml\n"
+  "skinparam activity {\n"
+  "BackgroundColor<<New>> Cyan\n"
+  "}\n\n"
+  "title " str " - \n"
+  "note left: " str "\n"
+  "(*) --> (*)\n"
+  _ - \n
+  "@enduml\n"
+  "#+end_src\n")
+
+(define-abbrev org-mode-abbrev-table "sact" "" 'skel-org-block-plantuml-activity)
+
+(define-skeleton skel-org-block-plantuml-sequence
+  "Insert a org plantuml activity diagram block, querying for filename."
+  "File appends (no extension): "
+  "#+begin_src plantuml :file " str "-seq.png :cache yes :tangle " str "-seq.txt\n"
+  "@startuml\n"
+  "title " str " - \n"
+  "actor CSR as \"Customer Service Representative\"\n"
+  "participant CSMO as \"CSM Online\"\n"
+  "participant CSMU as \"CSM Unix\"\n"
+  "participant NRIS\n"
+  "actor Customer"
+  _ - \n
+  "@enduml\n"
+  "#+end_src\n")
+
+(define-abbrev org-mode-abbrev-table "sseq" "" 'skel-org-block-plantuml-sequence)
 
 ;; sdot - Graphviz DOT block
 (define-skeleton skel-org-block-dot
