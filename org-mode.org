@@ -15,6 +15,11 @@
 Org-mode is a fabulous organizational tool originally built by Carsten
 Dominik that operates on plain text files.  Org-mode is part of Emacs.
 
+* How To Use This Document
+:PROPERTIES:
+:CUSTOM_ID: HowToUseThisDocument
+:END:
+[2012-11-24 Sat 23:28]
 This document assumes you've had some exposure to org-mode already so
 concepts like the agenda, capture mode, etc.  won't be completely
 foreign to you.  More information about org-mode can be found in the
@@ -36,6 +41,12 @@ set at their default values.  This explicitly shows the setting for
 important org-mode variables used in my workflow and to keep my
 workflow behaviour stable in the event that the default value changes
 in the future.
+
+This document is available as an [[http://doc.norang.ca/org-mode.org][org file]] which you can load in Emacs
+and tangle with =C-c C-v C-t= which will create org-mode.el in the
+same directory as the org-mode.org file.  This will extract all of the
+elisp examples in this document into a file you can include in your
+.emacs file.
 * License
 :PROPERTIES:
 :CUSTOM_ID: License
@@ -60,8 +71,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 #+end_example
 
-This document http://doc.norang.ca/org-mode.html and (either in its
-HTML format or in its Org format) is licensed under the GNU Free
+This document http://doc.norang.ca/org-mode.html (either in its
+[[http://doc.norang.ca/org-mode.html][HTML format]] or in its [[http://doc.norang.ca/org-mode.org][Org format]]) is licensed under the GNU Free
 Documentation License version 1.3 or later
 (http://www.gnu.org/copyleft/fdl.html).
 
