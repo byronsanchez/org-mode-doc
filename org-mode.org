@@ -4694,7 +4694,7 @@ the on-disk version.
 This is perfect for synchronizing my org-mode files between systems.
 
 #+begin_src emacs-lisp :tangle yes
-(setq global-auto-revert-mode t)
+(global-auto-revert-mode t)
 #+end_src
 ** Handling Encryption
 :PROPERTIES:
