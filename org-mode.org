@@ -5703,10 +5703,10 @@ Here is the definition for the =begin= snippet:
 
 org-mode Yasnippet: ~/.emacs.d/plugins/yasnippet/snippets/text-mode/org-mode/begin
 :  #name : #+begin_...#+end_
-:  # --
-: , #+begin_$1 $2
+:  # --     
+:  #+begin_$1 $2
 :  $0
-: , #+end_$1
+:  #+end_$1
 
 I used this to create =#+begin_*= blocks like 
 - =#+begin_example=
