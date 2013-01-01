@@ -3507,16 +3507,18 @@ so change the default 'F' binding in the agenda to allow both"
 
 (defun bh/narrow-to-org-subtree ()
   (widen)
-  (org-narrow-to-subtree)
-  (save-restriction
-    (org-agenda-set-restriction-lock)))
+  (org-narrow-to-subtree))
 
 (defun bh/narrow-to-subtree ()
   (interactive)
   (if (equal major-mode 'org-agenda-mode)
       (org-with-point-at (org-get-at-bol 'org-hd-marker)
-        (bh/narrow-to-org-subtree))
-    (bh/narrow-to-org-subtree)))
+        (bh/narrow-to-org-subtree)
+        (save-restriction
+          (org-agenda-set-restriction-lock)))
+    (bh/narrow-to-org-subtree)
+    (save-restriction
+      (org-agenda-set-restriction-lock))))
 
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "N" 'bh/narrow-to-subtree))
@@ -3555,8 +3557,12 @@ so change the default 'F' binding in the agenda to allow both"
   (interactive)
   (if (equal major-mode 'org-agenda-mode)
       (org-with-point-at (bh/get-pom-from-agenda-restriction-or-point)
-        (bh/narrow-to-org-project))
-    (bh/narrow-to-org-project)))
+        (bh/narrow-to-org-project)
+        (save-restriction
+          (org-agenda-set-restriction-lock)))
+    (bh/narrow-to-org-project)
+    (save-restriction
+      (org-agenda-set-restriction-lock))))
 
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "P" 'bh/narrow-to-project))
@@ -4785,13 +4791,13 @@ as a quick way to get back to the agenda and update the current view.
                                       ("K" . ignore)
                                       ("L" . ignore)
                                       ("M" . ignore)
-                                      ("N" . bh/narrow-to-subtree)
-                                      ("P" . bh/narrow-to-project)
+                                      ("N" . bh/narrow-to-org-subtree)
+                                      ("P" . bh/narrow-to-org-project)
                                       ("Q" . ignore)
                                       ("R" . ignore)
                                       ("S" . ignore)
                                       ("T" . bh/org-todo)
-                                      ("U" . bh/narrow-up-one-level)
+                                      ("U" . bh/narrow-up-one-org-level)
                                       ("V" . ignore)
                                       ("W" . bh/widen)
                                       ("X" . ignore)
