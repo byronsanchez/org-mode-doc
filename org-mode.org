@@ -202,7 +202,6 @@ The following org files collect non-work related tasks:
 | mark.org     | Tasks related to my son Mark               |
 | org.org      | Org-mode related tasks                     |
 | git.org      | Git related tasks                          |
-| bzflag.org   | BZFlag related tasks                       |
 
 The following org-file collects org capture notes and tasks:
 
@@ -243,7 +242,6 @@ Here is my current =org-agenda-files= setup.
 #+begin_src emacs-lisp :tangle no
 (setq org-agenda-files (quote ("~/git/org"
                                "~/git/org/client1"
-                               "~/git/org/bzflag"
                                "~/git/client2")))
 #+end_src
 
@@ -256,7 +254,6 @@ Here is my current =org-agenda-files= setup.
     (setq org-agenda-files org-user-agenda-files)
   (setq org-agenda-files (quote ("~/git/org"
                                "~/git/org/client1"
-                               "~/git/org/bzflag"
                                "~/git/client2"))))
 #+end_src
 
@@ -1678,48 +1675,6 @@ The following setting shows 1 minute clocking gaps.
               :max-gap 0
               :gap-ok-around ("4:00"))))
 #+end_src
-** Automatically clocking tasks
-:PROPERTIES:
-:CUSTOM_ID: AutomaticallyClockingTasks
-:END:
-
-I spend time on an open source project called BZFlag.  During work for releases
-I want to clock the time I spend testing the new BZFlag client.  I have a key
-binding in my window manager that runs a script which starts the clock on my
-testing task, runs the BZFlag client, and on exit resumes the clock on the 
-previous clocking task.
-
-The testing task has an ID property of
-=dcf55180-2a18-460e-8abb-a9f02f0893be= and the following elisp code
-starts the clock on this task.
-
-#+begin_src emacs-lisp :tangle yes
-(defun bh/clock-in-bzflagt-task ()
-  (interactive)
-  (bh/clock-in-task-by-id "dcf55180-2a18-460e-8abb-a9f02f0893be"))
-#+end_src
-
-This is invoked by a bash shell script as follows:
-
-#+begin_src sh :results output
-#!/bin/sh
-emacsclient -e '(bh/clock-in-bzflagt-task)'
-~/git/bzflag/trunk/bzflag/src/bzflag/bzflag -directory ~/git/bzflag/trunk/bzflag/data $*
-emacsclient -e '(bh/resume-clock)'
-#+end_src
-
-The resume clock function just returns the clock to the previous clocking task
-
-#+begin_src emacs-lisp :tangle yes
-(defun bh/resume-clock ()
-  (interactive)
-  (if (marker-buffer org-clock-interrupted-task)
-      (org-with-point-at org-clock-interrupted-task
-        (org-clock-in))
-    (org-clock-out)))
-#+end_src
-
-If no task was clocking =bh/resume-clock= just stops the clock.
 * Time reporting and tracking
 :PROPERTIES:
 :CUSTOM_ID: TimeReportingAndTracking
@@ -2037,7 +1992,6 @@ be at the farm to make the call.
                             ("crypt" . ?E)
                             ("MARK" . ?M)
                             ("NOTE" . ?n)
-                            ("BZFLAG" . ?B)
                             ("CANCELLED" . ?c)
                             ("FLAGGED" . ??))))
 
@@ -2071,7 +2025,6 @@ I have the following =#+FILETAGS:= entries in my org-mode files:
 |--------------+-----------------------|
 | todo.org     | PERSONAL              |
 | gsoc2009.org | GSOC PERSONAL         |
-| bzflag.org   | BZFLAG @home PERSONAL |
 | git.org      | GIT WORK              |
 | org.org      | ORG WORK              |
 | mark.org     | MARK PERSONAL         |
@@ -5807,6 +5760,48 @@ Here's the setup I use to propagate =STARTED= to parent tasks:
 
 (add-hook 'org-after-todo-state-change-hook 'bh/mark-parent-tasks-started 'append)
 #+end_src
+** Automatically clocking tasks
+:PROPERTIES:
+:CUSTOM_ID: AutomaticallyClockingTasks
+:END:
+
+I used to spend time on an open source project called BZFlag.  During
+work for releases I want to clock the time I spend testing the new
+BZFlag client.  I have a key binding in my window manager that runs a
+script which starts the clock on my testing task, runs the BZFlag
+client, and on exit resumes the clock on the previous clocking task.
+
+The testing task has an ID property of
+=dcf55180-2a18-460e-8abb-a9f02f0893be= and the following elisp code
+starts the clock on this task.
+
+#+begin_src emacs-lisp :tangle yes
+(defun bh/clock-in-bzflagt-task ()
+  (interactive)
+  (bh/clock-in-task-by-id "dcf55180-2a18-460e-8abb-a9f02f0893be"))
+#+end_src
+
+This is invoked by a bash shell script as follows:
+
+#+begin_src sh :results output
+#!/bin/sh
+emacsclient -e '(bh/clock-in-bzflagt-task)'
+~/git/bzflag/trunk/bzflag/src/bzflag/bzflag -directory ~/git/bzflag/trunk/bzflag/data $*
+emacsclient -e '(bh/resume-clock)'
+#+end_src
+
+The resume clock function just returns the clock to the previous clocking task
+
+#+begin_src emacs-lisp :tangle yes
+(defun bh/resume-clock ()
+  (interactive)
+  (if (marker-buffer org-clock-interrupted-task)
+      (org-with-point-at org-clock-interrupted-task
+        (org-clock-in))
+    (org-clock-out)))
+#+end_src
+
+If no task was clocking =bh/resume-clock= just stops the clock.
 * Using Git for Automatic History, Backups, and Synchronization
 :PROPERTIES:
 :CUSTOM_ID: GitSync
