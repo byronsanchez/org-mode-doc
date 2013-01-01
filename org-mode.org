@@ -4453,7 +4453,7 @@ Most of my logging is controlled by the global =org-todo-keywords=
 My logging settings are set as follows:
 #+begin_src emacs-lisp :tangle yes
 (setq org-log-done (quote time))
-(setq org-log-into-drawer "LOGBOOK")
+(setq org-log-into-drawer nil)
 #+end_src
 
 My =org-todo-keywords= are set as follows:
@@ -4470,11 +4470,19 @@ This adds a log entry whenever a task moves to any of the following states:
 - to =HOLD= status
 - to =CANCELLED= status (with a note) or out of =CANCELLED= status
 
-I keep clock times and states in the =LOGBOOK= drawer to keep my tasks
-uncluttered.  If a task is WAITING then the reason for why it is
-waiting is near the top of the LOGBOOK and unfolding the LOGBOOK
-drawer provides that information.  From the agenda simply hitting
-=SPC= on the task will reveal the LOGBOOK drawer.
+I keep clock times in the =LOGBOOK= drawer to keep my tasks
+uncluttered.  I have moved my state change notes outside the =LOGBOOK=
+drawer so they can be included in exports to other formats.
+
+If a task is WAITING then the reason why it is waiting is near the top
+of the task details.  From the agenda simply hitting =SPC= on the task will
+reveal the LOGBOOK drawer.
+
+I like to see state changes in my exports by default
+but these can be excluded by export options easily.  State change
+notes and inactive timestamps are normally exported by default since
+the note without the inactive timestamp is not very useful.
+
 ** Limiting time spent on tasks
 :PROPERTIES:
 :CUSTOM_ID: LimitingTimeSpentOnTasks
@@ -4892,10 +4900,13 @@ insert the inactive timestamp anywhere on demand.
 (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
 #+end_src
 
-To prevent the timestamps from being exported in documents I use the following setting
+Timestamps can be selectively exported to other document formats using
+export options.  By default I enable including the timestamps since
+this is easy to override at the subtree and document levels using export
+options.
 
 #+begin_src emacs-lisp :tangle yes
-(setq org-export-with-timestamps nil)
+(setq org-export-with-timestamps t)
 #+end_src
 ** Return follows links
 :PROPERTIES:
