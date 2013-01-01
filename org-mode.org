@@ -688,7 +688,7 @@ Here is my setup for org-capture
       (quote (("t" "todo" entry (file "~/git/org/refile.org")
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
               ("r" "respond" entry (file "~/git/org/refile.org")
-               "* TODO Respond to %:from on %:subject\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+               "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
               ("n" "note" entry (file "~/git/org/refile.org")
                "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
               ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
@@ -1057,7 +1057,7 @@ My day goes generally like this:
 - Look at my agenda and work on important tasks for today
   - Clock it in
   - Work on it until it is =DONE= or it gets interrupted
-- work on tasks
+- Work on tasks
 - Make journal entries (=C-M-r j=) for interruptions
 - Punch out for lunch and punch back in after lunch
 - work on more tasks
@@ -1133,7 +1133,9 @@ for each one.  This automatically links to the email in the task and
 makes it easy to find later.  Some emails are quick to respond to and
 some take research and a significant amount of time to complete.  I
 clock each one in it's own task just in case I need that clocked time
-later.
+later.  The capture template for Repond To tasks is now scheduled for
+today so I can refile the task to the appropriate org file without
+losing the task for a week.
 
 Next, I go to my newly created tasks to be refiled from the block
 agenda with =F12 a= and clock in an email task and deal with it.
