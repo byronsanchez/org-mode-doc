@@ -5554,6 +5554,18 @@ to allow editing again.
 #+begin_src emacs-lisp :tangle yes
 (setq org-catch-invisible-edits 'error)
 #+end_src
+** Use utf-8 as default coding system
+:PROPERTIES:
+:CUSTOM_ID: DefaultCodingSystem
+:END:
+[2013-01-01 Tue 13:49]
+I use =utf-8= as the default coding system for all of my org files.
+
+#+begin_src emacs-lisp :tangle yes
+(prefer-coding-system 'utf-8)
+(set-charset-priority 'unicode)
+(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+#+end_src
 * Things I Don't Use (Anymore)
 :PROPERTIES:
 :CUSTOM_ID: Unused
