@@ -5507,9 +5507,9 @@ from my manager.  In this case I mark my tasks with the priorities
 from the external source just to track the values and force the agenda
 to display tasks in the priority order.
 
-I disable the priority setting keys in org-mode using
+I use priorities A-E where tasks without a specific priority are lowest priority E.
 #+begin_src emacs-lisp :tangle yes
-(setq org-enable-priority-commands nil)
+(setq org-enable-priority-commands t)
 (setq org-default-priority ?E)
 (setq org-lowest-priority ?E)
 #+end_src
