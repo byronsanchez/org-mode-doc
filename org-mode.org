@@ -5428,7 +5428,7 @@ since they are now projects and not tasks.
   (let ((mystate (or (and (fboundp 'org-state)
                           state)
                      (nth 2 (org-heading-components)))))
-    (when (equal mystate "NEXT")
+    (when mystate
       (save-excursion
         (while (org-up-heading-safe)
           (when (member (nth 2 (org-heading-components)) (list "NEXT"))
