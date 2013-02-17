@@ -5588,6 +5588,25 @@ I use =utf-8= as the default coding system for all of my org files.
 (set-charset-priority 'unicode)
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 #+end_src
+
+** Keep clock durations in hours
+:PROPERTIES:
+:CUSTOM_ID: ClockDurationsNoDays
+:END:
+[2013-02-17 Sun 12:37]
+
+The default for clock durations has changed to include days which is
+24 hours.  At work I like to think of a day as 6 hours of work (the
+rest of the time is lost in meetings and other overhead on average) so
+displaying clock durations in days doesn't make sense to me.
+
+The following setting displays clock durations (from =C-c C-x C-d= in
+hours and minutes.
+
+#+begin_src emacs-lisp :tangle yes
+(setq org-time-clocksum-format
+      '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+#+end_src
 * Things I Don't Use (Anymore)
 :PROPERTIES:
 :CUSTOM_ID: Unused
