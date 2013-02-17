@@ -3337,6 +3337,10 @@ I have put the =s= (src) prefix on the shortcuts to prevent
 abbrev-mode from trying to expand =PlantUML= when I'm typing it in a
 sentence.
 
+For convenience in activity diagrams I added =sif= and =sfor= and just
+change the labels for the synchronization bars.
+
+
 #+begin_src emacs-lisp :tangle yes
 ;; Enable abbrev-mode
 (add-hook 'org-mode-hook (lambda () (abbrev-mode 1)))
@@ -3379,6 +3383,29 @@ sentence.
   "#+end_src\n")
 
 (define-abbrev org-mode-abbrev-table "sact" "" 'skel-org-block-plantuml-activity)
+
+(define-skeleton skel-org-block-plantuml-activity-if
+  "Insert a org plantuml block activity if statement"
+  "" 
+  "if \"\" then\n"
+  "  -> [] \"" - _ "\"\n"
+  "  --> ==M1==\n"
+  "  -left-> ==M2==\n"
+  "else\n"
+  "end if\n"
+  "--> ==M2==")
+
+(define-abbrev org-mode-abbrev-table "sif" "" 'skel-org-block-plantuml-activity-if)
+
+(define-skeleton skel-org-block-plantuml-activity-for
+  "Insert a org plantuml block activity for statement"
+  "" 
+  "--> ==LOOP1==\n"
+  "note left: Loop1: For each\n"
+  "--> ==ENDLOOP1==\n"
+  "note left: Loop1: End for each")
+
+(define-abbrev org-mode-abbrev-table "sfor" "" 'skel-org-block-plantuml-activity-for)
 
 (define-skeleton skel-org-block-plantuml-sequence
   "Insert a org plantuml activity diagram block, querying for filename."
