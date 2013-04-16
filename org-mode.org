@@ -1,6 +1,6 @@
 #+TITLE: Org Mode - Organize Your Life In Plain Text!
 #+LANGUAGE:  en
-#+AUTHOR: Bernt Hansen (IRC:BerntH on freenode)
+#+AUTHOR: Bernt Hansen (IRC: BerntH on freenode)
 #+EMAIL: bernt@norang.ca
 #+OPTIONS:   H:3 num:t   toc:3 \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:nil
 #+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
