@@ -15,6 +15,12 @@
 Org-mode is a fabulous organizational tool originally built by Carsten
 Dominik that operates on plain text files.  Org-mode is part of Emacs.
 
+#+begin_example
+The source for this document works with org-mode up to version 7.9.4.
+The code in this document will be updated to 8.0 as soon as it is 
+released.
+#+end_example
+
 * How To Use This Document
 :PROPERTIES:
 :CUSTOM_ID: HowToUseThisDocument
