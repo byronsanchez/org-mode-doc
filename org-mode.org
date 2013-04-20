@@ -15,17 +15,12 @@
 Org-mode is a fabulous organizational tool originally built by Carsten
 Dominik that operates on plain text files.  Org-mode is part of Emacs.
 
-#+begin_example
-The source for this document works with org-mode up to version 7.9.4.
-The code in this document will be updated to 8.0 as soon as it is 
-released.
-#+end_example
-
 * How To Use This Document
 :PROPERTIES:
 :CUSTOM_ID: HowToUseThisDocument
 :END:
 [2012-11-24 Sat 23:28]
+
 This document assumes you've had some exposure to org-mode already so
 concepts like the agenda, capture mode, etc.  won't be completely
 foreign to you.  More information about org-mode can be found in the
@@ -123,6 +118,7 @@ emacs to use the latest version of org-mode from the =git= repository.
 :CUSTOM_ID: GettingOrgModeWithGit
 :END:
 [2012-06-24 Sun 11:21]
+
 I keep a copy of the org-mode =git= repository in =~/git/org-mode/=.  This clone
 was created with
 #+begin_src sh
@@ -772,6 +768,7 @@ since it's a new task and I get a buffer like this:
 #+begin_src org :exports src
 ,* TODO 
   [2010-08-05 Thu 21:06]
+
   [[file:~/git/org-mode-doc/org-mode.org::*Capture%20Tasks%20is%20all%20about%20being%20FAST][Capture Tasks is all about being FAST]]
 #+end_src
 
@@ -2658,6 +2655,72 @@ I haven't begun the scratch the surface of what org-mode is capable of
 doing.  My main use case for org-mode publishing is just to create
 HTML documents for viewing online conveniently.  Someday I'll get time
 to try out the other formats when I need them for something.
+** New Exporter Setup 
+[2013-04-20 Sat 08:18]
+
+The new exporter created by Nicolas Goaziou was introduced in org 8.0.
+
+I have the following setup for the exporters I use.
+
+#+begin_src emacs-lisp :tangle yes
+;; Explicitly load required exporters
+(require 'ox-html)
+(require 'ox-latex)
+(require 'ox-ascii)
+#+end_src
+
+
+*** Conversion from the old exporter to the new exporter
+[2013-04-20 Sat 08:20]
+
+Here is the list of changes I made to move from the old exporter (pre
+org 8.0) to the new exporter.
+
+- Explicitly require exporters
+
+  - Add =ox-html=
+
+  - Add =ox-latex=
+
+  - Add =ox-ascii=
+
+- Rename variables
+
+  - =org-export-html-style-extra= to =org-html-head-extra=
+
+  - =org-export-html-validation-link= to =org-html-validation-link=
+
+  - =org-export-html-inline-images= to =org-html-inline-images=
+
+  - =org-export-html-style-include-default= to =org-html-head-include-default-style=
+
+  - =org-export-html-xml-declaration= to =org-html-xml-declaration=
+
+  - =org-export-latex-listings= to =org-latex-listings=
+
+  - =org-export-html-style-include-scripts= to =org-html-head-include-scripts=
+
+  - =org-export-html-validation-link= to =org-html-validation-link=
+
+- Publishing changes
+
+  - Rename =:publishing-function=
+
+    - =org-publish-org-to-html= to =org-html-publish-to-html=
+
+    - =org-publish-org-to-org= to =org-org-publish-to-org=
+
+  - Change =:style= to =:html-head=
+
+- Change =bh/is-late-deadline= to handle modified deadline string in agenda
+
+- Reverse agenda sorting for late deadlines
+
+  These are no longer reported with negative values on the agenda
+
+- Add a blank line after my inactive timestamps following headings to
+  prevent them from being exported.
+
 ** Org-babel Setup
 :PROPERTIES:
 :CUSTOM_ID: OrgBabel
@@ -2882,6 +2945,7 @@ deactivate Client
 :CUSTOM_ID: PlantUMLActivity
 :END:
 [2011-09-10 Sat 08:36]
+
 #+begin_src plantuml :file activity.png :exports both :cache yes
 title Example Activity Diagram
 note right: Example Function
@@ -2999,12 +3063,12 @@ Here's my publishing setup:
 (setq org-export-docbook-xslt-proc-command "xsltproc --output %s /usr/share/xml/docbook/stylesheet/nwalsh/fo/docbook.xsl %s")
 ;
 ; Inline images in HTML instead of producting links to the image
-(setq org-export-html-inline-images t)
+(setq org-html-inline-images t)
 ; Do not use sub or superscripts - I currently don't need this functionality in my documents
 (setq org-export-with-sub-superscripts nil)
 ; Use org.css from the norang website for export document stylesheets
-(setq org-export-html-style-extra "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />")
-(setq org-export-html-style-include-default nil)
+(setq org-html-head-extra "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />")
+(setq org-html-head-include-default-style nil)
 ; Do not generate internal css formatting for HTML exports
 (setq org-export-htmlize-output-type (quote css))
 ; Export with LaTeX fragments
@@ -3029,11 +3093,11 @@ Here's my publishing setup:
                :recursive t
                :table-of-contents nil
                :base-extension "org"
-               :publishing-function org-publish-org-to-html
+               :publishing-function org-html-publish-to-html
                :style-include-default nil
                :section-numbers nil
                :table-of-contents nil
-               :style "<link rel=\"stylesheet\" href=\"norang.css\" type=\"text/css\" />"
+               :html-head "<link rel=\"stylesheet\" href=\"norang.css\" type=\"text/css\" />"
                :author-info nil
                :creator-info nil)
               ("norang-extra"
@@ -3057,9 +3121,9 @@ Here's my publishing setup:
                :section-numbers nil
                :table-of-contents nil
                :base-extension "org"
-               :publishing-function (org-publish-org-to-html org-publish-org-to-org)
+               :publishing-function (org-html-publish-to-html org-org-publish-to-org)
                :style-include-default nil
-               :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
+               :html-head "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
                :author-info nil
                :creator-info nil)
               ("doc-extra"
@@ -3078,9 +3142,9 @@ Here's my publishing setup:
                :section-numbers nil
                :table-of-contents nil
                :base-extension "org"
-               :publishing-function (org-publish-org-to-html org-publish-org-to-org)
+               :publishing-function (org-html-publish-to-html org-org-publish-to-org)
                :style-include-default nil
-               :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
+               :html-head "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
                :auto-sitemap t
                :sitemap-filename "index.html"
                :sitemap-title "Norang Private Documents"
@@ -3106,9 +3170,9 @@ Here's my publishing setup:
                :section-numbers nil
                :table-of-contents nil
                :base-extension "org"
-               :publishing-function org-publish-org-to-html
+               :publishing-function org-html-publish-to-html
                :style-include-default nil
-               :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
+               :html-head "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
                :author-info nil
                :creator-info nil)
               ;
@@ -3124,11 +3188,11 @@ Here's my publishing setup:
                :section-numbers nil
                :table-of-contents nil
                :base-extension "org"
-               :publishing-function (org-publish-org-to-html org-publish-org-to-org)
+               :publishing-function (org-html-publish-to-html org-org-publish-to-org)
                :plain-source t
                :htmlized-source t
                :style-include-default nil
-               :style "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
+               :html-head "<link rel=\"stylesheet\" href=\"/org.css\" type=\"text/css\" />"
                :author-info nil
                :creator-info nil)
               ("org-mode-doc-extra"
@@ -3153,8 +3217,8 @@ Here's my publishing setup:
                :section-numbers nil
                :table-of-contents nil
                :base-extension "org"
-               :publishing-function (org-publish-org-to-html org-publish-org-to-org)
-               :style "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />"
+               :publishing-function (org-html-publish-to-html org-org-publish-to-org)
+               :html-head "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />"
                :plain-source t
                :htmlized-source t
                :style-include-default nil
@@ -3179,11 +3243,13 @@ Here's my publishing setup:
 ; the project that includes this file
 ;
 ; It's bound to C-S-F12 so I just edit and hit C-S-F12 when I'm done and move on to the next thing
-(defun bh/save-then-publish ()
-  (interactive)
+(defun bh/save-then-publish (&optional force)
+  (interactive "P")
   (save-buffer)
   (org-save-all-org-buffers)
-  (org-publish-current-project))
+  (let ((org-html-head-extra)
+        (org-html-validation-link "<a href=\"http://validator.w3.org/check?uri=referer\">Validate XHTML 1.0</a>"))
+    (org-publish-current-project force)))
 
 (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
 #+end_src
@@ -3211,7 +3277,7 @@ other people by simply giving them the link to the appropriate site.
 All I need to remember to do is edit the appropriate org file and
 publish it with C-S-F12 -- not exactly hard :)
 
-Recently I added a temporary publishing site for testing exports and
+I added a temporary publishing site for testing exports and
 validation.  This is the =tmp= site which takes files from
 =/tmp/publish= and exports those files to a website publishing
 directory.  This makes it easy to try new throw-away things on a live
@@ -3232,7 +3298,7 @@ For export to latex I use the following setting to get fontified
 listings from source blocks:
 
 #+begin_src emacs-lisp :tangle yes
-(setq org-export-latex-listings t)
+(setq org-latex-listings t)
 #+end_src
 *** Export HTML without XML header
 :PROPERTIES:
@@ -3244,9 +3310,9 @@ exports.  This xml line was confusing Open Office when opening the
 HTML to convert to ODT.
 
 #+begin_src emacs-lisp :tangle yes
-(setq org-export-html-xml-declaration (quote (("html" . "")
-                                              ("was-html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
-                                              ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
+(setq org-html-xml-declaration (quote (("html" . "")
+                                       ("was-html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
+                                       ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
 #+end_src
 *** Allow binding variables on export without confirmation
 :PROPERTIES:
@@ -3312,6 +3378,7 @@ with org-mode so that it Works-For-Me(tm).
 :CUSTOM_ID: AbbrevMode
 :END:
 [2011-09-26 Mon 05:44]
+
 I use skeletons with abbrev-mode to quickly add preconfigured blocks to my 
 Emacs edit buffers.
 
@@ -5373,6 +5440,7 @@ syntax highlighting when viewing in the org-mode buffer.
 :CUSTOM_ID: StructureTemplateBlocks
 :END:
 [2012-03-04 Sun 11:42]
+
 There is a shortcut key sequence in org-mode to insert structure templates
 quickly into your org files.
 
@@ -5468,6 +5536,7 @@ b. item two
 :CUSTOM_ID: OrgStructModeForMail
 :END:
 [2012-06-24 Sun 11:16]
+
 =orgstruct++-mode= is enabled in =Gnus= message buffers to aid in
 creating structured email messages.
 
@@ -5489,6 +5558,7 @@ creating structured email messages.
 :CUSTOM_ID: FlySpellModeChecksSpelling
 :END:
 [2012-06-24 Sun 11:17]
+
 =flyspell-mode= is enabled for almost everything to help prevent
 creating documents with spelling errors.
 
@@ -5535,37 +5605,6 @@ I use priorities A-E where tasks without a specific priority are lowest priority
 (setq org-default-priority ?E)
 (setq org-lowest-priority ?E)
 #+end_src
-** New Exporter
-:PROPERTIES:
-:CUSTOM_ID: NewExporter
-:END:
-[2012-06-24 Sun 12:10]
-
-The current export engine invoked with =C-c C-e= is going to be replaced with a new
-system soon.  I have the following settings so I can invoke the new exporter to see
-how it behaves compared to the existing one.
-
-#+begin_src emacs-lisp :tangle yes
-(setq org-e-html-inline-images t)
-(setq org-export-html-style-extra "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />")
-(setq org-e-html-style-extra "<link rel=\"stylesheet\" href=\"http://doc.norang.ca/org.css\" type=\"text/css\" />")
-(setq org-e-html-style-include-default nil)
-(setq org-e-html-xml-declaration
-      (quote
-       (("was-html" . "")
-        ("html" . "<?xml version=\"1.0\" encoding=\"%s\"?>")
-        ("php" . "<?php echo \"<?xml version=\\\"1.0\\\" encoding=\\\"%s\\\" ?>\"; ?>"))))
-(setq org-e-latex-listings t)
-(setq org-e-html-style-include-scripts nil)
-(setq org-e-html-validation-link nil)
-
-(setq org-export-coding-system 'utf-8)
-
-(require 'org-export)
-#+end_src
-
-To invoke the new exporter use =M-x org-export-dispatch=.
-
 ** Preserving source block indentation
 :PROPERTIES:
 :CUSTOM_ID: PreserveSourceIndentations
@@ -5588,6 +5627,7 @@ place without requiring use of =C-c '= so that code lines up correctly.
 :CUSTOM_ID: PreventInvisibleEdits
 :END:
 [2012-07-20 Fri 22:26]
+
 The following setting prevents accidentally editing hidden text when the point is inside a folded region.
 This can happen if you are in the body of a heading and globally fold the org-file with =S-TAB=
 
@@ -5603,6 +5643,7 @@ to allow editing again.
 :CUSTOM_ID: DefaultCodingSystem
 :END:
 [2013-01-01 Tue 13:49]
+
 I use =utf-8= as the default coding system for all of my org files.
 
 #+begin_src emacs-lisp :tangle yes
