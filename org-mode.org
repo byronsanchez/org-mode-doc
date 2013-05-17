@@ -5759,6 +5759,7 @@ I use =utf-8= as the default coding system for all of my org files.
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
+(setq org-export-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 (set-charset-priority 'unicode)
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
