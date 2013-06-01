@@ -420,8 +420,7 @@ Here is the keybinding setup in lisp:
 (global-set-key (kbd "<f9> s") 'bh/switch-to-scratch)
 
 (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
-(global-set-key (kbd "<f9> T") 'tabify)
-(global-set-key (kbd "<f9> U") 'untabify)
+(global-set-key (kbd "<f9> T") 'bh/toggle-insert-inactive-timestamp)
 
 (global-set-key (kbd "<f9> v") 'visible-mode)
 (global-set-key (kbd "<f9> SPC") 'bh/clock-in-last-task)
@@ -5053,17 +5052,33 @@ structure editing I want the timestamp automatically added when I create the hea
 I have a function that is run by an org-mode hook to automatically insert the inactive
 timestamp whenever a headline is created.
 
+Adding the timestamp can be controlled by =f9 T= which toggles the
+creation of the timestamp on and off for new headlines.
+
+
 #+header: :tangle yes
 #+begin_src emacs-lisp
+(defvar bh/insert-inactive-timestamp t)
+
+(defun bh/toggle-insert-inactive-timestamp ()
+  (interactive)
+  (setq bh/insert-inactive-timestamp (not bh/insert-inactive-timestamp))
+  (message "Heading timestamps are %s" (if bh/insert-inactive-timestamp "ON" "OFF")))
+
+(defun bh/insert-inactive-timestamp ()
+  (interactive)
+  (org-insert-time-stamp nil t t nil nil nil))
+
 (defun bh/insert-inactive-timestamp ()
   (interactive)
   (org-insert-time-stamp nil t t nil nil nil))
 
 (defun bh/insert-heading-inactive-timestamp ()
   (save-excursion
-    (org-return)
-    (org-cycle)
-    (bh/insert-inactive-timestamp)))
+    (when bh/insert-inactive-timestamp
+      (org-return)
+      (org-cycle)
+      (bh/insert-inactive-timestamp))))
 
 (add-hook 'org-insert-heading-hook 'bh/insert-heading-inactive-timestamp 'append)
 #+end_src
