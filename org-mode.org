@@ -5210,7 +5210,7 @@ application.
         (goto-char (point-min))
         (kill-ring-save (point-min) (point-max))))))
 #+end_src
-** Highlights persist after changes
+** Remove Highlights after changes
 :PROPERTIES:
 :CUSTOM_ID: HighlightPersistAfterEdit
 :END:
@@ -5221,13 +5221,18 @@ results of the search even after modifying the text.  This allows me
 to edit the file without having to reissue the org-occur command to
 find the other matches in my file. =C-c C-c= removes the highlights.
 
-#+header: :tangle yes
+#+header: :tangle no
 #+begin_src emacs-lisp
 (setq org-remove-highlights-with-change nil)
 #+end_src
 
 Setting this variable to t will automatically remove the yellow
 highlights as soon as the buffer is modified.
+
+I've gone back to automatically removing the highlights with change
+which is the default setting.  I've been using regular =M-x occur= a
+lot more lately to find things in any Emacs buffer.
+
 ** Getting up to date org-mode info documentation
 :PROPERTIES:
 :CUSTOM_ID: OrgModeInfoDocumentation
