@@ -979,7 +979,9 @@ don't want to spend time waiting for it to be generated.
                        (org-tags-match-list-sublevels nil)))
                 (tags-todo "-CANCELLED/!"
                            ((org-agenda-overriding-header "Stuck Projects")
-                            (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
+                            (org-agenda-skip-function 'bh/skip-non-stuck-projects)
+                            (org-agenda-sorting-strategy
+                             '(priority-down category-keep))))
                 (tags-todo "-WAITING-CANCELLED/!NEXT"
                            ((org-agenda-overriding-header "Next Tasks")
                             (org-agenda-skip-function 'bh/skip-projects-and-habits-and-single-tasks)
@@ -988,7 +990,7 @@ don't want to spend time waiting for it to be generated.
                             (org-agenda-todo-ignore-with-date t)
                             (org-tags-match-list-sublevels t)
                             (org-agenda-sorting-strategy
-                             '(todo-state-down effort-up category-keep))))
+                             '(priority-down todo-state-down effort-up category-keep))))
                 (tags-todo "-REFILE-CANCELLED/!-HOLD-WAITING"
                            ((org-agenda-overriding-header "Tasks")
                             (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
@@ -1001,7 +1003,7 @@ don't want to spend time waiting for it to be generated.
                            ((org-agenda-overriding-header "Projects")
                             (org-agenda-skip-function 'bh/skip-non-projects)
                             (org-agenda-sorting-strategy
-                             '(category-keep))))
+                             '(priority-down category-keep))))
                 (tags-todo "-CANCELLED+WAITING/!"
                            ((org-agenda-overriding-header "Waiting and Postponed Tasks")
                             (org-agenda-skip-function 'bh/skip-stuck-projects)
