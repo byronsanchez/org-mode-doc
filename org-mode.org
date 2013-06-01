@@ -3641,9 +3641,10 @@ so change the default 'F' binding in the agenda to allow both"
   (interactive "p")
   (if (equal arg 4)
       (org-agenda-follow-mode)
-    (if (equal major-mode 'org-agenda-mode)
-        (bh/set-agenda-restriction-lock 4)
-      (widen))))
+    (widen)
+    (bh/set-agenda-restriction-lock 4)
+    (org-agenda-redo)
+    (beginning-of-buffer)))
 
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "F" 'bh/restrict-to-file-or-follow))
