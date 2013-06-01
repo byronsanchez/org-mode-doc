@@ -3719,6 +3719,7 @@ so change the default 'F' binding in the agenda to allow both"
   (interactive)
   (unless (marker-position org-agenda-restrict-begin)
     (goto-char (point-min))
+    (re-search-forward "Tasks to Refile")
     (setq bh/current-view-project (point)))
   (bh/widen)
   (goto-char bh/current-view-project)
