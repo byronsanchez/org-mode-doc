@@ -5656,9 +5656,6 @@ creating structured email messages.
 (add-hook 'message-mode-hook
           '(lambda () (setq fill-column 72))
           'append)
-(add-hook 'message-mode-hook
-          '(lambda () (local-set-key (kbd "C-c M-o") 'org-mime-htmlize))
-          'append)
 #+end_src
 ** Using flyspell mode to reduce spelling errors
 :PROPERTIES:
