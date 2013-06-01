@@ -6012,7 +6012,7 @@ The testing task has an ID property of
 =dcf55180-2a18-460e-8abb-a9f02f0893be= and the following elisp code
 starts the clock on this task.
 
-#+header: :tangle yes
+#+header: :tangle no
 #+begin_src emacs-lisp
 (defun bh/clock-in-bzflagt-task ()
   (interactive)
@@ -6030,7 +6030,7 @@ emacsclient -e '(bh/resume-clock)'
 
 The resume clock function just returns the clock to the previous clocking task
 
-#+header: :tangle yes
+#+header: :tangle no
 #+begin_src emacs-lisp
 (defun bh/resume-clock ()
   (interactive)
