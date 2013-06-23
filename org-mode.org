@@ -2697,8 +2697,13 @@ The new exporter created by Nicolas Goaziou was introduced in org 8.0.
 
 I have the following setup for the exporters I use.
 
+Alphabetical listing options need to be set before the exporters are
+loaded for filling to work correctly.
+
 #+header: :tangle yes
 #+begin_src emacs-lisp
+(setq org-alphabetical-lists t)
+
 ;; Explicitly load required exporters
 (require 'ox-html)
 (require 'ox-latex)
@@ -5712,10 +5717,13 @@ a. item one
 b. item two
 #+end_src
 
-#+header: :tangle yes
+#+header: :tangle no
 #+begin_src emacs-lisp
 (setq org-alphabetical-lists t)
 #+end_src
+
+In order for filling to work correctly this needs to be set before the
+exporters are loaded.
 ** Using orgstruct mode for mail
 :PROPERTIES:
 :CUSTOM_ID: OrgStructModeForMail
