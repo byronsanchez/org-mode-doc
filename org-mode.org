@@ -4087,7 +4087,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
      ((bh/agenda-sort-test 'bh/is-due-deadline a b))
 
      ; late deadlines next
-     ((bh/agenda-sort-test-num 'bh/is-late-deadline '< a b))
+     ((bh/agenda-sort-test-num 'bh/is-late-deadline '> a b))
 
      ; scheduled items for today next
      ((bh/agenda-sort-test 'bh/is-scheduled-today a b))
@@ -4141,7 +4141,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
   (string-match "Deadline:" date-str))
 
 (defun bh/is-late-deadline (date-str)
-  (string-match "In *\\(-.*\\)d\.:" date-str))
+  (string-match "\\([0-9]*\\) d\. ago:" date-str))
 
 (defun bh/is-pending-deadline (date-str)
   (string-match "In \\([^-]*\\)d\.:" date-str))
