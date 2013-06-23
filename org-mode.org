@@ -3852,6 +3852,17 @@ org-file.
 
 - =W= removes the restriction, widening the buffer
 
+I like the highlighting for a restriction to only affect the headline
+and not the entire body of the agenda restriction.  I use the
+following setting to keep the highlight on the heading only (as was
+the case for pre-8.0 versions of org-mode)
+
+#+header: :tangle yes
+#+begin_src emacs-lisp
+;; Limit restriction lock highlighting to the headline only
+(setq org-agenda-restriction-lock-highlight-subtree nil)
+#+end_src
+
 *** Limiting the agenda to a file
 :PROPERTIES:
 :CUSTOM_ID: AgendaNarrowToFile
