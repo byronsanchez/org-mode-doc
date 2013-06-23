@@ -3626,9 +3626,11 @@ way to focus on what we are doing.
 (defun bh/widen ()
   (interactive)
   (if (equal major-mode 'org-agenda-mode)
-      (org-agenda-remove-restriction-lock)
-    (widen)
-    (org-agenda-remove-restriction-lock)))
+      (progn
+        (org-agenda-remove-restriction-lock)
+        (when org-agenda-sticky
+          (org-agenda-redo)))
+    (widen)))
 
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "W" 'bh/widen))
@@ -3657,10 +3659,13 @@ so change the default 'F' binding in the agenda to allow both"
 (defun bh/narrow-to-subtree ()
   (interactive)
   (if (equal major-mode 'org-agenda-mode)
-      (org-with-point-at (org-get-at-bol 'org-hd-marker)
-        (bh/narrow-to-org-subtree)
-        (save-restriction
-          (org-agenda-set-restriction-lock)))
+      (progn
+        (org-with-point-at (org-get-at-bol 'org-hd-marker)
+          (bh/narrow-to-org-subtree)
+          (save-restriction
+            (org-agenda-set-restriction-lock)))
+        (when org-agenda-sticky
+          (org-agenda-redo)))
     (bh/narrow-to-org-subtree)
     (save-restriction
       (org-agenda-set-restriction-lock))))
@@ -3726,6 +3731,8 @@ so change the default 'F' binding in the agenda to allow both"
     (re-search-forward "Tasks to Refile")
     (setq bh/current-view-project (point)))
   (bh/widen)
+  (when org-agenda-sticky
+    (org-agenda-redo))
   (goto-char bh/current-view-project)
   (forward-visible-line 1)
   (while (and (< (point) (point-max))
@@ -4147,6 +4154,25 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (defun bh/is-scheduled-late (date-str)
   (string-match "Sched\.\\(.*\\)x:" date-str))
+#+end_src
+*** Sticky Agendas
+:PROPERTIES:
+:CUSTOM_ID: StickyAgendas
+:END:
+[2013-06-23 Sun 10:16]
+
+Sticky agendas allow you to have more than one agenda view created simultaneously.
+You can quickly switch to the view without incurring an agenda rebuild by invoking
+the agenda custom command key that normally generates the agenda.  If it already 
+exists it will display the existing view.  =g= forces regeneration of the agenda view.
+
+I normally have two views displayed (=F12 a= for the daily/weekly
+agenda and =F12 SPC= for my project management view)
+
+#+header: :tangle yes
+#+begin_src emacs-lisp
+;; Use sticky agenda's so they persist
+(setq org-agenda-sticky t)
 #+end_src
 *** q buries the agenda view buffer
 :PROPERTIES:
@@ -4984,7 +5010,9 @@ as a quick way to get back to the agenda and update the current view.
 
 (defun bh/show-org-agenda ()
   (interactive)
-  (switch-to-buffer "*Org Agenda*")
+  (if org-agenda-sticky
+      (switch-to-buffer "*Org Agenda( )*")
+    (switch-to-buffer "*Org Agenda*"))
   (delete-other-windows))
 #+end_src
 
