@@ -988,7 +988,7 @@ don't want to spend time waiting for it to be generated.
                             (org-agenda-sorting-strategy
                              '(priority-down category-keep))))
                 (tags-todo "-WAITING-CANCELLED/!NEXT"
-                           ((org-agenda-overriding-header "Next Tasks")
+                           ((org-agenda-overriding-header "Project Next Tasks")
                             (org-agenda-skip-function 'bh/skip-projects-and-habits-and-single-tasks)
                             (org-agenda-todo-ignore-scheduled t)
                             (org-agenda-todo-ignore-deadlines t)
@@ -997,7 +997,7 @@ don't want to spend time waiting for it to be generated.
                             (org-agenda-sorting-strategy
                              '(priority-down todo-state-down effort-up category-keep))))
                 (tags-todo "-REFILE-CANCELLED/!-HOLD-WAITING"
-                           ((org-agenda-overriding-header "Tasks")
+                           ((org-agenda-overriding-header (if (marker-buffer org-agenda-restrict-begin) "Project Subtasks" "Standalone Tasks"))
                             (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                             (org-agenda-todo-ignore-scheduled t)
                             (org-agenda-todo-ignore-deadlines t)
