@@ -5256,6 +5256,12 @@ I've gone back to automatically removing the highlights with change
 which is the default setting.  I've been using regular =M-x occur= a
 lot more lately to find things in any Emacs buffer.
 
+#+header: :tangle yes
+#+begin_src emacs-lisp
+(setq org-remove-highlights-with-change t)
+#+end_src
+
+
 ** Getting up to date org-mode info documentation
 :PROPERTIES:
 :CUSTOM_ID: OrgModeInfoDocumentation
