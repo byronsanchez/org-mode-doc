@@ -5834,6 +5834,20 @@ hours and minutes.
 (setq org-time-clocksum-format
       '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
 #+end_src
+** Create unique IDs for tasks when linking
+:PROPERTIES:
+:CUSTOM_ID: LinkingToTaskCreatesId
+:END:
+[2013-06-23 Sun 10:38]
+
+The following setting creates a unique task ID for the heading in the
+=PROPERTY= drawer when I use =C-c l=.  This allows me to move the task
+around arbitrarily in my org files and the link to it still works.
+
+#+header: :tangle yes
+#+begin_src emacs-lisp
+(setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+#+end_src
 * Things I Don't Use (Anymore)
 :PROPERTIES:
 :CUSTOM_ID: Unused
