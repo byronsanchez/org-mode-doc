@@ -3701,10 +3701,14 @@ so change the default 'F' binding in the agenda to allow both"
 (defun bh/narrow-to-project ()
   (interactive)
   (if (equal major-mode 'org-agenda-mode)
-      (org-with-point-at (bh/get-pom-from-agenda-restriction-or-point)
-        (bh/narrow-to-org-project)
-        (save-restriction
-          (org-agenda-set-restriction-lock)))
+      (progn
+        (org-with-point-at (bh/get-pom-from-agenda-restriction-or-point)
+          (bh/narrow-to-org-project)
+          (save-excursion
+            (bh/find-project-task)
+            (org-agenda-set-restriction-lock)))
+        (org-agenda-redo)
+        (beginning-of-buffer))
     (bh/narrow-to-org-project)
     (save-restriction
       (org-agenda-set-restriction-lock))))
@@ -3792,7 +3796,8 @@ The following elisp accomplishes this.
         (cond
          ((and (equal major-mode 'org-agenda-mode) pom)
           (org-with-point-at pom
-            (org-agenda-set-restriction-lock restriction-type)))
+            (org-agenda-set-restriction-lock restriction-type))
+          (org-agenda-redo))
          ((and (equal major-mode 'org-mode) (org-before-first-heading-p))
           (org-agenda-set-restriction-lock 'file))
          (pom
