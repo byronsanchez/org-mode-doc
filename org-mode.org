@@ -2599,13 +2599,22 @@ with =B $=.  This normally takes less than 5 minutes once a month.
 :CUSTOM_ID: ArchiveSetup
 :END:
 
-I not longer use an =ARCHIVE= property in my subtrees.  Tasks can just
+I no longer use an =ARCHIVE= property in my subtrees.  Tasks can just
 archive normally to the =Archived Tasks= heading in the archive file.
 
 The following setting ensures that task states are untouched when they
 are archived.  This makes it possible to archive tasks that are not
 marked =DONE=.  By default tasks are archived under the heading =*
 Archived Tasks= in the archive file.
+
+This archiving function does not keep your project trees intact.  It
+archives done state tasks after they are old enough to they are
+removed from the main org file.  It should be possible to reconstruct
+the original tree from the archive detail properties but I've never
+needed to do this yet.  The archived detail is very useful the few
+times a year I actually need to look for some archived data but most
+of the time I just move it out of the way and keep it for historical
+purposes.
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
@@ -2619,22 +2628,24 @@ Archived Tasks= in the archive file.
   "Skip trees that are not available for archiving"
   (save-restriction
     (widen)
-    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
-      ;; Consider only tasks with done todo headings as archivable candidates
-      (if (member (org-get-todo-state) org-done-keywords)
-          (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
-                 (daynr (string-to-int (format-time-string "%d" (current-time))))
-                 (a-month-ago (* 60 60 24 (+ daynr 1)))
-                 (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
-                 (this-month (format-time-string "%Y-%m-" (current-time)))
-                 (subtree-is-current (save-excursion
-                                       (forward-line 1)
-                                       (and (< (point) subtree-end)
-                                            (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
-            (if subtree-is-current
-                next-headline ; Has a date in this month or last month, skip it
-              nil))  ; available to archive
-        (or next-headline (point-max))))))
+    ;; Consider only tasks with done todo headings as archivable candidates
+    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
+          (subtree-end (save-excursion (org-end-of-subtree t))))
+      (if (member (org-get-todo-state) org-todo-keywords-1)
+          (if (member (org-get-todo-state) org-done-keywords)
+              (let* ((daynr (string-to-int (format-time-string "%d" (current-time))))
+                     (a-month-ago (* 60 60 24 (+ daynr 1)))
+                     (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
+                     (this-month (format-time-string "%Y-%m-" (current-time)))
+                     (subtree-is-current (save-excursion
+                                           (forward-line 1)
+                                           (and (< (point) subtree-end)
+                                                (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
+                (if subtree-is-current
+                    subtree-end ; Has a date in this month or last month, skip it
+                  nil))  ; available to archive
+            (or subtree-end (point-max)))
+        next-headline))))
 #+end_src
 ** Archive Tag - Hiding Information
 :PROPERTIES:
