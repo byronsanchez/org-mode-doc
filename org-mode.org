@@ -995,7 +995,7 @@ don't want to spend time waiting for it to be generated.
                             (org-tags-match-list-sublevels t)
                             (org-agenda-sorting-strategy
                              '(priority-down todo-state-down effort-up category-keep))))
-                (tags-todo "-REFILE-CANCELLED/!-HOLD-WAITING"
+                (tags-todo "-REFILE-CANCELLED-WAITING/!"
                            ((org-agenda-overriding-header (if (marker-buffer org-agenda-restrict-begin) "Project Subtasks" "Standalone Tasks"))
                             (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
                             (org-agenda-todo-ignore-scheduled t)
