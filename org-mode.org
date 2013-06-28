@@ -621,11 +621,11 @@ The triggers break down to the following rules:
 
 - Moving a task to =CANCELLED= adds a =CANCELLED= tag
 - Moving a task to =WAITING= adds a =WAITING= tag
-- Moving a task to =HOLD= adds a =WAITING= tag
-- Moving a task to a done state removes a =WAITING= tag
-- Moving a task to =TODO= removes =WAITING= and =CANCELLED= tags
-- Moving a task to =NEXT= removes a =WAITING= tag
-- Moving a task to =DONE= removes =WAITING= and =CANCELLED= tags
+- Moving a task to =HOLD= adds =WAITING= and =HOLD= tags
+- Moving a task to a done state removes =WAITING= and =HOLD= tags
+- Moving a task to =TODO= removes =WAITING=, =CANCELLED=, and =HOLD= tags
+- Moving a task to =NEXT= removes =WAITING=, =CANCELLED=, and =HOLD= tags
+- Moving a task to =DONE= removes =WAITING=, =CANCELLED=, and =HOLD= tags
 
 The tags are used to filter tasks in the agenda views conveniently.
 
