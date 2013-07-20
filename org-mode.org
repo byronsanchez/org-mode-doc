@@ -492,7 +492,7 @@ Here are my =TODO= state keywords and colour settings:
 #+begin_src emacs-lisp
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE"))))
+              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
 
 (setq org-todo-keyword-faces
       (quote (("TODO" :foreground "red" :weight bold)
@@ -501,6 +501,7 @@ Here are my =TODO= state keywords and colour settings:
               ("WAITING" :foreground "orange" :weight bold)
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold)
+              ("MEETING" :foreground "forest green" :weight bold)
               ("PHONE" :foreground "forest green" :weight bold))))
 #+end_src
 *** Task States
@@ -576,6 +577,33 @@ PHONE -> [*]
 
 #+results[7fcae03150f58bbcc260379916083e99a91983c4]:
 [[file:phone_states.png]]
+
+*** Meetings
+:PROPERTIES:
+:CUSTOM_ID: TodoKeywordMeetings
+:END:
+
+Meetings are special.  They are created in a done state by a capture
+task.  I use the MEETING capture template when someone interrupts what
+I'm doing with a question or discussion.  This is handled similarly to
+phone calls where I clock the amount of time spent with whomever it is
+and record some notes of what was discussed (either during or after
+the meeting) depending on content, length, and complexity of the
+discussion.
+
+The time of the meeting is recorded for as long as the capture task is
+active.  If I need to look up other details and want to close the
+capture task early I can just =C-c C-c= to close the capture task
+(stopping the clock) and then =f9 SPC= to resume the clock in the
+meeting task while I do other things.
+#+begin_src plantuml :file meeting_states.png :cache yes
+title Meeting Task State
+[*] -> MEETING
+MEETING -> [*]
+#+end_src
+
+#+results[27cce0a2a2c020d46bb1801a287cca4327a13dff]:
+[[file:meeting_states.png]]
 
 ** Fast Todo Selection
 :PROPERTIES:
@@ -666,6 +694,7 @@ When a new task needs to be added I categorize it into one of a few
 things:
 
 - A phone call (p)
+- A meeting (m)
 - An email I need to respond to (r)
 - A new task (t)
 - A new note (n)
@@ -684,7 +713,7 @@ Here is my setup for org-capture
 ;; I use C-c c to start capture mode
 (global-set-key (kbd "C-c c") 'org-capture)
 
-;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
+;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
       (quote (("t" "todo" entry (file "~/git/org/refile.org")
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
@@ -696,6 +725,8 @@ Here is my setup for org-capture
                "* %?\n%U\n" :clock-in t :clock-resume t)
               ("w" "org-protocol" entry (file "~/git/org/refile.org")
                "* TODO Review %c\n%U\n" :immediate-finish t)
+              ("m" "Meeting" entry (file "~/git/org/refile.org")
+               "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
               ("p" "Phone call" entry (file "~/git/org/refile.org")
                "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
               ("h" "Habit" entry (file "~/git/org/refile.org")
@@ -895,18 +926,21 @@ related get filed to the appropriate project instead of under the
 catchall =* NOTES= task.  Generally these types of notes are specific
 to the project and not generally useful -- so removing them from the
 notes list when the project is archived makes sense.
-** Refiling Phone Calls
+** Refiling Phone Calls and Meetings
 :PROPERTIES:
 :CUSTOM_ID: RefilingPhoneCalls
 :END:
 
-Phone calls are handled using capture mode.  I time my calls using
-the capture mode template settings to clock in and out the capture
-task while the phone call is in progress.
+Phone calls and meetings are handled using capture mode.  I time my
+calls and meetings using the capture mode template settings to clock
+in and out the capture task while the phone call or meeting is in
+progress.
 
-Phone call tasks collect in =refile.org= and are later refiled to the
-appropriate location.  Some phone calls are billable and we want these
-tracked in the appropriate category.
+Phone call and meeting tasks collect in =refile.org= and are later
+refiled to the appropriate location.  Some phone calls are billable
+and we want these tracked in the appropriate category.  I refile my
+phone call and meeting tasks under the appropriate project so time
+tracking and reports are as accurate as possible.
 * Custom agenda views
 :PROPERTIES:
 :CUSTOM_ID: CustomAgendaViews
@@ -1948,6 +1982,7 @@ Tasks can have any number of arbitrary tags.  Tags are used for:
 - providing context for tasks
 - tagging notes
 - tagging phone calls
+- tagging meetings
 - tagging tasks to be refiled
 - tagging tasks in a WAITING state because a parent task is WAITING
 - tagging cancelled tasks because a parent task is CANCELLED
@@ -1984,7 +2019,7 @@ the context tags - you can't be in two places at once so if a task is
 marked with @farm and you add @office then the @farm tag is removed
 automagically.
 
-The other tags =PHONE= .. =FLAGGED= are not mutually exclusive and
+The other tags =WAITING= .. =FLAGGED= are not mutually exclusive and
 multiple tags can appear on a single task.  Some of those tags are
 created by todo state change triggers.  The shortcut key is used to
 add or remove the tag using =C-c C-q= or to apply the task for
@@ -4706,7 +4741,7 @@ My =org-todo-keywords= are set as follows:
 #+begin_src emacs-lisp
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-              (sequence "WAITING(w@/@)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE"))))
+              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
 #+end_src
 
 This adds a log entry whenever a task moves to any of the following states:
