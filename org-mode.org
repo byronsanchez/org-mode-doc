@@ -3946,10 +3946,13 @@ so change the default 'F' binding in the agenda to allow both"
   (let (num-project-left current-project)
     (unless (marker-position org-agenda-restrict-begin)
       (goto-char (point-min))
-      (setq bh/project-list nil)
+      ; Clear all of the existing markers on the list
+      (while bh/project-list
+        (set-marker (pop bh/project-list) nil))
       (re-search-forward "Tasks to Refile")
       (forward-visible-line 1))
 
+    ; Build a new project marker list
     (unless bh/project-list
       (while (< (point) (point-max))
         (while (and (< (point) (point-max))
@@ -3962,20 +3965,22 @@ so change the default 'F' binding in the agenda to allow both"
           (add-to-list 'bh/project-list (copy-marker (org-get-at-bol 'org-hd-marker)) 'append))
         (forward-visible-line 1)))
 
+    ; Pop off the first marker on the list and display
     (setq current-project (pop bh/project-list))
-    (if current-project
-        (progn
-          (org-with-point-at current-project
-            (setq bh/hide-scheduled-and-waiting-next-tasks nil)
-            (bh/narrow-to-project))
-          (org-agenda-redo)
-          (beginning-of-buffer)
-          (setq num-projects-left (length bh/project-list))
-          (if (> num-projects-left 0)
-              (message "%s projects left to view" num-projects-left)
-            (beginning-of-buffer)
-            (setq bh/hide-scheduled-and-waiting-next-tasks t)
-            (error "All projects viewed."))))))
+    (when current-project
+      (org-with-point-at current-project
+        (setq bh/hide-scheduled-and-waiting-next-tasks nil)
+        (bh/narrow-to-project))
+      ; Remove the marker
+      (setq current-project nil)
+      (org-agenda-redo)
+      (beginning-of-buffer)
+      (setq num-projects-left (length bh/project-list))
+      (if (> num-projects-left 0)
+          (message "%s projects left to view" num-projects-left)
+        (beginning-of-buffer)
+        (setq bh/hide-scheduled-and-waiting-next-tasks t)
+        (error "All projects viewed.")))))
 
 (add-hook 'org-agenda-mode-hook
           '(lambda () (org-defkey org-agenda-mode-map "V" 'bh/view-next-project))
