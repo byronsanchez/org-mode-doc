@@ -338,14 +338,14 @@ are set up like this:
 
 #+begin_src org :exports src
 ,* Health and Recreation
-  PROPERTIES:
-  CATEGORY: Health
-  END:
+  :PROPERTIES:
+  :CATEGORY: Health
+  :END:
   ...
 ,* House Maintenance
-  PROPERTIES:
-  CATEGORY: House
-  END:
+  :PROPERTIES:
+  :CATEGORY: House
+  :END:
 #+end_src
 ** Key bindings
 :PROPERTIES:
@@ -747,8 +747,8 @@ like this:
 
 #+begin_src org :exports src
 ,* TODO New Capture Task
-  LOGBOOK:
-  END:
+  :LOGBOOK:
+  :END:
   [2010-05-08 Sat 13:53]
 #+end_src
 I have the following setup to remove these empty =LOGBOOK= drawers if
@@ -1319,10 +1319,10 @@ My org files look like this:
 ...
 ,* Tasks
 ,** Organization
-   PROPERTIES:
-   CLOCK_MODELINE_TOTAL: today
-   ID:       eb155a82-92b2-4f25-a3c6-0304591af2f9
-   END:
+   :PROPERTIES:
+   :CLOCK_MODELINE_TOTAL: today
+   :ID:       eb155a82-92b2-4f25-a3c6-0304591af2f9
+   :END:
    ...
 #+end_src
 
@@ -2286,8 +2286,8 @@ doing my weekly review on Tuesday since Monday was a holiday.
 #+begin_src org :exports src
 ,* NEXT Weekly Review [0/6]
   SCHEDULED: <2009-05-18 Mon ++1w> 
-  LOGBOOK:...
-  PROPERTIES:...
+  :LOGBOOK:...
+  :PROPERTIES:...
 
   What to review:
 
@@ -4213,14 +4213,14 @@ I include holidays from the calendar in my =todo.org= file as follows:
 #+begin_src org :exports src
 ,#+FILETAGS: PERSONAL
 ,* Appointments
-  PROPERTIES:
-  CATEGORY: Appt
-  ARCHIVE:  %s_archive::* Appointments
-  END:      
+  :PROPERTIES:
+  :CATEGORY: Appt
+  :ARCHIVE:  %s_archive::* Appointments
+  :END:      
 ,** Holidays
-   PROPERTIES:
-   Category: Holiday
-   END:
+   :PROPERTIES:
+   :Category: Holiday
+   :END:
    %%(org-calendar-holiday)
 ,** Some other Appointment
    ...
@@ -4474,9 +4474,9 @@ like this
 #+begin_src org :exports src
 ,* TODO Invoicing and Archive Tasks [0/7]
   DEADLINE: <2009-07-01 Wed +1m -0d> 
-  PROPERTIES:
-  RESET_CHECK_BOXES: t
-  END:
+  :PROPERTIES:
+  :RESET_CHECK_BOXES: t
+  :END:
 
   - [ ] Do task 1
   - [ ] Do task 2
@@ -4546,9 +4546,9 @@ property on the repeated tasks as follows:
 #+begin_src org :exports src
 ,* TODO New Repeating Task
   SCHEDULED: <2009-06-16 Tue +1w>
-  PROPERTIES:
-  NOBLOCKING: t
-  END:
+  :PROPERTIES:
+  :NOBLOCKING: t
+  :END:
   ...
 ,** TODO Subtask  
 #+end_src
@@ -4561,9 +4561,9 @@ a property =ORDERED= that enforces this for subtasks.
 
 #+begin_src org :exports src
 ,* TODO Some Task
-  PROPERTY:
-  ORDERED: t
-  END:
+  :PROPERTIES:
+  :ORDERED: t
+  :END:
 ,** TODO Step 1
 ,** TODO Step 2
 ,** TODO Step 3  
@@ -4760,10 +4760,10 @@ attachment directory.
 
 #+begin_src org :exports src
 ,* Attachments                                                        :ATTACH:
-  PROPERTIES:
-  Attachments: x.sql
-  ID:       f1d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b
-  END:  
+  :PROPERTIES:
+  :Attachments: x.sql
+  :ID:       f1d38e9a-ff70-4cc4-ab50-e8b58b2aaa7b
+  :END:  
 #+end_src
 
 The attached file is saved in
@@ -4950,11 +4950,11 @@ To this end I have a task
 
 #+begin_src org :exports src
 ,* NEXT Document my use of org-mode
-  LOGBOOK:...
-  PROPERTIES:
-  CLOCK_MODELINE_TOTAL: today
-  Effort:   1:00
-  END:  
+  :LOGBOOK:...
+  :PROPERTIES:
+  :CLOCK_MODELINE_TOTAL: today
+  :Effort:   1:00
+  :END:  
 #+end_src
 
 The task has an estimated effort of 1 hour and when I clock in the
@@ -5012,9 +5012,9 @@ value setting and a special =SCHEDULED= date entry like this:
 ,* TODO Update Org Mode Doc
   SCHEDULED: <2009-11-21 Sat .+7d/30d>
   [2009-11-14 Sat 11:45]
-  PROPERTIES:
-  STYLE: habit
-  END:  
+  :PROPERTIES:
+  :STYLE: habit
+  :END:  
 #+end_src
 
 This marks the task as a habit and separates it from the regular task
@@ -5085,10 +5085,10 @@ My habit tasks look as follows - and I tend to have one in every org
 file that can have habits defined
 #+begin_src org :exports src
 ,* Habits
-  PROPERTIES:
-  LOGGING:  DONE(!)
-  ARCHIVE:  %s_archive::* Habits
-  END:  
+  :PROPERTIES:
+  :LOGGING:  DONE(!)
+  :ARCHIVE:  %s_archive::* Habits
+  :END:  
 #+end_src
 ** Auto revert mode
 :PROPERTIES:
