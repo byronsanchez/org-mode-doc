@@ -130,10 +130,10 @@ To update and get new commits from the org-mode developers you can use
 #+begin_src sh
 cd ~/git/org-mode
 git pull
-make autoloads
+make uncompiled
 #+end_src
 
-I run uncompiled source files in my setup so the autoloads =make= target is all you need.
+I run uncompiled source files in my setup so the uncompiled =make= target is all you need.
 
 I normally track the =master= branch in the org-mode repository.
 ** Org-Mode Setup
