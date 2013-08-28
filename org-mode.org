@@ -5590,13 +5590,29 @@ change list levels.
 | *                   | -                         |
 | 1.                  | -                         |
 | 1)                  | -                         |
+| A)                  | -                         |
+| B)                  | -                         |
+| a)                  | -                         |
+| b)                  | -                         |
+| A.                  | -                         |
+| B.                  | -                         |
+| a.                  | -                         |
+| b.                  | -                         |
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
 (setq org-list-demote-modify-bullet (quote (("+" . "-")
                                             ("*" . "-")
                                             ("1." . "-")
-                                            ("1)" . "-"))))
+                                            ("1)" . "-")
+                                            ("A)" . "-")
+                                            ("B)" . "-")
+                                            ("a)" . "-")
+                                            ("b)" . "-")
+                                            ("A." . "-")
+                                            ("B." . "-")
+                                            ("a." . "-")
+                                            ("b." . "-"))))
 #+end_src
 ** Remove indentation on agenda tags view
 :PROPERTIES:
