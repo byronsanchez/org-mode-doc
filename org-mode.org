@@ -899,8 +899,7 @@ sys RET= and it's done.  IDO completion makes locating targets a snap.
 Tasks to refile are in their own section of the block agenda.  To find
 tasks to refile I run my agenda view with =F12 SPC= and scroll down to
 second section of the block agenda: =Tasks to Refile=.  This view
-shows all tasks (even ones marked in a =done= state).  Alternatively
-I just use =F12 r= on my slower Eee PC.
+shows all tasks (even ones marked in a =done= state).
 
 Bulk refiling in the agenda works very well for multiple tasks going
 to the same place.  Just mark the tasks with =m= and then =B r= to
@@ -1040,39 +1039,7 @@ don't want to spend time waiting for it to be generated.
                       ((org-agenda-overriding-header "Tasks to Archive")
                        (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
                        (org-tags-match-list-sublevels nil))))
-               nil)
-              ("r" "Tasks to Refile" tags "REFILE"
-               ((org-agenda-overriding-header "Tasks to Refile")
-                (org-tags-match-list-sublevels nil)))
-              ("#" "Stuck Projects" tags-todo "-CANCELLED/!"
-               ((org-agenda-overriding-header "Stuck Projects")
-                (org-agenda-skip-function 'bh/skip-non-stuck-projects)))
-              ("n" "Next Tasks" tags-todo "-WAITING-CANCELLED/!NEXT"
-               ((org-agenda-overriding-header "Next Tasks")
-                (org-agenda-skip-function 'bh/skip-projects-and-habits-and-single-tasks)
-                (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
-                (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
-                (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
-                (org-tags-match-list-sublevels t)
-                (org-agenda-sorting-strategy
-                 '(todo-state-down effort-up category-keep))))
-              ("R" "Tasks" tags-todo "-REFILE-CANCELLED/!-HOLD-WAITING"
-               ((org-agenda-overriding-header "Tasks")
-                (org-agenda-skip-function 'bh/skip-project-tasks-maybe)
-                (org-agenda-sorting-strategy
-                 '(category-keep))))
-              ("p" "Projects" tags-todo "-HOLD-CANCELLED/!"
-               ((org-agenda-overriding-header "Projects")
-                (org-agenda-skip-function 'bh/skip-non-projects)
-                (org-agenda-sorting-strategy
-                 '(category-keep))))
-              ("w" "Waiting Tasks" tags-todo "-CANCELLED+WAITING/!"
-               ((org-agenda-overriding-header "Waiting and Postponed tasks"))
-               (org-tags-match-list-sublevels nil))
-              ("A" "Tasks to Archive" tags "-REFILE/"
-               ((org-agenda-overriding-header "Tasks to Archive")
-                (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
-                (org-tags-match-list-sublevels nil))))))
+               nil))))
 #+end_src
 
 My block agenda view looks like this when not narrowed to a project.
@@ -2344,7 +2311,7 @@ following setting.
 This prevents org-mode from trying to show incorrect data if I select
 the default stuck project view with =F12 #= from the agenda menu.  My
 customized stuck projects view is part of my block agenda displayed
-with =F12 a=.
+with =F12 SPC=.
 
 Projects can have subprojects - and these subprojects can also be stuck.
 Any project that is stuck shows up on the stuck projects list so I can
