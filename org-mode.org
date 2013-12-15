@@ -2753,8 +2753,6 @@ org 8.0) to the new exporter.
 
   - =org-export-html-style-include-scripts= to =org-html-head-include-scripts=
 
-  - =org-export-html-validation-link= to =org-html-validation-link=
-
 - Publishing changes
 
   - Rename =:publishing-function=
