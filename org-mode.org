@@ -100,9 +100,8 @@ This is version call_org-mode-doc-version() of this document.  This
 document is created using the publishing features of =org-mode= git
 version call_org-mode-version().
 
-The source for this document can be found as [[http://doc.norang.ca/org-mode.org.html][colorized HTML]] and as a
-[[http://doc.norang.ca/org-mode.org][plain text org file]].
-I try to update this document about once a month.
+The source for this document can be found as a [[http://doc.norang.ca/org-mode.org][plain text org file]].  I
+try to update this document about once a month.
 
 The change history for this document can be found at
 [[http://git.norang.ca/?p%3Dorg-mode-doc.git%3Ba%3Dsummary][git://git.norang.ca/org-mode-doc.git]].
