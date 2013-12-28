@@ -386,8 +386,7 @@ I have the following custom key bindings set up for my emacs (sorted by frequenc
 | f9 s    | Switch to scratch buffer                        | Sometimes  |
 | f9 h    | Hide other tasks                                | Rare       |
 | f7      | Toggle line truncation/wrap                     | Rare       |
-| f9 T    | Tabify region                                   | Rare       |
-| f9 U    | Untabify region                                 | Rare       |
+| f9 T    | Toggle insert inactive timestamp                | Rare       |
 | C-c a   | Enter Agenda (minimal emacs testing)            | Rare       |
 
 Here is the keybinding setup in lisp:
