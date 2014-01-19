@@ -3526,7 +3526,7 @@ change the labels for the synchronization bars.
   "BackgroundColor<<New>> Cyan\n"
   "}\n\n"
   "title " str " - \n"
-  "note left: " str "\\nLines X-Y\n"
+  "note left: " str "\n"
   "(*) --> \"" str "\"\n"
   "--> (*)\n"
   _ - \n
@@ -3661,7 +3661,7 @@ BackgroundColor<<New>> Cyan
 }
 
 title test - 
-note left: test\nLines X-Y
+note left: test
 (*) --> "test"
 --> (*)
 
@@ -3682,7 +3682,7 @@ BackgroundColor<<New>> Cyan
 }
 
 title test - 
-note left: test\nLines X-Y
+note left: test
 (*) --> "test"
 if "" then
   -> [condition] ==IF1==
@@ -3710,7 +3710,7 @@ BackgroundColor<<New>> Cyan
 }
 
 title test - 
-note left: test\nLines X-Y
+note left: test
 (*) --> "test"
 if "" then
   -> [condition] ==IF1==
@@ -3746,7 +3746,7 @@ BackgroundColor<<New>> Cyan
 }
 
 title test - 
-note left: test\nLines X-Y
+note left: test
 (*) --> "test"
 if "" then
   -> [condition] ==IF1==
