@@ -420,6 +420,7 @@ Here is the keybinding setup in lisp:
 (global-set-key (kbd "<f9> T") 'bh/toggle-insert-inactive-timestamp)
 
 (global-set-key (kbd "<f9> v") 'visible-mode)
+(global-set-key (kbd "<f9> l") 'org-toggle-link-display)
 (global-set-key (kbd "<f9> SPC") 'bh/clock-in-last-task)
 (global-set-key (kbd "C-<f9>") 'previous-buffer)
 (global-set-key (kbd "M-<f9>") 'org-toggle-inline-images)
