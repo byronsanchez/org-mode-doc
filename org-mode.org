@@ -1005,13 +1005,13 @@ don't want to spend time waiting for it to be generated.
                            ((org-agenda-overriding-header "Stuck Projects")
                             (org-agenda-skip-function 'bh/skip-non-stuck-projects)
                             (org-agenda-sorting-strategy
-                             '(priority-down category-keep))))
+                             '(category-keep))))
                 (tags-todo "-HOLD-CANCELLED/!"
                            ((org-agenda-overriding-header "Projects")
                             (org-agenda-skip-function 'bh/skip-non-projects)
                             (org-tags-match-list-sublevels 'indented)
                             (org-agenda-sorting-strategy
-                             '(priority-down category-keep))))
+                             '(category-keep))))
                 (tags-todo "-CANCELLED/!NEXT"
                            ((org-agenda-overriding-header (concat "Project Next Tasks"
                                                                   (if bh/hide-scheduled-and-waiting-next-tasks
@@ -1023,7 +1023,7 @@ don't want to spend time waiting for it to be generated.
                             (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
                             (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
                             (org-agenda-sorting-strategy
-                             '(priority-down todo-state-down effort-up category-keep))))
+                             '(todo-state-down effort-up category-keep))))
                 (tags-todo "-REFILE-CANCELLED-WAITING-HOLD/!"
                            ((org-agenda-overriding-header (concat "Project Subtasks"
                                                                   (if bh/hide-scheduled-and-waiting-next-tasks
@@ -1034,7 +1034,7 @@ don't want to spend time waiting for it to be generated.
                             (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
                             (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
                             (org-agenda-sorting-strategy
-                             '(priority-down category-keep))))
+                             '(category-keep))))
                 (tags-todo "-REFILE-CANCELLED-WAITING-HOLD/!"
                            ((org-agenda-overriding-header (concat "Standalone Tasks"
                                                                   (if bh/hide-scheduled-and-waiting-next-tasks
@@ -1045,7 +1045,7 @@ don't want to spend time waiting for it to be generated.
                             (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
                             (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
                             (org-agenda-sorting-strategy
-                             '(priority-down category-keep))))
+                             '(category-keep))))
                 (tags-todo "-CANCELLED+WAITING|HOLD/!"
                            ((org-agenda-overriding-header "Waiting and Postponed Tasks")
                             (org-agenda-skip-function 'bh/skip-stuck-projects)
@@ -4301,9 +4301,9 @@ Here are the =.emacs= settings:
 
 ;; Sorting order for tasks on the agenda
 (setq org-agenda-sorting-strategy
-      (quote ((agenda habit-down time-up user-defined-up priority-down effort-up category-keep)
-              (todo category-up priority-down effort-up)
-              (tags category-up priority-down effort-up)
+      (quote ((agenda habit-down time-up user-defined-up effort-up category-keep)
+              (todo category-up effort-up)
+              (tags category-up effort-up)
               (search category-up))))
 
 ;; Start the weekly agenda on Monday
@@ -6016,24 +6016,6 @@ creating documents with spelling errors.
   (org-mime-subtree))
 #+end_src
 
-** Task Priorities
-:PROPERTIES:
-:CUSTOM_ID: TaskPriorities
-:END:
-
-I use the agenda to figure out what to do work on next.  I don't use
-priorities at all normally but at work I occasionally get priorities
-from my manager.  In this case I mark my tasks with the priorities
-from the external source just to track the values and force the agenda
-to display tasks in the priority order.
-
-I use priorities A-E where tasks without a specific priority are lowest priority E.
-#+header: :tangle yes
-#+begin_src emacs-lisp
-(setq org-enable-priority-commands t)
-(setq org-default-priority ?E)
-(setq org-lowest-priority ?E)
-#+end_src
 ** Preserving source block indentation
 :PROPERTIES:
 :CUSTOM_ID: PreserveSourceIndentations
@@ -6393,6 +6375,24 @@ the results with =g=.
           (lambda ()
             (define-key org-agenda-mode-map "q" 'bury-buffer))
           'append)
+#+end_src
+** Task Priorities
+:PROPERTIES:
+:CUSTOM_ID: TaskPriorities
+:END:
+
+I use the agenda to figure out what to do work on next.  I don't use
+priorities at all normally but at work I occasionally get priorities
+from my manager.  In this case I mark my tasks with the priorities
+from the external source just to track the values and force the agenda
+to display tasks in the priority order.
+
+I use priorities A-E where tasks without a specific priority are lowest priority E.
+#+header: :tangle no
+#+begin_src emacs-lisp
+(setq org-enable-priority-commands t)
+(setq org-default-priority ?E)
+(setq org-lowest-priority ?E)
 #+end_src
 * Using Git for Automatic History, Backups, and Synchronization
 :PROPERTIES:
