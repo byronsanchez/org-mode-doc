@@ -3291,7 +3291,7 @@ Here's my publishing setup:
                :section-numbers nil
                :table-of-contents nil
                :base-extension "org"
-               :publishing-function (org-html-publish-to-html org-org-publish-to-org)
+               :publishing-function (org-html-publish-to-html)
                :plain-source t
                :htmlized-source t
                :style-include-default nil
@@ -3301,7 +3301,7 @@ Here's my publishing setup:
               ("org-mode-doc-extra"
                :base-directory "~/git/org-mode-doc/"
                :publishing-directory "/ssh:www-data@www:~/doc.norang.ca/htdocs"
-               :base-extension "css\\|pdf\\|png\\|jpg\\|gif"
+               :base-extension "css\\|pdf\\|png\\|jpg\\|gif\\|org"
                :publishing-function org-publish-attachment
                :recursive t
                :author nil)
