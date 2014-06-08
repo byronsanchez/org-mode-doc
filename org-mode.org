@@ -752,11 +752,6 @@ like this:
 I have the following setup to remove these empty =LOGBOOK= drawers if
 they occur.
 
-*NOTE:*
-I am currently on an OLD commit.  The signature for this function has
-changed in newer versions of org-mode.  Drop the "LOGBOOK" argument if
-you get errors from this function.
-
 #+header: :tangle yes
 #+begin_src emacs-lisp
 ;; Remove empty LOGBOOK drawers on clock out
@@ -764,7 +759,7 @@ you get errors from this function.
   (interactive)
   (save-excursion
     (beginning-of-line 0)
-    (org-remove-empty-drawer-at "LOGBOOK" (point))))
+    (org-remove-empty-drawer-at (point))))
 
 (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 #+end_src
