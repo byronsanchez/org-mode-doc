@@ -5341,10 +5341,6 @@ creation of the timestamp on and off for new headlines.
   (interactive)
   (org-insert-time-stamp nil t t nil nil nil))
 
-(defun bh/insert-inactive-timestamp ()
-  (interactive)
-  (org-insert-time-stamp nil t t nil nil nil))
-
 (defun bh/insert-heading-inactive-timestamp ()
   (save-excursion
     (when bh/insert-inactive-timestamp
