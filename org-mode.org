@@ -2838,7 +2838,7 @@ on your system.
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
-(setq org-ditaa-jar-path "~/java/ditaa0_6b.jar")
+(setq org-ditaa-jar-path "~/git/org-mode/contrib/scripts/ditaa.jar")
 (setq org-plantuml-jar-path "~/java/plantuml.jar")
 
 (add-hook 'org-babel-after-execute-hook 'bh/display-inline-images 'append)
