@@ -6540,7 +6540,7 @@ update the bare git repositories and then I run it again on my Eee PC
 to update all my local repositories on the laptop.  For any
 repositories that give errors due to non-fast-forward merges I
 manually merge as required and rerun =git-sync= until it reports no
-errors.  This normally takes a minute to two to do.  Then I grab my
+errors.  This normally takes a minute or two to do.  Then I grab my
 Eee PC and leave.  When I'm on the road I have full up-to-date history
 of all my git repositories.
 
