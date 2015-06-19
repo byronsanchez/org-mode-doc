@@ -1065,6 +1065,9 @@ My block agenda view looks like this when not narrowed to a project.
 This shows top-level projects and =NEXT= tasks but hides the project details since
 we are not focused on any particular project.
 
+*NOTE:* This agenda screen shot is out of date and do not currently match the agenda setup in this document.
+This will be fixed soon.
+
 [[file:block-agenda-nonproject.png]]
 
 After selecting a project (with =P= on any task in the agenda) the block agenda changes to show the project and
@@ -1072,6 +1075,10 @@ any subprojects in the Projects section.  Tasks show project-related tasks that 
 narrowed to a project.
 
 This makes it easy to focus on the task at hand.
+
+*NOTE:* This agenda screen shot is out of date and do not currently match the agenda setup in this document.
+This will be fixed soon.
+
 
 [[file:block-agenda-project.png]]
 
