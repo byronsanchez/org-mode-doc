@@ -538,7 +538,7 @@ CANCELLED:c
 WAITING --> DONE
 #+end_src
 
-#+results[c0362b66d6337f3ae0ac7ab2d715687debfa6652]:
+#+results[61c867b8eb4f49bc47e44ec2b534ac3219d82594]:
 [[file:normal_task_states.png]]
 
 *** Project Task States
@@ -572,7 +572,7 @@ title Phone Call Task State
 PHONE -> [*]
 #+end_src
 
-#+results[7fcae03150f58bbcc260379916083e99a91983c4]:
+#+results[9e27f3a56c4fca8f05455e6dfa1282030ae52830]:
 [[file:phone_states.png]]
 
 *** Meetings
@@ -599,7 +599,7 @@ title Meeting Task State
 MEETING -> [*]
 #+end_src
 
-#+results[27cce0a2a2c020d46bb1801a287cca4327a13dff]:
+#+results[942fb408787905ffcdde421ee02edabdbb921b06]:
 [[file:meeting_states.png]]
 
 ** Fast Todo Selection
@@ -2941,7 +2941,7 @@ Here's an example without the =#+begin_src= and =#+end_src= lines.
 +-----------------+                                                         
 #+end_src
 
-#+results[57642756cd4e509e2a4f67c40a5147ecb935933e]:
+#+results[b72ce84b1be00db6721081a8353a0c879f187fdd]:
 [[file:communication.png]]
 
 ** Playing with graphviz
@@ -2999,7 +2999,7 @@ digraph G {
 }
 #+end_src
 
-#+results[4bf665d19d319ee40e628cfc80170af69cfb776f]:
+#+results[296ce064f7aab7f79ba32a4e903ed7a31b01ca73]:
 [[file:gv01.png]]
 
 The =-Kdot= is optional (defaults to =dot=) but you can substitute other graphviz
@@ -3042,7 +3042,7 @@ Client -> Client: Saves token
 deactivate Client
 #+end_src
 
-#+results[6aff72a7a7c6801812c59c389114f65d462a61a0]:
+#+results[9b612e0e68cd747fc032d949b739f4c5b06dee21]:
 [[file:sequence.png]]
 
 *** Activity Diagram
@@ -3073,7 +3073,7 @@ endif
 --> (*)
 #+end_src
 
-#+results[1a0bdaefe8858ab0a55252b9c57fc16f57e27ea5]:
+#+results[d5646e42c69b25b55eb1699a43c5d9547c019c5e]:
 [[file:activity.png]]
 
 *** Usecase Diagram
@@ -3086,7 +3086,7 @@ LabUser --> (Runs Simulation)
 LabUser --> (Analyses Results)
 #+end_src
 
-#+results[14e8911f8940efbc6b90b57dcfa4eecce4a31d9f]:
+#+results[b7079ee21eb099b19ca524bf62e84edb7c317890]:
 [[file:usecase.png]]
 
 *** Object Diagram
@@ -3103,7 +3103,7 @@ Object2: setState()
 Object2: state
 #+end_src
 
-#+results[43eece3c12be40bac32cf12898e47d66ec1251da]:
+#+results[12eb2caa1043195361ca1953b474932e796e80f5]:
 [[file:object.png]]
 
 *** State Diagram
@@ -3122,7 +3122,7 @@ State3 --> Finish
 Finish --> [*]
 #+end_src
 
-#+results[d349aa79d785fec37ad60b1bcf43ced6df10aeb6]:
+#+results[5faa6c28383266f9e8b76f4a8c70012f7ab70753]:
 [[file:plantuml_example_states.png]]
 
 ** Publishing Single Files
@@ -3703,7 +3703,7 @@ note left: test
 @enduml
 #+end_src
 
-#+results[e196c6f48d5adbbf2b0300c87127c560d9913669]:
+#+results[941b135a91506a3806dcb1dcc07c18b23c0cd608]:
 [[file:test-act.png]]
 
 Put cursor on --> (*) and enter "sif RET"
@@ -3731,7 +3731,7 @@ end if
 @enduml
 #+end_src
 
-#+results[44839e6d5984e19cc3be9d5392f18fc11aade43c]:
+#+results[0b3365856895b29376087110b72d8cd127d3b4f7]:
 [[file:test-act2.png]]
 
 repeat on --> (*) line
@@ -3766,7 +3766,7 @@ end if
 @enduml
 #+end_src
 
-#+results[4f0d2bf2fed3fe0dc067e922132e8629d11bd224]:
+#+results[f1e8e6dfcb6cfc183b56196edb5769e53b7ad127]:
 [[file:test-act3.png]]
 
 and add two for loops at the end with "sfor RET line in file RET" and
@@ -3811,7 +3811,7 @@ note left: Loop2: End for each address in addressbook
 @enduml
 #+end_src
 
-#+results[178bbf661c1d4b459cc11b7b88ca339a4d9f85d1]:
+#+results[dffc80c1690d0ffc945596218c6264aa99f52ec5]:
 [[file:test-act4.png]]
 
 I use rectangular cut and paste if I need to indent generated blocks.
