@@ -758,10 +758,12 @@ they occur.
   (interactive)
   (save-excursion
     (beginning-of-line 0)
-    (org-remove-empty-drawer-at (point))))
+    (org-remove-empty-drawer-at "LOGBOOK" (point))))
 
 (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
+
 #+end_src
+
 ** Separate file for Capture Tasks
 :PROPERTIES:
 :CUSTOM_ID: CaptureRefileOrg
@@ -1065,7 +1067,7 @@ My block agenda view looks like this when not narrowed to a project.
 This shows top-level projects and =NEXT= tasks but hides the project details since
 we are not focused on any particular project.
 
-*NOTE:* This agenda screen shot is out of date and do not currently match the agenda setup in this document.
+*NOTE:* This agenda screen shot is out of date and does not currently match the agenda setup in this document.
 This will be fixed soon.
 
 [[file:block-agenda-nonproject.png]]
@@ -1076,7 +1078,7 @@ narrowed to a project.
 
 This makes it easy to focus on the task at hand.
 
-*NOTE:* This agenda screen shot is out of date and do not currently match the agenda setup in this document.
+*NOTE:* This agenda screen shot is out of date and does not currently match the agenda setup in this document.
 This will be fixed soon.
 
 
@@ -2506,6 +2508,18 @@ Callers of this function already widen the buffer view."
            (t
             subtree-end))))
     (save-excursion (org-end-of-subtree t))))
+
+(defun bh/skip-non-tasks ()
+  "Show non-project tasks.
+Skip project and sub-project tasks, habits, and project related tasks."
+  (save-restriction
+    (widen)
+    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
+      (cond
+       ((bh/is-task-p)
+        nil)
+       (t
+        next-headline)))))
 
 (defun bh/skip-project-trees-and-habits ()
   "Skip trees that are projects"
@@ -5039,6 +5053,7 @@ These are my settings for habit tracking.
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
+(require 'org-habit)
 ; Enable habit tracking (and a bunch of other modules)
 (setq org-modules (quote (org-bbdb
                           org-bibtex
@@ -5717,7 +5732,7 @@ post of the org-mode mailing list.  I actually use M-x a lot now
 because IDO completion is so easy.
 
 Here's the smex setup I use
-#+header: :tangle yes
+#+header: :tangle no
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (require 'smex)
