@@ -758,7 +758,7 @@ they occur.
   (interactive)
   (save-excursion
     (beginning-of-line 0)
-    (org-remove-empty-drawer-at "LOGBOOK" (point))))
+    (org-remove-empty-drawer-at (point))))
 
 (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
@@ -868,7 +868,12 @@ Here is my refile configuration:
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 
 ; Use IDO for both buffer and file completion and ido-everywhere to t
-(setq org-completion-use-ido t)
+;; Deprecated in org-mode 9.0
+;; see: https://github.com/emacs-mirror/emacs/blob/master/etc/ORG-NEWS
+;;
+;; "Instead Org uses regular functions, e.g., completion-read so as to let
+;; those libraries operate."
+;; (setq org-completion-use-ido t)
 (setq ido-everywhere t)
 (setq ido-max-directory-size 100000)
 (ido-mode (quote both))
@@ -1402,7 +1407,9 @@ I have the following org-mode settings for clocking:
 ;; Change tasks to NEXT when clocking in
 (setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
 ;; Separate drawers for clocking and logs
-(setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
+;; UPDATE 2018-03-18: Deprecated in org-mode 8.3- you can now use drawers ;;
+;; without listing them.
+;; (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
 ;; Save clock data and state changes and notes in the LOGBOOK drawer
 (setq org-clock-into-drawer t)
 ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
@@ -2882,7 +2889,7 @@ on your system.
          (ruby . t)
          (gnuplot . t)
          (clojure . t)
-         (sh . t)
+         (shell . t)
          (ledger . t)
          (org . t)
          (plantuml . t)
@@ -4035,9 +4042,11 @@ in a narrowed state.  I use =S-f5= (or some other widening speed key
 like =U=, =W=, =F=) to widen back to the normal view.
 
 I also have the following setting to force showing the next headline.
+
+Update 2018-03-18: Again, this variable has been eliminated.
 #+header: :tangle yes
 #+begin_src emacs-lisp
-(setq org-show-entry-below (quote ((default))))
+;; (setq org-show-entry-below (quote ((default))))
 #+end_src
 
 This prevents too many headlines from being folded together when I'm
@@ -4319,7 +4328,9 @@ Here are the =.emacs= settings:
 #+header: :tangle yes
 #+begin_src emacs-lisp
 ;; Show all future entries for repeating tasks
-(setq org-agenda-repeating-timestamp-show-all t)
+;; deprecated in org-mode 9.1 - 9.1 has org-agenda-show-future-repeats which
+;; has pretty much the same effect
+;; (setq org-agenda-repeating-timestamp-show-all t)
 
 ;; Show all agenda dates - even if they are empty
 (setq org-agenda-show-all-dates t)
@@ -4336,8 +4347,9 @@ Here are the =.emacs= settings:
 
 ;; Enable display of the time grid so we can see the marker for the current time
 (setq org-agenda-time-grid (quote ((daily today remove-match)
-                                   #("----------------" 0 16 (org-heading t))
-                                   (0900 1100 1300 1500 1700))))
+                                   (0900 1100 1300 1500 1700)
+                                   "......" "----------------"
+                                   )))
 
 ;; Display tags farther right
 (setq org-agenda-tags-column -102)
@@ -4712,13 +4724,17 @@ org-file.
 
 I have org-mode show the hierarchy of tasks above the matched entries
 and also the immediately following sibling task (but not all siblings)
-with the following settings:
+with the following settings.
+
+Update 2018-03-18: Org-mode has eliminated these variables in favor of 
+org-show-context-detail. The default setting for this variable sort of 
+approximates the configuration in this block, so it's good enough for me.
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
-(setq org-show-following-heading t)
-(setq org-show-hierarchy-above t)
-(setq org-show-siblings (quote ((default))))
+;; (setq org-show-following-heading t)
+;; (setq org-show-hierarchy-above t)
+;; (setq org-show-siblings (quote ((default))))
 #+end_src
 
 This keeps the results of the search relatively compact and mitigates
@@ -5775,7 +5791,11 @@ in the =org-mode-hook= to generate mail from an org-mode subtree.
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
-(require 'org-mime)
+;; Removed from org-mode in 9.1- you must manually install it or use
+;; use-package
+;;(require 'org-mime)
+(use-package org-mime
+      :ensure t)
 #+end_src
 ** Remove multiple state change log details from the agenda
 :PROPERTIES:
@@ -5815,10 +5835,10 @@ To get consistent applications for opening tasks I set the =org-file-apps= varia
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
-(setq org-file-apps (quote ((auto-mode . emacs)
-                            ("\\.mm\\'" . system)
-                            ("\\.x?html?\\'" . system)
-                            ("\\.pdf\\'" . system))))
+(setq org-file-apps (quote ((auto-mode . (lambda (file link) (emacs)))
+                            ("\\.mm\\'" . (lambda (file link) (system)))
+                            ("\\.x?html?\\'" . (lambda (file link) (system)))
+                            ("\\.pdf\\'" . (lambda (file link) (system))))))
 #+end_src
 
 This uses the entries defined in my system =mailcap= settings when
@@ -6105,8 +6125,10 @@ hours and minutes.
 
 #+header: :tangle yes
 #+begin_src emacs-lisp
-(setq org-time-clocksum-format
-      '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+;; (setq org-time-clocksum-format
+;;       '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+;; Updated for org-mode 9.1
+(setq org-duration-format (quote h:mm))
 #+end_src
 ** Create unique IDs for tasks when linking
 :PROPERTIES:
