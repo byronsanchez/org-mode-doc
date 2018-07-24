@@ -5517,7 +5517,6 @@ creation of the timestamp on and off for new headlines.
 (defun bh/insert-heading-inactive-timestamp ()
   (save-excursion
     (when bh/insert-inactive-timestamp
-      (message "correct dude")
 ;;      (org-return)
 ;;      (org-cycle)
       (org-end-of-line)
