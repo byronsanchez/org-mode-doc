@@ -17,3 +17,4 @@ nobackup
 *.png
 *.toc
 org-mode-source.org
+*.el
